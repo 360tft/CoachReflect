@@ -1,5 +1,72 @@
 # CoachReflect - Claude Session Context
 
+## Business Goals
+
+**Primary Objective**: Build MVP, validate with FCA community, grow to $5K MRR.
+
+**Brand**: 360 TFT product (subtle branding)
+**Price**: $7.99/mo (TBD)
+**Target**: Grassroots to semi-pro football coaches
+
+---
+
+## EXIT-READY DOCUMENTATION
+
+This repo MUST maintain 3 documents for potential acquisition. Update them whenever changes are made.
+
+### Required Documents
+
+| Document | Location | Contents |
+|----------|----------|----------|
+| **TECHNICAL.md** | `/docs/TECHNICAL.md` | Architecture, stack, schema, APIs, flows |
+| **CREDENTIALS.md** | `/docs/CREDENTIALS.md` (gitignored) | All service logins and access |
+| **SOP.md** | `/docs/SOP.md` | Daily/weekly operations, support, deployment |
+
+### Implementation Rules
+
+1. **Check if docs exist** - Before any work, verify these docs exist. Create if missing.
+2. **Update on changes** - Any technical change triggers a doc update.
+3. **CREDENTIALS.md is gitignored** - NEVER commit secrets.
+4. **Keep current** - Outdated docs are worse than no docs.
+
+### What Goes Where
+
+**TECHNICAL.md:**
+- Tech stack (Next.js, Supabase, Claude Vision)
+- Database schema (profiles, sessions, reflections, insights, session_plans)
+- API routes (reflection CRUD, session plan analysis)
+- AI integration (Claude Vision for session plan extraction)
+- Auth flow (Supabase Auth)
+- Environment variables list
+- Local dev & deployment instructions
+
+**CREDENTIALS.md (gitignored):**
+- Vercel login
+- Supabase project access
+- Anthropic API key location
+- Domain registrar access
+- GitHub repo access
+- All 2FA recovery codes
+
+**SOP.md:**
+- Daily: Check logs, review new signups
+- Weekly: Review analytics, user feedback
+- Support: Common issues and solutions
+- Deployment: How to deploy, rollback procedure
+- Handoff checklist for sale/transfer
+
+### Current Status
+
+| Document | Status | Action Needed |
+|----------|--------|---------------|
+| TECHNICAL.md | ❓ Check | Create or update |
+| CREDENTIALS.md | ❓ Check | Create (gitignored) |
+| SOP.md | ❓ Check | Create or update |
+
+**First task when working on this repo: Verify these docs exist and are current.**
+
+---
+
 ## Product Overview
 
 CoachReflect is a reflective journaling app for football coaches. It helps coaches capture post-session thoughts, track patterns over time, and get AI-powered insights to improve their coaching.
