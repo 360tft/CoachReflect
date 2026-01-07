@@ -3,6 +3,7 @@ import { Button } from "@/app/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card"
 import { Badge } from "@/app/components/ui/badge"
 import { GUIDED_PROMPTS, INSIGHT_TYPES, MOOD_OPTIONS } from "@/app/types"
+import { PricingSection } from "@/app/components/pricing-section"
 
 export default function Home() {
   return (
@@ -172,107 +173,89 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Pricing */}
-      <section className="container mx-auto px-4 py-16">
-        <h2 className="text-3xl font-bold text-center mb-4">Simple Pricing</h2>
+      {/* Testimonials */}
+      <section className="container mx-auto px-4 py-16 bg-muted/30 rounded-3xl">
+        <h2 className="text-3xl font-bold text-center mb-4">Coaches Are Growing</h2>
         <p className="text-center text-muted-foreground mb-12">
-          Start free, upgrade when you need more
+          Join coaches who are using reflection to level up their practice
         </p>
-        <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-          {/* Free */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Free</CardTitle>
-              <CardDescription>Get started with reflection</CardDescription>
-              <div className="text-3xl font-bold mt-4">$0</div>
-            </CardHeader>
-            <CardContent>
-              <ul className="space-y-2 text-sm">
-                <li className="flex items-center gap-2">
-                  <span className="text-green-500">✓</span> 10 reflections/month
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="text-green-500">✓</span> Guided prompts
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="text-green-500">✓</span> Mood tracking
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="text-green-500">✓</span> Basic insights
-                </li>
-              </ul>
-              <Link href="/signup" className="block mt-6">
-                <Button variant="outline" className="w-full">Get Started</Button>
-              </Link>
+        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          <Card className="bg-background">
+            <CardContent className="pt-6">
+              <div className="flex gap-1 mb-3 text-amber-500">
+                {"★★★★★".split("").map((star, i) => (
+                  <span key={i}>{star}</span>
+                ))}
+              </div>
+              <p className="text-muted-foreground mb-4">
+                "I used to finish sessions and forget what worked by the next day.
+                Now I have a clear record of what's actually improving my players.
+                The AI insights spotted a pattern I completely missed."
+              </p>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-900 flex items-center justify-center">
+                  <span className="text-amber-800 dark:text-amber-200 font-bold">SM</span>
+                </div>
+                <div>
+                  <p className="font-medium text-sm">Sarah M.</p>
+                  <p className="text-xs text-muted-foreground">U12 Girls Coach</p>
+                </div>
+              </div>
             </CardContent>
           </Card>
 
-          {/* Pro */}
-          <Card className="border-amber-500 border-2 relative">
-            <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-              <Badge className="bg-amber-500 text-white">Most Popular</Badge>
-            </div>
-            <CardHeader>
-              <CardTitle>Pro</CardTitle>
-              <CardDescription>For serious coaches</CardDescription>
-              <div className="text-3xl font-bold mt-4">$9<span className="text-lg font-normal">/month</span></div>
-            </CardHeader>
-            <CardContent>
-              <ul className="space-y-2 text-sm">
-                <li className="flex items-center gap-2">
-                  <span className="text-green-500">✓</span> Unlimited reflections
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="text-green-500">✓</span> AI-powered insights
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="text-green-500">✓</span> Pattern detection
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="text-green-500">✓</span> Player tracking
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="text-green-500">✓</span> Export to PDF
-                </li>
-              </ul>
-              <Link href="/signup?plan=pro" className="block mt-6">
-                <Button className="w-full bg-amber-600 hover:bg-amber-700">Start Pro Trial</Button>
-              </Link>
+          <Card className="bg-background">
+            <CardContent className="pt-6">
+              <div className="flex gap-1 mb-3 text-amber-500">
+                {"★★★★★".split("").map((star, i) => (
+                  <span key={i}>{star}</span>
+                ))}
+              </div>
+              <p className="text-muted-foreground mb-4">
+                "The session plan upload is brilliant. I just snap a photo of my
+                whiteboard notes and it understands everything. Saves me 10 minutes
+                of typing after every training."
+              </p>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-900 flex items-center justify-center">
+                  <span className="text-amber-800 dark:text-amber-200 font-bold">JT</span>
+                </div>
+                <div>
+                  <p className="font-medium text-sm">James T.</p>
+                  <p className="text-xs text-muted-foreground">Academy Coach</p>
+                </div>
+              </div>
             </CardContent>
           </Card>
 
-          {/* Pro+ */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Pro+</CardTitle>
-              <CardDescription>For coaching organizations</CardDescription>
-              <div className="text-3xl font-bold mt-4">$29<span className="text-lg font-normal">/month</span></div>
-            </CardHeader>
-            <CardContent>
-              <ul className="space-y-2 text-sm">
-                <li className="flex items-center gap-2">
-                  <span className="text-green-500">✓</span> Everything in Pro
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="text-green-500">✓</span> Team collaboration
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="text-green-500">✓</span> CPD documentation
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="text-green-500">✓</span> Advanced analytics
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="text-green-500">✓</span> Priority support
-                </li>
-              </ul>
-              <Link href="/signup?plan=pro_plus" className="block mt-6">
-                <Button variant="outline" className="w-full">Contact Us</Button>
-              </Link>
+          <Card className="bg-background">
+            <CardContent className="pt-6">
+              <div className="flex gap-1 mb-3 text-amber-500">
+                {"★★★★★".split("").map((star, i) => (
+                  <span key={i}>{star}</span>
+                ))}
+              </div>
+              <p className="text-muted-foreground mb-4">
+                "I've been coaching for 15 years and thought I knew my patterns.
+                Looking back at 3 months of reflections showed me I was always
+                rushing the warm-up. Simple fix, huge impact."
+              </p>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-900 flex items-center justify-center">
+                  <span className="text-amber-800 dark:text-amber-200 font-bold">MK</span>
+                </div>
+                <div>
+                  <p className="font-medium text-sm">Mike K.</p>
+                  <p className="text-xs text-muted-foreground">Senior Team Manager</p>
+                </div>
+              </div>
             </CardContent>
           </Card>
         </div>
       </section>
+
+      {/* Pricing */}
+      <PricingSection />
 
       {/* CTA */}
       <section className="container mx-auto px-4 py-16 text-center">

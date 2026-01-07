@@ -8,9 +8,34 @@ export interface Profile {
   age_group: string | null
   coaching_level: 'grassroots' | 'academy' | 'semi-pro' | 'professional' | null
   subscription_tier: 'free' | 'pro' | 'pro_plus'
+  stripe_customer_id: string | null
+  reflections_this_month: number
+  reflection_count_period: string | null
+  subscription_period_end: string | null
+  subscription_status: 'active' | 'inactive' | 'past_due' | 'canceled'
   created_at: string
   updated_at: string
 }
+
+export type SubscriptionTier = 'free' | 'pro' | 'pro_plus'
+
+export const SUBSCRIPTION_LIMITS = {
+  free: {
+    reflections_per_month: 5,
+    ai_features: false,
+    session_plan_upload: false,
+  },
+  pro: {
+    reflections_per_month: Infinity,
+    ai_features: true,
+    session_plan_upload: true,
+  },
+  pro_plus: {
+    reflections_per_month: Infinity,
+    ai_features: true,
+    session_plan_upload: true,
+  },
+} as const
 
 export interface Session {
   id: string
@@ -70,6 +95,7 @@ export interface Reflection {
   
   // Relations
   session?: Session
+  session_plan?: SessionPlan
 }
 
 export interface Insight {
@@ -169,3 +195,54 @@ export const ENERGY_OPTIONS = [
   { value: 4, label: 'Energized', emoji: '💪' },
   { value: 5, label: 'Fired Up', emoji: '🔥' },
 ]
+
+// Session Plan types (for uploaded coaching plans)
+export interface SessionDrill {
+  name: string
+  description: string | null
+  duration_minutes: number | null
+  setup: string | null
+  coaching_focus: string | null
+}
+
+export interface SessionPlan {
+  id: string
+  user_id: string
+  reflection_id: string | null
+
+  // Image
+  image_url: string
+  image_type: 'handwritten' | 'digital' | 'mixed' | null
+
+  // Extracted content
+  title: string | null
+  objectives: string[]
+  drills: SessionDrill[]
+  coaching_points: string[]
+  equipment_needed: string[]
+  total_duration_minutes: number | null
+
+  // Metadata
+  confidence_score: number // 0-1
+  raw_extraction: string | null
+  created_at: string
+}
+
+// API response types
+export interface SessionPlanAnalysis {
+  title: string | null
+  objectives: string[]
+  drills: SessionDrill[]
+  coaching_points: string[]
+  equipment_needed: string[]
+  total_duration_minutes: number | null
+  image_type: 'handwritten' | 'digital' | 'mixed'
+  confidence_score: number
+  raw_extraction: string
+}
+
+export interface ReflectionAIAnalysis {
+  summary: string
+  insights: string[]
+  action_items: string[]
+}
