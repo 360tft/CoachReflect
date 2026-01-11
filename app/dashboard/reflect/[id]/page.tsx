@@ -7,6 +7,7 @@ import { Badge } from "@/app/components/ui/badge"
 import { MOOD_OPTIONS, ENERGY_OPTIONS, SESSION_TYPES, GUIDED_PROMPTS } from "@/app/types"
 import { AnalyzeButton } from "./analyze-button"
 import { DeleteButton } from "./delete-button"
+import { ShareButton } from "@/app/components/share-button"
 
 export default async function ReflectionPage({
   params,
@@ -75,6 +76,7 @@ export default async function ReflectionPage({
           </div>
         </div>
         <div className="flex gap-2">
+          <ShareButton reflectionId={reflection.id} />
           <DeleteButton id={reflection.id} />
         </div>
       </div>
