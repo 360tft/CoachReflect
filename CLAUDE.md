@@ -2,6 +2,24 @@
 
 ---
 
+## Code Review Standards (MANDATORY)
+
+Before ANY commit, follow the code review checklist at:
+`/home/kevin/360tft_Marketing/_Tools/docs/CODE-REVIEW-STANDARDS.md`
+
+**Critical checks:**
+- Security: No secrets, server-side validation, auth checks
+- Bloat: No unused code/deps, run `npx depcheck` monthly
+- Quality: Build passes, accessibility, responsive
+- Monthly: `npm audit`, `npx ts-prune`
+
+**From the audit (2026-01-11):**
+- Remove `@stripe/stripe-js` (unused - using server-side stripe only)
+- Add `metadataBase` to root layout for SEO
+- Migrate `themeColor` to viewport exports (Next.js 16)
+
+---
+
 ## MANDATORY: SAAS STANDARDS COMPLIANCE
 
 **Before making ANY changes, check the master standards.**
