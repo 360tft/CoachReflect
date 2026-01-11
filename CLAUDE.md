@@ -1,5 +1,81 @@
 # CoachReflect - Claude Session Context
 
+---
+
+## ⚠️ FOOTBALLGPT BLUEPRINT - REQUIRED READING
+
+**FootballGPT is the gold standard.** This app MUST be brought up to FootballGPT's level before launch.
+
+### Reference Implementation
+- **Blueprint repo:** `/home/kevin/FootballGPT`
+- **Master checklist:** `/home/kevin/PRODUCT-SETUP-CHECKLIST.md`
+
+### Missing Features (14 of 17)
+
+| Priority | Feature | FootballGPT Reference | Purpose |
+|----------|---------|----------------------|---------|
+| **P0** | `chat` | `src/app/api/chat/` | AI chat interface - CORE VALUE |
+| **P0** | `conversations` | `src/app/api/conversations/` | Chat history - RETENTION |
+| **P0** | `cron` | `src/app/api/cron/` | Email sequences - RETENTION |
+| **P0** | `admin` | `src/app/api/admin/` | Dashboard - OPERATIONS |
+| **P1** | `gamification` | `src/app/api/gamification/` | Streaks, badges - STICKINESS |
+| **P1** | `memory` | `src/app/api/memory/` | User context - PERSONALIZATION |
+| **P1** | `feedback` | `src/app/api/feedback/` | User ratings - IMPROVEMENT |
+| **P1** | `push` | `src/app/api/push/` | Notifications - RE-ENGAGEMENT |
+| **P1** | `share` | `src/app/api/share/` | Social sharing - GROWTH |
+| **P2** | `account` | `src/app/api/account/` | Delete/export - COMPLIANCE |
+| **P2** | `pro-trial` | `src/app/api/pro-trial/` | Trial flow - CONVERSION |
+| **P2** | `track-visit` | `src/app/api/track-visit/` | Analytics - INSIGHTS |
+| **P2** | `sponsors` | `src/app/api/sponsors/` | Revenue - MONETIZATION |
+| **P2** | `unsubscribe` | `src/app/api/unsubscribe/` | Email compliance - LEGAL |
+
+### What CoachReflect Already Has ✅
+
+- auth, profile, stripe, analyze-plan (vision), reflections, sessions
+
+### Implementation Order
+
+1. **Phase 1 (Core):** Add AI chat for coaching conversations, conversations history, cron, admin
+2. **Phase 2 (Engagement):** gamification (reflection streaks), memory, feedback, push, share
+3. **Phase 3 (Polish):** account, pro-trial, track-visit, sponsors, unsubscribe
+
+### Key Patterns to Copy from FootballGPT
+
+| Pattern | Location | What It Does |
+|---------|----------|--------------|
+| Chat API | `src/app/api/chat/route.ts` | SSE streaming, model routing |
+| Streak system | `src/lib/gamification.ts` | Daily reflection streaks |
+| Email sequences | `src/app/api/cron/emails/` | Onboarding + winback |
+| Memory system | `src/lib/memory.ts` | Persistent coaching context |
+| Share images | `src/app/api/share/image/` | OG image generation |
+
+### CoachReflect-Specific Adaptations
+
+| FootballGPT Feature | CoachReflect Equivalent |
+|---------------------|------------------------|
+| Chat questions | Reflection prompts |
+| Topic badges | Reflection category badges |
+| Message streaks | Reflection streaks |
+| Coaching modes | Session types (training/match) |
+
+### Database Tables to Add
+
+Copy these from FootballGPT's migrations:
+- `chat_history` - AI conversation history
+- `conversations` - Chat metadata
+- `streaks` - Reflection streaks (adapt from message streaks)
+- `badges` / `user_badges` - Achievement system
+- `email_sequences` - Onboarding state machine
+- `email_log` - Delivery audit trail
+- `push_subscriptions` - Web push endpoints
+- `user_memory` - Persistent coaching context
+- `feedback` - User ratings
+- `query_analytics` - Anonymous usage data
+
+### DO NOT LAUNCH until P0 features are complete.
+
+---
+
 ## Business Goals
 
 **Primary Objective**: Build MVP, validate with FCA community, grow to $5K MRR.
