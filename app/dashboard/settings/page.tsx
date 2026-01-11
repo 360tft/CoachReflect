@@ -5,6 +5,7 @@ import { SUBSCRIPTION_LIMITS } from "@/app/types"
 import { ProfileForm } from "./profile-form"
 import { BillingToggle } from "./billing-toggle"
 import { PushNotificationToggle } from "@/app/components/push-notification-prompt"
+import { AccountActions } from "./account-actions"
 
 export default async function SettingsPage() {
   const supabase = await createClient()
@@ -97,6 +98,9 @@ export default async function SettingsPage() {
           )}
         </CardContent>
       </Card>
+
+      {/* Account Management */}
+      <AccountActions />
     </div>
   )
 }
