@@ -17,6 +17,106 @@ const getAdminClient = () => {
   )
 }
 
+// Extract memory from conversation (runs async, non-blocking)
+async function extractMemoryFromConversation(
+  userId: string,
+  userMessage: string,
+  assistantResponse: string
+) {
+  try {
+    const adminClient = getAdminClient()
+
+    // Get current memory
+    const { data: currentMemory } = await adminClient
+      .from("user_memory")
+      .select("*")
+      .eq("user_id", userId)
+      .single()
+
+    // Build conversation content
+    const conversationContent = `User: ${userMessage}\n\nAssistant: ${assistantResponse}`
+
+    // Use Claude to extract insights
+    const extractionPrompt = `Analyze this coaching conversation and extract key information about the coach. Return a JSON object with these fields (keep existing values if no new info):
+
+Current memory: ${JSON.stringify(currentMemory || {})}
+
+Conversation:
+${conversationContent}
+
+Extract and return JSON with:
+- coaching_style: array of style descriptors (e.g., "player-centered", "structured")
+- common_challenges: array of recurring issues they face
+- strengths: array of things they're good at
+- goals: array of what they're working toward
+- player_info: object with key player names and notes
+- team_context: string describing current team situation
+
+Only add new information that's clearly stated. Don't invent details. If nothing new to add, return empty arrays/objects for those fields. Return ONLY valid JSON.`
+
+    const response = await anthropic.messages.create({
+      model: "claude-sonnet-4-20250514",
+      max_tokens: 1024,
+      messages: [{ role: "user", content: extractionPrompt }],
+    })
+
+    const textContent = response.content.find(b => b.type === "text")
+    if (!textContent || textContent.type !== "text") {
+      return
+    }
+
+    // Parse extracted memory
+    let extracted
+    try {
+      let jsonText = textContent.text.trim()
+      if (jsonText.startsWith("```json")) jsonText = jsonText.slice(7)
+      if (jsonText.startsWith("```")) jsonText = jsonText.slice(3)
+      if (jsonText.endsWith("```")) jsonText = jsonText.slice(0, -3)
+      extracted = JSON.parse(jsonText.trim())
+    } catch {
+      console.error("Failed to parse memory extraction")
+      return
+    }
+
+    // Only update if there's new meaningful content
+    const hasNewContent =
+      (extracted.coaching_style?.length > 0) ||
+      (extracted.common_challenges?.length > 0) ||
+      (extracted.strengths?.length > 0) ||
+      (extracted.goals?.length > 0) ||
+      (Object.keys(extracted.player_info || {}).length > 0) ||
+      extracted.team_context
+
+    if (!hasNewContent) {
+      return
+    }
+
+    // Merge with existing memory
+    const mergedMemory = {
+      coaching_style: [...new Set([...(currentMemory?.coaching_style || []), ...(extracted.coaching_style || [])])].slice(0, 10),
+      common_challenges: [...new Set([...(currentMemory?.common_challenges || []), ...(extracted.common_challenges || [])])].slice(0, 10),
+      strengths: [...new Set([...(currentMemory?.strengths || []), ...(extracted.strengths || [])])].slice(0, 10),
+      goals: [...new Set([...(currentMemory?.goals || []), ...(extracted.goals || [])])].slice(0, 10),
+      player_info: { ...(currentMemory?.player_info || {}), ...(extracted.player_info || {}) },
+      team_context: extracted.team_context || currentMemory?.team_context || null,
+    }
+
+    // Upsert memory
+    await adminClient
+      .from("user_memory")
+      .upsert({
+        user_id: userId,
+        ...mergedMemory,
+        last_updated: new Date().toISOString(),
+      }, {
+        onConflict: "user_id",
+      })
+
+  } catch (error) {
+    console.error("Memory extraction error:", error)
+  }
+}
+
 // Helper to generate conversation title from first message
 function generateTitle(message: string): string {
   // Take first 50 chars, cut at word boundary
@@ -229,6 +329,12 @@ export async function POST(request: Request) {
             .from("profiles")
             .update({ last_active_at: new Date().toISOString() })
             .eq("user_id", user.id)
+
+          // Extract memory from conversation for Pro users (non-blocking)
+          if (isSubscribed) {
+            extractMemoryFromConversation(user.id, message, fullResponse)
+              .catch(err => console.error("Background memory extraction failed:", err))
+          }
 
           // Calculate remaining messages for free tier
           let remaining = isSubscribed ? -1 : 4 // -1 means unlimited
