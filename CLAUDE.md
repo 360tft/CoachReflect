@@ -10,6 +10,19 @@
 - **Blueprint repo:** `/home/kevin/FootballGPT`
 - **Master checklist:** `/home/kevin/PRODUCT-SETUP-CHECKLIST.md`
 
+### Brand Assets ✅ COMPLETE
+
+| Asset | Status | Location |
+|-------|--------|----------|
+| Browser icon | ✅ | `app/icon.tsx` (dynamic, gold CR) |
+| Apple touch icon | ✅ | `app/apple-icon.tsx` (dynamic, gold CR) |
+| OG image | ✅ | `app/opengraph-image.tsx` |
+| Twitter image | ✅ | `app/twitter-image.tsx` |
+| PWA manifest | ✅ | `public/manifest.json` |
+| Metadata | ✅ | `app/layout.tsx` (OG + Twitter meta) |
+
+**Brand Colors:** Gold `#E5A11C`, Dark `#0A0A0A` (360TFT brand)
+
 ### Missing Features (14 of 17)
 
 | Priority | Feature | FootballGPT Reference | Purpose |
