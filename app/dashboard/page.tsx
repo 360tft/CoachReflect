@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app
 import { Button } from "@/app/components/ui/button"
 import { MoodChart } from "@/app/components/ui/mood-chart"
 import { StreakBadges } from "@/app/components/streak-badges"
+import { PushNotificationPrompt } from "@/app/components/push-notification-prompt"
 import { MOOD_OPTIONS, SUBSCRIPTION_LIMITS } from "@/app/types"
 
 export default async function DashboardPage() {
@@ -222,6 +223,9 @@ export default async function DashboardPage() {
 
       {/* Streak and Badges */}
       <StreakBadges />
+
+      {/* Push Notification Prompt */}
+      <PushNotificationPrompt />
 
       {/* Mood Trend Chart */}
       {chartData.length > 0 && (

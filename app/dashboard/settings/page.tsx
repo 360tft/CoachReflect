@@ -4,6 +4,7 @@ import { Button } from "@/app/components/ui/button"
 import { SUBSCRIPTION_LIMITS } from "@/app/types"
 import { ProfileForm } from "./profile-form"
 import { BillingToggle } from "./billing-toggle"
+import { PushNotificationToggle } from "@/app/components/push-notification-prompt"
 
 export default async function SettingsPage() {
   const supabase = await createClient()
@@ -36,6 +37,17 @@ export default async function SettingsPage() {
         }}
         email={user.email || ""}
       />
+
+      {/* Notifications */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Notifications</CardTitle>
+          <CardDescription>Manage how you receive updates</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <PushNotificationToggle />
+        </CardContent>
+      </Card>
 
       {/* Subscription */}
       <Card>
