@@ -19,6 +19,29 @@ See `/home/kevin/CLAUDE.md` → "SAAS BEST PRACTICES (THE STANDARD)" for:
 
 **Reference Implementation:** `/home/kevin/FootballGPT`
 
+### Compliance Check Command
+
+When asked to "check compliance" or "align with FootballGPT", run this process:
+
+1. **Compare features** - Check `/home/kevin/FootballGPT/src/app/api/` against this repo's API routes
+2. **Compare components** - Check `/home/kevin/FootballGPT/src/components/` for missing UI components
+3. **Compare lib** - Check `/home/kevin/FootballGPT/src/lib/` for missing utilities
+4. **Apply brand adaptations** (see table below)
+5. **Report gaps** - List missing features with implementation priority
+
+### Brand Adaptations (FootballGPT → CoachReflect)
+
+| FootballGPT | CoachReflect |
+|-------------|--------------|
+| `#16a34a` (green) | `#E5A11C` (gold - 360TFT brand) |
+| `FootballGPT` | `CoachReflect` |
+| `chat` / `messages` | `reflections` / `journal entries` |
+| `AI assistant` | `reflection companion` |
+| `coach` / `player` | `coach` (same) |
+| `Football Coaching Academy` | `Football Coaching Academy` (same ecosystem) |
+| `footballgpt.co` | `coachreflect.com` |
+| Advisor modes | Reflection prompts / guided questions |
+
 ---
 
 ## ✅ FOOTBALLGPT PARITY COMPLETE (17/17 Features + Brand Assets)
