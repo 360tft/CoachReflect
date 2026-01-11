@@ -2,6 +2,25 @@
 
 ---
 
+## MANDATORY: SAAS STANDARDS COMPLIANCE
+
+**Before making ANY changes, check the master standards.**
+
+See `/home/kevin/CLAUDE.md` → "SAAS BEST PRACTICES (THE STANDARD)" for:
+- Project structure and folder conventions
+- Three Supabase clients pattern (client.ts, server.ts, admin.ts)
+- API route pattern (authenticate → rate limit → validate → check permissions → process)
+- Stripe integration patterns (checkout, webhook with idempotency)
+- Database-driven email sequences
+- Gamification implementation
+- Rate limiting with Redis + fallback
+- Required components checklist
+- Anti-patterns to avoid
+
+**Reference Implementation:** `/home/kevin/FootballGPT`
+
+---
+
 ## ✅ FOOTBALLGPT PARITY COMPLETE (17/17 Features + Brand Assets)
 
 **CoachReflect has reached full feature parity with FootballGPT.**
