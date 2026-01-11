@@ -86,7 +86,6 @@ export default function LoginPage() {
     <div className="min-h-screen bg-gradient-to-b from-primary/10 to-background flex items-center justify-center px-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
-          <div className="text-4xl mb-4">⚽</div>
           <CardTitle>Welcome Back</CardTitle>
           <CardDescription>
             Sign in to continue your coaching journey

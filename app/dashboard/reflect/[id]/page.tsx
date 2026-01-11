@@ -53,7 +53,7 @@ export default async function ReflectionPage({
       <div className="flex items-start justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 mb-2">
-            <span className="text-3xl">{mood?.emoji || "😐"}</span>
+            <span className="text-sm font-medium">{mood?.label || "Neutral"}</span>
             <h1 className="text-2xl font-bold">
               {reflection.sessions?.title || "Untitled Session"}
             </h1>
@@ -69,7 +69,7 @@ export default async function ReflectionPage({
             </span>
             {sessionType && (
               <Badge variant="secondary">
-                {sessionType.emoji} {sessionType.label}
+                {sessionType.label}
               </Badge>
             )}
             {reflection.sessions?.duration_minutes && (
@@ -88,7 +88,7 @@ export default async function ReflectionPage({
         <Card className="border-primary/50 bg-primary/5">
           <CardHeader className="pb-2">
             <CardTitle className="text-lg flex items-center gap-2">
-              <span>✨</span> AI Insights
+              AI Insights
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -154,14 +154,14 @@ export default async function ReflectionPage({
         <Card>
           <CardContent className="py-4 text-center">
             <p className="text-sm text-muted-foreground mb-1">Mood</p>
-            <span className="text-3xl">{mood?.emoji || "😐"}</span>
+            <span className="text-sm font-medium">{mood?.label || "Neutral"}</span>
             <p className="text-sm">{mood?.label || "Not rated"}</p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="py-4 text-center">
             <p className="text-sm text-muted-foreground mb-1">Energy</p>
-            <span className="text-3xl">{energy?.emoji || "⚡"}</span>
+            <span className="text-sm font-medium">{energy?.label || "Normal"}</span>
             <p className="text-sm">{energy?.label || "Not rated"}</p>
           </CardContent>
         </Card>

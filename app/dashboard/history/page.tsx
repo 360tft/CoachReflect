@@ -50,7 +50,7 @@ export default async function HistoryPage() {
                 <Card className="hover:bg-accent/50 transition-colors">
                   <CardContent className="py-4">
                     <div className="flex items-start gap-4">
-                      <div className="text-3xl">{mood?.emoji || "😐"}</div>
+                      <div className="text-sm font-medium">{mood?.label || "Neutral"}</div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
                           <span className="font-medium truncate">
@@ -58,7 +58,7 @@ export default async function HistoryPage() {
                           </span>
                           {sessionType && (
                             <span className="text-xs bg-muted px-2 py-0.5 rounded-full">
-                              {sessionType.emoji} {sessionType.label}
+                              {sessionType.label}
                             </span>
                           )}
                         </div>

@@ -65,10 +65,10 @@ export function StreakBadges() {
     )
   }
 
-  const streakEmoji = streak?.current_streak === 0 ? "😴"
-    : streak?.current_streak! >= 30 ? "🔥"
-    : streak?.current_streak! >= 7 ? "💪"
-    : "🌱"
+  const streakLabel = streak?.current_streak === 0 ? "Starting"
+    : streak?.current_streak! >= 30 ? "On Fire"
+    : streak?.current_streak! >= 7 ? "Building"
+    : "Beginning"
 
   return (
     <div className="space-y-4">
@@ -77,7 +77,6 @@ export function StreakBadges() {
         <Card className="border-amber-500 bg-amber-50 dark:bg-amber-950">
           <CardContent className="py-4">
             <div className="flex items-center gap-3">
-              <span className="text-3xl">🎉</span>
               <div>
                 <p className="font-semibold text-amber-800 dark:text-amber-200">
                   New Badge{newBadges.length > 1 ? "s" : ""} Earned!
@@ -85,7 +84,7 @@ export function StreakBadges() {
                 <div className="flex flex-wrap gap-2 mt-1">
                   {newBadges.map(badge => (
                     <Badge key={badge.id} variant="secondary" className="bg-amber-200 dark:bg-amber-800">
-                      {badge.emoji} {badge.name}
+                      {badge.name}
                     </Badge>
                   ))}
                 </div>
@@ -99,9 +98,9 @@ export function StreakBadges() {
       <Card>
         <CardHeader className="pb-2">
           <CardTitle className="text-lg flex items-center gap-2">
-            {streakEmoji} Your Streak
+            Your Streak
           </CardTitle>
-          <CardDescription>Keep reflecting to build your streak</CardDescription>
+          <CardDescription>Keep reflecting to build your streak ({streakLabel})</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-3 gap-4 text-center">
@@ -142,8 +141,7 @@ export function StreakBadges() {
                   `}
                   title={ub.badge.description}
                 >
-                  <span className="text-2xl">{ub.badge.emoji}</span>
-                  <p className="text-xs font-medium mt-1">{ub.badge.name}</p>
+                  <p className="text-xs font-medium">{ub.badge.name}</p>
                 </div>
               ))}
             </div>

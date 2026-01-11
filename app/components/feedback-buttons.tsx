@@ -53,7 +53,6 @@ export function FeedbackButtons({
   if (submitted) {
     return (
       <div className="flex items-center gap-2 text-xs text-muted-foreground">
-        <span>{submitted === "positive" ? "👍" : "👎"}</span>
         <span>Thanks for your feedback!</span>
       </div>
     )
@@ -64,23 +63,21 @@ export function FeedbackButtons({
       <span className="text-xs text-muted-foreground mr-1">Helpful?</span>
       <Button
         variant="ghost"
-        size="icon"
-        className="h-7 w-7"
+        size="sm"
         onClick={() => submitFeedback("positive")}
         disabled={loading}
         title="Yes, helpful"
       >
-        <span className="text-sm">👍</span>
+        <span className="text-xs">Yes</span>
       </Button>
       <Button
         variant="ghost"
-        size="icon"
-        className="h-7 w-7"
+        size="sm"
         onClick={() => submitFeedback("negative")}
         disabled={loading}
         title="Not helpful"
       >
-        <span className="text-sm">👎</span>
+        <span className="text-xs">No</span>
       </Button>
     </div>
   )

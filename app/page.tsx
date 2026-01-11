@@ -11,7 +11,6 @@ export default function Home() {
       {/* Header */}
       <header className="container mx-auto px-4 py-6 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <span className="text-2xl">🪞</span>
           <span className="text-xl font-bold text-amber-800 dark:text-amber-200">CoachReflect</span>
         </div>
         <div className="flex items-center gap-4">
@@ -69,7 +68,7 @@ export default function Home() {
                 <p className="text-sm text-muted-foreground italic">"{prompt.placeholder}"</p>
                 {prompt.tip && (
                   <p className="text-xs text-amber-600 dark:text-amber-400 mt-2">
-                    💡 {prompt.tip}
+                    {prompt.tip}
                   </p>
                 )}
               </CardContent>
@@ -87,7 +86,6 @@ export default function Home() {
         <div className="flex justify-center gap-4 flex-wrap">
           {MOOD_OPTIONS.map((mood) => (
             <div key={mood.value} className="flex flex-col items-center gap-2">
-              <span className="text-4xl">{mood.emoji}</span>
               <span className="text-sm text-muted-foreground">{mood.label}</span>
             </div>
           ))}
@@ -104,7 +102,6 @@ export default function Home() {
           {INSIGHT_TYPES.slice(0, 6).map((insight) => (
             <Card key={insight.id} className="text-center">
               <CardHeader>
-                <div className="text-3xl mb-2">{insight.emoji}</div>
                 <CardTitle className="text-lg">{insight.label}</CardTitle>
               </CardHeader>
               <CardContent>
@@ -128,7 +125,6 @@ export default function Home() {
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           <Card>
             <CardHeader>
-              <div className="text-2xl mb-2">📝</div>
               <CardTitle>Guided Journaling</CardTitle>
             </CardHeader>
             <CardContent>
@@ -139,7 +135,6 @@ export default function Home() {
           </Card>
           <Card>
             <CardHeader>
-              <div className="text-2xl mb-2">🔍</div>
               <CardTitle>Pattern Detection</CardTitle>
             </CardHeader>
             <CardContent>
@@ -150,7 +145,6 @@ export default function Home() {
           </Card>
           <Card>
             <CardHeader>
-              <div className="text-2xl mb-2">👤</div>
               <CardTitle>Player Tracking</CardTitle>
             </CardHeader>
             <CardContent>
@@ -161,7 +155,6 @@ export default function Home() {
           </Card>
           <Card>
             <CardHeader>
-              <div className="text-2xl mb-2">📊</div>
               <CardTitle>Progress Dashboard</CardTitle>
             </CardHeader>
             <CardContent>
@@ -280,7 +273,6 @@ export default function Home() {
       <footer className="container mx-auto px-4 py-8 border-t">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <span className="text-xl">🪞</span>
             <span className="font-semibold text-amber-800 dark:text-amber-200">CoachReflect</span>
           </div>
           <p className="text-sm text-muted-foreground">

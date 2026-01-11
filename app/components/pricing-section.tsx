@@ -58,16 +58,16 @@ export function PricingSection() {
           <CardContent>
             <ul className="space-y-2 text-sm">
               <li className="flex items-center gap-2">
-                <span className="text-green-500">✓</span> 5 reflections/month
+                <span className="text-green-500">•</span> 5 reflections/month
               </li>
               <li className="flex items-center gap-2">
-                <span className="text-green-500">✓</span> Guided prompts
+                <span className="text-green-500">•</span> Guided prompts
               </li>
               <li className="flex items-center gap-2">
-                <span className="text-green-500">✓</span> Mood tracking
+                <span className="text-green-500">•</span> Mood tracking
               </li>
               <li className="flex items-center gap-2">
-                <span className="text-green-500">✓</span> Basic insights
+                <span className="text-green-500">•</span> Basic insights
               </li>
             </ul>
             <Link href="/signup" className="block mt-6">
@@ -97,19 +97,19 @@ export function PricingSection() {
           <CardContent>
             <ul className="space-y-2 text-sm">
               <li className="flex items-center gap-2">
-                <span className="text-green-500">✓</span> Unlimited reflections
+                <span className="text-green-500">•</span> Unlimited reflections
               </li>
               <li className="flex items-center gap-2">
-                <span className="text-green-500">✓</span> AI-powered insights
+                <span className="text-green-500">•</span> AI-powered insights
               </li>
               <li className="flex items-center gap-2">
-                <span className="text-green-500">✓</span> Pattern detection
+                <span className="text-green-500">•</span> Pattern detection
               </li>
               <li className="flex items-center gap-2">
-                <span className="text-green-500">✓</span> Player tracking
+                <span className="text-green-500">•</span> Player tracking
               </li>
               <li className="flex items-center gap-2">
-                <span className="text-green-500">✓</span> Session plan upload
+                <span className="text-green-500">•</span> Session plan upload
               </li>
             </ul>
             <Link href={`/signup?plan=pro&billing=${billing}`} className="block mt-6">
@@ -128,19 +128,19 @@ export function PricingSection() {
           <CardContent>
             <ul className="space-y-2 text-sm">
               <li className="flex items-center gap-2">
-                <span className="text-green-500">✓</span> Everything in Pro
+                <span className="text-green-500">•</span> Everything in Pro
               </li>
               <li className="flex items-center gap-2">
-                <span className="text-green-500">✓</span> Team collaboration
+                <span className="text-green-500">•</span> Team collaboration
               </li>
               <li className="flex items-center gap-2">
-                <span className="text-green-500">✓</span> CPD documentation
+                <span className="text-green-500">•</span> CPD documentation
               </li>
               <li className="flex items-center gap-2">
-                <span className="text-green-500">✓</span> Advanced analytics
+                <span className="text-green-500">•</span> Advanced analytics
               </li>
               <li className="flex items-center gap-2">
-                <span className="text-green-500">✓</span> Priority support
+                <span className="text-green-500">•</span> Priority support
               </li>
             </ul>
             <Link href="/signup?plan=pro_plus" className="block mt-6">

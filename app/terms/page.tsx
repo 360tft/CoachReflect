@@ -5,7 +5,6 @@ export default function TermsPage() {
     <div className="min-h-screen bg-background">
       <header className="container mx-auto px-4 py-6">
         <Link href="/" className="flex items-center gap-2">
-          <span className="text-2xl">⚽</span>
           <span className="text-xl font-bold">CoachReflect</span>
         </Link>
       </header>

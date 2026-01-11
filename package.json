@@ -6,10 +6,20 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "cap:init": "npx cap add ios && npx cap add android",
+    "cap:sync": "npx cap sync",
+    "ios": "npx cap open ios",
+    "ios:dev": "npx cap run ios -l --external",
+    "android": "npx cap open android",
+    "android:dev": "npx cap run android -l --external"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.71.2",
+    "@capacitor/android": "^8.0.0",
+    "@capacitor/cli": "^8.0.0",
+    "@capacitor/core": "^8.0.0",
+    "@capacitor/ios": "^8.0.0",
     "@stripe/stripe-js": "^8.6.1",
     "@supabase/ssr": "^0.8.0",
     "@supabase/supabase-js": "^2.89.0",

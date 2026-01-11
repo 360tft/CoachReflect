@@ -52,7 +52,6 @@ export default function SignupPage() {
       <div className="min-h-screen bg-gradient-to-b from-primary/10 to-background flex items-center justify-center px-4">
         <Card className="w-full max-w-md text-center">
           <CardHeader>
-            <div className="text-4xl mb-4">✅</div>
             <CardTitle>Check Your Email</CardTitle>
             <CardDescription>
               We've sent a confirmation link to <strong>{email}</strong>. Click the link to activate your account.
@@ -76,7 +75,6 @@ export default function SignupPage() {
     <div className="min-h-screen bg-gradient-to-b from-primary/10 to-background flex items-center justify-center px-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
-          <div className="text-4xl mb-4">⚽</div>
           <CardTitle>Start Your Journey</CardTitle>
           <CardDescription>
             Create an account to begin reflecting on your coaching

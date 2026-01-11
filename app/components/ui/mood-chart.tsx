@@ -42,7 +42,7 @@ export function MoodChart({ data }: MoodChartProps) {
   // Get current mood/energy
   const latestMood = data[0]?.mood_rating || 3
   const latestEnergy = data[0]?.energy_rating || 3
-  const moodEmoji = MOOD_OPTIONS.find(m => m.value === latestMood)?.emoji || "😐"
+  const moodLabel = MOOD_OPTIONS.find(m => m.value === latestMood)?.label || "Neutral"
 
   // Calculate trend (comparing first half to second half average)
   const halfIndex = Math.floor(chartData.length / 2)
@@ -54,9 +54,8 @@ export function MoodChart({ data }: MoodChartProps) {
     <div className="space-y-3">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <span className="text-2xl">{moodEmoji}</span>
           <div>
-            <p className="text-sm font-medium">Current Mood</p>
+            <p className="text-sm font-medium">Current Mood: {moodLabel}</p>
             <p className="text-xs text-muted-foreground">Energy: {latestEnergy}/5</p>
           </div>
         </div>

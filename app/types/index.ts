@@ -59,12 +59,12 @@ export type SessionType =
   | 'individual'
 
 export const SESSION_TYPES: { id: SessionType; label: string; emoji: string }[] = [
-  { id: 'training', label: 'Training Session', emoji: '⚽' },
-  { id: 'match', label: 'Competitive Match', emoji: '🏆' },
-  { id: 'friendly', label: 'Friendly Match', emoji: '🤝' },
-  { id: 'tournament', label: 'Tournament', emoji: '🎯' },
-  { id: 'trial', label: 'Trial/Assessment', emoji: '📋' },
-  { id: 'individual', label: 'Individual Session', emoji: '👤' },
+  { id: 'training', label: 'Training Session', emoji: '' },
+  { id: 'match', label: 'Competitive Match', emoji: '' },
+  { id: 'friendly', label: 'Friendly Match', emoji: '' },
+  { id: 'tournament', label: 'Tournament', emoji: '' },
+  { id: 'trial', label: 'Trial/Assessment', emoji: '' },
+  { id: 'individual', label: 'Individual Session', emoji: '' },
 ]
 
 export interface Reflection {
@@ -119,12 +119,12 @@ export type InsightType =
   | 'milestone' // Achievement unlocked
 
 export const INSIGHT_TYPES: { id: InsightType; label: string; emoji: string }[] = [
-  { id: 'recurring_challenge', label: 'Recurring Challenge', emoji: '🔄' },
-  { id: 'player_pattern', label: 'Player Pattern', emoji: '👤' },
-  { id: 'improvement_trend', label: 'Improvement Trend', emoji: '📈' },
-  { id: 'decline_trend', label: 'Needs Attention', emoji: '📉' },
-  { id: 'suggestion', label: 'Suggestion', emoji: '💡' },
-  { id: 'milestone', label: 'Milestone', emoji: '🏅' },
+  { id: 'recurring_challenge', label: 'Recurring Challenge', emoji: '' },
+  { id: 'player_pattern', label: 'Player Pattern', emoji: '' },
+  { id: 'improvement_trend', label: 'Improvement Trend', emoji: '' },
+  { id: 'decline_trend', label: 'Needs Attention', emoji: '' },
+  { id: 'suggestion', label: 'Suggestion', emoji: '' },
+  { id: 'milestone', label: 'Milestone', emoji: '' },
 ]
 
 export interface GuidedPrompt {
@@ -181,19 +181,19 @@ export const GUIDED_PROMPTS: GuidedPrompt[] = [
 ]
 
 export const MOOD_OPTIONS = [
-  { value: 1, label: 'Frustrated', emoji: '😤' },
-  { value: 2, label: 'Disappointed', emoji: '😔' },
-  { value: 3, label: 'Neutral', emoji: '😐' },
-  { value: 4, label: 'Satisfied', emoji: '🙂' },
-  { value: 5, label: 'Excellent', emoji: '😊' },
+  { value: 1, label: 'Frustrated', emoji: '' },
+  { value: 2, label: 'Disappointed', emoji: '' },
+  { value: 3, label: 'Neutral', emoji: '' },
+  { value: 4, label: 'Satisfied', emoji: '' },
+  { value: 5, label: 'Excellent', emoji: '' },
 ]
 
 export const ENERGY_OPTIONS = [
-  { value: 1, label: 'Drained', emoji: '😴' },
-  { value: 2, label: 'Low', emoji: '🥱' },
-  { value: 3, label: 'Normal', emoji: '⚡' },
-  { value: 4, label: 'Energized', emoji: '💪' },
-  { value: 5, label: 'Fired Up', emoji: '🔥' },
+  { value: 1, label: 'Drained', emoji: '' },
+  { value: 2, label: 'Low', emoji: '' },
+  { value: 3, label: 'Normal', emoji: '' },
+  { value: 4, label: 'Energized', emoji: '' },
+  { value: 5, label: 'Fired Up', emoji: '' },
 ]
 
 // Session Plan types (for uploaded coaching plans)

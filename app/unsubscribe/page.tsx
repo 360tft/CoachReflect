@@ -67,7 +67,6 @@ function UnsubscribeContent() {
       <div className="min-h-screen bg-gradient-to-b from-amber-50 to-white dark:from-amber-950 dark:to-background flex items-center justify-center p-4">
         <Card className="max-w-md w-full">
           <CardHeader className="text-center">
-            <div className="text-4xl mb-2">🪞</div>
             <CardTitle>Invalid Link</CardTitle>
             <CardDescription>
               This unsubscribe link appears to be invalid.
@@ -88,9 +87,6 @@ function UnsubscribeContent() {
       <div className="min-h-screen bg-gradient-to-b from-amber-50 to-white dark:from-amber-950 dark:to-background flex items-center justify-center p-4">
         <Card className="max-w-md w-full">
           <CardHeader className="text-center">
-            <div className="text-4xl mb-2">
-              {action === "unsubscribed" ? "📭" : "📬"}
-            </div>
             <CardTitle>
               {action === "unsubscribed" ? "Unsubscribed" : "Resubscribed"}
             </CardTitle>
@@ -126,7 +122,6 @@ function UnsubscribeContent() {
     <div className="min-h-screen bg-gradient-to-b from-amber-50 to-white dark:from-amber-950 dark:to-background flex items-center justify-center p-4">
       <Card className="max-w-md w-full">
         <CardHeader className="text-center">
-          <div className="text-4xl mb-2">🪞</div>
           <CardTitle>Email Preferences</CardTitle>
           <CardDescription>
             Manage your email notifications from CoachReflect

@@ -177,7 +177,7 @@ export default function NewReflectionPage() {
         return (
           <Card className="border-amber-200 dark:border-amber-800">
             <CardHeader className="text-center">
-              <div className="text-4xl mb-2">📋</div>
+              
               <CardTitle>Upload Your Session Plan</CardTitle>
               <CardDescription className="text-base">
                 Snap a photo of your handwritten or digital session plan.
@@ -188,15 +188,15 @@ export default function NewReflectionPage() {
               {/* Value proposition */}
               <div className="grid grid-cols-3 gap-2 text-center text-xs text-muted-foreground p-3 bg-muted rounded-lg">
                 <div>
-                  <span className="block text-lg mb-1">✍️</span>
+                  
                   Reads handwriting
                 </div>
                 <div>
-                  <span className="block text-lg mb-1">⚡</span>
+                  
                   Saves time
                 </div>
                 <div>
-                  <span className="block text-lg mb-1">🎯</span>
+                  
                   Better reflections
                 </div>
               </div>
@@ -287,7 +287,7 @@ export default function NewReflectionPage() {
                           : "border-border hover:border-primary/50"
                       }`}
                     >
-                      <span className="text-lg mr-2">{type.emoji}</span>
+                      
                       <span className="text-sm">{type.label}</span>
                     </button>
                   ))}
@@ -414,7 +414,7 @@ export default function NewReflectionPage() {
                           : "border-border hover:border-primary/50"
                       }`}
                     >
-                      <span className="text-2xl block">{option.emoji}</span>
+                      
                       <span className="text-xs text-muted-foreground">{option.label}</span>
                     </button>
                   ))}
@@ -435,7 +435,7 @@ export default function NewReflectionPage() {
                           : "border-border hover:border-primary/50"
                       }`}
                     >
-                      <span className="text-2xl block">{option.emoji}</span>
+                      
                       <span className="text-xs text-muted-foreground">{option.label}</span>
                     </button>
                   ))}

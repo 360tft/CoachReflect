@@ -137,7 +137,6 @@ export function ImageUpload({
       />
 
       <div className="space-y-4">
-        <div className="text-4xl">📋</div>
         <div>
           <p className="font-medium">
             {isDragging ? "Drop your session plan here" : "Upload your session plan"}

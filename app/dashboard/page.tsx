@@ -54,7 +54,7 @@ export default async function DashboardPage() {
         {/* Welcome Card */}
         <Card className="border-amber-300 bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950 dark:to-orange-950 dark:border-amber-700">
           <CardHeader className="text-center pb-2">
-            <div className="text-5xl mb-4">👋</div>
+            
             <CardTitle className="text-2xl">
               Welcome to CoachReflect, {profile?.display_name || "Coach"}!
             </CardTitle>
@@ -118,7 +118,7 @@ export default async function DashboardPage() {
         <Card>
           <CardContent className="py-4">
             <div className="flex gap-3 items-start">
-              <span className="text-xl">💡</span>
+              
               <div>
                 <p className="font-medium text-sm">Pro tip</p>
                 <p className="text-sm text-muted-foreground">
@@ -192,7 +192,7 @@ export default async function DashboardPage() {
             <p className="text-3xl font-bold">
               {stats?.[0]?.avg_mood ? (
                 <>
-                  {MOOD_OPTIONS.find(m => m.value === Math.round(stats[0].avg_mood))?.emoji || "😐"}
+                  {MOOD_OPTIONS.find(m => m.value === Math.round(stats[0].avg_mood))?.label || "Neutral"}
                 </>
               ) : (
                 "—"
@@ -259,7 +259,7 @@ export default async function DashboardPage() {
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1">
                         <span className="text-lg">
-                          {MOOD_OPTIONS.find(m => m.value === reflection.mood_rating)?.emoji || "😐"}
+                          {MOOD_OPTIONS.find(m => m.value === reflection.mood_rating)?.label || "Neutral"}
                         </span>
                         <span className="font-medium truncate">
                           {reflection.sessions?.title || "Untitled Session"}
