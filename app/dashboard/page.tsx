@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card"
 import { Button } from "@/app/components/ui/button"
 import { MoodChart } from "@/app/components/ui/mood-chart"
+import { StreakBadges } from "@/app/components/streak-badges"
 import { MOOD_OPTIONS, SUBSCRIPTION_LIMITS } from "@/app/types"
 
 export default async function DashboardPage() {
@@ -218,6 +219,9 @@ export default async function DashboardPage() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Streak and Badges */}
+      <StreakBadges />
 
       {/* Mood Trend Chart */}
       {chartData.length > 0 && (

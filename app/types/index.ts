@@ -246,3 +246,132 @@ export interface ReflectionAIAnalysis {
   insights: string[]
   action_items: string[]
 }
+
+// Chat types
+export interface ChatMessage {
+  id?: string
+  role: 'user' | 'assistant' | 'system'
+  content: string
+  timestamp?: Date
+  followUps?: string[]
+}
+
+export interface Conversation {
+  id: string
+  user_id: string
+  title: string | null
+  summary: string | null
+  key_topics: string[] | null
+  outcome: string | null
+  created_at: string
+  updated_at: string
+}
+
+export interface Message {
+  id: string
+  conversation_id: string
+  user_id: string
+  role: 'user' | 'assistant' | 'system'
+  content: string
+  created_at: string
+}
+
+// Chat starters for reflection-focused conversations
+export const CHAT_STARTERS = [
+  {
+    category: 'Reflection',
+    prompts: [
+      "I just finished a session and want to reflect on it",
+      "Help me identify patterns in my coaching",
+      "What questions should I ask myself after a match?",
+      "I'm feeling frustrated after today's session",
+    ]
+  },
+  {
+    category: 'Challenges',
+    prompts: [
+      "A player is struggling with confidence",
+      "How do I handle parents who interfere?",
+      "My team keeps making the same mistakes",
+      "I'm struggling with player motivation",
+    ]
+  },
+  {
+    category: 'Development',
+    prompts: [
+      "How can I improve my communication as a coach?",
+      "What makes a good training session?",
+      "Help me set coaching goals for the season",
+      "I want to work on my tactical knowledge",
+    ]
+  },
+  {
+    category: 'Specific Situations',
+    prompts: [
+      "We lost badly today and morale is low",
+      "A star player is leaving the team",
+      "I need to give difficult feedback to a player",
+      "How do I balance winning vs development?",
+    ]
+  },
+]
+
+// Streak and Badge types
+export interface Streak {
+  id: string
+  user_id: string
+  current_streak: number
+  longest_streak: number
+  last_activity_date: string
+  total_active_days: number
+  created_at: string
+  updated_at: string
+}
+
+export interface Badge {
+  id: string
+  name: string
+  description: string
+  emoji: string
+  category: 'streak' | 'milestone' | 'topic' | 'special'
+  requirement_type: string
+  requirement_value: number
+  rarity: 'common' | 'uncommon' | 'rare' | 'legendary'
+  created_at: string
+}
+
+export interface UserBadge {
+  id: string
+  user_id: string
+  badge_id: string
+  earned_at: string
+  notified: boolean
+  badge?: Badge
+}
+
+// User Memory for personalized AI
+export interface UserMemory {
+  id: string
+  user_id: string
+  coaching_style: string[] | null
+  common_challenges: string[] | null
+  strengths: string[] | null
+  goals: string[] | null
+  player_info: Record<string, unknown>
+  team_context: string | null
+  last_updated: string
+  created_at: string
+}
+
+// Feedback types
+export interface Feedback {
+  id: string
+  user_id: string
+  reflection_id: string | null
+  conversation_id: string | null
+  content_type: 'ai_summary' | 'ai_insight' | 'chat_response'
+  content_text: string
+  rating: 'positive' | 'negative'
+  feedback_text: string | null
+  created_at: string
+}

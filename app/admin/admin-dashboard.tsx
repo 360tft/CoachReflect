@@ -1,0 +1,252 @@
+"use client"
+
+import { useEffect, useState } from "react"
+import Link from "next/link"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card"
+import { Button } from "@/app/components/ui/button"
+
+interface Metrics {
+  users: {
+    total: number
+    pro: number
+    today: number
+    week: number
+  }
+  reflections: {
+    total: number
+    today: number
+    week: number
+  }
+  conversations: {
+    total: number
+  }
+  feedback: {
+    satisfactionRate: number | null
+    total: number
+  }
+  emails: {
+    sentThisMonth: number
+  }
+  recentSignups: Array<{
+    id: string
+    display_name: string | null
+    subscription_tier: string
+    created_at: string
+  }>
+}
+
+export function AdminDashboard() {
+  const [metrics, setMetrics] = useState<Metrics | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    fetchMetrics()
+  }, [])
+
+  const fetchMetrics = async () => {
+    try {
+      setLoading(true)
+      const res = await fetch("/api/admin/metrics")
+      if (!res.ok) {
+        throw new Error("Failed to fetch metrics")
+      }
+      const data = await res.json()
+      setMetrics(data)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Unknown error")
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background p-8">
+        <div className="max-w-7xl mx-auto">
+          <h1 className="text-3xl font-bold mb-8">Admin Dashboard</h1>
+          <p className="text-muted-foreground">Loading metrics...</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-background p-8">
+        <div className="max-w-7xl mx-auto">
+          <h1 className="text-3xl font-bold mb-8">Admin Dashboard</h1>
+          <Card className="border-destructive">
+            <CardContent className="p-6">
+              <p className="text-destructive">{error}</p>
+              <Button onClick={fetchMetrics} className="mt-4">Retry</Button>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    )
+  }
+
+  if (!metrics) return null
+
+  const conversionRate = metrics.users.total > 0
+    ? ((metrics.users.pro / metrics.users.total) * 100).toFixed(1)
+    : "0"
+
+  return (
+    <div className="min-h-screen bg-background p-8">
+      <div className="max-w-7xl mx-auto">
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <h1 className="text-3xl font-bold">Admin Dashboard</h1>
+            <p className="text-muted-foreground">CoachReflect Analytics</p>
+          </div>
+          <Link href="/dashboard">
+            <Button variant="outline">Back to App</Button>
+          </Link>
+        </div>
+
+        {/* Key Metrics */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <Card>
+            <CardHeader className="pb-2">
+              <CardDescription>Total Users</CardDescription>
+              <CardTitle className="text-4xl">{metrics.users.total}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground">
+                +{metrics.users.today} today, +{metrics.users.week} this week
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="pb-2">
+              <CardDescription>Pro Users</CardDescription>
+              <CardTitle className="text-4xl text-green-600">{metrics.users.pro}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground">
+                {conversionRate}% conversion rate
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="pb-2">
+              <CardDescription>Total Reflections</CardDescription>
+              <CardTitle className="text-4xl">{metrics.reflections.total}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground">
+                +{metrics.reflections.today} today, +{metrics.reflections.week} this week
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="pb-2">
+              <CardDescription>Conversations</CardDescription>
+              <CardTitle className="text-4xl">{metrics.conversations.total}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground">
+                Chat sessions started
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Secondary Metrics */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <Card>
+            <CardHeader className="pb-2">
+              <CardDescription>AI Satisfaction</CardDescription>
+              <CardTitle className="text-3xl">
+                {metrics.feedback.satisfactionRate !== null
+                  ? `${metrics.feedback.satisfactionRate}%`
+                  : "N/A"
+                }
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground">
+                Based on {metrics.feedback.total} feedback responses
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="pb-2">
+              <CardDescription>Emails Sent</CardDescription>
+              <CardTitle className="text-3xl">{metrics.emails.sentThisMonth}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground">
+                This month (successful)
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="pb-2">
+              <CardDescription>Est. MRR</CardDescription>
+              <CardTitle className="text-3xl text-green-600">
+                ${(metrics.users.pro * 7.99).toFixed(0)}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground">
+                At $7.99/user
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Recent Signups */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Recent Signups</CardTitle>
+            <CardDescription>Last 10 users</CardDescription>
+          </CardHeader>
+          <CardContent>
+            {metrics.recentSignups.length === 0 ? (
+              <p className="text-muted-foreground">No signups yet</p>
+            ) : (
+              <div className="space-y-4">
+                {metrics.recentSignups.map((signup) => (
+                  <div
+                    key={signup.id}
+                    className="flex items-center justify-between p-3 bg-muted rounded-lg"
+                  >
+                    <div>
+                      <p className="font-medium">
+                        {signup.display_name || "Anonymous"}
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        {new Date(signup.created_at).toLocaleDateString("en-GB", {
+                          day: "numeric",
+                          month: "short",
+                          year: "numeric",
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                      </p>
+                    </div>
+                    <span className={`px-2 py-1 rounded-full text-xs ${
+                      signup.subscription_tier === "free"
+                        ? "bg-gray-100 text-gray-800"
+                        : "bg-green-100 text-green-800"
+                    }`}>
+                      {signup.subscription_tier}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  )
+}

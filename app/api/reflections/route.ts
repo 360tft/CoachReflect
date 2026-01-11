@@ -1,6 +1,15 @@
 import { NextResponse } from "next/server"
 import { createClient } from "@/lib/supabase/server"
+import { createClient as createAdminClient } from "@supabase/supabase-js"
 import { SUBSCRIPTION_LIMITS } from "@/app/types"
+
+// Admin client for calling database functions
+const getAdminClient = () => {
+  return createAdminClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  )
+}
 
 export async function GET() {
   try {
@@ -94,7 +103,39 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: error.message }, { status: 500 })
     }
 
-    return NextResponse.json(reflection, { status: 201 })
+    // Update streak and check for badges (using admin client for full access)
+    const adminClient = getAdminClient()
+
+    // Call the streak update function
+    const { data: streakResult } = await adminClient.rpc("update_user_streak", {
+      p_user_id: user.id,
+    })
+
+    // Check for reflection count badges
+    const { data: badgesResult } = await adminClient.rpc("check_reflection_badges", {
+      p_user_id: user.id,
+    })
+
+    // Increment monthly reflection count
+    await adminClient
+      .from("profiles")
+      .update({
+        reflections_this_month: (profile?.reflections_this_month || 0) + 1,
+        last_active_at: new Date().toISOString(),
+      })
+      .eq("user_id", user.id)
+
+    // Combine earned badges
+    const earnedBadges: string[] = [
+      ...(streakResult?.[0]?.badges_earned || []),
+      ...(badgesResult || []),
+    ]
+
+    return NextResponse.json({
+      ...reflection,
+      streak: streakResult?.[0],
+      earnedBadges,
+    }, { status: 201 })
   } catch (error) {
     console.error("Error creating reflection:", error)
     return NextResponse.json({ error: "Internal server error" }, { status: 500 })
