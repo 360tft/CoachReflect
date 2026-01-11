@@ -1,0 +1,27 @@
+{
+  "name": "CoachReflect - AI Reflection for Coaches",
+  "short_name": "CoachReflect",
+  "description": "Transform your coaching with guided post-session reflections. Track patterns, identify player progress, and grow as a coach with AI-powered insights.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0A0A0A",
+  "theme_color": "#E5A11C",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["sports", "education", "productivity"],
+  "lang": "en-GB"
+}

@@ -17,6 +17,20 @@ export const metadata: Metadata = {
   title: "CoachReflect - AI-Powered Reflection for Football Coaches",
   description: "Transform your coaching with guided post-session reflections. Track patterns, identify player progress, and grow as a coach with AI-powered insights.",
   keywords: ["football coaching", "coach reflection", "session review", "coaching development", "player tracking"],
+  manifest: "/manifest.json",
+  themeColor: "#E5A11C",
+  openGraph: {
+    title: "CoachReflect - AI-Powered Reflection for Football Coaches",
+    description: "Transform your coaching with guided post-session reflections. Track patterns and grow as a coach with AI-powered insights.",
+    type: "website",
+    locale: "en_GB",
+    siteName: "CoachReflect",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "CoachReflect - AI-Powered Reflection for Football Coaches",
+    description: "Transform your coaching with guided post-session reflections. Track patterns and grow as a coach with AI-powered insights.",
+  },
 };
 
 export default function RootLayout({
