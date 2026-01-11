@@ -47,18 +47,26 @@ export async function POST(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
-    // Check subscription
+    // Check subscription and trial status
     const { data: profile } = await supabase
       .from("profiles")
-      .select("subscription_tier")
+      .select("subscription_tier, pro_trial_used")
       .eq("user_id", user.id)
       .single()
 
+    const isProTrial = request.headers.get('X-Pro-Trial') === 'true'
+
     if (profile?.subscription_tier === "free") {
-      return NextResponse.json(
-        { error: "AI analysis requires a Pro subscription" },
-        { status: 403 }
-      )
+      // If it's a trial request and trial hasn't been used, allow it
+      if (isProTrial && !profile?.pro_trial_used) {
+        // Trial will be marked as used by the /api/pro-trial endpoint
+        // which is called before this endpoint
+      } else {
+        return NextResponse.json(
+          { error: "AI analysis requires a Pro subscription" },
+          { status: 403 }
+        )
+      }
     }
 
     // Get the reflection

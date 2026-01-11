@@ -6,6 +6,7 @@ import { Button } from "@/app/components/ui/button"
 import { Badge } from "@/app/components/ui/badge"
 import { MOOD_OPTIONS, ENERGY_OPTIONS, SESSION_TYPES, GUIDED_PROMPTS } from "@/app/types"
 import { AnalyzeButton } from "./analyze-button"
+import { TrialAnalyzeButton } from "./trial-analyze-button"
 import { DeleteButton } from "./delete-button"
 import { ShareButton } from "@/app/components/share-button"
 
@@ -33,14 +34,15 @@ export default async function ReflectionPage({
     notFound()
   }
 
-  // Get profile for subscription check
+  // Get profile for subscription and trial check
   const { data: profile } = await supabase
     .from("profiles")
-    .select("subscription_tier")
+    .select("subscription_tier, pro_trial_used")
     .eq("user_id", user.id)
     .single()
 
   const isPro = profile?.subscription_tier !== "free"
+  const canUseTrial = !isPro && !profile?.pro_trial_used
   const mood = MOOD_OPTIONS.find((m) => m.value === reflection.mood_rating)
   const energy = ENERGY_OPTIONS.find((e) => e.value === reflection.energy_rating)
   const sessionType = SESSION_TYPES.find((t) => t.id === reflection.sessions?.session_type)
@@ -126,6 +128,12 @@ export default async function ReflectionPage({
               Get AI-powered insights for this reflection
             </p>
             <AnalyzeButton id={reflection.id} />
+          </CardContent>
+        </Card>
+      ) : canUseTrial ? (
+        <Card className="border-amber-200">
+          <CardContent className="py-6">
+            <TrialAnalyzeButton id={reflection.id} />
           </CardContent>
         </Card>
       ) : (
