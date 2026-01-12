@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
 import Stripe from "stripe"
-import { createClient } from "@supabase/supabase-js"
+import { createAdminClient } from "@/lib/supabase/admin"
 
 function getStripe() {
   if (!process.env.STRIPE_SECRET_KEY) {
@@ -9,14 +9,17 @@ function getStripe() {
   return new Stripe(process.env.STRIPE_SECRET_KEY)
 }
 
-function getSupabaseAdmin() {
-  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
-    throw new Error("Supabase environment variables not set")
+// Idempotency: Track processed events to prevent duplicates
+const processedEvents = new Map<string, number>()
+const EVENT_TTL = 5 * 60 * 1000 // 5 minutes
+
+function cleanupProcessedEvents() {
+  const now = Date.now()
+  for (const [eventId, timestamp] of processedEvents) {
+    if (now - timestamp > EVENT_TTL) {
+      processedEvents.delete(eventId)
+    }
   }
-  return createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL,
-    process.env.SUPABASE_SERVICE_ROLE_KEY
-  )
 }
 
 export async function POST(request: Request) {
@@ -41,7 +44,13 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid signature" }, { status: 400 })
   }
 
-  const supabase = getSupabaseAdmin()
+  // Idempotency check - prevent duplicate processing
+  cleanupProcessedEvents()
+  if (processedEvents.has(event.id)) {
+    return NextResponse.json({ received: true, duplicate: true })
+  }
+
+  const supabase = createAdminClient()
 
   try {
     switch (event.type) {
@@ -124,6 +133,9 @@ export async function POST(request: Request) {
         break
       }
     }
+
+    // Mark event as processed
+    processedEvents.set(event.id, Date.now())
 
     return NextResponse.json({ received: true })
   } catch (error) {

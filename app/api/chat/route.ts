@@ -1,21 +1,14 @@
 import { NextResponse } from "next/server"
 import Anthropic from "@anthropic-ai/sdk"
 import { createClient } from "@/lib/supabase/server"
-import { createClient as createAdminClient } from "@supabase/supabase-js"
+import { createAdminClient } from "@/lib/supabase/admin"
+import { checkRateLimit, RATE_LIMITS } from "@/lib/rate-limit"
 import { SYSTEM_PROMPT, CHAT_CONFIG, buildUserContext } from "@/lib/chat-config"
 import type { ChatMessage } from "@/app/types"
 
 const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY,
 })
-
-// Admin client for bypassing RLS when saving messages
-const getAdminClient = () => {
-  return createAdminClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
-  )
-}
 
 // Extract memory from conversation (runs async, non-blocking)
 async function extractMemoryFromConversation(
@@ -24,7 +17,7 @@ async function extractMemoryFromConversation(
   assistantResponse: string
 ) {
   try {
-    const adminClient = getAdminClient()
+    const adminClient = createAdminClient()
 
     // Get current memory
     const { data: currentMemory } = await adminClient
@@ -138,6 +131,15 @@ export async function POST(request: Request) {
       return NextResponse.json(
         { error: "Unauthorized" },
         { status: 401 }
+      )
+    }
+
+    // Rate limiting
+    const rateLimit = await checkRateLimit(`chat:${user.id}`, RATE_LIMITS.CHAT)
+    if (!rateLimit.allowed) {
+      return NextResponse.json(
+        { error: "Too many requests. Please wait before sending another message.", retry_after: rateLimit.resetInSeconds },
+        { status: 429 }
       )
     }
 
@@ -278,7 +280,7 @@ export async function POST(request: Request) {
           }
 
           // Save conversation and messages to database
-          const adminClient = getAdminClient()
+          const adminClient = createAdminClient()
 
           // Create or get conversation
           let convId = conversationId
