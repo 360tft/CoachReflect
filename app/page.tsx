@@ -36,14 +36,14 @@ export default function Home() {
           Track patterns, identify player progress, and unlock your coaching potential with AI-powered reflection tools.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link href="/signup">
+          <Link href="/demo">
             <Button size="lg" className="bg-amber-600 hover:bg-amber-700 text-white">
-              Start Reflecting Free
+              Try Demo - 3 Free Messages
             </Button>
           </Link>
-          <Link href="#how-it-works">
+          <Link href="/signup">
             <Button size="lg" variant="outline">
-              See How It Works
+              Sign Up Free
             </Button>
           </Link>
         </div>
@@ -259,10 +259,15 @@ export default function Home() {
               Join coaches who are using reflection to accelerate their development
             </CardDescription>
           </CardHeader>
-          <CardContent>
-            <Link href="/signup">
+          <CardContent className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/demo">
               <Button size="lg" variant="secondary" className="bg-white text-amber-800 hover:bg-amber-50">
-                Start Your Free Account
+                Try Demo Free
+              </Button>
+            </Link>
+            <Link href="/signup">
+              <Button size="lg" variant="outline" className="border-white text-white hover:bg-amber-700">
+                Sign Up
               </Button>
             </Link>
           </CardContent>
