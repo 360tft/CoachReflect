@@ -103,7 +103,7 @@ export default function TermsPage() {
           <section>
             <h2 className="text-xl font-semibold mb-3">9. Limitation of Liability</h2>
             <p className="text-muted-foreground">
-              CoachReflect is provided "as is" without warranties of any kind. We are not
+              CoachReflect is provided &quot;as is&quot; without warranties of any kind. We are not
               liable for any indirect, incidental, or consequential damages arising from
               your use of the service. Our total liability is limited to the amount you
               paid for the service in the past 12 months.

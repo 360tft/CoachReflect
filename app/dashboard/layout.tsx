@@ -2,6 +2,8 @@ import { redirect } from "next/navigation"
 import Link from "next/link"
 import { createClient } from "@/lib/supabase/server"
 import { Button } from "@/app/components/ui/button"
+import { BottomNav } from "@/app/components/bottom-nav"
+import { PWAInstallPrompt } from "@/app/components/pwa-install-prompt"
 
 async function signOut() {
   "use server"
@@ -94,15 +96,22 @@ export default async function DashboardLayout({
             <NavLink href="/dashboard/reflect/new">New Reflection</NavLink>
             <NavLink href="/dashboard/chat">Coach Chat</NavLink>
             <NavLink href="/dashboard/history">History</NavLink>
+            <NavLink href="/dashboard/referrals">Referrals</NavLink>
             <NavLink href="/dashboard/settings">Settings</NavLink>
           </div>
         </div>
       </nav>
 
+      {/* PWA Install Prompt */}
+      <PWAInstallPrompt variant="banner" />
+
       {/* Main content */}
-      <main className="container mx-auto px-4 py-6">
+      <main className="container mx-auto px-4 py-6 pb-20 md:pb-6">
         {children}
       </main>
+
+      {/* Mobile bottom navigation */}
+      <BottomNav />
     </div>
   )
 }

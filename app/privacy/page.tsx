@@ -17,7 +17,7 @@ export default function PrivacyPage() {
           <section>
             <h2 className="text-xl font-semibold mb-3">1. Introduction</h2>
             <p className="text-muted-foreground">
-              CoachReflect ("we", "our", or "us") is committed to protecting your privacy.
+              CoachReflect (&quot;we&quot;, &quot;our&quot;, or &quot;us&quot;) is committed to protecting your privacy.
               This Privacy Policy explains how we collect, use, and safeguard your information
               when you use our coaching reflection application.
             </p>

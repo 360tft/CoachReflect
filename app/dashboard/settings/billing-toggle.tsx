@@ -47,7 +47,7 @@ export function BillingToggle() {
             <span className="text-3xl font-bold">$79</span>
             <span className="text-muted-foreground">/year</span>
             <p className="text-sm text-green-600 dark:text-green-400 mt-1">
-              That's $6.58/month - save $16.88/year
+              That&apos;s $6.58/month - save $16.88/year
             </p>
           </div>
         )}

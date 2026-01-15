@@ -1,0 +1,47 @@
+name: Voice Audit
+
+on:
+  pull_request:
+    branches:
+      - main
+      - master
+    paths:
+      - 'app/**/*.tsx'
+      - 'app/**/*.ts'
+      - 'app/**/*.md'
+      - 'emails/**/*.tsx'
+      - 'emails/**/*.ts'
+      - 'lib/*prompt*.ts'
+      - 'lib/*system*.ts'
+
+jobs:
+  voice-audit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch all history for full scan
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Run voice audit
+        run: |
+          node scripts/audit-voice.js .
+        continue-on-error: false
+
+      - name: Check voice audit score
+        if: failure()
+        run: |
+          echo "Voice audit failed. Please review the violations above and update your content."
+          echo ""
+          echo "Common fixes:"
+          echo "- Replace critical language with helpful alternatives"
+          echo "- Use 'I've found' instead of 'you must'"
+          echo "- Replace absolutes (never/always) with nuanced language (tends to/often)"
+          echo "- Add empathy questions ('Have you ever...')"
+          exit 1

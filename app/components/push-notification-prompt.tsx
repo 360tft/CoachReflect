@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { usePushNotifications } from '@/hooks/use-push-notifications'
 import { Button } from '@/app/components/ui/button'
 import { Card, CardContent } from '@/app/components/ui/card'
@@ -12,20 +12,17 @@ interface Props {
 
 export function PushNotificationPrompt({ variant = 'card', onDismiss }: Props) {
   const { isSupported, permission, isSubscribed, isLoading, subscribe } = usePushNotifications()
-  const [dismissed, setDismissed] = useState(false)
-
-  // Check if user has already dismissed
-  useEffect(() => {
+  const [dismissed, setDismissed] = useState(() => {
+    // Check during initialization (client-side only)
+    if (typeof window === 'undefined') return false
     const dismissedTime = localStorage.getItem('push-prompt-dismissed')
     if (dismissedTime) {
       const dismissedDate = new Date(dismissedTime)
       const daysSinceDismissed = (Date.now() - dismissedDate.getTime()) / (1000 * 60 * 60 * 24)
-      // Show again after 7 days
-      if (daysSinceDismissed < 7) {
-        setDismissed(true)
-      }
+      return daysSinceDismissed < 7
     }
-  }, [])
+    return false
+  })
 
   const handleDismiss = () => {
     localStorage.setItem('push-prompt-dismissed', new Date().toISOString())

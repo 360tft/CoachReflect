@@ -5,6 +5,7 @@ import { Button } from "@/app/components/ui/button"
 import { MoodChart } from "@/app/components/ui/mood-chart"
 import { StreakBadges } from "@/app/components/streak-badges"
 import { PushNotificationPrompt } from "@/app/components/push-notification-prompt"
+import { ReferralCard } from "@/app/components/referral-card"
 import { MOOD_OPTIONS, SUBSCRIPTION_LIMITS } from "@/app/types"
 
 export default async function DashboardPage() {
@@ -59,7 +60,7 @@ export default async function DashboardPage() {
               Welcome to CoachReflect, {profile?.display_name || "Coach"}!
             </CardTitle>
             <CardDescription className="text-base">
-              You're about to transform how you grow as a coach
+              You&apos;re about to transform how you grow as a coach
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -83,7 +84,7 @@ export default async function DashboardPage() {
                 <div>
                   <p className="font-medium">Answer guided questions</p>
                   <p className="text-sm text-muted-foreground">
-                    What worked? What didn't? Which players stood out?
+                    What worked? What didn&apos;t? Which players stood out?
                   </p>
                 </div>
               </div>
@@ -122,7 +123,7 @@ export default async function DashboardPage() {
               <div>
                 <p className="font-medium text-sm">Pro tip</p>
                 <p className="text-sm text-muted-foreground">
-                  Reflect right after your session while details are fresh. Even 2 minutes of reflection can unlock insights you'd otherwise forget.
+                  Reflect right after your session while details are fresh. Even 2 minutes of reflection can unlock insights you&apos;d otherwise forget.
                 </p>
               </div>
             </div>
@@ -227,12 +228,15 @@ export default async function DashboardPage() {
       {/* Push Notification Prompt */}
       <PushNotificationPrompt />
 
+      {/* Referral Card */}
+      <ReferralCard />
+
       {/* Mood Trend Chart */}
       {chartData.length > 0 && (
         <Card>
           <CardHeader>
             <CardTitle>Your Mood Trend</CardTitle>
-            <CardDescription>How you've been feeling after sessions</CardDescription>
+            <CardDescription>How you&apos;ve been feeling after sessions</CardDescription>
           </CardHeader>
           <CardContent>
             <MoodChart data={chartData} />

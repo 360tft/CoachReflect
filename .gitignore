@@ -52,3 +52,9 @@ android/app/build
 android/.gradle
 android/build
 .capacitor
+
+# Playwright
+e2e/.auth/
+test-results/
+playwright-report/
+.playwright/

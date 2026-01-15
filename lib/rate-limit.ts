@@ -42,7 +42,7 @@ export const RATE_LIMITS = {
 
 // Initialize Redis client (lazy loaded)
 let redis: Redis | null = null
-let rateLimiters: Map<string, Ratelimit> = new Map()
+const rateLimiters: Map<string, Ratelimit> = new Map()
 
 function getRedis(): Redis | null {
   if (redis) return redis

@@ -96,9 +96,14 @@ export default function LoginPage() {
             <LoginForm />
           </Suspense>
           <p className="text-center text-sm text-muted-foreground mt-4">
-            Don't have an account?{" "}
+            Don&apos;t have an account?{" "}
             <Link href="/signup" className="text-primary hover:underline">
               Sign up
+            </Link>
+          </p>
+          <p className="text-center text-sm text-muted-foreground mt-2">
+            <Link href="/forgot-password" className="text-primary hover:underline">
+              Forgot your password?
             </Link>
           </p>
           <p className="text-center text-sm text-muted-foreground mt-2">

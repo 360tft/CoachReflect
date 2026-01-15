@@ -23,7 +23,7 @@ export function DeleteButton({ id }: { id: string }) {
 
       router.push("/dashboard/history")
       router.refresh()
-    } catch (err) {
+    } catch {
       setLoading(false)
       setConfirming(false)
     }

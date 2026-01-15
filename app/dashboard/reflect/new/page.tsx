@@ -89,7 +89,7 @@ export default function NewReflectionPage() {
       if (analysis.objectives.length > 0) {
         setNextFocus(analysis.objectives.join(". "))
       }
-    } catch (err) {
+    } catch {
       setError("Failed to analyze session plan")
     } finally {
       setAnalyzing(false)

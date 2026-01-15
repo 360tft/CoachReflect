@@ -65,9 +65,10 @@ export function StreakBadges() {
     )
   }
 
-  const streakLabel = streak?.current_streak === 0 ? "Starting"
-    : streak?.current_streak! >= 30 ? "On Fire"
-    : streak?.current_streak! >= 7 ? "Building"
+  const currentStreak = streak?.current_streak ?? 0
+  const streakLabel = currentStreak === 0 ? "Starting"
+    : currentStreak >= 30 ? "On Fire"
+    : currentStreak >= 7 ? "Building"
     : "Beginning"
 
   return (

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">CoachReflect</string>
+    <string name="title_activity_main">CoachReflect</string>
+    <string name="package_name">com.coachreflect.app</string>
+    <string name="custom_url_scheme">com.coachreflect.app</string>
+</resources>

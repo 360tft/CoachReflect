@@ -139,7 +139,7 @@ function UnsubscribeContent() {
           <div className="p-4 bg-muted rounded-lg">
             <p className="font-medium mb-2">Unsubscribe from all emails</p>
             <p className="text-sm text-muted-foreground mb-4">
-              You'll stop receiving onboarding emails, streak reminders, and product updates.
+              You&apos;ll stop receiving onboarding emails, streak reminders, and product updates.
             </p>
             <Button
               onClick={handleUnsubscribe}

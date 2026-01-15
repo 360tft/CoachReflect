@@ -2,6 +2,12 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ServiceWorkerRegister } from "@/app/components/service-worker-register";
+import { Analytics } from "@/app/components/analytics";
+import {
+  generateWebsiteSchema,
+  generateOrganizationSchema,
+  generateSoftwareApplicationSchema,
+} from "@/lib/structured-data";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,22 +20,69 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "CoachReflect - AI-Powered Reflection for Football Coaches",
+  title: {
+    default: "CoachReflect - AI-Powered Reflection for Football Coaches",
+    template: "%s | CoachReflect",
+  },
   description: "Transform your coaching with guided post-session reflections. Track patterns, identify player progress, and grow as a coach with AI-powered insights.",
-  keywords: ["football coaching", "coach reflection", "session review", "coaching development", "player tracking"],
+  keywords: ["football coaching", "coach reflection", "session review", "coaching development", "player tracking", "coaching journal", "football coach app", "session planning"],
+  authors: [{ name: "360TFT" }],
+  creator: "360TFT",
+  publisher: "SVMS Consultancy Limited",
+  metadataBase: new URL("https://coachreflect.com"),
   manifest: "/manifest.json",
-  themeColor: "#E5A11C",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "CoachReflect",
+  },
+  formatDetection: {
+    telephone: false,
+  },
+  other: {
+    "mobile-web-app-capable": "yes",
+    "theme-color": "#E5A11C",
+  },
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
-    title: "CoachReflect - AI-Powered Reflection for Football Coaches",
-    description: "Transform your coaching with guided post-session reflections. Track patterns and grow as a coach with AI-powered insights.",
     type: "website",
     locale: "en_GB",
+    url: "https://coachreflect.com",
     siteName: "CoachReflect",
+    title: "CoachReflect - AI-Powered Reflection for Football Coaches",
+    description: "Transform your coaching with guided post-session reflections. Track patterns, identify player progress, and grow as a coach with AI-powered insights.",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "CoachReflect - AI-Powered Coaching Journal",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "CoachReflect - AI-Powered Reflection for Football Coaches",
-    description: "Transform your coaching with guided post-session reflections. Track patterns and grow as a coach with AI-powered insights.",
+    description: "Transform your coaching with guided post-session reflections. Track patterns, identify player progress, and grow as a coach with AI-powered insights.",
+    images: ["/og-image.png"],
+    creator: "@360_tft",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  verification: {
+    // Add your verification codes when you have them
+    // google: "your-google-verification-code",
   },
 };
 
@@ -39,10 +92,50 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        {/* Prevent flash of wrong theme by setting class before React hydrates */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var theme = localStorage.getItem('theme');
+                  if (theme === 'dark') {
+                    document.documentElement.classList.add('dark');
+                  }
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
+        {/* WebSite Schema for Search Box */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(generateWebsiteSchema())
+          }}
+        />
+        {/* Organization Schema for Brand Knowledge Panel */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(generateOrganizationSchema())
+          }}
+        />
+        {/* SoftwareApplication Schema for Rich Snippets */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(generateSoftwareApplicationSchema())
+          }}
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        suppressHydrationWarning
       >
+        <Analytics />
         <ServiceWorkerRegister />
         {children}
       </body>

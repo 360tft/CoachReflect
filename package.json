@@ -7,12 +7,18 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "generate:icons": "node scripts/generate-app-icons.mjs",
+    "generate:splash": "node scripts/generate-splash-screens.mjs",
     "cap:init": "npx cap add ios && npx cap add android",
     "cap:sync": "npx cap sync",
     "ios": "npx cap open ios",
     "ios:dev": "npx cap run ios -l --external",
     "android": "npx cap open android",
-    "android:dev": "npx cap run android -l --external"
+    "android:dev": "npx cap run android -l --external",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:headed": "playwright test --headed",
+    "test:e2e:debug": "playwright test --debug"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.71.2",
@@ -20,6 +26,7 @@
     "@capacitor/cli": "^8.0.0",
     "@capacitor/core": "^8.0.0",
     "@capacitor/ios": "^8.0.0",
+    "@sentry/nextjs": "^10.33.0",
     "@supabase/ssr": "^0.8.0",
     "@supabase/supabase-js": "^2.89.0",
     "@upstash/ratelimit": "^2.0.7",
@@ -36,6 +43,7 @@
     "web-push": "^3.6.7"
   },
   "devDependencies": {
+    "@playwright/test": "^1.57.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
@@ -43,6 +51,7 @@
     "@types/web-push": "^3.6.4",
     "eslint": "^9",
     "eslint-config-next": "16.1.1",
+    "sharp": "^0.33.5",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

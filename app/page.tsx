@@ -65,7 +65,7 @@ export default function Home() {
                 <CardTitle className="text-lg">{prompt.question}</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-muted-foreground italic">"{prompt.placeholder}"</p>
+                <p className="text-sm text-muted-foreground italic">&quot;{prompt.placeholder}&quot;</p>
                 {prompt.tip && (
                   <p className="text-xs text-amber-600 dark:text-amber-400 mt-2">
                     {prompt.tip}
@@ -181,9 +181,9 @@ export default function Home() {
                 ))}
               </div>
               <p className="text-muted-foreground mb-4">
-                "I used to finish sessions and forget what worked by the next day.
-                Now I have a clear record of what's actually improving my players.
-                The AI insights spotted a pattern I completely missed."
+                &quot;I used to finish sessions and forget what worked by the next day.
+                Now I have a clear record of what&apos;s actually improving my players.
+                The AI insights spotted a pattern I completely missed.&quot;
               </p>
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-900 flex items-center justify-center">
@@ -205,9 +205,9 @@ export default function Home() {
                 ))}
               </div>
               <p className="text-muted-foreground mb-4">
-                "The session plan upload is brilliant. I just snap a photo of my
+                &quot;The session plan upload is brilliant. I just snap a photo of my
                 whiteboard notes and it understands everything. Saves me 10 minutes
-                of typing after every training."
+                of typing after every training.&quot;
               </p>
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-900 flex items-center justify-center">
@@ -229,9 +229,9 @@ export default function Home() {
                 ))}
               </div>
               <p className="text-muted-foreground mb-4">
-                "I've been coaching for 15 years and thought I knew my patterns.
+                &quot;I&apos;ve been coaching for 15 years and thought I knew my patterns.
                 Looking back at 3 months of reflections showed me I was always
-                rushing the warm-up. Simple fix, huge impact."
+                rushing the warm-up. Simple fix, huge impact.&quot;
               </p>
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-900 flex items-center justify-center">

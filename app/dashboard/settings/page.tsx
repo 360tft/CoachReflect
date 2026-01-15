@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server"
+import Link from "next/link"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card"
 import { Button } from "@/app/components/ui/button"
 import { SUBSCRIPTION_LIMITS } from "@/app/types"
@@ -96,6 +97,60 @@ export default async function SettingsPage() {
               </Button>
             </form>
           )}
+        </CardContent>
+      </Card>
+
+      {/* Help & Support */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Help & Support</CardTitle>
+          <CardDescription>Get help using CoachReflect</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="flex items-center justify-between py-3 border-b">
+            <div>
+              <p className="font-medium">Help Center</p>
+              <p className="text-sm text-muted-foreground">
+                FAQs and guides for getting the most out of CoachReflect
+              </p>
+            </div>
+            <Link href="/help">
+              <Button variant="outline">View Help</Button>
+            </Link>
+          </div>
+          <div className="flex items-center justify-between py-3">
+            <div>
+              <p className="font-medium">Contact Support</p>
+              <p className="text-sm text-muted-foreground">
+                Need help? Reach out to our support team
+              </p>
+            </div>
+            <a href="mailto:support@coachreflect.com">
+              <Button variant="outline">Email Support</Button>
+            </a>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Refer a Coach */}
+      <Card className="border-amber-200 dark:border-amber-800 bg-amber-50/50 dark:bg-amber-950/30">
+        <CardHeader>
+          <CardTitle>Refer a Coach</CardTitle>
+          <CardDescription>Share CoachReflect with other coaches</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-muted-foreground">
+                Help other coaches improve their sessions with reflection. Coming soon: earn rewards for referrals.
+              </p>
+            </div>
+            <Link href="/referral">
+              <Button variant="outline" className="border-amber-300 dark:border-amber-700 hover:bg-amber-100 dark:hover:bg-amber-900/50">
+                Learn More
+              </Button>
+            </Link>
+          </div>
         </CardContent>
       </Card>
 
