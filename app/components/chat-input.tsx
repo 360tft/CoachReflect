@@ -1,0 +1,495 @@
+"use client"
+
+import { useState, useRef, useCallback } from "react"
+import { Button } from "@/app/components/ui/button"
+import { Textarea } from "@/app/components/ui/textarea"
+import {
+  VOICE_MAX_DURATION_SECONDS,
+  SUPPORTED_AUDIO_TYPES,
+  type MessageAttachment,
+  type TranscriptionResponse,
+} from "@/app/types"
+
+interface ChatInputProps {
+  onSend: (
+    message: string,
+    attachments?: {
+      type: 'voice' | 'image'
+      attachment_id: string
+      transcription?: string
+    }[]
+  ) => void
+  isSubscribed: boolean
+  remaining?: number
+  disabled?: boolean
+  placeholder?: string
+}
+
+interface PendingAttachment {
+  type: 'voice' | 'image'
+  file?: File
+  blob?: Blob
+  previewUrl: string
+  status: 'uploading' | 'transcribing' | 'ready' | 'error'
+  attachment_id?: string
+  transcription?: string
+  error?: string
+  duration?: number
+}
+
+export function ChatInput({
+  onSend,
+  isSubscribed,
+  remaining = 5,
+  disabled = false,
+  placeholder = "Type your message...",
+}: ChatInputProps) {
+  const [input, setInput] = useState("")
+  const [isRecording, setIsRecording] = useState(false)
+  const [recordingDuration, setRecordingDuration] = useState(0)
+  const [attachments, setAttachments] = useState<PendingAttachment[]>([])
+  const [error, setError] = useState<string | null>(null)
+
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
+  const fileInputRef = useRef<HTMLInputElement>(null)
+  const imageInputRef = useRef<HTMLInputElement>(null)
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null)
+  const chunksRef = useRef<Blob[]>([])
+  const timerRef = useRef<NodeJS.Timeout | null>(null)
+  const startTimeRef = useRef<number>(0)
+
+  const isLimitReached = !isSubscribed && remaining <= 0
+  const hasReadyAttachments = attachments.some(a => a.status === 'ready')
+  const isProcessing = attachments.some(a => a.status === 'uploading' || a.status === 'transcribing')
+  const canSend = (input.trim() || hasReadyAttachments) && !disabled && !isLimitReached && !isProcessing
+
+  // Upload voice note and get transcription
+  const uploadAndTranscribe = useCallback(async (file: File | Blob, isBlob: boolean = false) => {
+    const previewUrl = URL.createObjectURL(file)
+    const newAttachment: PendingAttachment = {
+      type: 'voice',
+      blob: isBlob ? file as Blob : undefined,
+      file: isBlob ? undefined : file as File,
+      previewUrl,
+      status: 'uploading',
+    }
+
+    setAttachments(prev => [...prev, newAttachment])
+    const attachmentIndex = attachments.length
+
+    try {
+      // Upload
+      const formData = new FormData()
+      const filename = isBlob ? `recording-${Date.now()}.webm` : (file as File).name
+      formData.append('audio', file, filename)
+
+      const uploadRes = await fetch('/api/voice/upload', {
+        method: 'POST',
+        body: formData,
+      })
+
+      if (!uploadRes.ok) {
+        const data = await uploadRes.json()
+        throw new Error(data.error || 'Upload failed')
+      }
+
+      const { attachment_id } = await uploadRes.json()
+
+      // Update status to transcribing
+      setAttachments(prev => prev.map((a, i) =>
+        i === attachmentIndex ? { ...a, status: 'transcribing', attachment_id } : a
+      ))
+
+      // Transcribe
+      const transcribeRes = await fetch('/api/voice/transcribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ attachment_id }),
+      })
+
+      if (!transcribeRes.ok) {
+        const data = await transcribeRes.json()
+        throw new Error(data.error || 'Transcription failed')
+      }
+
+      const { transcription, duration_seconds }: TranscriptionResponse = await transcribeRes.json()
+
+      // Update to ready
+      setAttachments(prev => prev.map((a, i) =>
+        i === attachmentIndex ? {
+          ...a,
+          status: 'ready',
+          transcription,
+          duration: duration_seconds,
+        } : a
+      ))
+
+    } catch (err) {
+      setAttachments(prev => prev.map((a, i) =>
+        i === attachmentIndex ? {
+          ...a,
+          status: 'error',
+          error: err instanceof Error ? err.message : 'Unknown error',
+        } : a
+      ))
+    }
+  }, [attachments.length])
+
+  // Start recording
+  const startRecording = useCallback(async () => {
+    if (disabled || isLimitReached) return
+
+    setError(null)
+    chunksRef.current = []
+
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+      const mediaRecorder = new MediaRecorder(stream, {
+        mimeType: MediaRecorder.isTypeSupported('audio/webm') ? 'audio/webm' : 'audio/mp4',
+      })
+
+      mediaRecorderRef.current = mediaRecorder
+
+      mediaRecorder.ondataavailable = (e) => {
+        if (e.data.size > 0) {
+          chunksRef.current.push(e.data)
+        }
+      }
+
+      mediaRecorder.onstop = () => {
+        stream.getTracks().forEach(track => track.stop())
+        const blob = new Blob(chunksRef.current, { type: mediaRecorder.mimeType })
+        uploadAndTranscribe(blob, true)
+      }
+
+      mediaRecorder.start(1000)
+      startTimeRef.current = Date.now()
+      setIsRecording(true)
+
+      timerRef.current = setInterval(() => {
+        const elapsed = Math.round((Date.now() - startTimeRef.current) / 1000)
+        setRecordingDuration(elapsed)
+
+        if (elapsed >= VOICE_MAX_DURATION_SECONDS) {
+          stopRecording()
+        }
+      }, 100)
+
+    } catch (err) {
+      if (err instanceof DOMException && err.name === 'NotAllowedError') {
+        setError('Microphone access denied. Please allow microphone access.')
+      } else {
+        setError('Failed to start recording. Please check your microphone.')
+      }
+    }
+  }, [disabled, isLimitReached, uploadAndTranscribe])
+
+  // Stop recording
+  const stopRecording = useCallback(() => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current)
+      timerRef.current = null
+    }
+    if (mediaRecorderRef.current && mediaRecorderRef.current.state === 'recording') {
+      mediaRecorderRef.current.stop()
+    }
+    setIsRecording(false)
+    setRecordingDuration(0)
+  }, [])
+
+  // Handle file selection
+  const handleFileSelect = useCallback((e: React.ChangeEvent<HTMLInputElement>, type: 'voice' | 'image') => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    if (type === 'voice') {
+      if (!SUPPORTED_AUDIO_TYPES.includes(file.type as typeof SUPPORTED_AUDIO_TYPES[number])) {
+        setError('Unsupported audio format. Use MP3, M4A, WAV, WebM, OGG, or FLAC.')
+        return
+      }
+      if (file.size > 50 * 1024 * 1024) {
+        setError('File too large. Maximum 50MB.')
+        return
+      }
+      uploadAndTranscribe(file, false)
+    } else {
+      // Image upload - for future implementation
+      if (!file.type.startsWith('image/')) {
+        setError('Please select an image file.')
+        return
+      }
+      if (file.size > 10 * 1024 * 1024) {
+        setError('Image too large. Maximum 10MB.')
+        return
+      }
+      // For now, just add as attachment
+      const previewUrl = URL.createObjectURL(file)
+      setAttachments(prev => [...prev, {
+        type: 'image',
+        file,
+        previewUrl,
+        status: 'ready',
+      }])
+    }
+
+    // Reset input
+    e.target.value = ''
+  }, [uploadAndTranscribe])
+
+  // Remove attachment
+  const removeAttachment = useCallback((index: number) => {
+    setAttachments(prev => {
+      const attachment = prev[index]
+      if (attachment.previewUrl) {
+        URL.revokeObjectURL(attachment.previewUrl)
+      }
+      return prev.filter((_, i) => i !== index)
+    })
+  }, [])
+
+  // Handle send
+  const handleSend = useCallback(() => {
+    if (!canSend) return
+
+    const readyAttachments = attachments
+      .filter(a => a.status === 'ready' && a.attachment_id)
+      .map(a => ({
+        type: a.type,
+        attachment_id: a.attachment_id!,
+        transcription: a.transcription,
+      }))
+
+    // Build message with transcriptions
+    let finalMessage = input.trim()
+    if (!finalMessage && readyAttachments.length > 0) {
+      // Use transcription as message if no text
+      const transcriptions = readyAttachments
+        .filter(a => a.transcription)
+        .map(a => a.transcription)
+        .join('\n\n')
+      finalMessage = transcriptions || '[Voice note attached]'
+    }
+
+    onSend(finalMessage, readyAttachments.length > 0 ? readyAttachments : undefined)
+
+    // Cleanup
+    setInput('')
+    attachments.forEach(a => {
+      if (a.previewUrl) URL.revokeObjectURL(a.previewUrl)
+    })
+    setAttachments([])
+  }, [canSend, input, attachments, onSend])
+
+  // Handle key down
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault()
+      handleSend()
+    }
+  }
+
+  const formatDuration = (seconds: number) => {
+    const mins = Math.floor(seconds / 60)
+    const secs = seconds % 60
+    return `${mins}:${secs.toString().padStart(2, '0')}`
+  }
+
+  return (
+    <div className="border-t pt-4">
+      {/* Error display */}
+      {error && (
+        <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-3 mb-3">
+          <p className="text-sm text-destructive">{error}</p>
+        </div>
+      )}
+
+      {/* Attachments preview */}
+      {attachments.length > 0 && (
+        <div className="flex flex-wrap gap-2 mb-3">
+          {attachments.map((attachment, index) => (
+            <div
+              key={index}
+              className="flex items-center gap-2 bg-muted rounded-lg px-3 py-2 text-sm"
+            >
+              {attachment.type === 'voice' ? (
+                <>
+                  <span className="text-muted-foreground">
+                    {attachment.status === 'uploading' && 'Uploading...'}
+                    {attachment.status === 'transcribing' && 'Transcribing...'}
+                    {attachment.status === 'ready' && (
+                      attachment.duration
+                        ? `Voice (${formatDuration(attachment.duration)})`
+                        : 'Voice note'
+                    )}
+                    {attachment.status === 'error' && (
+                      <span className="text-destructive">Error: {attachment.error}</span>
+                    )}
+                  </span>
+                  {attachment.status === 'ready' && attachment.transcription && (
+                    <span className="max-w-[200px] truncate text-xs text-muted-foreground">
+                      &quot;{attachment.transcription.slice(0, 50)}...&quot;
+                    </span>
+                  )}
+                </>
+              ) : (
+                <span>Image</span>
+              )}
+              <button
+                onClick={() => removeAttachment(index)}
+                className="text-muted-foreground hover:text-foreground"
+                disabled={attachment.status === 'uploading' || attachment.status === 'transcribing'}
+              >
+                ×
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Recording indicator */}
+      {isRecording && (
+        <div className="flex items-center gap-3 mb-3 p-3 bg-red-50 dark:bg-red-950 rounded-lg">
+          <span className="relative flex h-3 w-3">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+          </span>
+          <span className="font-mono">{formatDuration(recordingDuration)}</span>
+          <Button
+            size="sm"
+            variant="destructive"
+            onClick={stopRecording}
+          >
+            Stop
+          </Button>
+        </div>
+      )}
+
+      {/* Input area */}
+      <div className="flex gap-2">
+        {/* Attachment buttons */}
+        <div className="flex flex-col gap-1">
+          {/* Voice record button */}
+          <Button
+            type="button"
+            variant="outline"
+            size="icon"
+            onClick={isRecording ? stopRecording : startRecording}
+            disabled={disabled || isLimitReached}
+            className={isRecording ? 'bg-red-100 border-red-300 dark:bg-red-900' : ''}
+            title={isRecording ? 'Stop recording' : 'Record voice note'}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="h-4 w-4"
+            >
+              <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+              <line x1="12" x2="12" y1="19" y2="22" />
+            </svg>
+          </Button>
+
+          {/* Voice file upload */}
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="audio/*"
+            className="hidden"
+            onChange={(e) => handleFileSelect(e, 'voice')}
+            disabled={disabled || isLimitReached}
+          />
+          <Button
+            type="button"
+            variant="outline"
+            size="icon"
+            onClick={() => fileInputRef.current?.click()}
+            disabled={disabled || isLimitReached || isRecording}
+            title="Upload voice file"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="h-4 w-4"
+            >
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="17 8 12 3 7 8" />
+              <line x1="12" x2="12" y1="3" y2="15" />
+            </svg>
+          </Button>
+
+          {/* Image upload (Pro only) */}
+          {isSubscribed && (
+            <>
+              <input
+                ref={imageInputRef}
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={(e) => handleFileSelect(e, 'image')}
+                disabled={disabled || isLimitReached || isRecording}
+              />
+              <Button
+                type="button"
+                variant="outline"
+                size="icon"
+                onClick={() => imageInputRef.current?.click()}
+                disabled={disabled || isLimitReached || isRecording}
+                title="Upload session plan image"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="h-4 w-4"
+                >
+                  <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
+                  <circle cx="9" cy="9" r="2" />
+                  <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
+                </svg>
+              </Button>
+            </>
+          )}
+        </div>
+
+        {/* Text input */}
+        <Textarea
+          ref={textareaRef}
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={handleKeyDown}
+          placeholder={isLimitReached ? 'Daily limit reached. Upgrade to continue...' : placeholder}
+          disabled={disabled || isLimitReached || isRecording}
+          className="resize-none min-h-[60px] flex-1"
+          rows={2}
+        />
+
+        {/* Send button */}
+        <Button
+          onClick={handleSend}
+          disabled={!canSend}
+          className="bg-brand hover:bg-brand-hover self-end"
+        >
+          {isProcessing ? '...' : 'Send'}
+        </Button>
+      </div>
+
+      <p className="text-xs text-muted-foreground mt-2">
+        Press Enter to send, Shift+Enter for new line
+      </p>
+    </div>
+  )
+}

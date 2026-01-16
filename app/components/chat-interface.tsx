@@ -3,8 +3,8 @@
 import { useState, useRef, useEffect, useCallback } from "react"
 import { Button } from "@/app/components/ui/button"
 import { Card, CardContent } from "@/app/components/ui/card"
-import { Textarea } from "@/app/components/ui/textarea"
 import { FeedbackButtons } from "@/app/components/feedback-buttons"
+import { ChatInput } from "@/app/components/chat-input"
 import { CHAT_STARTERS, type ChatMessage, type Conversation } from "@/app/types"
 
 interface ChatInterfaceProps {
@@ -23,7 +23,6 @@ export function ChatInterface({ isSubscribed, initialRemaining = 5 }: ChatInterf
   const [remaining, setRemaining] = useState(initialRemaining)
 
   const messagesEndRef = useRef<HTMLDivElement>(null)
-  const textareaRef = useRef<HTMLTextAreaElement>(null)
   const abortControllerRef = useRef<AbortController | null>(null)
 
   // Scroll to bottom when messages change
@@ -93,9 +92,12 @@ export function ChatInterface({ isSubscribed, initialRemaining = 5 }: ChatInterf
     }
   }
 
-  const sendMessage = useCallback(async (messageText?: string) => {
+  const sendMessage = useCallback(async (
+    messageText?: string,
+    attachments?: { type: 'voice' | 'image'; attachment_id: string; transcription?: string }[]
+  ) => {
     const text = messageText || input.trim()
-    if (!text || loading) return
+    if ((!text && !attachments?.length) || loading) return
 
     // Check free tier limit
     if (!isSubscribed && remaining <= 0) {
@@ -107,10 +109,20 @@ export function ChatInterface({ isSubscribed, initialRemaining = 5 }: ChatInterf
     setInput("")
     setLoading(true)
 
+    // Build display text - include transcription indicator if voice note
+    let displayText = text
+    if (attachments?.some(a => a.type === 'voice' && a.transcription)) {
+      const voiceText = attachments
+        .filter(a => a.type === 'voice' && a.transcription)
+        .map(a => a.transcription)
+        .join('\n\n')
+      displayText = text ? `${text}\n\n[Voice note]: ${voiceText}` : `[Voice note]: ${voiceText}`
+    }
+
     // Add user message immediately
     const userMessage: ChatMessage = {
       role: "user",
-      content: text,
+      content: displayText,
       timestamp: new Date(),
     }
     setMessages(prev => [...prev, userMessage])
@@ -134,6 +146,7 @@ export function ChatInterface({ isSubscribed, initialRemaining = 5 }: ChatInterf
           message: text,
           history: messages.map(m => ({ role: m.role, content: m.content })),
           conversationId,
+          attachments,
         }),
         signal: abortControllerRef.current.signal,
       })
@@ -222,13 +235,6 @@ export function ChatInterface({ isSubscribed, initialRemaining = 5 }: ChatInterf
       abortControllerRef.current = null
     }
   }, [input, loading, messages, conversationId, isSubscribed, remaining])
-
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault()
-      sendMessage()
-    }
-  }
 
   return (
     <div className="flex h-[calc(100vh-8rem)] gap-4">
@@ -385,34 +391,17 @@ export function ChatInterface({ isSubscribed, initialRemaining = 5 }: ChatInterf
         )}
 
         {/* Input Area */}
-        <div className="border-t pt-4">
-          <div className="flex gap-2">
-            <Textarea
-              ref={textareaRef}
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={handleKeyDown}
-              placeholder={
-                !isSubscribed && remaining <= 0
-                  ? "Daily limit reached. Upgrade to continue..."
-                  : "Type your message..."
-              }
-              disabled={loading || (!isSubscribed && remaining <= 0)}
-              className="resize-none min-h-[60px]"
-              rows={2}
-            />
-            <Button
-              onClick={() => sendMessage()}
-              disabled={!input.trim() || loading || (!isSubscribed && remaining <= 0)}
-              className="bg-amber-600 hover:bg-amber-700"
-            >
-              {loading ? "..." : "Send"}
-            </Button>
-          </div>
-          <p className="text-xs text-muted-foreground mt-2">
-            Press Enter to send, Shift+Enter for new line
-          </p>
-        </div>
+        <ChatInput
+          onSend={sendMessage}
+          isSubscribed={isSubscribed}
+          remaining={remaining}
+          disabled={loading}
+          placeholder={
+            !isSubscribed && remaining <= 0
+              ? "Daily limit reached. Upgrade to continue..."
+              : "Type your message, or add a voice note..."
+          }
+        />
       </div>
     </div>
   )

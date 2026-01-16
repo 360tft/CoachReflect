@@ -375,3 +375,214 @@ export interface Feedback {
   feedback_text: string | null
   created_at: string
 }
+
+// ==================== Voice & Multi-Modal Types ====================
+
+export type AttachmentType = 'voice' | 'image' | 'session_plan'
+export type ProcessingStatus = 'pending' | 'processing' | 'completed' | 'failed'
+
+export interface MessageAttachment {
+  id: string
+  message_id: string | null
+  user_id: string
+  attachment_type: AttachmentType
+  storage_path: string
+  mime_type: string
+  file_size_bytes: number
+  original_filename: string | null
+  processing_status: ProcessingStatus
+  processing_error: string | null
+  voice_transcription: string | null
+  voice_duration_seconds: number | null
+  image_analysis: SessionPlanAnalysis | null
+  session_date: string | null
+  created_at: string
+  processed_at: string | null
+}
+
+export interface VoiceUploadResponse {
+  attachment_id: string
+  storage_path: string
+  status: ProcessingStatus
+}
+
+export interface TranscriptionResponse {
+  transcription: string
+  duration_seconds: number
+  attachment_id: string
+}
+
+// Extended chat message with attachments
+export interface ChatMessageWithAttachments extends ChatMessage {
+  attachments?: MessageAttachment[]
+  extracted_data?: ExtractedData
+}
+
+// ==================== Extracted Insights Types ====================
+
+export type ExtractedInsightType = 'player_mention' | 'theme' | 'exercise' | 'challenge' | 'sentiment'
+export type InsightContext = 'positive' | 'concern' | 'neutral' | 'mixed'
+
+export interface ExtractedInsight {
+  id: string
+  user_id: string
+  conversation_id: string | null
+  message_id: string | null
+  attachment_id: string | null
+  insight_type: ExtractedInsightType
+  name: string
+  category: string | null
+  context: InsightContext | null
+  snippet: string | null
+  confidence: number
+  session_date: string | null
+  extraction_date: string
+  created_at: string
+}
+
+export interface PlayerMention {
+  name: string
+  context: InsightContext
+  snippet: string
+}
+
+export interface ThemeExtraction {
+  theme: string
+  category: ThemeCategory
+  frequency: number
+}
+
+export type ThemeCategory =
+  | 'player_behavior'
+  | 'tactical'
+  | 'physical'
+  | 'mental'
+  | 'organizational'
+  | 'parent_related'
+
+export interface ExerciseMention {
+  name: string
+  context: string | null
+}
+
+export interface ExtractedData {
+  players_mentioned: PlayerMention[]
+  themes: ThemeExtraction[]
+  exercises: ExerciseMention[]
+  challenges: string[]
+  overall_sentiment: InsightContext
+  confidence: number
+}
+
+// ==================== Analytics Types ====================
+
+export interface CoachDailyStats {
+  id: string
+  user_id: string
+  stat_date: string
+  messages_sent: number
+  voice_notes_sent: number
+  images_uploaded: number
+  reflections_created: number
+  unique_players_mentioned: number
+  unique_themes: number
+  unique_exercises: number
+  top_players: PlayerAnalyticsItem[]
+  top_themes: ThemeAnalyticsItem[]
+  top_exercises: ExerciseAnalyticsItem[]
+  avg_mood: number | null
+  avg_energy: number | null
+  positive_mentions: number
+  concern_mentions: number
+  neutral_mentions: number
+  created_at: string
+  updated_at: string
+}
+
+export interface PlayerAnalyticsItem {
+  name: string
+  count: number
+  context: InsightContext
+}
+
+export interface ThemeAnalyticsItem {
+  theme: string
+  category: ThemeCategory
+  count: number
+}
+
+export interface ExerciseAnalyticsItem {
+  name: string
+  count: number
+}
+
+export type AnalyticsPeriod = '4w' | '8w' | '12w'
+
+export interface PatternAnalytics {
+  period: AnalyticsPeriod
+  start_date: string
+  end_date: string
+  players: PlayerAnalyticsItem[]
+  themes: ThemeAnalyticsItem[]
+  exercises: ExerciseAnalyticsItem[]
+  mood_trend: MoodTrendPoint[]
+  energy_trend: MoodTrendPoint[]
+  insights: InsightSummary[]
+  totals: {
+    voice_notes: number
+    images: number
+    reflections: number
+    messages: number
+  }
+}
+
+export interface MoodTrendPoint {
+  date: string
+  value: number | null
+}
+
+export interface InsightSummary {
+  type: 'pattern' | 'milestone' | 'suggestion'
+  title: string
+  description: string
+  data?: Record<string, unknown>
+}
+
+// ==================== Coaching Themes ====================
+
+export interface CoachingTheme {
+  id: string
+  name: string
+  category: ThemeCategory
+  keywords: string[]
+  created_at: string
+}
+
+export const COACHING_THEME_CATEGORIES: { id: ThemeCategory; label: string }[] = [
+  { id: 'player_behavior', label: 'Player Behavior' },
+  { id: 'tactical', label: 'Tactical' },
+  { id: 'physical', label: 'Physical' },
+  { id: 'mental', label: 'Mental' },
+  { id: 'organizational', label: 'Organizational' },
+  { id: 'parent_related', label: 'Parent Related' },
+]
+
+// ==================== Voice Limits ====================
+
+export const VOICE_NOTE_LIMITS = {
+  free: 3,        // 3 voice notes per month
+  pro: 999999,    // Effectively unlimited
+  pro_plus: 999999,
+} as const
+
+export const VOICE_MAX_DURATION_SECONDS = 300  // 5 minutes
+export const VOICE_MAX_FILE_SIZE_BYTES = 50 * 1024 * 1024  // 50MB
+
+export const SUPPORTED_AUDIO_TYPES = [
+  'audio/mpeg',     // .mp3
+  'audio/mp4',      // .m4a
+  'audio/wav',      // .wav
+  'audio/webm',     // .webm
+  'audio/ogg',      // .ogg
+  'audio/flac',     // .flac
+] as const

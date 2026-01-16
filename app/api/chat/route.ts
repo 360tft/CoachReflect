@@ -180,22 +180,53 @@ export async function POST(request: Request) {
     const {
       message,
       history = [],
-      conversationId
+      conversationId,
+      attachments = []
     }: {
       message: string
       history: ChatMessage[]
       conversationId?: string
+      attachments?: {
+        type: 'voice' | 'image'
+        attachment_id: string
+        transcription?: string
+      }[]
     } = body
 
-    // Validate message
-    if (!message || typeof message !== "string") {
+    // Validate message or attachments
+    if ((!message || typeof message !== "string") && attachments.length === 0) {
+      return NextResponse.json(
+        { error: "Message or attachment is required" },
+        { status: 400 }
+      )
+    }
+
+    // Build message with attachment context
+    let fullMessage = message || ""
+
+    // Add voice transcriptions to the message context
+    const voiceTranscriptions = attachments
+      .filter(a => a.type === 'voice' && a.transcription)
+      .map(a => a.transcription)
+      .join('\n\n')
+
+    if (voiceTranscriptions) {
+      if (fullMessage) {
+        fullMessage = `${fullMessage}\n\n[Voice note transcription]\n${voiceTranscriptions}`
+      } else {
+        fullMessage = `[Voice note transcription]\n${voiceTranscriptions}`
+      }
+    }
+
+    // Validate the final message
+    if (!fullMessage.trim()) {
       return NextResponse.json(
         { error: "Message is required" },
         { status: 400 }
       )
     }
 
-    if (message.length > CHAT_CONFIG.maxMessageLength) {
+    if (fullMessage.length > CHAT_CONFIG.maxMessageLength) {
       return NextResponse.json(
         { error: `Message too long. Maximum ${CHAT_CONFIG.maxMessageLength} characters.` },
         { status: 400 }
@@ -243,7 +274,7 @@ export async function POST(request: Request) {
     // Add current message
     claudeMessages.push({
       role: "user",
-      content: message,
+      content: fullMessage,
     })
 
     // Create streaming response
@@ -310,12 +341,12 @@ export async function POST(request: Request) {
 
           // Save messages
           if (convId) {
-            await adminClient.from("messages").insert([
+            const { data: savedMessages } = await adminClient.from("messages").insert([
               {
                 conversation_id: convId,
                 user_id: user.id,
                 role: "user",
-                content: message,
+                content: fullMessage,
               },
               {
                 conversation_id: convId,
@@ -323,7 +354,17 @@ export async function POST(request: Request) {
                 role: "assistant",
                 content: fullResponse,
               },
-            ])
+            ]).select('id')
+
+            // Link attachments to the user message
+            if (attachments.length > 0 && savedMessages?.[0]?.id) {
+              const attachmentIds = attachments.map(a => a.attachment_id)
+              await adminClient
+                .from("message_attachments")
+                .update({ message_id: savedMessages[0].id })
+                .in("id", attachmentIds)
+                .eq("user_id", user.id)
+            }
           }
 
           // Update last_active_at on profile
