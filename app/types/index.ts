@@ -387,6 +387,7 @@ export interface MessageAttachment {
   user_id: string
   attachment_type: AttachmentType
   storage_path: string
+  file_url: string | null
   mime_type: string
   file_size_bytes: number
   original_filename: string | null

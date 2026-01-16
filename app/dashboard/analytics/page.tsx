@@ -1,0 +1,34 @@
+import { createClient } from "@/lib/supabase/server"
+import { redirect } from "next/navigation"
+import { AnalyticsDashboard } from "./analytics-dashboard"
+
+export default async function AnalyticsPage() {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+
+  if (!user) {
+    redirect("/login")
+  }
+
+  // Get profile to check subscription
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("subscription_tier")
+    .eq("user_id", user.id)
+    .single()
+
+  const isSubscribed = profile?.subscription_tier !== "free"
+
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <div className="mb-8">
+        <h1 className="text-2xl font-bold">Coaching Analytics</h1>
+        <p className="text-muted-foreground">
+          Track your patterns and insights over time
+        </p>
+      </div>
+
+      <AnalyticsDashboard isSubscribed={isSubscribed} />
+    </div>
+  )
+}

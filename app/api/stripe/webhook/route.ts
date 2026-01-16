@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server"
 import Stripe from "stripe"
 import { createAdminClient } from "@/lib/supabase/admin"
+import { createClub, updateClubSubscription } from "@/lib/clubs"
+import type { ClubTier } from "@/lib/config"
 
 function getStripe() {
   if (!process.env.STRIPE_SECRET_KEY) {
@@ -56,59 +58,108 @@ export async function POST(request: Request) {
     switch (event.type) {
       case "checkout.session.completed": {
         const session = event.data.object as Stripe.Checkout.Session
-        const userId = session.subscription
-          ? (await stripe.subscriptions.retrieve(session.subscription as string)).metadata.user_id
-          : null
+        const subscriptionType = session.metadata?.type
 
-        if (userId) {
-          await supabase
-            .from("profiles")
-            .update({
-              subscription_tier: "pro",
-              subscription_status: "active",
-              stripe_customer_id: session.customer as string,
+        if (subscriptionType === "club") {
+          // Handle club subscription
+          const subscription = await stripe.subscriptions.retrieve(session.subscription as string) as unknown as Stripe.Subscription
+          const userId = session.metadata?.supabase_user_id
+          const clubName = session.metadata?.club_name
+          const clubTier = session.metadata?.club_tier as ClubTier
+          const billingPeriod = session.metadata?.billing_period as 'monthly' | 'annual'
+          const periodEnd = (subscription as unknown as { current_period_end: number }).current_period_end
+
+          if (userId && clubName && clubTier) {
+            // Create the club
+            await createClub({
+              name: clubName,
+              adminUserId: userId,
+              tier: clubTier,
+              billingPeriod: billingPeriod || 'monthly',
+              stripeCustomerId: session.customer as string,
+              stripeSubscriptionId: subscription.id,
+              currentPeriodEnd: new Date(periodEnd * 1000).toISOString(),
             })
-            .eq("user_id", userId)
+          }
+        } else {
+          // Handle individual subscription
+          let userId = session.metadata?.supabase_user_id
+          if (!userId && session.subscription) {
+            const subData = await stripe.subscriptions.retrieve(session.subscription as string)
+            userId = subData.metadata.user_id
+          }
+
+          if (userId) {
+            await supabase
+              .from("profiles")
+              .update({
+                subscription_tier: "pro",
+                subscription_status: "active",
+                stripe_customer_id: session.customer as string,
+              })
+              .eq("user_id", userId)
+          }
         }
         break
       }
 
       case "customer.subscription.updated": {
         const subscription = event.data.object as Stripe.Subscription & { current_period_end?: number }
-        const userId = subscription.metadata.user_id
+        const subscriptionType = subscription.metadata.type
 
-        if (userId) {
-          const status = subscription.status
-          const tier = status === "active" ? "pro" : "free"
+        if (subscriptionType === "club") {
+          // Handle club subscription update
+          const status = subscription.status as 'active' | 'cancelled' | 'past_due' | 'incomplete' | 'trialing'
           const periodEnd = subscription.current_period_end
             ? new Date(subscription.current_period_end * 1000).toISOString()
-            : null
+            : undefined
 
-          await supabase
-            .from("profiles")
-            .update({
-              subscription_tier: tier,
-              subscription_status: status,
-              subscription_period_end: periodEnd,
-            })
-            .eq("user_id", userId)
+          await updateClubSubscription(subscription.id, status, periodEnd)
+        } else {
+          // Handle individual subscription update
+          const userId = subscription.metadata.user_id
+
+          if (userId) {
+            const status = subscription.status
+            const tier = status === "active" ? "pro" : "free"
+            const periodEnd = subscription.current_period_end
+              ? new Date(subscription.current_period_end * 1000).toISOString()
+              : null
+
+            await supabase
+              .from("profiles")
+              .update({
+                subscription_tier: tier,
+                subscription_status: status,
+                subscription_period_end: periodEnd,
+              })
+              .eq("user_id", userId)
+          }
         }
         break
       }
 
       case "customer.subscription.deleted": {
         const subscription = event.data.object as Stripe.Subscription
-        const userId = subscription.metadata.user_id
+        const subscriptionType = subscription.metadata.type
 
-        if (userId) {
-          await supabase
-            .from("profiles")
-            .update({
-              subscription_tier: "free",
-              subscription_status: "canceled",
-              subscription_period_end: null,
-            })
-            .eq("user_id", userId)
+        if (subscriptionType === "club") {
+          // Handle club subscription cancellation
+          await updateClubSubscription(subscription.id, 'cancelled')
+        } else {
+          // Handle individual subscription cancellation
+          const userId = subscription.metadata.user_id
+
+          if (userId) {
+            await supabase
+              .from("profiles")
+              .update({
+                subscription_tier: "free",
+                subscription_status: "canceled",
+                subscription_period_end: null,
+              })
+              .eq("user_id", userId)
+          }
         }
         break
       }

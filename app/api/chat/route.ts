@@ -4,7 +4,7 @@ import { createClient } from "@/lib/supabase/server"
 import { createAdminClient } from "@/lib/supabase/admin"
 import { checkRateLimit, RATE_LIMITS } from "@/lib/rate-limit"
 import { SYSTEM_PROMPT, CHAT_CONFIG, buildUserContext } from "@/lib/chat-config"
-import type { ChatMessage } from "@/app/types"
+import type { ChatMessage, SessionPlanAnalysis } from "@/app/types"
 
 const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY,
@@ -190,6 +190,8 @@ export async function POST(request: Request) {
         type: 'voice' | 'image'
         attachment_id: string
         transcription?: string
+        analysis?: SessionPlanAnalysis
+        file_url?: string
       }[]
     } = body
 
@@ -215,6 +217,39 @@ export async function POST(request: Request) {
         fullMessage = `${fullMessage}\n\n[Voice note transcription]\n${voiceTranscriptions}`
       } else {
         fullMessage = `[Voice note transcription]\n${voiceTranscriptions}`
+      }
+    }
+
+    // Add session plan analysis to the message context
+    const imageAttachments = attachments.filter(a => a.type === 'image' && a.analysis)
+    if (imageAttachments.length > 0) {
+      const sessionPlanContext = imageAttachments.map(a => {
+        const analysis = a.analysis!
+        const parts: string[] = []
+
+        if (analysis.title) parts.push(`Title: ${analysis.title}`)
+        if (analysis.objectives?.length) parts.push(`Objectives: ${analysis.objectives.join(', ')}`)
+        if (analysis.drills?.length) {
+          const drillSummary = analysis.drills.map(d => {
+            let drill = d.name
+            if (d.duration_minutes) drill += ` (${d.duration_minutes}min)`
+            return drill
+          }).join(', ')
+          parts.push(`Drills: ${drillSummary}`)
+        }
+        if (analysis.total_duration_minutes) parts.push(`Total Duration: ${analysis.total_duration_minutes} minutes`)
+        if (analysis.coaching_points?.length) parts.push(`Key Coaching Points: ${analysis.coaching_points.join(', ')}`)
+        if (analysis.equipment_needed?.length) parts.push(`Equipment: ${analysis.equipment_needed.join(', ')}`)
+
+        return parts.join('\n')
+      }).join('\n\n---\n\n')
+
+      const sessionPlanSection = `[Session Plan Analysis]\n${sessionPlanContext}`
+
+      if (fullMessage) {
+        fullMessage = `${fullMessage}\n\n${sessionPlanSection}`
+      } else {
+        fullMessage = sessionPlanSection
       }
     }
 

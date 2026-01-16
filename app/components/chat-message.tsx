@@ -156,36 +156,63 @@ function AttachmentDisplay({ attachment }: { attachment: MessageAttachment }) {
   if (attachment.attachment_type === "image" || attachment.attachment_type === "session_plan") {
     return (
       <div className="bg-background/50 rounded-lg p-3 space-y-2">
-        <div className="flex items-center gap-2">
-          {/* Image icon */}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="h-4 w-4 text-muted-foreground"
-          >
-            <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
-            <circle cx="9" cy="9" r="2" />
-            <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
-          </svg>
-          <span className="text-xs font-medium">
-            {attachment.attachment_type === "session_plan" ? "Session Plan" : "Image"}
-          </span>
-          {attachment.processing_status === "processing" && (
-            <span className="text-xs text-amber-600 animate-pulse">
-              Analyzing...
-            </span>
+        <div className="flex items-start gap-3">
+          {/* Image thumbnail */}
+          {attachment.file_url && (
+            <a
+              href={attachment.file_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-shrink-0"
+            >
+              <img
+                src={attachment.file_url}
+                alt="Session plan"
+                className="w-16 h-16 object-cover rounded border hover:opacity-80 transition-opacity"
+              />
+            </a>
           )}
-        </div>
 
-        {/* Session plan analysis */}
-        {attachment.image_analysis && (
-          <SessionPlanPreview analysis={attachment.image_analysis} />
-        )}
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2">
+              {/* Image icon if no thumbnail */}
+              {!attachment.file_url && (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="h-4 w-4 text-muted-foreground"
+                >
+                  <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
+                  <circle cx="9" cy="9" r="2" />
+                  <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
+                </svg>
+              )}
+              <span className="text-xs font-medium">
+                {attachment.attachment_type === "session_plan" ? "Session Plan" : "Session Plan Image"}
+              </span>
+              {attachment.processing_status === "processing" && (
+                <span className="text-xs text-amber-600 animate-pulse">
+                  Analyzing...
+                </span>
+              )}
+              {attachment.processing_status === "completed" && attachment.image_analysis && (
+                <span className="text-xs text-green-600">
+                  Analyzed
+                </span>
+              )}
+            </div>
+
+            {/* Session plan analysis */}
+            {attachment.image_analysis && (
+              <SessionPlanPreview analysis={attachment.image_analysis} />
+            )}
+          </div>
+        </div>
       </div>
     )
   }

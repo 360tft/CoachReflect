@@ -6,8 +6,8 @@ import { Textarea } from "@/app/components/ui/textarea"
 import {
   VOICE_MAX_DURATION_SECONDS,
   SUPPORTED_AUDIO_TYPES,
-  type MessageAttachment,
   type TranscriptionResponse,
+  type SessionPlanAnalysis,
 } from "@/app/types"
 
 interface ChatInputProps {
@@ -30,9 +30,11 @@ interface PendingAttachment {
   file?: File
   blob?: Blob
   previewUrl: string
-  status: 'uploading' | 'transcribing' | 'ready' | 'error'
+  status: 'uploading' | 'transcribing' | 'analyzing' | 'ready' | 'error'
   attachment_id?: string
   transcription?: string
+  analysis?: SessionPlanAnalysis
+  file_url?: string
   error?: string
   duration?: number
 }
@@ -60,7 +62,7 @@ export function ChatInput({
 
   const isLimitReached = !isSubscribed && remaining <= 0
   const hasReadyAttachments = attachments.some(a => a.status === 'ready')
-  const isProcessing = attachments.some(a => a.status === 'uploading' || a.status === 'transcribing')
+  const isProcessing = attachments.some(a => a.status === 'uploading' || a.status === 'transcribing' || a.status === 'analyzing')
   const canSend = (input.trim() || hasReadyAttachments) && !disabled && !isLimitReached && !isProcessing
 
   // Upload voice note and get transcription
@@ -121,6 +123,75 @@ export function ChatInput({
           status: 'ready',
           transcription,
           duration: duration_seconds,
+        } : a
+      ))
+
+    } catch (err) {
+      setAttachments(prev => prev.map((a, i) =>
+        i === attachmentIndex ? {
+          ...a,
+          status: 'error',
+          error: err instanceof Error ? err.message : 'Unknown error',
+        } : a
+      ))
+    }
+  }, [attachments.length])
+
+  // Upload image and optionally analyze
+  const uploadAndAnalyzeImage = useCallback(async (file: File) => {
+    const previewUrl = URL.createObjectURL(file)
+    const newAttachment: PendingAttachment = {
+      type: 'image',
+      file,
+      previewUrl,
+      status: 'uploading',
+    }
+
+    setAttachments(prev => [...prev, newAttachment])
+    const attachmentIndex = attachments.length
+
+    try {
+      // Upload
+      const formData = new FormData()
+      formData.append('image', file)
+
+      const uploadRes = await fetch('/api/image/upload', {
+        method: 'POST',
+        body: formData,
+      })
+
+      if (!uploadRes.ok) {
+        const data = await uploadRes.json()
+        throw new Error(data.error || 'Upload failed')
+      }
+
+      const { attachment_id, file_url } = await uploadRes.json()
+
+      // Update status to analyzing
+      setAttachments(prev => prev.map((a, i) =>
+        i === attachmentIndex ? { ...a, status: 'analyzing', attachment_id, file_url } : a
+      ))
+
+      // Analyze with Claude Vision
+      const analyzeRes = await fetch('/api/image/analyze', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ attachment_id }),
+      })
+
+      if (!analyzeRes.ok) {
+        const data = await analyzeRes.json()
+        throw new Error(data.error || 'Analysis failed')
+      }
+
+      const { analysis } = await analyzeRes.json()
+
+      // Update to ready
+      setAttachments(prev => prev.map((a, i) =>
+        i === attachmentIndex ? {
+          ...a,
+          status: 'ready',
+          analysis,
         } : a
       ))
 
@@ -213,7 +284,7 @@ export function ChatInput({
       }
       uploadAndTranscribe(file, false)
     } else {
-      // Image upload - for future implementation
+      // Image upload with Claude Vision analysis
       if (!file.type.startsWith('image/')) {
         setError('Please select an image file.')
         return
@@ -222,19 +293,12 @@ export function ChatInput({
         setError('Image too large. Maximum 10MB.')
         return
       }
-      // For now, just add as attachment
-      const previewUrl = URL.createObjectURL(file)
-      setAttachments(prev => [...prev, {
-        type: 'image',
-        file,
-        previewUrl,
-        status: 'ready',
-      }])
+      uploadAndAnalyzeImage(file)
     }
 
     // Reset input
     e.target.value = ''
-  }, [uploadAndTranscribe])
+  }, [uploadAndTranscribe, uploadAndAnalyzeImage])
 
   // Remove attachment
   const removeAttachment = useCallback((index: number) => {
@@ -257,17 +321,28 @@ export function ChatInput({
         type: a.type,
         attachment_id: a.attachment_id!,
         transcription: a.transcription,
+        analysis: a.analysis,
+        file_url: a.file_url,
       }))
 
-    // Build message with transcriptions
+    // Build message with transcriptions or session plan context
     let finalMessage = input.trim()
     if (!finalMessage && readyAttachments.length > 0) {
-      // Use transcription as message if no text
-      const transcriptions = readyAttachments
-        .filter(a => a.transcription)
+      // Use transcription or analysis as message context
+      const voiceTranscriptions = readyAttachments
+        .filter(a => a.type === 'voice' && a.transcription)
         .map(a => a.transcription)
         .join('\n\n')
-      finalMessage = transcriptions || '[Voice note attached]'
+
+      const imageAnalyses = readyAttachments
+        .filter(a => a.type === 'image' && a.analysis)
+        .map(a => {
+          const analysis = a.analysis!
+          return `[Session plan uploaded: ${analysis.title || 'Untitled'}]`
+        })
+        .join('\n')
+
+      finalMessage = voiceTranscriptions || imageAnalyses || '[Attachment added]'
     }
 
     onSend(finalMessage, readyAttachments.length > 0 ? readyAttachments : undefined)
@@ -332,12 +407,33 @@ export function ChatInput({
                   )}
                 </>
               ) : (
-                <span>Image</span>
+                <>
+                  {/* Image thumbnail */}
+                  {attachment.previewUrl && (
+                    <img
+                      src={attachment.previewUrl}
+                      alt="Session plan preview"
+                      className="h-10 w-10 object-cover rounded"
+                    />
+                  )}
+                  <span className="text-muted-foreground">
+                    {attachment.status === 'uploading' && 'Uploading...'}
+                    {attachment.status === 'analyzing' && 'Analyzing...'}
+                    {attachment.status === 'ready' && (
+                      attachment.analysis?.title
+                        ? `Session: ${attachment.analysis.title}`
+                        : 'Session plan'
+                    )}
+                    {attachment.status === 'error' && (
+                      <span className="text-destructive">Error: {attachment.error}</span>
+                    )}
+                  </span>
+                </>
               )}
               <button
                 onClick={() => removeAttachment(index)}
-                className="text-muted-foreground hover:text-foreground"
-                disabled={attachment.status === 'uploading' || attachment.status === 'transcribing'}
+                className="text-muted-foreground hover:text-foreground ml-1"
+                disabled={attachment.status === 'uploading' || attachment.status === 'transcribing' || attachment.status === 'analyzing'}
               >
                 ×
               </button>
