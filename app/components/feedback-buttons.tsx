@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { Button } from "@/app/components/ui/button"
+import { FeedbackReasonModal } from "@/app/components/feedback-reason-modal"
 
 interface FeedbackButtonsProps {
   contentType: "ai_summary" | "ai_insight" | "chat_response"
@@ -20,8 +21,13 @@ export function FeedbackButtons({
 }: FeedbackButtonsProps) {
   const [submitted, setSubmitted] = useState<"positive" | "negative" | null>(null)
   const [loading, setLoading] = useState(false)
+  const [showReasonModal, setShowReasonModal] = useState(false)
 
-  const submitFeedback = async (rating: "positive" | "negative") => {
+  const submitFeedback = async (
+    rating: "positive" | "negative",
+    reason?: string,
+    reasonText?: string
+  ) => {
     if (loading || submitted) return
 
     setLoading(true)
@@ -34,6 +40,8 @@ export function FeedbackButtons({
           content_type: contentType,
           content_text: contentText,
           rating,
+          feedback_reason: reason,
+          feedback_text: reasonText,
           reflection_id: reflectionId,
           conversation_id: conversationId,
         }),
@@ -50,6 +58,14 @@ export function FeedbackButtons({
     }
   }
 
+  const handleNegativeClick = () => {
+    setShowReasonModal(true)
+  }
+
+  const handleReasonSubmit = async (reason: string, text?: string) => {
+    await submitFeedback("negative", reason, text)
+  }
+
   if (submitted) {
     return (
       <div className="flex items-center gap-2 text-xs text-muted-foreground">
@@ -59,26 +75,34 @@ export function FeedbackButtons({
   }
 
   return (
-    <div className="flex items-center gap-1">
-      <span className="text-xs text-muted-foreground mr-1">Helpful?</span>
-      <Button
-        variant="ghost"
-        size="sm"
-        onClick={() => submitFeedback("positive")}
-        disabled={loading}
-        title="Yes, helpful"
-      >
-        <span className="text-xs">Yes</span>
-      </Button>
-      <Button
-        variant="ghost"
-        size="sm"
-        onClick={() => submitFeedback("negative")}
-        disabled={loading}
-        title="Not helpful"
-      >
-        <span className="text-xs">No</span>
-      </Button>
-    </div>
+    <>
+      <div className="flex items-center gap-1">
+        <span className="text-xs text-muted-foreground mr-1">Helpful?</span>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => submitFeedback("positive")}
+          disabled={loading}
+          title="Yes, helpful"
+        >
+          <span className="text-xs">Yes</span>
+        </Button>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={handleNegativeClick}
+          disabled={loading}
+          title="Not helpful"
+        >
+          <span className="text-xs">No</span>
+        </Button>
+      </div>
+
+      <FeedbackReasonModal
+        isOpen={showReasonModal}
+        onClose={() => setShowReasonModal(false)}
+        onSubmit={handleReasonSubmit}
+      />
+    </>
   )
 }

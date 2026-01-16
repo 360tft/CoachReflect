@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app
 import { Badge } from "@/app/components/ui/badge"
 import { GUIDED_PROMPTS, INSIGHT_TYPES, MOOD_OPTIONS } from "@/app/types"
 import { PricingSection } from "@/app/components/pricing-section"
+import { Footer } from "@/app/components/footer"
 
 export default function Home() {
   return (
@@ -275,20 +276,7 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="container mx-auto px-4 py-8 border-t">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <span className="font-semibold text-amber-800 dark:text-amber-200">CoachReflect</span>
-          </div>
-          <p className="text-sm text-muted-foreground">
-            Part of the 360TFT family of coaching tools
-          </p>
-          <div className="flex gap-4 text-sm text-muted-foreground">
-            <Link href="/privacy" className="hover:underline">Privacy</Link>
-            <Link href="/terms" className="hover:underline">Terms</Link>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }

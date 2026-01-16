@@ -2,6 +2,7 @@ import { NextResponse } from "next/server"
 import { createClient } from "@/lib/supabase/server"
 import { createClient as createAdminClient } from "@supabase/supabase-js"
 import { SUBSCRIPTION_LIMITS } from "@/app/types"
+import { checkRateLimit, RATE_LIMITS } from "@/lib/rate-limit"
 
 // Admin client for calling database functions
 const getAdminClient = () => {
@@ -18,6 +19,15 @@ export async function GET() {
 
     if (!user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+    }
+
+    // Rate limiting
+    const rateLimit = await checkRateLimit(`reflections:get:${user.id}`, RATE_LIMITS.REFLECTIONS)
+    if (!rateLimit.allowed) {
+      return NextResponse.json(
+        { error: "Too many requests", retry_after: rateLimit.resetInSeconds },
+        { status: 429 }
+      )
     }
 
     const { data: reflections, error } = await supabase
@@ -44,6 +54,15 @@ export async function POST(request: Request) {
 
     if (!user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+    }
+
+    // Rate limiting
+    const rateLimit = await checkRateLimit(`reflections:post:${user.id}`, RATE_LIMITS.REFLECTIONS)
+    if (!rateLimit.allowed) {
+      return NextResponse.json(
+        { error: "Too many requests", retry_after: rateLimit.resetInSeconds },
+        { status: 429 }
+      )
     }
 
     // Check subscription limits

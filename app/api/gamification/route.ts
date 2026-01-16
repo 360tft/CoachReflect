@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import { createClient } from "@/lib/supabase/server"
+import { checkRateLimit, RATE_LIMITS } from "@/lib/rate-limit"
 
 // GET /api/gamification - Fetch user's streak and badges
 export async function GET() {
@@ -9,6 +10,15 @@ export async function GET() {
 
     if (!user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+    }
+
+    // Rate limiting
+    const rateLimit = await checkRateLimit(`gamification:${user.id}`, RATE_LIMITS.API)
+    if (!rateLimit.allowed) {
+      return NextResponse.json(
+        { error: "Too many requests", retry_after: rateLimit.resetInSeconds },
+        { status: 429 }
+      )
     }
 
     // Fetch streak
