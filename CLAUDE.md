@@ -327,3 +327,35 @@ Use Claude Vision with structured extraction prompt:
 - Parse into structured format
 - Handle poor handwriting gracefully
 - Return confidence score
+
+---
+
+## DEPLOYMENT TODO (Updated 2026-01-16)
+
+Before CoachReflect goes fully live with clubs and analytics:
+
+### Stripe Setup (12 prices to create)
+- [ ] Pro Monthly ($7.99) → `NEXT_PUBLIC_STRIPE_PRO_PRICE_ID`
+- [ ] Pro Annual ($79) → `NEXT_PUBLIC_STRIPE_PRO_ANNUAL_PRICE_ID`
+- [ ] Pro+ Monthly ($29) → `STRIPE_PRO_PLUS_PRICE_ID`
+- [ ] Pro+ Annual ($290) → `STRIPE_PRO_PLUS_ANNUAL_PRICE_ID`
+- [ ] Sponsor Monthly ($99) → `STRIPE_SPONSOR_PRICE_ID`
+- [ ] Sponsor Annual ($899) → `STRIPE_SPONSOR_ANNUAL_PRICE_ID`
+- [ ] Small Club Monthly ($29) → `STRIPE_PRICE_CLUB_SMALL_MONTHLY`
+- [ ] Small Club Annual ($259) → `STRIPE_PRICE_CLUB_SMALL_ANNUAL`
+- [ ] Club Monthly ($59) → `STRIPE_PRICE_CLUB_MONTHLY`
+- [ ] Club Annual ($529) → `STRIPE_PRICE_CLUB_ANNUAL`
+- [ ] Academy Monthly ($99) → `STRIPE_PRICE_CLUB_ACADEMY_MONTHLY`
+- [ ] Academy Annual ($899) → `STRIPE_PRICE_CLUB_ACADEMY_ANNUAL`
+
+### Vercel Setup
+- [ ] Add all 12 Stripe price IDs as environment variables
+- [ ] Verify `STRIPE_WEBHOOK_SECRET` is set
+
+### Supabase Setup
+- [ ] Run migration: `supabase/migrations/20260116_clubs_and_analytics.sql`
+
+### Stripe Webhook
+- [ ] Add webhook endpoint: `https://[your-domain]/api/stripe/webhook`
+- [ ] Enable events: `checkout.session.completed`, `customer.subscription.updated`, `customer.subscription.deleted`, `invoice.payment_failed`
+
