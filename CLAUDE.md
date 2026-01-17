@@ -354,6 +354,7 @@ Before CoachReflect goes fully live with clubs and analytics:
 
 ### Supabase Setup
 - [ ] Run migration: `supabase/migrations/20260116_clubs_and_analytics.sql`
+- [ ] Run migration: `supabase/migrations/20260117_multi_sport.sql`
 
 ### Stripe Webhook
 - [ ] Add webhook endpoint: `https://[your-domain]/api/stripe/webhook`
