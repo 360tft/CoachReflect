@@ -10,12 +10,22 @@ export async function PUT(request: NextRequest) {
   }
 
   const body = await request.json()
-  const { display_name, club_name, age_group, coaching_level } = body
+  const { display_name, club_name, age_group, coaching_level, sport } = body
 
   // Validate coaching_level if provided
   const validLevels = ['grassroots', 'academy', 'semi-pro', 'professional']
   if (coaching_level && !validLevels.includes(coaching_level)) {
     return NextResponse.json({ error: "Invalid coaching level" }, { status: 400 })
+  }
+
+  // Validate sport if provided
+  const validSports = [
+    'football', 'rugby', 'basketball', 'hockey', 'tennis', 'cricket',
+    'volleyball', 'baseball', 'american_football', 'swimming', 'athletics',
+    'gymnastics', 'martial_arts', 'other'
+  ]
+  if (sport && !validSports.includes(sport)) {
+    return NextResponse.json({ error: "Invalid sport" }, { status: 400 })
   }
 
   const { data, error } = await supabase
@@ -25,6 +35,7 @@ export async function PUT(request: NextRequest) {
       club_name: club_name || null,
       age_group: age_group || null,
       coaching_level: coaching_level || null,
+      sport: sport || 'football',
       updated_at: new Date().toISOString()
     })
     .eq("user_id", user.id)

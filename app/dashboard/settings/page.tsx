@@ -36,6 +36,7 @@ export default async function SettingsPage() {
           club_name: profile?.club_name || null,
           age_group: profile?.age_group || null,
           coaching_level: profile?.coaching_level || null,
+          sport: profile?.sport || null,
         }}
         email={user.email || ""}
       />

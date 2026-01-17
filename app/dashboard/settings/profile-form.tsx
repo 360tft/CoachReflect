@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { Button } from "@/app/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card"
+import { SportSelector, SPORTS } from "@/app/components/sport-selector"
 
 interface ProfileFormProps {
   profile: {
@@ -10,6 +11,7 @@ interface ProfileFormProps {
     club_name: string | null
     age_group: string | null
     coaching_level: string | null
+    sport: string | null
   }
   email: string
 }
@@ -40,6 +42,7 @@ export function ProfileForm({ profile, email }: ProfileFormProps) {
   const [clubName, setClubName] = useState(profile.club_name || "")
   const [ageGroup, setAgeGroup] = useState(profile.age_group || "")
   const [coachingLevel, setCoachingLevel] = useState(profile.coaching_level || "")
+  const [sport, setSport] = useState(profile.sport || "football")
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -59,6 +62,7 @@ export function ProfileForm({ profile, email }: ProfileFormProps) {
           club_name: clubName,
           age_group: ageGroup,
           coaching_level: coachingLevel,
+          sport: sport,
         }),
       })
 
@@ -116,6 +120,21 @@ export function ProfileForm({ profile, email }: ProfileFormProps) {
             </label>
             <p className="text-muted-foreground px-3 py-2 bg-muted rounded-lg">{email}</p>
             <p className="text-xs text-muted-foreground mt-1">Email cannot be changed</p>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-2">
+              Sport
+            </label>
+            <SportSelector
+              value={sport}
+              onChange={setSport}
+              disabled={saving}
+              variant="dropdown"
+            />
+            <p className="text-xs text-muted-foreground mt-1">
+              This helps tailor your coaching reflection experience
+            </p>
           </div>
 
           <div>

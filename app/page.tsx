@@ -7,9 +7,9 @@ import { PricingSection } from "@/app/components/pricing-section"
 import { Footer } from "@/app/components/footer"
 import { AskAI } from "@/app/components/ask-ai"
 
-const COACHREFLECT_AI_PROMPT = `As a football coach who wants to improve but doesn't track what I actually coach, explain what CoachReflect is.
+const COACHREFLECT_AI_PROMPT = `As a sports coach who wants to improve but doesn't track what I actually coach, explain what CoachReflect is.
 
-Cover: How does the reflection/journaling process work? What do I log after each session? How does it help me identify patterns and gaps in my coaching? Is there AI-powered feedback? How is this different from just keeping notes? Does it integrate with other 360TFT tools? What's the pricing model?`
+Cover: How does the reflection/journaling process work? What do I log after each session? How does it help me identify patterns and gaps in my coaching? Is there AI-powered feedback? How is this different from just keeping notes? What sports does it support? What's the pricing model?`
 
 export default function Home() {
   return (
@@ -32,15 +32,23 @@ export default function Home() {
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-16 text-center">
         <Badge className="mb-4 bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200">
-          For Football Coaches
+          For Sports Coaches
         </Badge>
         <h1 className="text-4xl md:text-5xl font-bold mb-6 text-amber-900 dark:text-amber-100">
           Grow as a Coach Through<br />Guided Reflection
         </h1>
         <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
           Transform your post-session thoughts into actionable insights.
-          Track patterns, identify player progress, and unlock your coaching potential with AI-powered reflection tools.
+          Track patterns, identify athlete progress, and unlock your coaching potential with AI-powered reflection tools.
         </p>
+        <div className="flex justify-center gap-3 mb-6 text-2xl">
+          <span title="Football">⚽</span>
+          <span title="Rugby">🏉</span>
+          <span title="Basketball">🏀</span>
+          <span title="Tennis">🎾</span>
+          <span title="Swimming">🏊</span>
+          <span className="text-muted-foreground text-lg">+10 more</span>
+        </div>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link href="/demo">
             <Button size="lg" className="bg-amber-600 hover:bg-amber-700 text-white">

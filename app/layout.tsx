@@ -21,11 +21,11 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "CoachReflect - AI-Powered Reflection for Football Coaches",
+    default: "CoachReflect - AI-Powered Reflection for Sports Coaches",
     template: "%s | CoachReflect",
   },
-  description: "Transform your coaching with guided post-session reflections. Track patterns, identify player progress, and grow as a coach with AI-powered insights.",
-  keywords: ["football coaching", "coach reflection", "session review", "coaching development", "player tracking", "coaching journal", "football coach app", "session planning"],
+  description: "Transform your coaching with guided post-session reflections. Track patterns, identify athlete progress, and grow as a coach with AI-powered insights. For football, rugby, basketball, and more.",
+  keywords: ["sports coaching", "coach reflection", "session review", "coaching development", "athlete tracking", "coaching journal", "coach app", "session planning", "football coaching", "rugby coaching", "basketball coaching"],
   authors: [{ name: "360TFT" }],
   creator: "360TFT",
   publisher: "SVMS Consultancy Limited",
@@ -51,8 +51,8 @@ export const metadata: Metadata = {
     locale: "en_GB",
     url: "https://coachreflect.com",
     siteName: "CoachReflect",
-    title: "CoachReflect - AI-Powered Reflection for Football Coaches",
-    description: "Transform your coaching with guided post-session reflections. Track patterns, identify player progress, and grow as a coach with AI-powered insights.",
+    title: "CoachReflect - AI-Powered Reflection for Sports Coaches",
+    description: "Transform your coaching with guided post-session reflections. Track patterns, identify athlete progress, and grow as a coach with AI-powered insights. For football, rugby, basketball, and more.",
     images: [
       {
         url: "/og-image.png",

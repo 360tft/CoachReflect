@@ -3,27 +3,32 @@ import Anthropic from "@anthropic-ai/sdk"
 import { createClient } from "@/lib/supabase/server"
 import { createAdminClient } from "@/lib/supabase/admin"
 import { checkRateLimit, RATE_LIMITS } from "@/lib/rate-limit"
+import { SPORT_NAMES, getSportTerminology } from "@/lib/chat-config"
 
 const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY,
 })
 
-// Default coaching themes to look for
+// Default coaching themes to look for (applicable to all sports)
 const COACHING_THEMES = [
   'discipline', 'motivation', 'technique', 'tactical', 'physical',
   'communication', 'teamwork', 'confidence', 'session_planning',
   'player_development', 'game_management', 'parent_management'
 ]
 
-const EXTRACTION_PROMPT = `Analyze this coaching conversation and extract structured information about the coaching session.
+function getExtractionPrompt(sport: string, conversation: string): string {
+  const sportName = SPORT_NAMES[sport] || sport
+  const terms = getSportTerminology(sport)
+
+  return `Analyze this ${sportName} coaching conversation and extract structured information about the coaching session.
 
 Conversation:
-{conversation}
+${conversation}
 
 Extract and return a JSON object with:
 
-1. "players_mentioned": Array of players mentioned with context:
-   - "name": Player's name/identifier
+1. "${terms.player}s_mentioned": Array of ${terms.player}s mentioned with context:
+   - "name": ${terms.player.charAt(0).toUpperCase() + terms.player.slice(1)}'s name/identifier
    - "context": What was said about them (brief)
    - "sentiment": "positive", "concern", or "neutral"
 
@@ -32,8 +37,8 @@ Extract and return a JSON object with:
    - "confidence": 0-1 how strongly this theme is present
    - "snippet": Brief quote that shows this theme
 
-3. "exercises": Array of drills/exercises mentioned:
-   - "name": Exercise name
+3. "exercises": Array of ${terms.drill}s/exercises mentioned:
+   - "name": ${terms.drill.charAt(0).toUpperCase() + terms.drill.slice(1)} name
    - "context": How it was used or what happened
 
 4. "overall_sentiment": "positive", "neutral", "negative", or "mixed"
@@ -42,8 +47,10 @@ Extract and return a JSON object with:
 
 6. "key_insights": 1-3 main takeaways from this reflection
 
+Note: Return players_mentioned as the key regardless of sport terminology.
 Only include information that is actually present. Don't invent details.
 Return ONLY valid JSON, no explanation.`
+}
 
 export interface ExtractedInsight {
   players_mentioned: {
@@ -90,11 +97,12 @@ export async function POST(request: Request) {
     // Check subscription - theme extraction is Pro only
     const { data: profile } = await supabase
       .from("profiles")
-      .select("subscription_tier")
+      .select("subscription_tier, sport")
       .eq("user_id", user.id)
       .single()
 
     const isSubscribed = profile?.subscription_tier !== "free"
+    const userSport = profile?.sport || "football"
 
     if (!isSubscribed) {
       return NextResponse.json(
@@ -113,8 +121,8 @@ export async function POST(request: Request) {
       )
     }
 
-    // Build the extraction prompt
-    const prompt = EXTRACTION_PROMPT.replace('{conversation}', conversation_text)
+    // Build the extraction prompt with sport-specific terminology
+    const prompt = getExtractionPrompt(userSport, conversation_text)
 
     // Call Claude for extraction
     const response = await anthropic.messages.create({
@@ -191,10 +199,11 @@ export async function extractInsightsBackground(
   userId: string,
   conversationId: string,
   messageId: string,
-  conversationText: string
+  conversationText: string,
+  sport: string = 'football'
 ): Promise<void> {
   try {
-    const prompt = EXTRACTION_PROMPT.replace('{conversation}', conversationText)
+    const prompt = getExtractionPrompt(sport, conversationText)
 
     const response = await anthropic.messages.create({
       model: "claude-sonnet-4-20250514",

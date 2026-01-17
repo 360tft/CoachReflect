@@ -2,7 +2,7 @@ import { ImageResponse } from 'next/og'
 
 export const runtime = 'edge'
 
-export const alt = 'CoachReflect - AI-Powered Reflection for Football Coaches'
+export const alt = 'CoachReflect - AI-Powered Reflection for Sports Coaches'
 export const size = {
   width: 1200,
   height: 630,
@@ -68,7 +68,7 @@ export default async function Image() {
             textAlign: 'center',
           }}
         >
-          AI-Powered Reflection for Football Coaches
+          AI-Powered Reflection for Sports Coaches
         </div>
 
         {/* Features */}

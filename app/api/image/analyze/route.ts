@@ -3,28 +3,33 @@ import Anthropic from "@anthropic-ai/sdk"
 import { createClient } from "@/lib/supabase/server"
 import { createAdminClient } from "@/lib/supabase/admin"
 import { checkRateLimit, RATE_LIMITS } from "@/lib/rate-limit"
+import { SPORT_NAMES, getSportTerminology } from "@/lib/chat-config"
 import type { SessionPlanAnalysis } from "@/app/types"
 
 const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY,
 })
 
-const SESSION_PLAN_ANALYSIS_PROMPT = `You are analyzing a football coaching session plan image. Extract all relevant information and return it as structured JSON.
+function getSessionPlanAnalysisPrompt(sport: string): string {
+  const sportName = SPORT_NAMES[sport] || sport
+  const terms = getSportTerminology(sport)
 
-Analyze this session plan image and extract:
+  return `You are analyzing a ${sportName} coaching session plan image. Extract all relevant information and return it as structured JSON.
+
+Analyze this ${terms.session} plan image and extract:
 
 1. **title**: The session title or topic if visible
 2. **objectives**: List of session objectives/goals
-3. **drills**: Array of drills/activities, each with:
-   - name: Drill name
-   - description: What players do
+3. **drills**: Array of ${terms.drill}s/activities, each with:
+   - name: ${terms.drill.charAt(0).toUpperCase() + terms.drill.slice(1)} name
+   - description: What ${terms.player}s do
    - duration_minutes: Time allocation if shown
    - setup: Equipment/space setup
    - coaching_points: Key things to coach
 4. **total_duration_minutes**: Total session time if shown
 5. **equipment_needed**: List of equipment mentioned
 6. **age_group**: Target age group if mentioned
-7. **player_count**: Number of players if mentioned
+7. **player_count**: Number of ${terms.player}s if mentioned
 8. **coaching_points**: General coaching points for the session
 9. **image_type**: "handwritten", "digital", or "mixed"
 10. **confidence_score**: 0-1 how confident you are in the extraction
@@ -32,6 +37,7 @@ Analyze this session plan image and extract:
 If information is not visible or unclear, omit that field or use null.
 
 Return ONLY valid JSON, no markdown formatting or explanation.`
+}
 
 export async function POST(request: Request) {
   try {
@@ -58,11 +64,12 @@ export async function POST(request: Request) {
     // Check subscription - image analysis is Pro only
     const { data: profile } = await supabase
       .from("profiles")
-      .select("subscription_tier")
+      .select("subscription_tier, sport")
       .eq("user_id", user.id)
       .single()
 
     const isSubscribed = profile?.subscription_tier !== "free"
+    const userSport = profile?.sport || "football"
 
     if (!isSubscribed) {
       return NextResponse.json(
@@ -140,7 +147,7 @@ export async function POST(request: Request) {
               },
               {
                 type: "text",
-                text: SESSION_PLAN_ANALYSIS_PROMPT,
+                text: getSessionPlanAnalysisPrompt(userSport),
               },
             ],
           },

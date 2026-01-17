@@ -3,7 +3,7 @@ import Anthropic from "@anthropic-ai/sdk"
 import { createClient } from "@/lib/supabase/server"
 import { createAdminClient } from "@/lib/supabase/admin"
 import { checkRateLimit, RATE_LIMITS } from "@/lib/rate-limit"
-import { SYSTEM_PROMPT, CHAT_CONFIG, buildUserContext } from "@/lib/chat-config"
+import { getSystemPrompt, CHAT_CONFIG, buildUserContext } from "@/lib/chat-config"
 import type { ChatMessage, SessionPlanAnalysis } from "@/app/types"
 
 const anthropic = new Anthropic({
@@ -268,6 +268,9 @@ export async function POST(request: Request) {
       )
     }
 
+    // Get user's sport (default to football)
+    const userSport = profile?.sport || 'football'
+
     // Get user memory if exists (Pro feature)
     let userContext = ""
     if (isSubscribed) {
@@ -283,6 +286,7 @@ export async function POST(request: Request) {
           club_name: profile?.club_name,
           age_group: profile?.age_group,
           coaching_level: profile?.coaching_level,
+          sport: userSport,
         },
         memory || undefined
       )
@@ -292,11 +296,12 @@ export async function POST(request: Request) {
         club_name: profile?.club_name,
         age_group: profile?.age_group,
         coaching_level: profile?.coaching_level,
+        sport: userSport,
       })
     }
 
-    // Build messages array for Claude
-    const systemPrompt = SYSTEM_PROMPT + userContext
+    // Build messages array for Claude with sport-specific system prompt
+    const systemPrompt = getSystemPrompt(userSport) + userContext
 
     // Trim history to last N messages
     const trimmedHistory = history.slice(-CHAT_CONFIG.maxHistoryMessages)
