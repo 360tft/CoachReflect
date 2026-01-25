@@ -23,6 +23,7 @@ interface ChatInputProps {
   remaining?: number
   disabled?: boolean
   placeholder?: string
+  onUpgradeClick?: () => void
 }
 
 interface PendingAttachment {
@@ -45,6 +46,7 @@ export function ChatInput({
   remaining = 5,
   disabled = false,
   placeholder = "Type your message...",
+  onUpgradeClick,
 }: ChatInputProps) {
   const [input, setInput] = useState("")
   const [isRecording, setIsRecording] = useState(false)
@@ -60,10 +62,26 @@ export function ChatInput({
   const timerRef = useRef<NodeJS.Timeout | null>(null)
   const startTimeRef = useRef<number>(0)
 
+  const [showUpgradeHint, setShowUpgradeHint] = useState<string | null>(null)
+
   const isLimitReached = !isSubscribed && remaining <= 0
   const hasReadyAttachments = attachments.some(a => a.status === 'ready')
   const isProcessing = attachments.some(a => a.status === 'uploading' || a.status === 'transcribing' || a.status === 'analyzing')
   const canSend = (input.trim() || hasReadyAttachments) && !disabled && !isLimitReached && !isProcessing
+
+  // Handle Pro feature click for free users
+  const handleProFeatureClick = useCallback((feature: string) => {
+    if (!isSubscribed) {
+      setShowUpgradeHint(feature)
+      if (onUpgradeClick) {
+        onUpgradeClick()
+      }
+      // Auto-hide hint after 3 seconds
+      setTimeout(() => setShowUpgradeHint(null), 3000)
+      return false
+    }
+    return true
+  }, [isSubscribed, onUpgradeClick])
 
   // Upload voice note and get transcription
   const uploadAndTranscribe = useCallback(async (file: File | Blob, isBlob: boolean = false) => {
@@ -209,6 +227,7 @@ export function ChatInput({
   // Start recording
   const startRecording = useCallback(async () => {
     if (disabled || isLimitReached) return
+    if (!handleProFeatureClick('voice')) return
 
     setError(null)
     chunksRef.current = []
@@ -253,7 +272,7 @@ export function ChatInput({
         setError('Failed to start recording. Please check your microphone.')
       }
     }
-  }, [disabled, isLimitReached, uploadAndTranscribe])
+  }, [disabled, isLimitReached, uploadAndTranscribe, handleProFeatureClick])
 
   // Stop recording
   const stopRecording = useCallback(() => {
@@ -272,6 +291,12 @@ export function ChatInput({
   const handleFileSelect = useCallback((e: React.ChangeEvent<HTMLInputElement>, type: 'voice' | 'image') => {
     const file = e.target.files?.[0]
     if (!file) return
+
+    // Check Pro status for these features
+    if (!handleProFeatureClick(type)) {
+      e.target.value = ''
+      return
+    }
 
     if (type === 'voice') {
       if (!SUPPORTED_AUDIO_TYPES.includes(file.type as typeof SUPPORTED_AUDIO_TYPES[number])) {
@@ -298,7 +323,7 @@ export function ChatInput({
 
     // Reset input
     e.target.value = ''
-  }, [uploadAndTranscribe, uploadAndAnalyzeImage])
+  }, [uploadAndTranscribe, uploadAndAnalyzeImage, handleProFeatureClick])
 
   // Remove attachment
   const removeAttachment = useCallback((index: number) => {
@@ -371,6 +396,17 @@ export function ChatInput({
 
   return (
     <div className="border-t pt-4">
+      {/* Upgrade hint for Pro features */}
+      {showUpgradeHint && (
+        <div className="bg-amber-50 dark:bg-amber-950 border border-amber-200 dark:border-amber-800 rounded-lg p-3 mb-3">
+          <p className="text-sm text-amber-700 dark:text-amber-300">
+            {showUpgradeHint === 'voice' && 'Voice notes are a Pro feature. '}
+            {showUpgradeHint === 'image' && 'Session plan uploads are a Pro feature. '}
+            <a href="/dashboard/settings" className="underline font-medium">Upgrade to Pro</a> to unlock.
+          </p>
+        </div>
+      )}
+
       {/* Error display */}
       {error && (
         <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-3 mb-3">
@@ -461,18 +497,18 @@ export function ChatInput({
       )}
 
       {/* Input area */}
-      <div className="flex gap-2">
-        {/* Attachment buttons */}
-        <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-3">
+        {/* Attachment buttons - horizontal row above input */}
+        <div className="flex gap-2 flex-wrap">
           {/* Voice record button */}
           <Button
             type="button"
             variant="outline"
-            size="icon"
+            size="sm"
             onClick={isRecording ? stopRecording : startRecording}
-            disabled={disabled || isLimitReached}
-            className={isRecording ? 'bg-red-100 border-red-300 dark:bg-red-900' : ''}
-            title={isRecording ? 'Stop recording' : 'Record voice note'}
+            disabled={disabled}
+            className={`gap-2 ${isRecording ? 'bg-red-100 border-red-300 dark:bg-red-900' : ''} ${!isSubscribed ? 'opacity-70' : ''}`}
+            title={isRecording ? 'Stop recording' : (isSubscribed ? 'Record voice note' : 'Record voice note (Pro)')}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -488,6 +524,8 @@ export function ChatInput({
               <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
               <line x1="12" x2="12" y1="19" y2="22" />
             </svg>
+            {isRecording ? 'Stop' : 'Voice Note'}
+            {!isSubscribed && <span className="text-xs bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-300 px-1 rounded">Pro</span>}
           </Button>
 
           {/* Voice file upload */}
@@ -497,15 +535,19 @@ export function ChatInput({
             accept="audio/*"
             className="hidden"
             onChange={(e) => handleFileSelect(e, 'voice')}
-            disabled={disabled || isLimitReached}
+            disabled={disabled || isRecording}
           />
           <Button
             type="button"
             variant="outline"
-            size="icon"
-            onClick={() => fileInputRef.current?.click()}
-            disabled={disabled || isLimitReached || isRecording}
-            title="Upload voice file"
+            size="sm"
+            onClick={() => {
+              if (!handleProFeatureClick('voice')) return
+              fileInputRef.current?.click()
+            }}
+            disabled={disabled || isRecording}
+            className={`gap-2 ${!isSubscribed ? 'opacity-70' : ''}`}
+            title={isSubscribed ? "Upload voice file" : "Upload voice file (Pro)"}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -521,66 +563,74 @@ export function ChatInput({
               <polyline points="17 8 12 3 7 8" />
               <line x1="12" x2="12" y1="3" y2="15" />
             </svg>
+            Upload Audio
+            {!isSubscribed && <span className="text-xs bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-300 px-1 rounded">Pro</span>}
           </Button>
 
-          {/* Image upload (Pro only) */}
-          {isSubscribed && (
-            <>
-              <input
-                ref={imageInputRef}
-                type="file"
-                accept="image/*"
-                className="hidden"
-                onChange={(e) => handleFileSelect(e, 'image')}
-                disabled={disabled || isLimitReached || isRecording}
-              />
-              <Button
-                type="button"
-                variant="outline"
-                size="icon"
-                onClick={() => imageInputRef.current?.click()}
-                disabled={disabled || isLimitReached || isRecording}
-                title="Upload session plan image"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="h-4 w-4"
-                >
-                  <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
-                  <circle cx="9" cy="9" r="2" />
-                  <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
-                </svg>
-              </Button>
-            </>
-          )}
+          {/* Image upload - visible to all, Pro-gated on click */}
+          <input
+            ref={imageInputRef}
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={(e) => handleFileSelect(e, 'image')}
+            disabled={disabled || isRecording}
+          />
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => {
+              if (!handleProFeatureClick('image')) return
+              imageInputRef.current?.click()
+            }}
+            disabled={disabled || isRecording}
+            className={`gap-2 ${!isSubscribed ? 'opacity-70' : ''}`}
+            title={isSubscribed ? "Upload session plan image" : "Upload session plan (Pro)"}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="h-4 w-4"
+            >
+              <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
+              <circle cx="9" cy="9" r="2" />
+              <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
+            </svg>
+            Session Plan
+            {!isSubscribed && <span className="text-xs bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-300 px-1 rounded">Pro</span>}
+          </Button>
         </div>
 
-        {/* Text input */}
-        <Textarea
-          ref={textareaRef}
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={handleKeyDown}
-          placeholder={isLimitReached ? 'Daily limit reached. Upgrade to continue...' : placeholder}
-          disabled={disabled || isLimitReached || isRecording}
-          className="resize-none min-h-[60px] flex-1"
-          rows={2}
-        />
+        {/* Text input row */}
+        <div className="flex gap-2">
 
-        {/* Send button */}
-        <Button
-          onClick={handleSend}
-          disabled={!canSend}
-          className="bg-brand hover:bg-brand-hover self-end"
-        >
-          {isProcessing ? '...' : 'Send'}
-        </Button>
+        {/* Text input */}
+          <Textarea
+            ref={textareaRef}
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder={isLimitReached ? 'Daily limit reached. Upgrade to continue...' : placeholder}
+            disabled={disabled || isLimitReached || isRecording}
+            className="resize-none min-h-[60px] flex-1"
+            rows={2}
+          />
+
+          {/* Send button */}
+          <Button
+            onClick={handleSend}
+            disabled={!canSend}
+            className="bg-brand hover:bg-brand-hover self-end"
+          >
+            {isProcessing ? '...' : 'Send'}
+          </Button>
+        </div>
       </div>
 
       <p className="text-xs text-muted-foreground mt-2">
