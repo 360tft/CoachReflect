@@ -158,7 +158,9 @@ export function validateAudioFile(
     }
   }
 
-  if (!SUPPORTED_TYPES.includes(mimeType)) {
+  // Check if mime type starts with any supported type (handles codec suffixes like "audio/webm;codecs=opus")
+  const baseType = mimeType.split(';')[0].trim()
+  if (!SUPPORTED_TYPES.includes(baseType)) {
     return {
       valid: false,
       error: `Unsupported audio format: ${mimeType}. Supported formats: MP3, M4A, WAV, WebM, OGG, FLAC`,
