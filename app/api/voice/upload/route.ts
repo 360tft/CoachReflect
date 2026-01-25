@@ -133,7 +133,7 @@ export async function POST(request: NextRequest) {
       // Clean up uploaded file on error
       await adminClient.storage.from('voice-notes').remove([storagePath])
       return NextResponse.json(
-        { error: "Failed to create attachment record" },
+        { error: `Failed to create attachment record: ${insertError.message}` },
         { status: 500 }
       )
     }
