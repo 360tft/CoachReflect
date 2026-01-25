@@ -95,11 +95,14 @@ export async function POST(request: NextRequest) {
     const arrayBuffer = await file.arrayBuffer()
     const buffer = Buffer.from(arrayBuffer)
 
+    // Strip codec suffix (e.g., "audio/webm;codecs=opus" -> "audio/webm")
+    const contentType = file.type.split(';')[0].trim()
+
     const { error: uploadError } = await adminClient
       .storage
       .from('voice-notes')
       .upload(storagePath, buffer, {
-        contentType: file.type,
+        contentType,
         upsert: false,
       })
 
@@ -117,7 +120,7 @@ export async function POST(request: NextRequest) {
         user_id: user.id,
         attachment_type: 'voice',
         storage_path: storagePath,
-        mime_type: file.type,
+        mime_type: contentType,
         file_size_bytes: file.size,
         original_filename: file.name,
         processing_status: 'pending',
