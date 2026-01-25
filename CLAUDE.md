@@ -262,11 +262,12 @@ See `supabase/migrations/` for full schema. Key tables:
 
 ---
 
-## INFRASTRUCTURE SETUP (2026-01-24)
+## INFRASTRUCTURE SETUP (2026-01-24) ✅ COMPLETE
 
 ### Domain & DNS ✅ COMPLETE
 
 **Domain:** coachreflection.com (Namecheap)
+**Live URL:** https://coachreflection.com
 
 | Record | Host | Value | Status |
 |--------|------|-------|--------|
@@ -278,31 +279,60 @@ See `supabase/migrations/` for full schema. Key tables:
 | TXT | send | v=spf1 include:amazonses.com ~all | ✅ Resend |
 
 **Resend Domain:** ✅ Verified
+**Vercel Domain:** ✅ Added (coachreflection.com + www.coachreflection.com)
+**SSL Certificate:** ✅ Active
 
-### Vercel Environment Variables ✅ COMPLETE
+### Vercel Environment Variables ✅ COMPLETE (22 vars)
 
+**Core (10 vars):**
 | Variable | Status | Source |
 |----------|--------|--------|
 | NEXT_PUBLIC_APP_URL | ✅ | https://coachreflection.com |
 | RESEND_API_KEY | ✅ | Resend |
-| GOOGLE_CLIENT_ID | ✅ | Google Cloud (reused from FootballGPT) |
-| GOOGLE_CLIENT_SECRET | ✅ | Google Cloud (reused from FootballGPT) |
-| UPSTASH_REDIS_REST_URL | ✅ | Upstash (reused from FootballGPT) |
-| UPSTASH_REDIS_REST_TOKEN | ✅ | Upstash (reused from FootballGPT) |
-| OPENAI_API_KEY | ✅ | OpenAI (reused from FootballGPT) |
-| GOOGLE_AI_API_KEY | ✅ | Google AI (reused from FootballGPT) |
+| GOOGLE_CLIENT_ID | ✅ | Google Cloud (reused) |
+| GOOGLE_CLIENT_SECRET | ✅ | Google Cloud (reused) |
+| UPSTASH_REDIS_REST_URL | ✅ | Upstash (reused) |
+| UPSTASH_REDIS_REST_TOKEN | ✅ | Upstash (reused) |
+| OPENAI_API_KEY | ✅ | OpenAI (reused) |
+| GOOGLE_AI_API_KEY | ✅ | Google AI (reused) |
 | CRON_SECRET | ✅ | Auto-generated |
 | ADMIN_EMAILS | ✅ | kevin@360tft.com |
+
+**Stripe Price IDs (12 vars - placeholders, fill when creating products):**
+| Variable | Product | Price |
+|----------|---------|-------|
+| NEXT_PUBLIC_STRIPE_PRO_PRICE_ID | Pro Monthly | $7.99 |
+| NEXT_PUBLIC_STRIPE_PRO_ANNUAL_PRICE_ID | Pro Annual | $79 |
+| STRIPE_PRO_PLUS_PRICE_ID | Pro+ Monthly | $29 |
+| STRIPE_PRO_PLUS_ANNUAL_PRICE_ID | Pro+ Annual | $290 |
+| STRIPE_SPONSOR_PRICE_ID | Sponsor Monthly | $99 |
+| STRIPE_SPONSOR_ANNUAL_PRICE_ID | Sponsor Annual | $899 |
+| STRIPE_PRICE_CLUB_SMALL_MONTHLY | Small Club Monthly | $29 |
+| STRIPE_PRICE_CLUB_SMALL_ANNUAL | Small Club Annual | $259 |
+| STRIPE_PRICE_CLUB_MONTHLY | Club Monthly | $59 |
+| STRIPE_PRICE_CLUB_ANNUAL | Club Annual | $529 |
+| STRIPE_PRICE_CLUB_ACADEMY_MONTHLY | Academy Monthly | $99 |
+| STRIPE_PRICE_CLUB_ACADEMY_ANNUAL | Academy Annual | $899 |
+
+### Automation Scripts
+
+Located in `/scripts/`:
+- `setup-vercel-env.sh` - Push env vars to Vercel
+- `setup-stripe-products.sh` - Create Stripe products/prices
+- `setup-stripe-webhook.sh` - Create Stripe webhook
+- `setup-namecheap-dns.sh` - Configure DNS via Namecheap API
+- `add-dkim-record.sh` - Add DKIM for Resend
+- `verify-setup.sh` - Verify all services configured
 
 ### Still Needed (When Ready to Launch)
 
 | Item | Triggers Cost? | Status |
 |------|---------------|--------|
-| Supabase project | **Yes** | ⏳ Pending |
+| Supabase project | **Yes** | ⏳ Pending (create last) |
 | Supabase env vars | - | ⏳ After project created |
-| Stripe products/prices | No | ⏳ Pending |
-| Stripe env vars | - | ⏳ After products created |
-| Add domain to Vercel | No | ⏳ Pending |
+| Stripe products (create in dashboard) | No | ⏳ Pending |
+| Update Stripe price ID env vars | - | ⏳ After products created |
+| Stripe webhook | - | ⏳ After products created |
 | Google OAuth redirect URI | No | ⏳ After Supabase created |
 
 ### Google OAuth Note
