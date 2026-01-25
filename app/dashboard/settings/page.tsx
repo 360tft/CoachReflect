@@ -93,11 +93,11 @@ export default async function SettingsPage() {
 
           {subscriptionTier === "free" ? (
             <div className="space-y-4">
-              <div className="p-4 rounded-lg bg-muted/50 dark:bg-background border border dark:border">
-                <p className="font-medium text-primary dark:text-primary mb-2">
+              <div className="p-4 rounded-lg bg-muted/50 border">
+                <p className="font-medium text-foreground mb-2">
                   Upgrade to Pro
                 </p>
-                <ul className="text-sm text-primary dark:text-amber-300 space-y-1">
+                <ul className="text-sm text-muted-foreground space-y-1">
                   <li>• Unlimited reflections</li>
                   <li>• AI-powered insights and summaries</li>
                   <li>• Session plan upload with AI analysis</li>

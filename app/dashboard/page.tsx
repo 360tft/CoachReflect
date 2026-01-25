@@ -53,7 +53,7 @@ export default async function DashboardPage() {
     return (
       <div className="max-w-2xl mx-auto space-y-6">
         {/* Welcome Card */}
-        <Card className="border bg-gradient-to-br from-background to-orange-50 dark:from-background dark:to-orange-950 dark:border-amber-700">
+        <Card className="border bg-gradient-to-br from-background to-primary/5 dark:from-background dark:to-primary/10">
           <CardHeader className="text-center pb-2">
             
             <CardTitle className="text-2xl">

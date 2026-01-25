@@ -71,7 +71,7 @@ export function ReferralCard() {
   }
 
   return (
-    <Card className="border bg-gradient-to-br from-background to-orange-50 dark:from-background/30 dark:to-orange-950/30 dark:border">
+    <Card className="border bg-gradient-to-br from-background to-primary/5 dark:from-background dark:to-primary/10">
       <CardContent className="py-4">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div className="flex items-start gap-3">
@@ -81,10 +81,10 @@ export function ReferralCard() {
               </svg>
             </div>
             <div>
-              <h3 className="font-semibold text-primary dark:text-primary">
+              <h3 className="font-semibold text-foreground">
                 Refer Friends, Get Rewards
               </h3>
-              <p className="text-sm text-primary dark:text-amber-300">
+              <p className="text-sm text-muted-foreground">
                 {data.stats.total > 0
                   ? `${data.stats.total} referral${data.stats.total !== 1 ? 's' : ''}, ${data.stats.totalRewards} days earned`
                   : 'Get 7 days of Pro free for each friend who subscribes'
@@ -97,7 +97,6 @@ export function ReferralCard() {
               variant="outline"
               size="sm"
               onClick={copyReferralLink}
-              className="text-primary border hover:bg-primary/10 dark:text-amber-300 dark:border-amber-700 dark:hover:bg-primary/10"
             >
               {copied ? 'Copied!' : 'Copy Link'}
             </Button>

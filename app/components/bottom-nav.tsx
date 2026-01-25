@@ -57,7 +57,7 @@ export function BottomNav() {
 
   return (
     <nav
-      className="md:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 z-50 safe-area-bottom"
+      className="md:hidden fixed bottom-0 left-0 right-0 bg-background border-t border-border z-50 safe-area-bottom"
       aria-label="Mobile navigation"
     >
       <div className="flex items-center justify-around h-16">
@@ -69,8 +69,8 @@ export function BottomNav() {
               href={item.href}
               className={`flex flex-col items-center justify-center flex-1 h-full px-2 transition-colors ${
                 isActive
-                  ? 'text-primary dark:text-primary'
-                  : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
+                  ? 'text-primary'
+                  : 'text-muted-foreground hover:text-foreground'
               }`}
               aria-current={isActive ? 'page' : undefined}
             >

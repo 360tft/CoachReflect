@@ -16,7 +16,7 @@ export function AskAI({ question, prompt, className = '' }: AskAIProps) {
   const encodedPrompt = encodeURIComponent(prompt)
 
   return (
-    <p className={`text-sm text-gray-500 dark:text-gray-400 ${className}`}>
+    <p className={`text-sm text-muted-foreground ${className}`}>
       &ldquo;{question}&rdquo; — Ask{' '}
       {AI_PLATFORMS.map((platform, i) => (
         <span key={platform.name}>
@@ -24,7 +24,7 @@ export function AskAI({ question, prompt, className = '' }: AskAIProps) {
             href={`${platform.baseUrl}${encodedPrompt}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-gray-600 dark:text-gray-300 hover:text-brand underline underline-offset-2"
+            className="text-foreground hover:text-primary underline underline-offset-2"
           >
             {platform.name}
           </a>
