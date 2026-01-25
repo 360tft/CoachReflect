@@ -24,7 +24,7 @@ export function ChatInterface({ isSubscribed, initialRemaining = 5 }: ChatInterf
   const [remaining, setRemaining] = useState(initialRemaining)
   const [activeQuickReply, setActiveQuickReply] = useState<ParsedQuickReply | null>(null)
   const [reflectionSaved, setReflectionSaved] = useState(false)
-  const [savingReflection, setSavingReflection] = useState(false)
+  const [autoSaveTriggered, setAutoSaveTriggered] = useState(false)
 
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const abortControllerRef = useRef<AbortController | null>(null)
@@ -260,53 +260,42 @@ export function ChatInterface({ isSubscribed, initialRemaining = 5 }: ChatInterf
     setActiveQuickReply(null)
   }, [sendMessage])
 
-  // Check if reflection is ready to save (enough messages, no quick reply pending)
-  const canSaveReflection = messages.length >= 6 && !activeQuickReply && !loading && conversationId && !reflectionSaved
+  // Auto-save reflection after enough messages (4+ total, meaning 2 user + 2 assistant)
+  useEffect(() => {
+    const shouldAutoSave =
+      messages.length >= 4 &&
+      !loading &&
+      conversationId &&
+      !reflectionSaved &&
+      !autoSaveTriggered &&
+      isSubscribed // Only auto-save for Pro users to avoid API costs on free tier
 
-  // Save reflection to database
-  const saveReflection = useCallback(async () => {
-    if (!conversationId || savingReflection || reflectionSaved) return
+    if (shouldAutoSave) {
+      setAutoSaveTriggered(true)
 
-    setSavingReflection(true)
-    setError(null)
-
-    try {
-      const res = await fetch("/api/insights/extract", {
+      // Save in background - don't block UI
+      fetch("/api/insights/extract", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ conversationId, createReflection: true }),
       })
-
-      if (!res.ok) {
-        const data = await res.json()
-        throw new Error(data.error || "Failed to save reflection")
-      }
-
-      const data = await res.json()
-      setReflectionSaved(true)
-
-      // Show success feedback
-      const summaryMsg = data.extracted?.ai_summary
-        ? `Reflection saved! ${data.extracted.ai_summary}`
-        : "Reflection saved successfully. Your insights have been captured for analytics."
-
-      setMessages(prev => [...prev, {
-        role: "assistant" as const,
-        content: summaryMsg,
-        timestamp: new Date(),
-      }])
-
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to save reflection")
-    } finally {
-      setSavingReflection(false)
+        .then(res => res.json())
+        .then(() => {
+          setReflectionSaved(true)
+          console.log("Reflection auto-saved")
+        })
+        .catch(err => {
+          console.error("Auto-save failed:", err)
+          // Don't show error to user - it's a background operation
+        })
     }
-  }, [conversationId, savingReflection, reflectionSaved])
+  }, [messages.length, loading, conversationId, reflectionSaved, autoSaveTriggered, isSubscribed])
 
   // Reset reflection saved state when starting a new chat
   const startNewChatWithReset = useCallback(() => {
     startNewChat()
     setReflectionSaved(false)
+    setAutoSaveTriggered(false)
   }, [startNewChat])
 
   return (
@@ -459,29 +448,13 @@ export function ChatInterface({ isSubscribed, initialRemaining = 5 }: ChatInterf
           )}
         </div>
 
-        {/* Save Reflection Button */}
-        {canSaveReflection && (
-          <div className="bg-primary/5 border border-primary/20 rounded-lg p-3 mb-4">
-            <div className="flex items-center justify-between gap-4">
-              <div>
-                <p className="text-sm font-medium">Ready to save this reflection?</p>
-                <p className="text-xs text-muted-foreground">This will capture your insights for trending and analytics.</p>
-              </div>
-              <Button
-                size="sm"
-                onClick={saveReflection}
-                disabled={savingReflection}
-              >
-                {savingReflection ? "Saving..." : "Save Reflection"}
-              </Button>
-            </div>
-          </div>
-        )}
-
-        {/* Reflection Saved Confirmation */}
+        {/* Auto-saved indicator - subtle notification */}
         {reflectionSaved && (
-          <div className="bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-lg p-3 mb-4">
-            <p className="text-sm text-green-700 dark:text-green-300">Reflection saved! View your trends in Analytics.</p>
+          <div className="flex items-center gap-2 text-xs text-muted-foreground mb-2">
+            <svg className="h-3 w-3 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+            </svg>
+            Reflection saved to History
           </div>
         )}
 
