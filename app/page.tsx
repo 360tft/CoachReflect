@@ -18,7 +18,7 @@ export default function Home() {
       {/* Header */}
       <header className="container mx-auto px-4 py-6 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-3">
-          <Image src="/logo.svg" alt="Coach Reflection" width={180} height={36} priority />
+          <Image src="/logo.svg" alt="Coach Reflection" width={220} height={36} priority />
           <span className="text-sm text-muted-foreground">by 360TFT</span>
         </Link>
         <div className="flex items-center gap-4">
