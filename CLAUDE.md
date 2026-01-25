@@ -327,7 +327,7 @@ See `supabase/migrations/` for full schema. Key tables:
 | OPENAI_API_KEY | ✅ | OpenAI (reused) |
 | GOOGLE_AI_API_KEY | ✅ | Google AI (reused) |
 | CRON_SECRET | ✅ | Auto-generated |
-| ADMIN_EMAILS | ✅ | kevin@360tft.com |
+| ADMIN_EMAILS | ✅ | admin@360tft.com |
 
 **Stripe Price IDs (12 vars - placeholders, fill when creating products):**
 | Variable | Product | Price |

@@ -119,7 +119,7 @@ OPENAI_API_KEY=sk-...
 # App Config
 NEXT_PUBLIC_APP_URL=https://coachreflection.com
 CRON_SECRET=generate-random-string-here
-ADMIN_EMAILS=kevin@360tft.com
+ADMIN_EMAILS=admin@360tft.com
 
 # Optional: Rate Limiting (Upstash)
 UPSTASH_REDIS_REST_URL=https://...
