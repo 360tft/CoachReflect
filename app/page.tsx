@@ -183,6 +183,45 @@ export default function Home() {
         </div>
       </section>
 
+      {/* FAQ */}
+      <section className="container mx-auto px-4 py-20">
+        <h2 className="text-3xl font-bold text-center mb-4">Common Questions</h2>
+        <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
+          Quick answers about Coach Reflection
+        </p>
+        <div className="max-w-3xl mx-auto space-y-4">
+          <Card className="border">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-base">What sports does this work for?</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground">
+                Football, rugby, basketball, hockey, tennis, cricket, volleyball, baseball, swimming, athletics, gymnastics, martial arts, and more. The AI adapts its terminology and advice to your sport.
+              </p>
+            </CardContent>
+          </Card>
+          <Card className="border">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-base">How is this different from keeping notes?</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground">
+                Notes sit in a notebook. Coach Reflection asks you the right questions, spots patterns you might miss, and helps you identify what&apos;s actually working. It&apos;s like having a mentor who remembers everything.
+              </p>
+            </CardContent>
+          </Card>
+          <Card className="border">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-base">Is my data private?</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground">
+                Yes. Your reflections are encrypted and never shared. We don&apos;t sell data or use it to train AI models. You can export or delete your data at any time.
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
 
       {/* Pricing */}
       <PricingSection />

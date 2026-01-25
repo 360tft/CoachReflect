@@ -43,7 +43,25 @@ export function Footer() {
           <p className="text-center text-muted-foreground text-xs mb-4">
             More from 360 TFT
           </p>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 max-w-3xl mx-auto">
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3 max-w-4xl mx-auto">
+            <a
+              href="https://footballgpt.co"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex flex-col items-center gap-1 p-3 rounded-lg bg-card hover:bg-primary/10 transition-colors group"
+            >
+              <span className="text-xs font-medium text-foreground group-hover:text-primary text-center">FootballGPT</span>
+              <span className="text-[10px] text-muted-foreground">AI Coaching Assistant</span>
+            </a>
+            <a
+              href="https://refereegpt.co"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex flex-col items-center gap-1 p-3 rounded-lg bg-card hover:bg-primary/10 transition-colors group"
+            >
+              <span className="text-xs font-medium text-foreground group-hover:text-primary text-center">RefereeGPT</span>
+              <span className="text-[10px] text-muted-foreground">AI Referee Training</span>
+            </a>
             <a
               href="https://www.skool.com/coachingacademy"
               target="_blank"
