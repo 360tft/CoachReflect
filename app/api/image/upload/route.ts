@@ -117,10 +117,9 @@ export async function POST(request: Request) {
       .insert({
         user_id: user.id,
         attachment_type: "image",
-        file_path: uploadData.path,
-        file_url: publicUrl,
-        file_size: file.size,
+        storage_path: uploadData.path,
         mime_type: file.type,
+        file_size_bytes: file.size,
         original_filename: file.name,
         processing_status: "pending",
       })

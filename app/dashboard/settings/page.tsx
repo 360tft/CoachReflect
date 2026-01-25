@@ -32,6 +32,63 @@ export default async function SettingsPage() {
     <div className="max-w-2xl mx-auto space-y-6">
       <h1 className="text-2xl font-bold">Settings</h1>
 
+      {/* Subscription - FIRST */}
+      <Card className="border-2 border-primary/20">
+        <CardHeader>
+          <CardTitle>Subscription</CardTitle>
+          <CardDescription>Manage your subscription plan</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="font-medium capitalize">{subscriptionTier} Plan</p>
+              <p className="text-sm text-muted-foreground">
+                {subscriptionTier === "free"
+                  ? `${profile?.reflections_this_month || 0}/${limits.reflections_per_month} reflections this month`
+                  : "Unlimited reflections"
+                }
+              </p>
+            </div>
+            {subscriptionTier === "free" && (
+              <div className="text-right">
+                <p className="text-2xl font-bold">$7.99<span className="text-sm font-normal">/mo</span></p>
+              </div>
+            )}
+          </div>
+
+          {subscriptionTier === "free" ? (
+            <div className="space-y-4">
+              <div className="p-4 rounded-lg bg-muted/50 border">
+                <p className="font-medium text-foreground mb-2">
+                  Upgrade to Pro
+                </p>
+                <ul className="text-sm text-muted-foreground space-y-1">
+                  <li>• Unlimited reflections</li>
+                  <li>• Voice note recording and transcription</li>
+                  <li>• Session plan upload with AI analysis</li>
+                  <li>• AI-powered insights and summaries</li>
+                  <li>• Pattern detection across reflections</li>
+                </ul>
+              </div>
+              <BillingToggle />
+            </div>
+          ) : (
+            <div className="space-y-2">
+              <p className="text-sm text-green-600 dark:text-green-400">You have Pro access</p>
+              {profile?.stripe_customer_id ? (
+                <form action="/api/stripe/portal" method="POST">
+                  <Button type="submit" variant="outline">
+                    Manage Billing
+                  </Button>
+                </form>
+              ) : (
+                <p className="text-xs text-muted-foreground">Pro access granted manually</p>
+              )}
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
       {/* Profile - Editable Form */}
       <ProfileForm
         profile={{
@@ -66,55 +123,6 @@ export default async function SettingsPage() {
 
       {/* CPD Export */}
       <CPDExport isSubscribed={subscriptionTier !== "free"} />
-
-      {/* Subscription */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Subscription</CardTitle>
-          <CardDescription>Manage your subscription plan</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="font-medium capitalize">{subscriptionTier} Plan</p>
-              <p className="text-sm text-muted-foreground">
-                {subscriptionTier === "free"
-                  ? `${profile?.reflections_this_month || 0}/${limits.reflections_per_month} reflections this month`
-                  : "Unlimited reflections"
-                }
-              </p>
-            </div>
-            {subscriptionTier === "free" && (
-              <div className="text-right">
-                <p className="text-2xl font-bold">$7.99<span className="text-sm font-normal">/mo</span></p>
-              </div>
-            )}
-          </div>
-
-          {subscriptionTier === "free" ? (
-            <div className="space-y-4">
-              <div className="p-4 rounded-lg bg-muted/50 border">
-                <p className="font-medium text-foreground mb-2">
-                  Upgrade to Pro
-                </p>
-                <ul className="text-sm text-muted-foreground space-y-1">
-                  <li>• Unlimited reflections</li>
-                  <li>• AI-powered insights and summaries</li>
-                  <li>• Session plan upload with AI analysis</li>
-                  <li>• Pattern detection across reflections</li>
-                </ul>
-              </div>
-              <BillingToggle />
-            </div>
-          ) : (
-            <form action="/api/stripe/portal" method="POST">
-              <Button type="submit" variant="outline">
-                Manage Subscription
-              </Button>
-            </form>
-          )}
-        </CardContent>
-      </Card>
 
       {/* Help & Support */}
       <Card>
