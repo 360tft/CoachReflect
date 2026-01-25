@@ -117,10 +117,16 @@ export async function POST(request: Request) {
       .eq("id", attachment_id)
 
     try {
+      // Get public URL from storage path
+      const { data: { publicUrl } } = adminClient
+        .storage
+        .from("session-plans")
+        .getPublicUrl(attachment.storage_path)
+
       // Fetch the image
-      const imageResponse = await fetch(attachment.file_url)
+      const imageResponse = await fetch(publicUrl)
       if (!imageResponse.ok) {
-        throw new Error("Failed to fetch image")
+        throw new Error(`Failed to fetch image: ${imageResponse.status}`)
       }
 
       const imageBuffer = await imageResponse.arrayBuffer()
@@ -159,7 +165,6 @@ export async function POST(request: Request) {
         if (jsonText.endsWith("```")) jsonText = jsonText.slice(0, -3)
         analysis = JSON.parse(jsonText.trim())
       } catch {
-        console.error("Failed to parse Gemini response:", textContent)
         throw new Error("Failed to parse session plan analysis")
       }
 
@@ -168,7 +173,7 @@ export async function POST(request: Request) {
         .from("message_attachments")
         .update({
           processing_status: "completed",
-          metadata: analysis,
+          image_analysis: analysis,
         })
         .eq("id", attachment_id)
 
@@ -178,25 +183,23 @@ export async function POST(request: Request) {
       })
 
     } catch (analysisError) {
-      console.error("Analysis error:", analysisError)
-
       // Update status to failed
+      const errorMessage = analysisError instanceof Error ? analysisError.message : "Unknown error"
       await adminClient
         .from("message_attachments")
         .update({
           processing_status: "failed",
-          metadata: { error: analysisError instanceof Error ? analysisError.message : "Unknown error" },
+          processing_error: errorMessage,
         })
         .eq("id", attachment_id)
 
       return NextResponse.json(
-        { error: "Failed to analyze image" },
+        { error: `Failed to analyze image: ${errorMessage}` },
         { status: 500 }
       )
     }
 
-  } catch (error) {
-    console.error("Image analyze error:", error)
+  } catch {
     return NextResponse.json(
       { error: "Failed to analyze image" },
       { status: 500 }
