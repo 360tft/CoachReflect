@@ -18,7 +18,7 @@ export default function Home() {
       <header className="container mx-auto px-4 py-6 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo.svg" alt="Coach Reflection" width={200} height={36} />
+          <img src="/logo.png" alt="Coach Reflection" width={240} height={40} className="h-10 w-auto" />
           <span className="text-sm text-muted-foreground">by 360TFT</span>
         </Link>
         <div className="flex items-center gap-4">
