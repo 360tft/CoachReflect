@@ -59,7 +59,7 @@ export function ReferralCard() {
       <Card>
         <CardContent className="py-6">
           <div className="flex items-center justify-center">
-            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-amber-600"></div>
+            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>
           </div>
         </CardContent>
       </Card>
@@ -71,20 +71,20 @@ export function ReferralCard() {
   }
 
   return (
-    <Card className="border-amber-200 bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/30 dark:to-orange-950/30 dark:border-amber-800">
+    <Card className="border bg-gradient-to-br from-background to-orange-50 dark:from-background/30 dark:to-orange-950/30 dark:border">
       <CardContent className="py-4">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div className="flex items-start gap-3">
-            <div className="p-2 bg-amber-100 dark:bg-amber-900 rounded-lg">
-              <svg className="w-5 h-5 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="p-2 bg-primary/10 dark:bg-primary/10 rounded-lg">
+              <svg className="w-5 h-5 text-primary dark:text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
               </svg>
             </div>
             <div>
-              <h3 className="font-semibold text-amber-800 dark:text-amber-200">
+              <h3 className="font-semibold text-primary dark:text-primary">
                 Refer Friends, Get Rewards
               </h3>
-              <p className="text-sm text-amber-700 dark:text-amber-300">
+              <p className="text-sm text-primary dark:text-amber-300">
                 {data.stats.total > 0
                   ? `${data.stats.total} referral${data.stats.total !== 1 ? 's' : ''}, ${data.stats.totalRewards} days earned`
                   : 'Get 7 days of Pro free for each friend who subscribes'
@@ -97,14 +97,14 @@ export function ReferralCard() {
               variant="outline"
               size="sm"
               onClick={copyReferralLink}
-              className="text-amber-700 border-amber-300 hover:bg-amber-100 dark:text-amber-300 dark:border-amber-700 dark:hover:bg-amber-900"
+              className="text-primary border hover:bg-primary/10 dark:text-amber-300 dark:border-amber-700 dark:hover:bg-primary/10"
             >
               {copied ? 'Copied!' : 'Copy Link'}
             </Button>
             <Link href="/dashboard/referrals">
               <Button
                 size="sm"
-                className="bg-amber-600 hover:bg-amber-700 text-white"
+                className="bg-primary hover:bg-primary/90 text-white"
               >
                 View Details
               </Button>

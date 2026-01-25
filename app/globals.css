@@ -1,48 +1,52 @@
 @import "tailwindcss";
 
+/* Modern, clean design system */
+/* Primary accent: 360TFT Gold #E5A11C */
+/* Neutral base: Clean grays */
+
 :root {
   --background: 0 0% 100%;
-  --foreground: 45 10% 10%;
+  --foreground: 224 71% 4%;
   --card: 0 0% 100%;
-  --card-foreground: 45 10% 10%;
+  --card-foreground: 224 71% 4%;
   --popover: 0 0% 100%;
-  --popover-foreground: 45 10% 10%;
-  --primary: 45 93% 47%;
-  --primary-foreground: 45 10% 10%;
-  --secondary: 45 30% 96%;
-  --secondary-foreground: 45 10% 10%;
-  --muted: 45 30% 96%;
-  --muted-foreground: 45 10% 45%;
-  --accent: 45 30% 96%;
-  --accent-foreground: 45 10% 10%;
+  --popover-foreground: 224 71% 4%;
+  --primary: 43 85% 50%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 220 14% 96%;
+  --secondary-foreground: 224 71% 4%;
+  --muted: 220 14% 96%;
+  --muted-foreground: 220 9% 46%;
+  --accent: 220 14% 96%;
+  --accent-foreground: 224 71% 4%;
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 100%;
-  --border: 45 20% 90%;
-  --input: 45 20% 90%;
-  --ring: 45 93% 47%;
+  --border: 220 13% 91%;
+  --input: 220 13% 91%;
+  --ring: 43 85% 50%;
   --radius: 0.5rem;
 }
 
 .dark {
-  --background: 45 10% 5%;
-  --foreground: 45 10% 98%;
-  --card: 45 10% 8%;
-  --card-foreground: 45 10% 98%;
-  --popover: 45 10% 8%;
-  --popover-foreground: 45 10% 98%;
-  --primary: 45 93% 47%;
-  --primary-foreground: 45 10% 10%;
-  --secondary: 45 10% 15%;
-  --secondary-foreground: 45 10% 98%;
-  --muted: 45 10% 15%;
-  --muted-foreground: 45 10% 60%;
-  --accent: 45 10% 15%;
-  --accent-foreground: 45 10% 98%;
+  --background: 224 71% 4%;
+  --foreground: 210 20% 98%;
+  --card: 224 71% 6%;
+  --card-foreground: 210 20% 98%;
+  --popover: 224 71% 6%;
+  --popover-foreground: 210 20% 98%;
+  --primary: 43 85% 50%;
+  --primary-foreground: 224 71% 4%;
+  --secondary: 215 28% 17%;
+  --secondary-foreground: 210 20% 98%;
+  --muted: 215 28% 17%;
+  --muted-foreground: 217 10% 64%;
+  --accent: 215 28% 17%;
+  --accent-foreground: 210 20% 98%;
   --destructive: 0 62% 50%;
   --destructive-foreground: 0 0% 100%;
-  --border: 45 10% 20%;
-  --input: 45 10% 20%;
-  --ring: 45 93% 47%;
+  --border: 215 28% 17%;
+  --input: 215 28% 17%;
+  --ring: 43 85% 50%;
 }
 
 @theme inline {
@@ -69,29 +73,34 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
+  /* Custom brand colors */
+  --color-gold: #E5A11C;
+  --color-gold-dark: #C4890F;
+  --color-gold-light: #F5C04A;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not(.light) {
-    --background: 45 10% 5%;
-    --foreground: 45 10% 98%;
-    --card: 45 10% 8%;
-    --card-foreground: 45 10% 98%;
-    --popover: 45 10% 8%;
-    --popover-foreground: 45 10% 98%;
-    --primary: 45 93% 47%;
-    --primary-foreground: 45 10% 10%;
-    --secondary: 45 10% 15%;
-    --secondary-foreground: 45 10% 98%;
-    --muted: 45 10% 15%;
-    --muted-foreground: 45 10% 60%;
-    --accent: 45 10% 15%;
-    --accent-foreground: 45 10% 98%;
+    --background: 224 71% 4%;
+    --foreground: 210 20% 98%;
+    --card: 224 71% 6%;
+    --card-foreground: 210 20% 98%;
+    --popover: 224 71% 6%;
+    --popover-foreground: 210 20% 98%;
+    --primary: 43 85% 50%;
+    --primary-foreground: 224 71% 4%;
+    --secondary: 215 28% 17%;
+    --secondary-foreground: 210 20% 98%;
+    --muted: 215 28% 17%;
+    --muted-foreground: 217 10% 64%;
+    --accent: 215 28% 17%;
+    --accent-foreground: 210 20% 98%;
     --destructive: 0 62% 50%;
     --destructive-foreground: 0 0% 100%;
-    --border: 45 10% 20%;
-    --input: 45 10% 20%;
-    --ring: 45 93% 47%;
+    --border: 215 28% 17%;
+    --input: 215 28% 17%;
+    --ring: 43 85% 50%;
   }
 }
 
@@ -121,4 +130,18 @@ html, body {
   main {
     padding-bottom: calc(4rem + env(safe-area-inset-bottom));
   }
+}
+
+/* Custom utility classes for brand gold */
+.bg-gold {
+  background-color: var(--color-gold);
+}
+.bg-gold-dark {
+  background-color: var(--color-gold-dark);
+}
+.text-gold {
+  color: var(--color-gold);
+}
+.border-gold {
+  border-color: var(--color-gold);
 }

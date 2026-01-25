@@ -121,7 +121,7 @@ export default function AdminAnalytics() {
             </div>
             <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow">
               <p className="text-sm text-gray-500 dark:text-gray-400">Avg Reflections/User</p>
-              <p className="text-2xl font-bold text-amber-600">
+              <p className="text-2xl font-bold text-primary">
                 {data.summary.avgReflectionsPerUser.toFixed(1)}
               </p>
             </div>

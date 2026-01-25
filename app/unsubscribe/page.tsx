@@ -64,7 +64,7 @@ function UnsubscribeContent() {
 
   if (!userId && !email) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-amber-50 to-white dark:from-amber-950 dark:to-background flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-b from-background to-white dark:from-background dark:to-background flex items-center justify-center p-4">
         <Card className="max-w-md w-full">
           <CardHeader className="text-center">
             <CardTitle>Invalid Link</CardTitle>
@@ -84,7 +84,7 @@ function UnsubscribeContent() {
 
   if (status === "success") {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-amber-50 to-white dark:from-amber-950 dark:to-background flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-b from-background to-white dark:from-background dark:to-background flex items-center justify-center p-4">
         <Card className="max-w-md w-full">
           <CardHeader className="text-center">
             <CardTitle>
@@ -103,7 +103,7 @@ function UnsubscribeContent() {
                 Changed your mind?{" "}
                 <button
                   onClick={handleResubscribe}
-                  className="text-amber-600 hover:underline"
+                  className="text-primary hover:underline"
                 >
                   Resubscribe
                 </button>
@@ -119,7 +119,7 @@ function UnsubscribeContent() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50 to-white dark:from-amber-950 dark:to-background flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-b from-background to-white dark:from-background dark:to-background flex items-center justify-center p-4">
       <Card className="max-w-md w-full">
         <CardHeader className="text-center">
           <CardTitle>Email Preferences</CardTitle>
@@ -163,7 +163,7 @@ function UnsubscribeContent() {
 export default function UnsubscribePage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-gradient-to-b from-amber-50 to-white dark:from-amber-950 dark:to-background flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-b from-background to-white dark:from-background dark:to-background flex items-center justify-center">
         <p className="text-muted-foreground">Loading...</p>
       </div>
     }>

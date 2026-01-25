@@ -85,7 +85,7 @@ export default function ReferralsPage() {
         <Card>
           <CardContent className="py-12">
             <div className="flex items-center justify-center">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-amber-600"></div>
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
             </div>
           </CardContent>
         </Card>
@@ -205,7 +205,7 @@ export default function ReferralsPage() {
         <CardContent>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             <div className="text-center p-4 bg-muted rounded-lg">
-              <div className="text-2xl font-bold text-amber-600">{data.stats.total}</div>
+              <div className="text-2xl font-bold text-primary">{data.stats.total}</div>
               <div className="text-xs text-muted-foreground">Total Referrals</div>
             </div>
             <div className="text-center p-4 bg-muted rounded-lg">
@@ -217,7 +217,7 @@ export default function ReferralsPage() {
               <div className="text-xs text-muted-foreground">Completed</div>
             </div>
             <div className="text-center p-4 bg-muted rounded-lg">
-              <div className="text-2xl font-bold text-amber-600">{data.stats.totalRewards}</div>
+              <div className="text-2xl font-bold text-primary">{data.stats.totalRewards}</div>
               <div className="text-xs text-muted-foreground">Days Earned</div>
             </div>
           </div>
@@ -232,15 +232,15 @@ export default function ReferralsPage() {
         <CardContent>
           <ol className="space-y-4">
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-amber-600 text-white text-sm flex items-center justify-center font-semibold">1</span>
+              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary text-white text-sm flex items-center justify-center font-semibold">1</span>
               <span className="text-muted-foreground">Share your referral link with fellow coaches</span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-amber-600 text-white text-sm flex items-center justify-center font-semibold">2</span>
+              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary text-white text-sm flex items-center justify-center font-semibold">2</span>
               <span className="text-muted-foreground">When they sign up using your link and subscribe to Pro, you both get 7 days free</span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-amber-600 text-white text-sm flex items-center justify-center font-semibold">3</span>
+              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary text-white text-sm flex items-center justify-center font-semibold">3</span>
               <span className="text-muted-foreground">The more friends you refer, the more free Pro days you earn</span>
             </li>
           </ol>

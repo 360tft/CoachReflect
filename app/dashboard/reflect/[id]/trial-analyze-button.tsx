@@ -52,24 +52,24 @@ export function TrialAnalyzeButton({ id }: { id: string }) {
 
   return (
     <div className="space-y-4">
-      <div className="p-4 rounded-lg bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-950 dark:to-orange-950 border border-amber-200 dark:border-amber-800">
+      <div className="p-4 rounded-lg bg-gradient-to-r from-background to-orange-50 dark:from-background dark:to-orange-950 border border dark:border">
         <div className="flex items-center gap-2 mb-2">
           <span className="text-xl">sparkles symbol</span>
-          <p className="font-semibold text-amber-800 dark:text-amber-200">
+          <p className="font-semibold text-primary dark:text-primary">
             Try AI Insights Free
           </p>
         </div>
-        <p className="text-sm text-amber-700 dark:text-amber-300 mb-3">
+        <p className="text-sm text-primary dark:text-amber-300 mb-3">
           Experience the power of AI coaching insights with a free trial. See how AI can help you grow as a coach.
         </p>
-        <Button onClick={handleTrialAnalyze} disabled={loading} className="bg-amber-600 hover:bg-amber-700">
+        <Button onClick={handleTrialAnalyze} disabled={loading} className="bg-primary hover:bg-primary/90">
           {loading ? 'Analyzing...' : 'Try AI Insights Free'}
         </Button>
       </div>
 
       <div className="flex items-center justify-center gap-4 text-sm text-muted-foreground">
         <span>or</span>
-        <Link href="/dashboard/settings" className="text-amber-600 hover:underline">
+        <Link href="/dashboard/settings" className="text-primary hover:underline">
           Upgrade to Pro for unlimited AI insights
         </Link>
       </div>

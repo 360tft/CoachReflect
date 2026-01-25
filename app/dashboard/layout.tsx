@@ -60,7 +60,7 @@ export default async function DashboardLayout({
         <div className="container mx-auto px-4 py-3 flex items-center justify-between">
           <Link href="/dashboard" className="flex items-center gap-2">
             <span className="text-2xl">🪞</span>
-            <span className="font-bold text-lg text-amber-800 dark:text-amber-200">Coach Reflection</span>
+            <span className="font-bold text-lg text-primary dark:text-primary">Coach Reflection</span>
           </Link>
 
           <div className="flex items-center gap-4">
@@ -69,7 +69,7 @@ export default async function DashboardLayout({
             </span>
             {subscriptionTier === "free" && (
               <Link href="/dashboard/settings">
-                <span className="text-xs bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200 px-2 py-1 rounded-full">
+                <span className="text-xs bg-primary/10 text-primary dark:bg-primary/10 dark:text-primary px-2 py-1 rounded-full">
                   Free
                 </span>
               </Link>

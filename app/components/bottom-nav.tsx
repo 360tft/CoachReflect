@@ -69,7 +69,7 @@ export function BottomNav() {
               href={item.href}
               className={`flex flex-col items-center justify-center flex-1 h-full px-2 transition-colors ${
                 isActive
-                  ? 'text-amber-600 dark:text-amber-400'
+                  ? 'text-primary dark:text-primary'
                   : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
               }`}
               aria-current={isActive ? 'page' : undefined}

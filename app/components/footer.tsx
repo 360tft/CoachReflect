@@ -50,7 +50,6 @@ export function Footer() {
               rel="noopener noreferrer"
               className="flex flex-col items-center gap-1 p-3 rounded-lg bg-card hover:bg-primary/10 transition-colors group"
             >
-              <span className="text-lg">🎓</span>
               <span className="text-xs font-medium text-foreground group-hover:text-primary text-center">Coaching Academy</span>
               <span className="text-[10px] text-muted-foreground">Community & Courses</span>
             </a>
@@ -60,7 +59,6 @@ export function Footer() {
               rel="noopener noreferrer"
               className="flex flex-col items-center gap-1 p-3 rounded-lg bg-card hover:bg-primary/10 transition-colors group"
             >
-              <span className="text-lg">⚽</span>
               <span className="text-xs font-medium text-foreground group-hover:text-primary text-center">$2 Drill Club</span>
               <span className="text-[10px] text-muted-foreground">Weekly Drills</span>
             </a>
@@ -70,7 +68,6 @@ export function Footer() {
               rel="noopener noreferrer"
               className="flex flex-col items-center gap-1 p-3 rounded-lg bg-card hover:bg-primary/10 transition-colors group"
             >
-              <span className="text-lg">💬</span>
               <span className="text-xs font-medium text-foreground group-hover:text-primary text-center">360TFT Community</span>
               <span className="text-[10px] text-muted-foreground">Free Discussion</span>
             </a>
@@ -80,7 +77,6 @@ export function Footer() {
               rel="noopener noreferrer"
               className="flex flex-col items-center gap-1 p-3 rounded-lg bg-card hover:bg-primary/10 transition-colors group"
             >
-              <span className="text-lg">📚</span>
               <span className="text-xs font-medium text-foreground group-hover:text-primary text-center">Dogmatic Coach</span>
               <span className="text-[10px] text-muted-foreground">Book by Kevin</span>
             </a>
@@ -90,7 +86,6 @@ export function Footer() {
               rel="noopener noreferrer"
               className="flex flex-col items-center gap-1 p-3 rounded-lg bg-card hover:bg-primary/10 transition-colors group"
             >
-              <span className="text-lg">🌐</span>
               <span className="text-xs font-medium text-foreground group-hover:text-primary text-center">360TFT Website</span>
               <span className="text-[10px] text-muted-foreground">Blog & Resources</span>
             </a>

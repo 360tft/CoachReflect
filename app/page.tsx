@@ -13,11 +13,11 @@ Cover: How does the reflection/journaling process work? What do I log after each
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50 to-white dark:from-amber-950 dark:to-background">
+    <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="container mx-auto px-4 py-6 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <span className="text-xl font-bold text-amber-800 dark:text-amber-200">Coach Reflection</span>
+          <span className="text-xl font-bold">Coach Reflection</span>
         </div>
         <div className="flex items-center gap-4">
           <Link href="/login">
@@ -30,28 +30,23 @@ export default function Home() {
       </header>
 
       {/* Hero Section */}
-      <section className="container mx-auto px-4 py-16 text-center">
-        <Badge className="mb-4 bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200">
+      <section className="container mx-auto px-4 py-20 text-center">
+        <Badge className="mb-4" variant="secondary">
           For Sports Coaches
         </Badge>
-        <h1 className="text-4xl md:text-5xl font-bold mb-6 text-amber-900 dark:text-amber-100">
+        <h1 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight">
           Grow as a Coach Through<br />Guided Reflection
         </h1>
-        <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+        <p className="text-xl text-muted-foreground mb-4 max-w-2xl mx-auto">
           Transform your post-session thoughts into actionable insights.
-          Track patterns, identify athlete progress, and unlock your coaching potential with AI-powered reflection tools.
+          Track patterns, identify athlete progress, and unlock your coaching potential.
         </p>
-        <div className="flex justify-center gap-3 mb-6 text-2xl">
-          <span title="Football">⚽</span>
-          <span title="Rugby">🏉</span>
-          <span title="Basketball">🏀</span>
-          <span title="Tennis">🎾</span>
-          <span title="Swimming">🏊</span>
-          <span className="text-muted-foreground text-lg">+10 more</span>
-        </div>
+        <p className="text-sm text-muted-foreground mb-8">
+          Football, Rugby, Basketball, Tennis, Swimming, and 10+ more sports
+        </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link href="/demo">
-            <Button size="lg" className="bg-amber-600 hover:bg-amber-700 text-white">
+            <Button size="lg">
               Try Demo - 3 Free Messages
             </Button>
           </Link>
@@ -72,21 +67,21 @@ export default function Home() {
       </section>
 
       {/* Guided Prompts Preview */}
-      <section id="how-it-works" className="container mx-auto px-4 py-16">
+      <section id="how-it-works" className="container mx-auto px-4 py-20">
         <h2 className="text-3xl font-bold text-center mb-4">Guided Reflection Questions</h2>
         <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
           Answer simple questions after each session. Our AI finds patterns and turns your thoughts into growth opportunities.
         </p>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
           {GUIDED_PROMPTS.slice(0, 3).map((prompt) => (
-            <Card key={prompt.id} className="border-amber-200 dark:border-amber-800">
+            <Card key={prompt.id} className="border">
               <CardHeader>
                 <CardTitle className="text-lg">{prompt.question}</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-muted-foreground italic">&quot;{prompt.placeholder}&quot;</p>
                 {prompt.tip && (
-                  <p className="text-xs text-amber-600 dark:text-amber-400 mt-2">
+                  <p className="text-xs text-primary mt-2">
                     {prompt.tip}
                   </p>
                 )}
@@ -97,29 +92,31 @@ export default function Home() {
       </section>
 
       {/* Mood Tracking */}
-      <section className="container mx-auto px-4 py-16 bg-amber-50/50 dark:bg-amber-950/20 rounded-3xl mx-4">
-        <h2 className="text-3xl font-bold text-center mb-4">Track Your Coaching Journey</h2>
-        <p className="text-center text-muted-foreground mb-8">
-          Log your mood and energy after each session to spot burnout early
-        </p>
-        <div className="flex justify-center gap-4 flex-wrap">
-          {MOOD_OPTIONS.map((mood) => (
-            <div key={mood.value} className="flex flex-col items-center gap-2">
-              <span className="text-sm text-muted-foreground">{mood.label}</span>
-            </div>
-          ))}
+      <section className="container mx-auto px-4 py-20">
+        <div className="bg-muted/50 rounded-2xl p-8 md:p-12 max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl font-bold mb-4">Track Your Coaching Journey</h2>
+          <p className="text-muted-foreground mb-8">
+            Log your mood and energy after each session to spot burnout early
+          </p>
+          <div className="flex justify-center gap-4 flex-wrap">
+            {MOOD_OPTIONS.map((mood) => (
+              <div key={mood.value} className="flex flex-col items-center gap-2 px-4 py-2 rounded-lg bg-background border">
+                <span className="text-sm font-medium">{mood.label}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* AI Insights */}
-      <section className="container mx-auto px-4 py-16">
+      <section className="container mx-auto px-4 py-20">
         <h2 className="text-3xl font-bold text-center mb-4">AI-Powered Insights</h2>
         <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
           Our AI analyzes your reflections over time to surface patterns you might miss
         </p>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
           {INSIGHT_TYPES.slice(0, 6).map((insight) => (
-            <Card key={insight.id} className="text-center">
+            <Card key={insight.id} className="text-center border">
               <CardHeader>
                 <CardTitle className="text-lg">{insight.label}</CardTitle>
               </CardHeader>
@@ -139,10 +136,10 @@ export default function Home() {
       </section>
 
       {/* Features */}
-      <section className="container mx-auto px-4 py-16">
+      <section className="container mx-auto px-4 py-20">
         <h2 className="text-3xl font-bold text-center mb-12">Everything You Need to Reflect & Grow</h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <Card>
+          <Card className="border">
             <CardHeader>
               <CardTitle>Guided Journaling</CardTitle>
             </CardHeader>
@@ -152,7 +149,7 @@ export default function Home() {
               </p>
             </CardContent>
           </Card>
-          <Card>
+          <Card className="border">
             <CardHeader>
               <CardTitle>Pattern Detection</CardTitle>
             </CardHeader>
@@ -162,7 +159,7 @@ export default function Home() {
               </p>
             </CardContent>
           </Card>
-          <Card>
+          <Card className="border">
             <CardHeader>
               <CardTitle>Player Tracking</CardTitle>
             </CardHeader>
@@ -172,7 +169,7 @@ export default function Home() {
               </p>
             </CardContent>
           </Card>
-          <Card>
+          <Card className="border">
             <CardHeader>
               <CardTitle>Progress Dashboard</CardTitle>
             </CardHeader>
@@ -186,83 +183,85 @@ export default function Home() {
       </section>
 
       {/* Testimonials */}
-      <section className="container mx-auto px-4 py-16 bg-muted/30 rounded-3xl">
-        <h2 className="text-3xl font-bold text-center mb-4">Coaches Are Growing</h2>
-        <p className="text-center text-muted-foreground mb-12">
-          Join coaches who are using reflection to level up their practice
-        </p>
-        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          <Card className="bg-background">
-            <CardContent className="pt-6">
-              <div className="flex gap-1 mb-3 text-amber-500">
-                {"★★★★★".split("").map((star, i) => (
-                  <span key={i}>{star}</span>
-                ))}
-              </div>
-              <p className="text-muted-foreground mb-4">
-                &quot;I used to finish sessions and forget what worked by the next day.
-                Now I have a clear record of what&apos;s actually improving my players.
-                The AI insights spotted a pattern I completely missed.&quot;
-              </p>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-900 flex items-center justify-center">
-                  <span className="text-amber-800 dark:text-amber-200 font-bold">SM</span>
+      <section className="container mx-auto px-4 py-20">
+        <div className="bg-muted/30 rounded-2xl p-8 md:p-12">
+          <h2 className="text-3xl font-bold text-center mb-4">Coaches Are Growing</h2>
+          <p className="text-center text-muted-foreground mb-12">
+            Join coaches who are using reflection to level up their practice
+          </p>
+          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            <Card className="bg-background border">
+              <CardContent className="pt-6">
+                <div className="flex gap-1 mb-3 text-primary">
+                  {"★★★★★".split("").map((star, i) => (
+                    <span key={i}>{star}</span>
+                  ))}
                 </div>
-                <div>
-                  <p className="font-medium text-sm">Sarah M.</p>
-                  <p className="text-xs text-muted-foreground">U12 Girls Coach</p>
+                <p className="text-muted-foreground mb-4">
+                  &quot;I used to finish sessions and forget what worked by the next day.
+                  Now I have a clear record of what&apos;s actually improving my players.
+                  The AI insights spotted a pattern I completely missed.&quot;
+                </p>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                    <span className="text-primary font-bold text-sm">SM</span>
+                  </div>
+                  <div>
+                    <p className="font-medium text-sm">Sarah M.</p>
+                    <p className="text-xs text-muted-foreground">U12 Girls Coach</p>
+                  </div>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
 
-          <Card className="bg-background">
-            <CardContent className="pt-6">
-              <div className="flex gap-1 mb-3 text-amber-500">
-                {"★★★★★".split("").map((star, i) => (
-                  <span key={i}>{star}</span>
-                ))}
-              </div>
-              <p className="text-muted-foreground mb-4">
-                &quot;The session plan upload is brilliant. I just snap a photo of my
-                whiteboard notes and it understands everything. Saves me 10 minutes
-                of typing after every training.&quot;
-              </p>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-900 flex items-center justify-center">
-                  <span className="text-amber-800 dark:text-amber-200 font-bold">JT</span>
+            <Card className="bg-background border">
+              <CardContent className="pt-6">
+                <div className="flex gap-1 mb-3 text-primary">
+                  {"★★★★★".split("").map((star, i) => (
+                    <span key={i}>{star}</span>
+                  ))}
                 </div>
-                <div>
-                  <p className="font-medium text-sm">James T.</p>
-                  <p className="text-xs text-muted-foreground">Academy Coach</p>
+                <p className="text-muted-foreground mb-4">
+                  &quot;The session plan upload is brilliant. I just snap a photo of my
+                  whiteboard notes and it understands everything. Saves me 10 minutes
+                  of typing after every training.&quot;
+                </p>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                    <span className="text-primary font-bold text-sm">JT</span>
+                  </div>
+                  <div>
+                    <p className="font-medium text-sm">James T.</p>
+                    <p className="text-xs text-muted-foreground">Academy Coach</p>
+                  </div>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
 
-          <Card className="bg-background">
-            <CardContent className="pt-6">
-              <div className="flex gap-1 mb-3 text-amber-500">
-                {"★★★★★".split("").map((star, i) => (
-                  <span key={i}>{star}</span>
-                ))}
-              </div>
-              <p className="text-muted-foreground mb-4">
-                &quot;I&apos;ve been coaching for 15 years and thought I knew my patterns.
-                Looking back at 3 months of reflections showed me I was always
-                rushing the warm-up. Simple fix, huge impact.&quot;
-              </p>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-900 flex items-center justify-center">
-                  <span className="text-amber-800 dark:text-amber-200 font-bold">MK</span>
+            <Card className="bg-background border">
+              <CardContent className="pt-6">
+                <div className="flex gap-1 mb-3 text-primary">
+                  {"★★★★★".split("").map((star, i) => (
+                    <span key={i}>{star}</span>
+                  ))}
                 </div>
-                <div>
-                  <p className="font-medium text-sm">Mike K.</p>
-                  <p className="text-xs text-muted-foreground">Senior Team Manager</p>
+                <p className="text-muted-foreground mb-4">
+                  &quot;I&apos;ve been coaching for 15 years and thought I knew my patterns.
+                  Looking back at 3 months of reflections showed me I was always
+                  rushing the warm-up. Simple fix, huge impact.&quot;
+                </p>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                    <span className="text-primary font-bold text-sm">MK</span>
+                  </div>
+                  <div>
+                    <p className="font-medium text-sm">Mike K.</p>
+                    <p className="text-xs text-muted-foreground">Senior Team Manager</p>
+                  </div>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </section>
 
@@ -270,22 +269,22 @@ export default function Home() {
       <PricingSection />
 
       {/* CTA */}
-      <section className="container mx-auto px-4 py-16 text-center">
-        <Card className="bg-amber-600 text-white border-0 max-w-2xl mx-auto">
+      <section className="container mx-auto px-4 py-20 text-center">
+        <Card className="bg-primary text-primary-foreground border-0 max-w-2xl mx-auto">
           <CardHeader>
-            <CardTitle className="text-2xl text-white">Ready to Become a Better Coach?</CardTitle>
-            <CardDescription className="text-amber-100">
+            <CardTitle className="text-2xl">Ready to Become a Better Coach?</CardTitle>
+            <CardDescription className="text-primary-foreground/80">
               Join coaches who are using reflection to accelerate their development
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/demo">
-              <Button size="lg" variant="secondary" className="bg-white text-amber-800 hover:bg-amber-50">
+              <Button size="lg" variant="secondary">
                 Try Demo Free
               </Button>
             </Link>
             <Link href="/signup">
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-amber-700">
+              <Button size="lg" variant="outline" className="border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/10">
                 Sign Up
               </Button>
             </Link>

@@ -175,7 +175,7 @@ export default function NewReflectionPage() {
     switch (step) {
       case "upload":
         return (
-          <Card className="border-amber-200 dark:border-amber-800">
+          <Card className="border dark:border">
             <CardHeader className="text-center">
               
               <CardTitle>Upload Your Session Plan</CardTitle>
@@ -462,13 +462,13 @@ export default function NewReflectionPage() {
                     {tags.map((tag) => (
                       <span
                         key={tag}
-                        className="inline-flex items-center gap-1 px-2 py-1 bg-amber-100 dark:bg-amber-900 text-amber-800 dark:text-amber-200 rounded-full text-sm"
+                        className="inline-flex items-center gap-1 px-2 py-1 bg-primary/10 dark:bg-primary/10 text-primary dark:text-primary rounded-full text-sm"
                       >
                         #{tag}
                         <button
                           type="button"
                           onClick={() => handleRemoveTag(tag)}
-                          className="hover:text-amber-600"
+                          className="hover:text-primary"
                         >
                           ×
                         </button>

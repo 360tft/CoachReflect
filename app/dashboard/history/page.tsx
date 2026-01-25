@@ -80,7 +80,7 @@ export default async function HistoryPage() {
                             {reflection.tags.map((tag: string) => (
                               <span
                                 key={tag}
-                                className="text-xs bg-amber-100 dark:bg-amber-900 text-amber-800 dark:text-amber-200 px-2 py-0.5 rounded-full"
+                                className="text-xs bg-primary/10 dark:bg-primary/10 text-primary dark:text-primary px-2 py-0.5 rounded-full"
                               >
                                 #{tag}
                               </span>

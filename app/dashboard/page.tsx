@@ -53,7 +53,7 @@ export default async function DashboardPage() {
     return (
       <div className="max-w-2xl mx-auto space-y-6">
         {/* Welcome Card */}
-        <Card className="border-amber-300 bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950 dark:to-orange-950 dark:border-amber-700">
+        <Card className="border bg-gradient-to-br from-background to-orange-50 dark:from-background dark:to-orange-950 dark:border-amber-700">
           <CardHeader className="text-center pb-2">
             
             <CardTitle className="text-2xl">
@@ -67,7 +67,7 @@ export default async function DashboardPage() {
             {/* How it works */}
             <div className="grid gap-4">
               <div className="flex gap-4 items-start">
-                <div className="w-8 h-8 rounded-full bg-amber-200 dark:bg-amber-800 flex items-center justify-center text-amber-800 dark:text-amber-200 font-bold shrink-0">
+                <div className="w-8 h-8 rounded-full bg-primary/20 dark:bg-primary/80 flex items-center justify-center text-primary dark:text-primary font-bold shrink-0">
                   1
                 </div>
                 <div>
@@ -78,7 +78,7 @@ export default async function DashboardPage() {
                 </div>
               </div>
               <div className="flex gap-4 items-start">
-                <div className="w-8 h-8 rounded-full bg-amber-200 dark:bg-amber-800 flex items-center justify-center text-amber-800 dark:text-amber-200 font-bold shrink-0">
+                <div className="w-8 h-8 rounded-full bg-primary/20 dark:bg-primary/80 flex items-center justify-center text-primary dark:text-primary font-bold shrink-0">
                   2
                 </div>
                 <div>
@@ -89,7 +89,7 @@ export default async function DashboardPage() {
                 </div>
               </div>
               <div className="flex gap-4 items-start">
-                <div className="w-8 h-8 rounded-full bg-amber-200 dark:bg-amber-800 flex items-center justify-center text-amber-800 dark:text-amber-200 font-bold shrink-0">
+                <div className="w-8 h-8 rounded-full bg-primary/20 dark:bg-primary/80 flex items-center justify-center text-primary dark:text-primary font-bold shrink-0">
                   3
                 </div>
                 <div>
@@ -104,7 +104,7 @@ export default async function DashboardPage() {
             {/* CTA */}
             <div className="pt-4">
               <Link href="/dashboard/reflect/new" className="block">
-                <Button size="lg" className="w-full bg-amber-600 hover:bg-amber-700 text-white">
+                <Button size="lg" className="w-full bg-primary hover:bg-primary/90 text-white">
                   Create Your First Reflection
                 </Button>
               </Link>
@@ -154,14 +154,14 @@ export default async function DashboardPage() {
 
       {/* Free tier warning */}
       {subscriptionTier === "free" && reflectionsThisMonth > 0 && (
-        <Card className="border-amber-200 bg-amber-50 dark:border-amber-800 dark:bg-amber-950">
+        <Card className="border bg-muted/50 dark:border dark:bg-background">
           <CardContent className="py-4">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>
-                <p className="font-medium text-amber-800 dark:text-amber-200">
+                <p className="font-medium text-primary dark:text-primary">
                   Free Plan: {reflectionsThisMonth}/{limits.reflections_per_month} reflections this month
                 </p>
-                <p className="text-sm text-amber-700 dark:text-amber-300">
+                <p className="text-sm text-primary dark:text-amber-300">
                   Upgrade to Pro for unlimited reflections and AI insights
                 </p>
               </div>

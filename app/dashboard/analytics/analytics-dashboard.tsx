@@ -218,7 +218,7 @@ export function AnalyticsDashboard({ isSubscribed }: AnalyticsDashboardProps) {
                           style={{ width: `${positivePercent}%` }}
                         />
                         <div
-                          className="bg-amber-500 h-full"
+                          className="bg-muted/500 h-full"
                           style={{ width: `${concernPercent}%` }}
                         />
                         <div className="bg-gray-400 h-full flex-1" />

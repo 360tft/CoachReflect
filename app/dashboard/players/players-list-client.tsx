@@ -94,7 +94,7 @@ export function PlayersListClient({ isSubscribed }: PlayersListClientProps) {
   const getSentimentColor = (sentiment: string) => {
     switch (sentiment) {
       case 'positive': return 'text-green-500'
-      case 'concern': return 'text-amber-500'
+      case 'concern': return 'text-primary-foreground0'
       default: return 'text-gray-400'
     }
   }
@@ -102,7 +102,7 @@ export function PlayersListClient({ isSubscribed }: PlayersListClientProps) {
   const getSentimentBg = (sentiment: string) => {
     switch (sentiment) {
       case 'positive': return 'bg-green-500/10 border-green-500/20'
-      case 'concern': return 'bg-amber-500/10 border-amber-500/20'
+      case 'concern': return 'bg-muted/500/10 border-primary/20'
       default: return 'bg-gray-500/10 border-gray-500/20'
     }
   }
@@ -135,7 +135,7 @@ export function PlayersListClient({ isSubscribed }: PlayersListClientProps) {
         </Card>
         <Card>
           <CardContent className="pt-6 text-center">
-            <div className="text-2xl font-bold text-amber-500">
+            <div className="text-2xl font-bold text-primary-foreground0">
               {players.filter(p => p.dominant_sentiment === 'concern').length}
             </div>
             <p className="text-sm text-muted-foreground">Need Attention</p>
@@ -175,12 +175,12 @@ export function PlayersListClient({ isSubscribed }: PlayersListClientProps) {
                           style={{ width: `${(player.sentiment.positive / player.total_mentions) * 100}%` }}
                         />
                         <div
-                          className="bg-amber-500 h-full"
+                          className="bg-muted/500 h-full"
                           style={{ width: `${(player.sentiment.concern / player.total_mentions) * 100}%` }}
                         />
                         <div className="bg-gray-400 h-full flex-1" />
                       </div>
-                      <span className="text-xs text-amber-500">{player.sentiment.concern}</span>
+                      <span className="text-xs text-primary-foreground0">{player.sentiment.concern}</span>
                     </div>
                     {isSubscribed && (
                       <span className="text-muted-foreground">→</span>

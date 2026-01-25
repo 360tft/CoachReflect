@@ -64,7 +64,7 @@ export function MoodChart({ data }: MoodChartProps) {
             <span className="text-green-600 text-sm font-medium">↑ Improving</span>
           )}
           {trend < -0.3 && (
-            <span className="text-amber-600 text-sm font-medium">↓ Declining</span>
+            <span className="text-primary text-sm font-medium">↓ Declining</span>
           )}
           {trend >= -0.3 && trend <= 0.3 && (
             <span className="text-muted-foreground text-sm">→ Steady</span>

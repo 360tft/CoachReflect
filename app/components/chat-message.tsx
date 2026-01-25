@@ -36,7 +36,7 @@ export function ChatMessage({
       <Card
         className={`max-w-[85%] ${
           isUser
-            ? "bg-amber-100 dark:bg-amber-900 border-amber-200 dark:border-amber-800"
+            ? "bg-primary/10 dark:bg-primary/10 border dark:border"
             : "bg-muted"
         }`}
       >
@@ -125,7 +125,7 @@ function AttachmentDisplay({ attachment }: { attachment: MessageAttachment }) {
             </span>
           )}
           {attachment.processing_status === "processing" && (
-            <span className="text-xs text-amber-600 animate-pulse">
+            <span className="text-xs text-primary animate-pulse">
               Transcribing...
             </span>
           )}
@@ -196,7 +196,7 @@ function AttachmentDisplay({ attachment }: { attachment: MessageAttachment }) {
                 {attachment.attachment_type === "session_plan" ? "Session Plan" : "Session Plan Image"}
               </span>
               {attachment.processing_status === "processing" && (
-                <span className="text-xs text-amber-600 animate-pulse">
+                <span className="text-xs text-primary animate-pulse">
                   Analyzing...
                 </span>
               )}

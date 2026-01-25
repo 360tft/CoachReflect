@@ -75,16 +75,16 @@ export function StreakBadges() {
     <div className="space-y-4">
       {/* New Badge Toast */}
       {newBadges.length > 0 && (
-        <Card className="border-amber-500 bg-amber-50 dark:bg-amber-950">
+        <Card className="border-primary bg-muted/50 dark:bg-background">
           <CardContent className="py-4">
             <div className="flex items-center gap-3">
               <div>
-                <p className="font-semibold text-amber-800 dark:text-amber-200">
+                <p className="font-semibold text-primary dark:text-primary">
                   New Badge{newBadges.length > 1 ? "s" : ""} Earned!
                 </p>
                 <div className="flex flex-wrap gap-2 mt-1">
                   {newBadges.map(badge => (
-                    <Badge key={badge.id} variant="secondary" className="bg-amber-200 dark:bg-amber-800">
+                    <Badge key={badge.id} variant="secondary" className="bg-primary/20 dark:bg-primary/80">
                       {badge.name}
                     </Badge>
                   ))}
@@ -106,7 +106,7 @@ export function StreakBadges() {
         <CardContent>
           <div className="grid grid-cols-3 gap-4 text-center">
             <div>
-              <p className="text-3xl font-bold text-amber-600">{streak?.current_streak || 0}</p>
+              <p className="text-3xl font-bold text-primary">{streak?.current_streak || 0}</p>
               <p className="text-xs text-muted-foreground">Current</p>
             </div>
             <div>
@@ -135,7 +135,7 @@ export function StreakBadges() {
                   key={ub.id}
                   className={`
                     px-3 py-2 rounded-lg text-center
-                    ${ub.badge.rarity === "legendary" ? "bg-amber-100 dark:bg-amber-900 border-2 border-amber-500" : ""}
+                    ${ub.badge.rarity === "legendary" ? "bg-primary/10 dark:bg-primary/10 border-2 border-primary" : ""}
                     ${ub.badge.rarity === "rare" ? "bg-purple-100 dark:bg-purple-900" : ""}
                     ${ub.badge.rarity === "uncommon" ? "bg-blue-100 dark:bg-blue-900" : ""}
                     ${ub.badge.rarity === "common" ? "bg-muted" : ""}

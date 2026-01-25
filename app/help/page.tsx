@@ -58,21 +58,21 @@ export default function HelpPage() {
         <div className="grid gap-4 md:grid-cols-3 mb-12">
           <Link
             href="/dashboard/reflect/new"
-            className="p-4 border rounded-lg hover:border-amber-500 transition-colors"
+            className="p-4 border rounded-lg hover:border-primary transition-colors"
           >
             <h3 className="font-semibold mb-1">Create a Reflection</h3>
             <p className="text-sm text-muted-foreground">Start reflecting on your latest session</p>
           </Link>
           <Link
             href="/dashboard/settings"
-            className="p-4 border rounded-lg hover:border-amber-500 transition-colors"
+            className="p-4 border rounded-lg hover:border-primary transition-colors"
           >
             <h3 className="font-semibold mb-1">Account Settings</h3>
             <p className="text-sm text-muted-foreground">Manage your profile and subscription</p>
           </Link>
           <a
             href="mailto:support@coachreflection.com"
-            className="p-4 border rounded-lg hover:border-amber-500 transition-colors"
+            className="p-4 border rounded-lg hover:border-primary transition-colors"
           >
             <h3 className="font-semibold mb-1">Contact Support</h3>
             <p className="text-sm text-muted-foreground">Get help from our team</p>
@@ -98,7 +98,7 @@ export default function HelpPage() {
           </p>
           <a
             href="mailto:support@coachreflection.com"
-            className="inline-flex items-center gap-2 px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-lg transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary/90 text-white rounded-lg transition-colors"
           >
             Email Support
           </a>

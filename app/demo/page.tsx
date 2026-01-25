@@ -154,12 +154,12 @@ export default function DemoPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50 to-white dark:from-amber-950 dark:to-background flex flex-col">
+    <div className="min-h-screen bg-background flex flex-col">
       {/* Header */}
       <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container mx-auto px-4 py-3 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
-            <span className="font-semibold text-amber-800 dark:text-amber-200">Coach Reflection</span>
+            <span className="font-semibold">Coach Reflection</span>
             <Badge variant="secondary" className="ml-2">Demo</Badge>
           </Link>
           <div className="flex items-center gap-4">
@@ -167,7 +167,7 @@ export default function DemoPage() {
               {remaining} message{remaining !== 1 ? 's' : ''} left
             </span>
             <Link href="/signup">
-              <Button size="sm" className="bg-amber-600 hover:bg-amber-700">Sign Up Free</Button>
+              <Button size="sm">Sign Up Free</Button>
             </Link>
           </div>
         </div>
@@ -178,10 +178,10 @@ export default function DemoPage() {
         {/* Welcome message if no messages */}
         {messages.length === 0 && (
           <div className="flex-1 flex flex-col items-center justify-center text-center">
-            <div className="w-16 h-16 rounded-full bg-amber-100 dark:bg-amber-900 flex items-center justify-center mb-4">
-              <span className="text-2xl">🤔</span>
+            <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+              <span className="text-2xl font-bold text-primary">CR</span>
             </div>
-            <h1 className="text-2xl font-bold mb-2 text-amber-900 dark:text-amber-100">Try Coach Reflection</h1>
+            <h1 className="text-2xl font-bold mb-2">Try Coach Reflection</h1>
             <p className="text-muted-foreground mb-6 max-w-md">
               I&apos;m your AI coaching reflection partner. Share what&apos;s on your mind and I&apos;ll help you process and grow.
             </p>
@@ -195,7 +195,7 @@ export default function DemoPage() {
                 <Button
                   key={suggestion}
                   variant="outline"
-                  className="justify-start text-left h-auto py-3 px-4 border-amber-200 dark:border-amber-800"
+                  className="justify-start text-left h-auto py-3 px-4 border"
                   onClick={() => sendMessage(suggestion)}
                 >
                   {suggestion}
@@ -216,7 +216,7 @@ export default function DemoPage() {
                 <Card
                   className={`max-w-[85%] p-4 ${
                     message.role === 'user'
-                      ? 'bg-amber-600 text-white'
+                      ? 'bg-primary text-primary-foreground'
                       : 'bg-muted'
                   }`}
                 >
@@ -239,7 +239,7 @@ export default function DemoPage() {
                     key={i}
                     variant="outline"
                     size="sm"
-                    className="text-xs border-amber-200 dark:border-amber-800"
+                    className="text-xs border"
                     onClick={() => sendMessage(suggestion)}
                     disabled={isDemoLimitReached()}
                   >
@@ -263,13 +263,13 @@ export default function DemoPage() {
               onKeyDown={handleKeyDown}
               placeholder={remaining > 0 ? "What's on your mind after your session?" : "Demo limit reached - sign up to continue!"}
               disabled={isLoading || remaining <= 0}
-              className="flex-1 resize-none rounded-lg border bg-background p-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 disabled:opacity-50"
+              className="flex-1 resize-none rounded-lg border bg-background p-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
               rows={2}
             />
             <Button
               onClick={() => sendMessage()}
               disabled={!input.trim() || isLoading || remaining <= 0}
-              className="bg-amber-600 hover:bg-amber-700 self-end"
+              className="bg-primary hover:bg-primary/90 self-end"
             >
               {isLoading ? '...' : 'Send'}
             </Button>
@@ -287,10 +287,10 @@ export default function DemoPage() {
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
           <Card className="max-w-md w-full p-6">
             <div className="text-center">
-              <div className="w-16 h-16 rounded-full bg-amber-100 dark:bg-amber-900 flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">🌱</span>
+              <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-primary">CR</span>
               </div>
-              <h2 className="text-xl font-bold mb-2 text-amber-900 dark:text-amber-100">
+              <h2 className="text-xl font-bold mb-2 ">
                 {remaining <= 0 ? "You've used all 3 demo messages!" : 'Ready to grow as a coach?'}
               </h2>
               <p className="text-muted-foreground mb-6">
@@ -298,7 +298,7 @@ export default function DemoPage() {
               </p>
               <div className="space-y-3">
                 <Link href="/signup" className="block">
-                  <Button className="w-full bg-amber-600 hover:bg-amber-700" size="lg">
+                  <Button className="w-full bg-primary hover:bg-primary/90" size="lg">
                     Sign Up Free
                   </Button>
                 </Link>

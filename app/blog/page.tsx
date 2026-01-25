@@ -19,7 +19,7 @@ const categoryConfig: Record<string, { label: string; color: string }> = {
   session_planning: { label: "Session Planning", color: "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300" },
   player_development: { label: "Player Development", color: "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300" },
   tactics: { label: "Tactics", color: "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300" },
-  reflection: { label: "Reflection", color: "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300" },
+  reflection: { label: "Reflection", color: "bg-primary/10 text-primary dark:bg-primary/10/30 dark:text-amber-300" },
   communication: { label: "Communication", color: "bg-pink-100 text-pink-700 dark:bg-pink-900/30 dark:text-pink-300" },
   match_preparation: { label: "Match Prep", color: "bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-300" },
   coaching_philosophy: { label: "Philosophy", color: "bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-300" },

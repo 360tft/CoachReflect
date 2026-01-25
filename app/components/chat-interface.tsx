@@ -341,7 +341,7 @@ export function ChatInterface({ isSubscribed, initialRemaining = 5 }: ChatInterf
                 >
                   <Card className={`max-w-[85%] ${
                     msg.role === "user"
-                      ? "bg-amber-100 dark:bg-amber-900 border-amber-200 dark:border-amber-800"
+                      ? "bg-primary/10 dark:bg-primary/10 border dark:border"
                       : "bg-muted"
                   }`}>
                     <CardContent className="p-3">
@@ -379,8 +379,8 @@ export function ChatInterface({ isSubscribed, initialRemaining = 5 }: ChatInterf
 
         {/* Free Tier Warning */}
         {!isSubscribed && remaining <= 2 && remaining > 0 && (
-          <div className="bg-amber-50 dark:bg-amber-950 border border-amber-200 dark:border-amber-800 rounded-lg p-3 mb-4">
-            <p className="text-sm text-amber-800 dark:text-amber-200">
+          <div className="bg-muted/50 dark:bg-background border border dark:border rounded-lg p-3 mb-4">
+            <p className="text-sm text-primary dark:text-primary">
               {remaining} message{remaining === 1 ? "" : "s"} remaining today.{" "}
               <a href="/dashboard/settings" className="underline font-medium">
                 Upgrade to Pro

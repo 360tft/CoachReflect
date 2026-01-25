@@ -131,15 +131,15 @@ export default async function ReflectionPage({
           </CardContent>
         </Card>
       ) : canUseTrial ? (
-        <Card className="border-amber-200">
+        <Card className="border">
           <CardContent className="py-6">
             <TrialAnalyzeButton id={reflection.id} />
           </CardContent>
         </Card>
       ) : (
-        <Card className="border-amber-200 bg-amber-50 dark:border-amber-800 dark:bg-amber-950">
+        <Card className="border bg-muted/50 dark:border dark:bg-background">
           <CardContent className="py-6 text-center">
-            <p className="text-amber-800 dark:text-amber-200 mb-4">
+            <p className="text-primary dark:text-primary mb-4">
               Upgrade to Pro to get AI-powered insights for your reflections
             </p>
             <Link href="/dashboard/settings">
@@ -199,7 +199,7 @@ export default async function ReflectionPage({
           {reflection.tags.map((tag: string) => (
             <span
               key={tag}
-              className="px-3 py-1 bg-amber-100 dark:bg-amber-900 text-amber-800 dark:text-amber-200 rounded-full text-sm"
+              className="px-3 py-1 bg-primary/10 dark:bg-primary/10 text-primary dark:text-primary rounded-full text-sm"
             >
               #{tag}
             </span>

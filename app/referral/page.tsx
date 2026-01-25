@@ -22,11 +22,11 @@ export default function ReferralPage() {
         </p>
 
         {/* Coming Soon Banner */}
-        <div className="p-6 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-lg mb-8">
-          <h2 className="text-xl font-semibold text-amber-800 dark:text-amber-200 mb-2">
+        <div className="p-6 bg-muted/50 dark:bg-background/30 border border dark:border rounded-lg mb-8">
+          <h2 className="text-xl font-semibold text-primary dark:text-primary mb-2">
             Referral Program Coming Soon
           </h2>
-          <p className="text-amber-700 dark:text-amber-300">
+          <p className="text-primary dark:text-amber-300">
             We&apos;re building a referral program that will reward you for sharing Coach Reflection with other coaches.
             Stay tuned for updates!
           </p>
@@ -72,7 +72,7 @@ export default function ReferralPage() {
           <h2 className="text-2xl font-bold mb-4">How to Share</h2>
           <div className="space-y-4">
             <div className="flex items-start gap-4 p-4 border rounded-lg">
-              <div className="w-8 h-8 rounded-full bg-amber-100 dark:bg-amber-900 flex items-center justify-center text-amber-800 dark:text-amber-200 font-semibold">
+              <div className="w-8 h-8 rounded-full bg-primary/10 dark:bg-primary/10 flex items-center justify-center text-primary dark:text-primary font-semibold">
                 1
               </div>
               <div>
@@ -84,7 +84,7 @@ export default function ReferralPage() {
               </div>
             </div>
             <div className="flex items-start gap-4 p-4 border rounded-lg">
-              <div className="w-8 h-8 rounded-full bg-amber-100 dark:bg-amber-900 flex items-center justify-center text-amber-800 dark:text-amber-200 font-semibold">
+              <div className="w-8 h-8 rounded-full bg-primary/10 dark:bg-primary/10 flex items-center justify-center text-primary dark:text-primary font-semibold">
                 2
               </div>
               <div>
@@ -95,7 +95,7 @@ export default function ReferralPage() {
               </div>
             </div>
             <div className="flex items-start gap-4 p-4 border rounded-lg">
-              <div className="w-8 h-8 rounded-full bg-amber-100 dark:bg-amber-900 flex items-center justify-center text-amber-800 dark:text-amber-200 font-semibold">
+              <div className="w-8 h-8 rounded-full bg-primary/10 dark:bg-primary/10 flex items-center justify-center text-primary dark:text-primary font-semibold">
                 3
               </div>
               <div>

@@ -151,7 +151,7 @@ export function PlayerDetailClient({ playerName }: PlayerDetailClientProps) {
   const getSentimentColor = (sentiment: string) => {
     switch (sentiment) {
       case 'positive': return 'text-green-500'
-      case 'concern': return 'text-amber-500'
+      case 'concern': return 'text-primary-foreground0'
       default: return 'text-gray-400'
     }
   }
@@ -167,7 +167,7 @@ export function PlayerDetailClient({ playerName }: PlayerDetailClientProps) {
   const getTrendColor = (trend: string) => {
     switch (trend) {
       case 'improving': return 'text-green-500'
-      case 'declining': return 'text-amber-500'
+      case 'declining': return 'text-primary-foreground0'
       default: return 'text-muted-foreground'
     }
   }
@@ -176,7 +176,7 @@ export function PlayerDetailClient({ playerName }: PlayerDetailClientProps) {
     switch (category) {
       case 'strength': return 'bg-green-500/10 border-green-500/20 text-green-600'
       case 'development': return 'bg-blue-500/10 border-blue-500/20 text-blue-600'
-      case 'concern': return 'bg-amber-500/10 border-amber-500/20 text-amber-600'
+      case 'concern': return 'bg-muted/500/10 border-primary/20 text-primary'
       case 'goal': return 'bg-purple-500/10 border-purple-500/20 text-purple-600'
       default: return 'bg-gray-500/10 border-gray-500/20 text-gray-600'
     }
@@ -221,7 +221,7 @@ export function PlayerDetailClient({ playerName }: PlayerDetailClientProps) {
         </Card>
         <Card>
           <CardContent className="pt-6">
-            <div className="text-2xl font-bold text-amber-500">{data.sentiment_breakdown.concern}</div>
+            <div className="text-2xl font-bold text-primary-foreground0">{data.sentiment_breakdown.concern}</div>
             <p className="text-sm text-muted-foreground">Concerns</p>
           </CardContent>
         </Card>
@@ -232,7 +232,7 @@ export function PlayerDetailClient({ playerName }: PlayerDetailClientProps) {
         <CardContent className="pt-6">
           <div className="mb-2 flex justify-between text-sm">
             <span className="text-green-500">Positive ({data.sentiment_breakdown.positive})</span>
-            <span className="text-amber-500">Concern ({data.sentiment_breakdown.concern})</span>
+            <span className="text-primary-foreground0">Concern ({data.sentiment_breakdown.concern})</span>
             <span className="text-gray-500">Neutral ({data.sentiment_breakdown.neutral})</span>
           </div>
           <div className="h-4 bg-muted rounded-full overflow-hidden flex">
@@ -241,7 +241,7 @@ export function PlayerDetailClient({ playerName }: PlayerDetailClientProps) {
               style={{ width: `${(data.sentiment_breakdown.positive / data.total_mentions) * 100}%` }}
             />
             <div
-              className="bg-amber-500 h-full"
+              className="bg-muted/500 h-full"
               style={{ width: `${(data.sentiment_breakdown.concern / data.total_mentions) * 100}%` }}
             />
             <div className="bg-gray-400 h-full flex-1" />
@@ -356,7 +356,7 @@ export function PlayerDetailClient({ playerName }: PlayerDetailClientProps) {
                 <div key={i} className="flex gap-4 items-start border-l-2 border-muted pl-4 pb-4">
                   <div className={`w-3 h-3 rounded-full mt-1 -ml-[1.4rem] ${
                     mention.sentiment === 'positive' ? 'bg-green-500' :
-                    mention.sentiment === 'concern' ? 'bg-amber-500' : 'bg-gray-400'
+                    mention.sentiment === 'concern' ? 'bg-muted/500' : 'bg-gray-400'
                   }`} />
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">

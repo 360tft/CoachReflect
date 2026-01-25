@@ -135,9 +135,9 @@ export default async function SharedReflectionPage({ params }: Props) {
   const moodOption = MOOD_OPTIONS.find(m => m.value === reflection.mood_rating)
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50 to-white dark:from-amber-950 dark:to-background">
+    <div className="min-h-screen bg-gradient-to-b from-background to-white dark:from-background dark:to-background">
       {/* Header */}
-      <header className="bg-amber-600 text-white py-6">
+      <header className="bg-primary text-white py-6">
         <div className="max-w-3xl mx-auto px-4">
           <Link href="/" className="flex items-center gap-3 w-fit">
             <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center text-2xl">
@@ -155,10 +155,10 @@ export default async function SharedReflectionPage({ params }: Props) {
       <main className="max-w-3xl mx-auto px-4 py-8">
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
           {/* Session info */}
-          <div className="border-b border-amber-200 dark:border-amber-800 p-6">
+          <div className="border-b border dark:border p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-amber-600 mb-1">
+                <p className="text-sm font-medium text-primary mb-1">
                   {reflection.sessions?.session_type || 'Session'} Reflection
                 </p>
                 <h2 className="text-xl font-bold text-gray-900 dark:text-white">
@@ -186,8 +186,8 @@ export default async function SharedReflectionPage({ params }: Props) {
           <div className="p-6 space-y-6">
             {/* AI Summary if exists */}
             {reflection.ai_summary && (
-              <div className="bg-amber-50 dark:bg-amber-950 border border-amber-200 dark:border-amber-800 rounded-lg p-4">
-                <p className="text-sm font-medium text-amber-800 dark:text-amber-200 mb-2">
+              <div className="bg-muted/50 dark:bg-background border border dark:border rounded-lg p-4">
+                <p className="text-sm font-medium text-primary dark:text-primary mb-2">
                   AI Summary
                 </p>
                 <p className="text-gray-700 dark:text-gray-300">{reflection.ai_summary}</p>
@@ -235,7 +235,7 @@ export default async function SharedReflectionPage({ params }: Props) {
               </div>
               <Link
                 href="/signup"
-                className="inline-flex items-center justify-center gap-2 px-6 py-2 bg-amber-600 text-white rounded-lg font-medium hover:bg-amber-700 transition-colors"
+                className="inline-flex items-center justify-center gap-2 px-6 py-2 bg-primary text-white rounded-lg font-medium hover:bg-primary/90 transition-colors"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
@@ -265,7 +265,7 @@ export default async function SharedReflectionPage({ params }: Props) {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/signup"
-              className="px-8 py-3 bg-amber-600 text-white rounded-lg font-semibold hover:bg-amber-700 transition-colors"
+              className="px-8 py-3 bg-primary text-white rounded-lg font-semibold hover:bg-primary/90 transition-colors"
             >
               Start Free
             </Link>
