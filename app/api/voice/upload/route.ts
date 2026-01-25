@@ -37,7 +37,6 @@ export async function POST(request: NextRequest) {
       .single()
 
     if (limitError) {
-      console.error('Voice limit check error:', limitError)
       // If the function doesn't exist yet, allow (for development)
       if (!limitError.message.includes('function') && !limitError.message.includes('does not exist')) {
         return NextResponse.json(
@@ -105,9 +104,8 @@ export async function POST(request: NextRequest) {
       })
 
     if (uploadError) {
-      console.error('Storage upload error:', uploadError)
       return NextResponse.json(
-        { error: "Failed to upload audio file" },
+        { error: `Failed to upload audio file: ${uploadError.message}` },
         { status: 500 }
       )
     }
@@ -129,7 +127,6 @@ export async function POST(request: NextRequest) {
       .single()
 
     if (insertError) {
-      console.error('Attachment insert error:', insertError)
       // Clean up uploaded file on error
       await adminClient.storage.from('voice-notes').remove([storagePath])
       return NextResponse.json(
@@ -151,8 +148,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(response)
 
-  } catch (error) {
-    console.error("Voice upload error:", error)
+  } catch {
     return NextResponse.json(
       { error: "Failed to upload voice note" },
       { status: 500 }

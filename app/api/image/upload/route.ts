@@ -98,7 +98,6 @@ export async function POST(request: Request) {
       })
 
     if (uploadError) {
-      console.error("Storage upload error:", uploadError)
       return NextResponse.json(
         { error: `Failed to upload image: ${uploadError.message}` },
         { status: 500 }
@@ -127,7 +126,6 @@ export async function POST(request: Request) {
       .single()
 
     if (attachmentError) {
-      console.error("Attachment record error:", attachmentError)
       // Clean up uploaded file
       await adminClient.storage.from("session-plans").remove([filename])
       return NextResponse.json(
@@ -141,8 +139,7 @@ export async function POST(request: Request) {
       file_url: publicUrl,
     })
 
-  } catch (error) {
-    console.error("Image upload error:", error)
+  } catch {
     return NextResponse.json(
       { error: "Failed to upload image" },
       { status: 500 }
