@@ -1,0 +1,12 @@
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- CR Icon Box - Standalone -->
+  <rect x="4" y="4" width="32" height="32" rx="6" fill="url(#gold-gradient-icon)"/>
+  <text x="20" y="26" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="700" fill="white" text-anchor="middle">CR</text>
+
+  <defs>
+    <linearGradient id="gold-gradient-icon" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#E5A11C"/>
+      <stop offset="100%" style="stop-color:#CC8F17"/>
+    </linearGradient>
+  </defs>
+</svg>

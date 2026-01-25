@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import { Button } from "@/app/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card"
 import { Badge } from "@/app/components/ui/badge"
@@ -16,10 +17,10 @@ export default function Home() {
     <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="container mx-auto px-4 py-6 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <span className="text-xl font-bold">Coach Reflection</span>
+        <Link href="/" className="flex items-center gap-3">
+          <Image src="/logo.svg" alt="Coach Reflection" width={180} height={36} priority />
           <span className="text-sm text-muted-foreground">by 360TFT</span>
-        </div>
+        </Link>
         <div className="flex items-center gap-4">
           <Link href="/login">
             <Button variant="ghost">Sign in</Button>

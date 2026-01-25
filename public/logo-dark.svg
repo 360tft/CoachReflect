@@ -1,0 +1,16 @@
+<svg width="200" height="40" viewBox="0 0 200 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- CR Icon Box -->
+  <rect x="0" y="4" width="32" height="32" rx="6" fill="url(#gold-gradient-dark)"/>
+  <text x="16" y="26" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="700" fill="white" text-anchor="middle">CR</text>
+
+  <!-- Wordmark (white for dark backgrounds) -->
+  <text x="42" y="26" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="600" fill="#FAFAFA">Coach</text>
+  <text x="96" y="26" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="400" fill="#FAFAFA">Reflection</text>
+
+  <defs>
+    <linearGradient id="gold-gradient-dark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#E5A11C"/>
+      <stop offset="100%" style="stop-color:#CC8F17"/>
+    </linearGradient>
+  </defs>
+</svg>
