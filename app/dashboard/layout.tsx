@@ -97,8 +97,7 @@ export default async function DashboardLayout({
         <div className="container mx-auto px-4">
           <div className="flex gap-1 overflow-x-auto">
             <NavLink href="/dashboard">Dashboard</NavLink>
-            <NavLink href="/dashboard/reflect/new">New Reflection</NavLink>
-            <NavLink href="/dashboard/chat">Coach Chat</NavLink>
+            <NavLink href="/dashboard/chat">Reflect</NavLink>
             <NavLink href="/dashboard/history">History</NavLink>
             <NavLink href="/dashboard/analytics">Analytics</NavLink>
             <NavLink href="/dashboard/players">Players</NavLink>

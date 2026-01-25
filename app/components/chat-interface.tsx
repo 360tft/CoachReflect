@@ -5,6 +5,7 @@ import { Button } from "@/app/components/ui/button"
 import { Card, CardContent } from "@/app/components/ui/card"
 import { FeedbackButtons } from "@/app/components/feedback-buttons"
 import { ChatInput } from "@/app/components/chat-input"
+import { QuickReplies, parseQuickReplyFromMessage, stripQuickReplyMarker, type ParsedQuickReply } from "@/app/components/quick-replies"
 import { CHAT_STARTERS, type ChatMessage, type Conversation } from "@/app/types"
 
 interface ChatInterfaceProps {
@@ -21,6 +22,9 @@ export function ChatInterface({ isSubscribed, initialRemaining = 5 }: ChatInterf
   const [conversations, setConversations] = useState<Conversation[]>([])
   const [showSidebar, setShowSidebar] = useState(false)
   const [remaining, setRemaining] = useState(initialRemaining)
+  const [activeQuickReply, setActiveQuickReply] = useState<ParsedQuickReply | null>(null)
+  const [reflectionSaved, setReflectionSaved] = useState(false)
+  const [savingReflection, setSavingReflection] = useState(false)
 
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const abortControllerRef = useRef<AbortController | null>(null)
@@ -236,6 +240,75 @@ export function ChatInterface({ isSubscribed, initialRemaining = 5 }: ChatInterf
     }
   }, [input, loading, messages, conversationId, isSubscribed, remaining])
 
+  // Check for quick reply in the last message whenever messages change
+  useEffect(() => {
+    if (messages.length > 0 && !loading) {
+      const lastMessage = messages[messages.length - 1]
+      if (lastMessage.role === 'assistant' && lastMessage.content) {
+        const parsed = parseQuickReplyFromMessage(lastMessage.content)
+        setActiveQuickReply(parsed)
+      } else {
+        setActiveQuickReply(null)
+      }
+    }
+  }, [messages, loading])
+
+  // Handle quick reply selection
+  const handleQuickReplySelect = useCallback((value: string | number, label: string) => {
+    // Send the response as a message
+    sendMessage(label)
+    setActiveQuickReply(null)
+  }, [sendMessage])
+
+  // Check if reflection is ready to save (enough messages, no quick reply pending)
+  const canSaveReflection = messages.length >= 6 && !activeQuickReply && !loading && conversationId && !reflectionSaved
+
+  // Save reflection to database
+  const saveReflection = useCallback(async () => {
+    if (!conversationId || savingReflection || reflectionSaved) return
+
+    setSavingReflection(true)
+    setError(null)
+
+    try {
+      const res = await fetch("/api/insights/extract", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ conversationId, createReflection: true }),
+      })
+
+      if (!res.ok) {
+        const data = await res.json()
+        throw new Error(data.error || "Failed to save reflection")
+      }
+
+      const data = await res.json()
+      setReflectionSaved(true)
+
+      // Show success feedback
+      const summaryMsg = data.extracted?.ai_summary
+        ? `Reflection saved! ${data.extracted.ai_summary}`
+        : "Reflection saved successfully. Your insights have been captured for analytics."
+
+      setMessages(prev => [...prev, {
+        role: "assistant" as const,
+        content: summaryMsg,
+        timestamp: new Date(),
+      }])
+
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to save reflection")
+    } finally {
+      setSavingReflection(false)
+    }
+  }, [conversationId, savingReflection, reflectionSaved])
+
+  // Reset reflection saved state when starting a new chat
+  const startNewChatWithReset = useCallback(() => {
+    startNewChat()
+    setReflectionSaved(false)
+  }, [startNewChat])
+
   return (
     <div className="flex h-[calc(100vh-8rem)] gap-4">
       {/* Sidebar - Conversations */}
@@ -248,7 +321,7 @@ export function ChatInterface({ isSubscribed, initialRemaining = 5 }: ChatInterf
       `}>
         <div className="flex items-center justify-between mb-4">
           <h3 className="font-semibold">Conversations</h3>
-          <Button size="sm" variant="outline" onClick={startNewChat}>
+          <Button size="sm" variant="outline" onClick={startNewChatWithReset}>
             New
           </Button>
         </div>
@@ -334,41 +407,83 @@ export function ChatInterface({ isSubscribed, initialRemaining = 5 }: ChatInterf
             </div>
           ) : (
             <>
-              {messages.map((msg, i) => (
-                <div
-                  key={i}
-                  className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
-                >
-                  <Card className={`max-w-[85%] ${
-                    msg.role === "user"
-                      ? "bg-primary/10 dark:bg-primary/10 border dark:border"
-                      : "bg-muted"
-                  }`}>
-                    <CardContent className="p-3">
-                      <div className="prose prose-sm dark:prose-invert max-w-none">
-                        {msg.content || (
-                          <span className="text-muted-foreground animate-pulse">
-                            Thinking...
-                          </span>
-                        )}
-                      </div>
-                      {msg.role === "assistant" && msg.content && !loading && (
-                        <div className="mt-2 pt-2 border-t border-border/50">
-                          <FeedbackButtons
-                            contentType="chat_response"
-                            contentText={msg.content}
-                            conversationId={conversationId || undefined}
-                          />
+              {messages.map((msg, i) => {
+                const isLastMessage = i === messages.length - 1
+                const displayContent = msg.role === 'assistant' && msg.content
+                  ? stripQuickReplyMarker(msg.content)
+                  : msg.content
+
+                return (
+                  <div
+                    key={i}
+                    className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
+                  >
+                    <Card className={`max-w-[85%] ${
+                      msg.role === "user"
+                        ? "bg-primary/10 dark:bg-primary/10 border dark:border"
+                        : "bg-muted"
+                    }`}>
+                      <CardContent className="p-3">
+                        <div className="prose prose-sm dark:prose-invert max-w-none">
+                          {displayContent || (
+                            <span className="text-muted-foreground animate-pulse">
+                              Thinking...
+                            </span>
+                          )}
                         </div>
-                      )}
-                    </CardContent>
-                  </Card>
-                </div>
-              ))}
+                        {/* Show quick reply buttons for the last assistant message */}
+                        {msg.role === "assistant" && isLastMessage && activeQuickReply && !loading && (
+                          <QuickReplies
+                            type={activeQuickReply.type}
+                            options={activeQuickReply.options}
+                            onSelect={handleQuickReplySelect}
+                            disabled={loading}
+                          />
+                        )}
+                        {msg.role === "assistant" && msg.content && !loading && (
+                          <div className="mt-2 pt-2 border-t border-border/50">
+                            <FeedbackButtons
+                              contentType="chat_response"
+                              contentText={msg.content}
+                              conversationId={conversationId || undefined}
+                            />
+                          </div>
+                        )}
+                      </CardContent>
+                    </Card>
+                  </div>
+                )
+              })}
               <div ref={messagesEndRef} />
             </>
           )}
         </div>
+
+        {/* Save Reflection Button */}
+        {canSaveReflection && (
+          <div className="bg-primary/5 border border-primary/20 rounded-lg p-3 mb-4">
+            <div className="flex items-center justify-between gap-4">
+              <div>
+                <p className="text-sm font-medium">Ready to save this reflection?</p>
+                <p className="text-xs text-muted-foreground">This will capture your insights for trending and analytics.</p>
+              </div>
+              <Button
+                size="sm"
+                onClick={saveReflection}
+                disabled={savingReflection}
+              >
+                {savingReflection ? "Saving..." : "Save Reflection"}
+              </Button>
+            </div>
+          </div>
+        )}
+
+        {/* Reflection Saved Confirmation */}
+        {reflectionSaved && (
+          <div className="bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-lg p-3 mb-4">
+            <p className="text-sm text-green-700 dark:text-green-300">Reflection saved! View your trends in Analytics.</p>
+          </div>
+        )}
 
         {/* Error Display */}
         {error && (

@@ -114,13 +114,13 @@ export default async function DashboardPage() {
 
             {/* CTA */}
             <div className="pt-4">
-              <Link href="/dashboard/reflect/new" className="block">
+              <Link href="/dashboard/chat" className="block">
                 <Button size="lg" className="w-full bg-primary hover:bg-primary/90 text-white">
-                  Create Your First Reflection
+                  Start Your First Reflection
                 </Button>
               </Link>
               <p className="text-center text-xs text-muted-foreground mt-3">
-                Takes about 3 minutes
+                Just chat naturally - upload a voice note or type what happened
               </p>
             </div>
           </CardContent>
@@ -156,9 +156,9 @@ export default async function DashboardPage() {
             Track your coaching journey through reflection
           </p>
         </div>
-        <Link href="/dashboard/reflect/new">
+        <Link href="/dashboard/chat">
           <Button size="lg" disabled={!canReflect}>
-            + New Reflection
+            + Reflect
           </Button>
         </Link>
       </div>

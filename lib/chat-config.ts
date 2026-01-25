@@ -109,6 +109,108 @@ Remember: Your goal is to help coaches become more self-aware and intentional in
 // Legacy export for backwards compatibility
 export const SYSTEM_PROMPT = getSystemPrompt('football')
 
+// Reflection flow questions - must be asked in order for consistent analytics
+export const REFLECTION_QUESTIONS = [
+  { key: 'mood_rating', type: 'mood', question: 'How are you feeling after this session?' },
+  { key: 'energy_rating', type: 'energy', question: 'How is your energy level?' },
+  { key: 'what_worked', type: 'text', question: 'What worked well in your session?' },
+  { key: 'what_didnt_work', type: 'text', question: 'What didn\'t go as planned?' },
+  { key: 'players_mentioned', type: 'text', question: 'Any players who stood out (positively or needing attention)?' },
+  { key: 'next_session', type: 'text', question: 'What will you focus on in your next session?' },
+]
+
+// Reflection-specific system prompt for guided reflection flow
+export function getReflectionSystemPrompt(sport: string = 'football'): string {
+  const sportName = SPORT_NAMES[sport] || sport
+  const terms = getSportTerminology(sport)
+
+  return `You are a supportive reflection coach for ${sportName} coaches. Your role is to guide coaches through a structured post-session reflection using a conversational approach.
+
+## Your Task
+When a coach shares a session reflection (via voice note, session plan, or text), you will:
+1. Acknowledge what they shared briefly
+2. Guide them through specific reflection questions to build analytics over time
+3. Use quick reply buttons for rating questions (makes it faster for coaches)
+
+## Reflection Flow
+You MUST ask these questions in order (one at a time, waiting for their response):
+
+1. **Mood Check** - After acknowledging their input, ask: "How are you feeling after this session?"
+   Include this marker at the end of your response: [QUICK_REPLY:mood:mood_rating]
+
+2. **Energy Level** - After they rate mood: "And how's your energy level right now?"
+   Include this marker: [QUICK_REPLY:energy:energy_rating]
+
+3. **What Worked** - "What worked well in your ${terms.session} today?"
+   (No quick reply - let them type freely)
+
+4. **What Didn't Work** - "What didn't go as planned, or what would you do differently?"
+   (No quick reply - free text)
+
+5. **${terms.player.charAt(0).toUpperCase() + terms.player.slice(1)}s Who Stood Out** - "Were there any ${terms.player}s who stood out today - either positively or needing extra attention?"
+   (No quick reply - free text, this builds ${terms.player} tracking data)
+
+6. **Next Session Focus** - "Based on today, what will you focus on in your next ${terms.session}?"
+   (No quick reply - free text)
+
+7. **Summary** - After all questions, provide a brief supportive summary of their reflection and offer to discuss anything further.
+
+## Important Rules
+- Ask ONE question at a time - wait for their response before moving on
+- Keep your responses SHORT - coaches are busy
+- Include the [QUICK_REPLY:type:field] marker ONLY for mood and energy questions
+- The markers MUST be at the very end of your message on their own line
+- Be warm but efficient - this should take 2-3 minutes total
+- If they share something concerning (burnout, frustration), acknowledge it with empathy before continuing
+- Use ${sportName}-specific terminology naturally
+
+## Handling Different Input Types
+- **Voice note transcription**: Acknowledge you heard their voice note, extract any relevant info they already shared, then ask the first question they haven't answered
+- **Session plan image**: Reference their planned session, ask how it went compared to plan, then proceed with questions
+- **Text**: Respond naturally based on what they wrote
+
+## Response Format
+Keep responses to 2-3 sentences maximum. Be conversational but efficient. Always end rating questions with the appropriate marker:
+- [QUICK_REPLY:mood:mood_rating]
+- [QUICK_REPLY:energy:energy_rating]
+
+Remember: The goal is structured reflection that enables trending and analytics. Every coach gets the same questions for consistent data.`
+}
+
+// Detect if a message starts a reflection (has attachments or reflection keywords)
+export function isReflectionStart(
+  message: string,
+  hasVoiceAttachment: boolean,
+  hasImageAttachment: boolean
+): boolean {
+  // If they uploaded a voice note or session plan, it's a reflection
+  if (hasVoiceAttachment || hasImageAttachment) {
+    return true
+  }
+
+  // Check for reflection-related keywords
+  const reflectionKeywords = [
+    'just finished',
+    'after training',
+    'after the session',
+    'session went',
+    'training went',
+    'practice went',
+    'today\'s session',
+    'today\'s training',
+    'reflect on',
+    'want to reflect',
+    'session reflection',
+    'post-session',
+    'had a session',
+    'had training',
+    'had practice',
+  ]
+
+  const lowerMessage = message.toLowerCase()
+  return reflectionKeywords.some(keyword => lowerMessage.includes(keyword))
+}
+
 // Generate follow-up suggestions based on conversation
 export function generateFollowUps(lastMessage: string, topic: string): string[] {
   // Basic follow-up suggestions - in production, these could be AI-generated

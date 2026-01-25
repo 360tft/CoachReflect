@@ -3,7 +3,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai"
 import { createClient } from "@/lib/supabase/server"
 import { createAdminClient } from "@/lib/supabase/admin"
 import { checkRateLimit, RATE_LIMITS } from "@/lib/rate-limit"
-import { getSystemPrompt, CHAT_CONFIG, buildUserContext } from "@/lib/chat-config"
+import { getSystemPrompt, getReflectionSystemPrompt, isReflectionStart, CHAT_CONFIG, buildUserContext } from "@/lib/chat-config"
 import type { ChatMessage, SessionPlanAnalysis } from "@/app/types"
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY || "")
@@ -296,8 +296,17 @@ export async function POST(request: Request) {
       })
     }
 
-    // Build messages array for Gemini with sport-specific system prompt
-    const systemPrompt = getSystemPrompt(userSport) + userContext
+    // Detect if this is a reflection (has attachments or reflection keywords)
+    const hasVoiceAttachment = attachments.some(a => a.type === 'voice' && a.transcription)
+    const hasImageAttachment = attachments.some(a => a.type === 'image' && a.analysis)
+    const isReflection = isReflectionStart(message || '', hasVoiceAttachment, hasImageAttachment)
+
+    // Build messages array for Gemini with appropriate system prompt
+    // Use reflection prompt for reflection flows, regular prompt otherwise
+    const basePrompt = isReflection
+      ? getReflectionSystemPrompt(userSport)
+      : getSystemPrompt(userSport)
+    const systemPrompt = basePrompt + userContext
 
     // Trim history to last N messages
     const trimmedHistory = history.slice(-CHAT_CONFIG.maxHistoryMessages)
