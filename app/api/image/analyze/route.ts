@@ -199,9 +199,9 @@ export async function POST(request: Request) {
       )
     }
 
-  } catch {
+  } catch (err) {
     return NextResponse.json(
-      { error: "Failed to analyze image" },
+      { error: `Failed to analyze image: ${err instanceof Error ? err.message : 'Unknown error'}` },
       { status: 500 }
     )
   }
