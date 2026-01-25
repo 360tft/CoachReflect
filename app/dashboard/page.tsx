@@ -71,9 +71,9 @@ export default async function DashboardPage() {
                   1
                 </div>
                 <div>
-                  <p className="font-medium">Upload your session plan (optional)</p>
+                  <p className="font-medium">Reflect after each session</p>
                   <p className="text-sm text-muted-foreground">
-                    Snap a photo of your handwritten or digital plan - our AI reads it for you
+                    Answer guided questions: What worked? What didn&apos;t? Which players stood out?
                   </p>
                 </div>
               </div>
@@ -82,9 +82,9 @@ export default async function DashboardPage() {
                   2
                 </div>
                 <div>
-                  <p className="font-medium">Answer guided questions</p>
+                  <p className="font-medium">Track mood and energy</p>
                   <p className="text-sm text-muted-foreground">
-                    What worked? What didn&apos;t? Which players stood out?
+                    Log how you felt after sessions to spot patterns and prevent burnout
                   </p>
                 </div>
               </div>
@@ -93,12 +93,23 @@ export default async function DashboardPage() {
                   3
                 </div>
                 <div>
-                  <p className="font-medium">Track your progress</p>
+                  <p className="font-medium">Chat with your AI coach</p>
                   <p className="text-sm text-muted-foreground">
-                    See patterns, mood trends, and AI insights over time
+                    Get advice, talk through challenges, and plan your next session
                   </p>
                 </div>
               </div>
+            </div>
+
+            {/* Free tier info */}
+            <div className="bg-muted/50 rounded-lg p-4 text-sm">
+              <p className="font-medium mb-2">Your free account includes:</p>
+              <ul className="space-y-1 text-muted-foreground">
+                <li>5 reflections per month</li>
+                <li>5 AI coach messages per day</li>
+                <li>Mood and energy tracking</li>
+                <li>4 weeks of analytics</li>
+              </ul>
             </div>
 
             {/* CTA */}

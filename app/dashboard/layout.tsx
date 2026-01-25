@@ -59,8 +59,12 @@ export default async function DashboardLayout({
       <header className="border-b bg-card">
         <div className="container mx-auto px-4 py-3 flex items-center justify-between">
           <Link href="/dashboard" className="flex items-center gap-2">
-            <span className="text-2xl">🪞</span>
-            <span className="font-bold text-lg text-primary dark:text-primary">Coach Reflection</span>
+            {/* Light mode logo (dark text) */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo.png" alt="Coach Reflection" width={160} height={28} className="h-7 w-auto dark:hidden" />
+            {/* Dark mode logo (white text) */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo-dark.png" alt="Coach Reflection" width={160} height={28} className="h-7 w-auto hidden dark:block" />
           </Link>
 
           <div className="flex items-center gap-4">
