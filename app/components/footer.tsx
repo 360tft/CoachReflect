@@ -43,69 +43,69 @@ export function Footer() {
           <p className="text-center text-muted-foreground text-xs mb-4">
             More from 360 TFT
           </p>
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3 max-w-4xl mx-auto">
+          <div className="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto">
             <a
               href="https://footballgpt.co"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex flex-col items-center gap-1 p-3 rounded-lg bg-card hover:bg-primary/10 transition-colors group"
+              className="flex flex-col items-center justify-center w-28 h-16 p-2 rounded-lg bg-card hover:bg-primary/10 transition-colors group"
             >
-              <span className="text-xs font-medium text-foreground group-hover:text-primary text-center">FootballGPT</span>
-              <span className="text-[10px] text-muted-foreground">AI Coaching Assistant</span>
+              <span className="text-xs font-medium text-foreground group-hover:text-primary text-center leading-tight">FootballGPT</span>
+              <span className="text-[10px] text-muted-foreground text-center leading-tight">AI Coaching Assistant</span>
             </a>
             <a
               href="https://refereegpt.co"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex flex-col items-center gap-1 p-3 rounded-lg bg-card hover:bg-primary/10 transition-colors group"
+              className="flex flex-col items-center justify-center w-28 h-16 p-2 rounded-lg bg-card hover:bg-primary/10 transition-colors group"
             >
-              <span className="text-xs font-medium text-foreground group-hover:text-primary text-center">RefereeGPT</span>
-              <span className="text-[10px] text-muted-foreground">AI Referee Training</span>
+              <span className="text-xs font-medium text-foreground group-hover:text-primary text-center leading-tight">RefereeGPT</span>
+              <span className="text-[10px] text-muted-foreground text-center leading-tight">AI Referee Training</span>
             </a>
             <a
               href="https://www.skool.com/coachingacademy"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex flex-col items-center gap-1 p-3 rounded-lg bg-card hover:bg-primary/10 transition-colors group"
+              className="flex flex-col items-center justify-center w-28 h-16 p-2 rounded-lg bg-card hover:bg-primary/10 transition-colors group"
             >
-              <span className="text-xs font-medium text-foreground group-hover:text-primary text-center">Coaching Academy</span>
-              <span className="text-[10px] text-muted-foreground">Community & Courses</span>
+              <span className="text-xs font-medium text-foreground group-hover:text-primary text-center leading-tight">Coaching Academy</span>
+              <span className="text-[10px] text-muted-foreground text-center leading-tight">Community & Courses</span>
             </a>
             <a
               href="https://www.skool.com/the-2-drill-club-5017"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex flex-col items-center gap-1 p-3 rounded-lg bg-card hover:bg-primary/10 transition-colors group"
+              className="flex flex-col items-center justify-center w-28 h-16 p-2 rounded-lg bg-card hover:bg-primary/10 transition-colors group"
             >
-              <span className="text-xs font-medium text-foreground group-hover:text-primary text-center">$2 Drill Club</span>
-              <span className="text-[10px] text-muted-foreground">Weekly Drills</span>
+              <span className="text-xs font-medium text-foreground group-hover:text-primary text-center leading-tight">$2 Drill Club</span>
+              <span className="text-[10px] text-muted-foreground text-center leading-tight">Weekly Drills</span>
             </a>
             <a
               href="https://www.skool.com/360tft-7374"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex flex-col items-center gap-1 p-3 rounded-lg bg-card hover:bg-primary/10 transition-colors group"
+              className="flex flex-col items-center justify-center w-28 h-16 p-2 rounded-lg bg-card hover:bg-primary/10 transition-colors group"
             >
-              <span className="text-xs font-medium text-foreground group-hover:text-primary text-center">360TFT Community</span>
-              <span className="text-[10px] text-muted-foreground">Free Discussion</span>
+              <span className="text-xs font-medium text-foreground group-hover:text-primary text-center leading-tight">360TFT Community</span>
+              <span className="text-[10px] text-muted-foreground text-center leading-tight">Free Discussion</span>
             </a>
             <a
               href="https://www.amazon.co.uk/dp/B0GF9VSGKG"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex flex-col items-center gap-1 p-3 rounded-lg bg-card hover:bg-primary/10 transition-colors group"
+              className="flex flex-col items-center justify-center w-28 h-16 p-2 rounded-lg bg-card hover:bg-primary/10 transition-colors group"
             >
-              <span className="text-xs font-medium text-foreground group-hover:text-primary text-center">Dogmatic Coach</span>
-              <span className="text-[10px] text-muted-foreground">Book by Kevin</span>
+              <span className="text-xs font-medium text-foreground group-hover:text-primary text-center leading-tight">Dogmatic Coach</span>
+              <span className="text-[10px] text-muted-foreground text-center leading-tight">Book by Kevin</span>
             </a>
             <a
               href="https://360tft.co.uk"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex flex-col items-center gap-1 p-3 rounded-lg bg-card hover:bg-primary/10 transition-colors group"
+              className="flex flex-col items-center justify-center w-28 h-16 p-2 rounded-lg bg-card hover:bg-primary/10 transition-colors group"
             >
-              <span className="text-xs font-medium text-foreground group-hover:text-primary text-center">360TFT Website</span>
-              <span className="text-[10px] text-muted-foreground">Blog & Resources</span>
+              <span className="text-xs font-medium text-foreground group-hover:text-primary text-center leading-tight">360TFT Website</span>
+              <span className="text-[10px] text-muted-foreground text-center leading-tight">Blog & Resources</span>
             </a>
           </div>
         </div>
