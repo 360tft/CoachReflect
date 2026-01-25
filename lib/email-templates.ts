@@ -221,6 +221,113 @@ export const TEMPLATES: Record<string, (props: TemplateProps) => string> = {
     <p>You've got this.</p>
   `, props),
 
+  // Streak milestone celebration emails
+  'streak-3': (props) => baseTemplate(`
+    <div style="text-align: center; margin-bottom: 20px;">
+      <span style="font-size: 48px;">3</span>
+      <p style="font-size: 18px; color: #d97706; margin: 5px 0;">Day Streak!</p>
+    </div>
+
+    <p>Hey ${props.name},</p>
+
+    <p>Three days of reflection - you're building momentum!</p>
+
+    <p>Research shows it takes about 3 weeks to form a habit. You're on your way. Keep going and you'll start seeing patterns in your coaching that you never noticed before.</p>
+
+    <p style="background: #fef3c7; padding: 15px; border-radius: 8px; margin: 20px 0;">
+      <strong>Quick tip:</strong> Set a reminder right after your regular session time. Make reflection part of your routine.
+    </p>
+
+    <p style="text-align: center; margin: 30px 0;">
+      <a href="${APP_URL}/dashboard" style="background: #d97706; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; display: inline-block;">Keep the Streak Going</a>
+    </p>
+
+    <p>Nice work!</p>
+  `, props),
+
+  'streak-7': (props) => baseTemplate(`
+    <div style="text-align: center; margin-bottom: 20px;">
+      <span style="font-size: 48px;">7</span>
+      <p style="font-size: 18px; color: #d97706; margin: 5px 0;">Day Streak!</p>
+    </div>
+
+    <p>Hey ${props.name},</p>
+
+    <p>A full week of reflecting on your coaching. That's impressive.</p>
+
+    <p>Most coaches never take time to do this. You're already ahead of the curve. By now, you might be noticing:</p>
+
+    <ul>
+      <li>Recurring themes in your sessions</li>
+      <li>Players who keep showing up in your notes</li>
+      <li>Patterns in what works and what doesn't</li>
+    </ul>
+
+    <p style="background: #fef3c7; padding: 15px; border-radius: 8px; margin: 20px 0;">
+      <strong>Pro tip:</strong> Check your weekly summary in the Analytics section. See what the AI has spotted that you might have missed.
+    </p>
+
+    <p style="text-align: center; margin: 30px 0;">
+      <a href="${APP_URL}/dashboard/analytics" style="background: #d97706; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; display: inline-block;">View Your Analytics</a>
+    </p>
+
+    <p>Keep it up!</p>
+  `, props),
+
+  'streak-14': (props) => baseTemplate(`
+    <div style="text-align: center; margin-bottom: 20px;">
+      <span style="font-size: 48px;">14</span>
+      <p style="font-size: 18px; color: #d97706; margin: 5px 0;">Day Streak!</p>
+    </div>
+
+    <p>Hey ${props.name},</p>
+
+    <p>Two weeks straight. This is no longer a try-out - it's becoming part of who you are as a coach.</p>
+
+    <p>At this point, you've got a proper dataset. Your reflections aren't just notes - they're evidence of your coaching journey. In a year's time, you'll be able to look back and see how far you've come.</p>
+
+    <p style="background: #fef3c7; padding: 15px; border-radius: 8px; margin: 20px 0;">
+      <strong>Think about:</strong> What's the one thing you've learned about yourself as a coach in the last two weeks?
+    </p>
+
+    <p>Seriously - we're impressed. Most people don't stick with new habits this long.</p>
+
+    <p style="text-align: center; margin: 30px 0;">
+      <a href="${APP_URL}/dashboard" style="background: #d97706; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; display: inline-block;">Continue Your Journey</a>
+    </p>
+  `, props),
+
+  'streak-30': (props) => baseTemplate(`
+    <div style="text-align: center; margin-bottom: 20px;">
+      <span style="font-size: 64px;">30</span>
+      <p style="font-size: 24px; color: #d97706; margin: 5px 0;">Day Streak!</p>
+    </div>
+
+    <p>Hey ${props.name},</p>
+
+    <p><strong>Thirty days.</strong> A full month of intentional reflection.</p>
+
+    <p>You've officially crossed from "trying something new" to "this is what I do." Reflection is now part of your coaching identity.</p>
+
+    <p>Here's what you've built:</p>
+    <ul>
+      <li>A searchable log of 30+ sessions</li>
+      <li>Patterns the AI has identified across your coaching</li>
+      <li>Evidence of your development as a coach</li>
+      <li>A habit that separates good coaches from great ones</li>
+    </ul>
+
+    <p style="background: #d97706; color: white; padding: 20px; border-radius: 8px; margin: 20px 0; text-align: center;">
+      <strong>You're in the top 1% of coaches who actually take time to reflect consistently.</strong>
+    </p>
+
+    <p>We're genuinely proud to have you as part of Coach Reflection. Keep going - the insights only get richer from here.</p>
+
+    <p style="text-align: center; margin: 30px 0;">
+      <a href="${APP_URL}/dashboard/analytics" style="background: #1f2937; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; display: inline-block;">See Your 30-Day Journey</a>
+    </p>
+  `, props),
+
   // Weekly summary email
   'weekly-summary': (props) => {
     const summary = props.weeklySummary

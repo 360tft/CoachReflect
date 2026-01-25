@@ -17,8 +17,12 @@ export default function Home() {
       {/* Header */}
       <header className="container mx-auto px-4 py-6 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
+          {/* Light mode logo (dark text) */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo.png" alt="Coach Reflection" width={240} height={40} className="h-10 w-auto" />
+          <img src="/logo.png" alt="Coach Reflection" width={240} height={40} className="h-10 w-auto dark:hidden" />
+          {/* Dark mode logo (white text) */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo-dark.png" alt="Coach Reflection" width={240} height={40} className="h-10 w-auto hidden dark:block" />
           <span className="text-sm text-muted-foreground">by 360TFT</span>
         </Link>
         <div className="flex items-center gap-4">
@@ -238,12 +242,12 @@ export default function Home() {
           </CardHeader>
           <CardContent className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/signup">
-              <Button size="lg" className="bg-white text-foreground hover:bg-white/90">
+              <Button size="lg" className="!bg-white !text-gray-900 hover:!bg-gray-100">
                 Get Started Free
               </Button>
             </Link>
             <Link href="/login">
-              <Button size="lg" variant="outline" className="border-white/40 text-white hover:bg-white/10">
+              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
                 Sign In
               </Button>
             </Link>

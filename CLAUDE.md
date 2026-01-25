@@ -62,22 +62,41 @@ When asked to "check compliance" or "align with FootballGPT", run this process:
 
 ---
 
-## ✅ FOOTBALLGPT PARITY COMPLETE (17/17 Features + Brand Assets)
+## ✅ FOOTBALLGPT PARITY STATUS (Updated: 2026-01-25)
 
-**Coach Reflection has reached full feature parity with FootballGPT.**
+**Coach Reflection core features implemented.**
 
 ### Reference Implementation
 - **Blueprint repo:** `/home/kevin/FootballGPT`
 - **Master checklist:** `/home/kevin/PRODUCT-SETUP-CHECKLIST.md`
 
-### All Features Implemented ✅
+### Feature Status
 
-| Category | Features |
-|----------|----------|
-| **P0 (Core)** | chat, conversations, cron/emails, admin/metrics |
-| **P1 (Engagement)** | gamification, memory, feedback, push/subscribe, share |
-| **P2 (Polish)** | account/delete, account/export, pro-trial, track, sponsors, unsubscribe |
-| **Product-Specific** | reflections, sessions, analyze-plan (vision), auth, stripe |
+| Category | Status | Notes |
+|----------|--------|-------|
+| **P0 (Core)** | ✅ Done | Chat, email sequences, React Email templates |
+| **P1 (Engagement)** | ✅ Done | gamification.ts, memory.ts, subscription.ts implemented |
+| **P2 (Polish)** | ⚠️ Partial | Basic versions exist |
+| **Product-Specific** | ✅ Done | reflections, sessions, analyze-plan work |
+
+### Implemented lib/ Files
+
+| File | Status | Purpose |
+|------|--------|---------|
+| `gamification.ts` | ✅ Done | Streak/badge system, theme detection, milestone tracking |
+| `memory.ts` | ✅ Done | User memory for AI personalization (Pro feature) |
+| `subscription.ts` | ✅ Done | Unified subscription validation (individual + club) |
+| `email-sender.ts` | ✅ Done | React Email sending with template support |
+
+### Email System ✅
+
+| Aspect | Status | Notes |
+|--------|--------|-------|
+| Architecture | ✅ React Email | 12 templates in `emails/templates/` |
+| Onboarding | ✅ 5 emails | welcome, first-reflection, tips, check-in, upgrade |
+| Streak Milestones | ✅ 4 emails | 3, 7, 14, 30 day celebrations |
+| Winback | ✅ 3 emails | winback, feature highlight, streak-broken |
+| Sequences | ✅ Done | Generic sequences (not mode-specific) |
 
 ### Brand Assets ✅
 
@@ -89,17 +108,29 @@ When asked to "check compliance" or "align with FootballGPT", run this process:
 | Twitter image | ✅ | `app/twitter-image.tsx` |
 | PWA manifest | ✅ | `public/manifest.json` |
 | Metadata | ✅ | `app/layout.tsx` (OG + Twitter meta) |
+| Logo | ✅ | `public/logo.png` (CR + Coach Reflection text) |
 
 **Brand Colors:** Gold `#E5A11C`, Dark `#0A0A0A` (360TFT brand)
 
-### Key Libraries
+### Current Libraries
 
-| Library | Location | Purpose |
-|---------|----------|---------|
-| Chat Config | `lib/chat-config.ts` | System prompts, user context |
-| Email Sequences | `lib/email-sequences.ts` | Onboarding/winback |
-| Email Templates | `lib/email-templates.ts` | React Email templates |
-| Supabase | `lib/supabase/` | Database client |
+| Library | Location | Status |
+|---------|----------|--------|
+| Chat Config | `lib/chat-config.ts` | ✅ Works |
+| Gamification | `lib/gamification.ts` | ✅ Streak/badge system |
+| Memory | `lib/memory.ts` | ✅ AI personalization |
+| Subscription | `lib/subscription.ts` | ✅ Unified tier checking |
+| Email Sender | `lib/email-sender.ts` | ✅ React Email integration |
+| Email Sequences | `lib/email-sequences.ts` | ✅ Sequence management |
+| Email Templates | `lib/email-templates.ts` | ✅ Fallback HTML templates |
+| Rate Limit | `lib/rate-limit.ts` | ✅ Works |
+| Supabase | `lib/supabase/` | ✅ 3-client pattern |
+
+### Remaining Items
+
+**Nice-to-have:**
+- [ ] Add shareable insights/achievements
+- [ ] Topics.ts for coaching topic detection
 
 ### What's Left (For Kevin)
 

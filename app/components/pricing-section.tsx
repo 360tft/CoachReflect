@@ -156,7 +156,7 @@ export function PricingSection() {
                 </li>
               </ul>
               <Link href={`/signup?plan=pro&billing=${billing}`} className="block mt-6">
-                <Button className="w-full bg-brand hover:bg-brand-hover">Start Pro</Button>
+                <Button className="w-full bg-brand hover:bg-brand-hover !text-white">Start Pro</Button>
               </Link>
             </CardContent>
           </Card>
@@ -210,7 +210,7 @@ export function PricingSection() {
                       <Button
                         className={`w-full ${
                           tier.recommended
-                            ? "bg-brand hover:bg-brand-hover"
+                            ? "bg-brand hover:bg-brand-hover !text-white"
                             : ""
                         }`}
                         variant={tier.recommended ? "default" : "outline"}

@@ -2,6 +2,10 @@
 
 export type SequenceName = 'onboarding' | 'winback' | 'streak_recovery' | 'weekly_summary'
 
+// Streak milestones that trigger celebration emails
+export const STREAK_MILESTONES = [3, 7, 14, 30] as const
+export type StreakMilestone = (typeof STREAK_MILESTONES)[number]
+
 export interface SequenceStep {
   day: number        // Days since sequence started
   template: string   // Template name
@@ -61,4 +65,23 @@ export function getNextSendTime(
   const nextSendTime = new Date(sequenceStartDate)
   nextSendTime.setDate(nextSendTime.getDate() + nextStep.day)
   return nextSendTime
+}
+
+// Check if streak count is a milestone
+export function isStreakMilestone(streak: number): streak is StreakMilestone {
+  return STREAK_MILESTONES.includes(streak as StreakMilestone)
+}
+
+// Get streak milestone email template and subject
+export function getStreakMilestoneEmail(streak: StreakMilestone): { template: string; subject: string } {
+  switch (streak) {
+    case 3:
+      return { template: 'streak-3', subject: '3-day reflection streak!' }
+    case 7:
+      return { template: 'streak-7', subject: 'One week of reflections!' }
+    case 14:
+      return { template: 'streak-14', subject: 'Two weeks strong!' }
+    case 30:
+      return { template: 'streak-30', subject: '30-day reflection streak!' }
+  }
 }

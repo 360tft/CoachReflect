@@ -145,3 +145,17 @@ html, body {
 .border-gold {
   border-color: var(--color-gold);
 }
+
+/* Brand color aliases (used in pricing, buttons, etc.) */
+.bg-brand {
+  background-color: var(--color-gold) !important;
+}
+.hover\:bg-brand-hover:hover {
+  background-color: var(--color-gold-dark) !important;
+}
+.border-brand {
+  border-color: var(--color-gold);
+}
+.text-brand {
+  color: var(--color-gold);
+}
