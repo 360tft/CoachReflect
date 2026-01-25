@@ -1,16 +1,16 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.coachreflect.app',
-  appName: 'CoachReflect',
+  appId: 'com.coachreflection.app',
+  appName: 'Coach Reflection',
   webDir: 'public',
   server: {
     // Production URL - set this once deployed to Vercel
     // For local dev, use: npx cap run ios -l (live reload from localhost:3000)
-    url: process.env.CAPACITOR_SERVER_URL || 'https://coachreflect.vercel.app',
+    url: process.env.CAPACITOR_SERVER_URL || 'https://coachreflection.com',
     cleartext: process.env.NODE_ENV === 'development',
     androidScheme: 'https',
-    allowNavigation: ['coachreflect.vercel.app', 'coachreflect.com']
+    allowNavigation: ['coachreflection.com']
   },
   ios: {
     contentInset: 'automatic'

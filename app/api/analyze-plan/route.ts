@@ -1,11 +1,9 @@
 import { NextResponse } from "next/server"
-import Anthropic from "@anthropic-ai/sdk"
+import { GoogleGenerativeAI } from "@google/generative-ai"
 import { createClient } from "@/lib/supabase/server"
 import type { SessionPlanAnalysis, SessionDrill } from "@/app/types"
 
-const anthropic = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY,
-})
+const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY || "")
 
 const ANALYSIS_PROMPT = `You are analyzing a football/soccer coaching session plan image. Extract the following information from the image:
 
@@ -89,37 +87,25 @@ export async function POST(request: Request) {
       )
     }
 
-    const mediaType = `image/${base64Match[1]}` as "image/jpeg" | "image/png" | "image/gif" | "image/webp"
+    const mimeType = `image/${base64Match[1]}`
     const base64Data = base64Match[2]
 
-    // Call Claude Vision API
-    const response = await anthropic.messages.create({
-      model: "claude-sonnet-4-20250514",
-      max_tokens: 2048,
-      messages: [
-        {
-          role: "user",
-          content: [
-            {
-              type: "image",
-              source: {
-                type: "base64",
-                media_type: mediaType,
-                data: base64Data,
-              },
-            },
-            {
-              type: "text",
-              text: ANALYSIS_PROMPT,
-            },
-          ],
+    // Call Gemini Vision API
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" })
+    const result = await model.generateContent([
+      {
+        inlineData: {
+          mimeType: mimeType,
+          data: base64Data,
         },
-      ],
-    })
+      },
+      { text: ANALYSIS_PROMPT },
+    ])
 
-    // Extract text content
-    const textContent = response.content.find((block) => block.type === "text")
-    if (!textContent || textContent.type !== "text") {
+    const response = result.response
+    const textContent = response.text()
+
+    if (!textContent) {
       return NextResponse.json(
         { error: "Failed to analyze image" },
         { status: 500 }
@@ -130,7 +116,7 @@ export async function POST(request: Request) {
     let analysis: SessionPlanAnalysis
     try {
       // Clean up the response in case there's markdown formatting
-      let jsonText = textContent.text.trim()
+      let jsonText = textContent.trim()
       if (jsonText.startsWith("```json")) {
         jsonText = jsonText.slice(7)
       }
@@ -158,7 +144,7 @@ export async function POST(request: Request) {
         total_duration_minutes: parsed.total_duration_minutes || null,
         image_type: parsed.image_type || "mixed",
         confidence_score: parsed.confidence_score || 0.5,
-        raw_extraction: textContent.text,
+        raw_extraction: textContent,
       }
     } catch {
       return NextResponse.json(

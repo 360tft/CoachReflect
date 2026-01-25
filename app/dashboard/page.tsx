@@ -57,7 +57,7 @@ export default async function DashboardPage() {
           <CardHeader className="text-center pb-2">
             
             <CardTitle className="text-2xl">
-              Welcome to CoachReflect, {profile?.display_name || "Coach"}!
+              Welcome to Coach Reflection, {profile?.display_name || "Coach"}!
             </CardTitle>
             <CardDescription className="text-base">
               You&apos;re about to transform how you grow as a coach

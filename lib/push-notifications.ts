@@ -3,7 +3,7 @@ import webpush from 'web-push'
 // Configure web-push with VAPID keys
 const VAPID_PUBLIC_KEY = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!
 const VAPID_PRIVATE_KEY = process.env.VAPID_PRIVATE_KEY!
-const VAPID_SUBJECT = 'mailto:support@coachreflect.com'
+const VAPID_SUBJECT = 'mailto:support@coachreflection.com'
 
 if (VAPID_PUBLIC_KEY && VAPID_PRIVATE_KEY) {
   webpush.setVapidDetails(VAPID_SUBJECT, VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY)
@@ -68,7 +68,7 @@ export async function sendPushNotification(
   }
 }
 
-// Predefined notification templates for CoachReflect
+// Predefined notification templates for Coach Reflection
 export const NOTIFICATION_TEMPLATES = {
   streakReminder: (currentStreak: number) => ({
     title: `Don't lose your ${currentStreak}-day streak!`,

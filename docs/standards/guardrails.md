@@ -79,7 +79,7 @@ When something breaks, add a sign here. Next iteration reads this first.
 
 ### Sign: Never expose API keys in client code
 - **Trigger:** Any API key usage
-- **Instruction:** Only `NEXT_PUBLIC_*` vars in client code. All secret keys (`STRIPE_SECRET_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `RESEND_API_KEY`, etc.) server-side only. Run `grep -r "sk_live\|service_role\|ANTHROPIC\|RESEND" src/` to verify.
+- **Instruction:** Only `NEXT_PUBLIC_*` vars in client code. All secret keys (`STRIPE_SECRET_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `RESEND_API_KEY`, `GOOGLE_AI_API_KEY`, etc.) server-side only. Run `grep -r "sk_live\|service_role\|GOOGLE_AI\|RESEND" src/` to verify.
 - **Added after:** Security audit found exposed keys in client bundle
 
 ### Sign: No unused code

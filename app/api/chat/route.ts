@@ -1,14 +1,12 @@
 import { NextResponse } from "next/server"
-import Anthropic from "@anthropic-ai/sdk"
+import { GoogleGenerativeAI } from "@google/generative-ai"
 import { createClient } from "@/lib/supabase/server"
 import { createAdminClient } from "@/lib/supabase/admin"
 import { checkRateLimit, RATE_LIMITS } from "@/lib/rate-limit"
 import { getSystemPrompt, CHAT_CONFIG, buildUserContext } from "@/lib/chat-config"
 import type { ChatMessage, SessionPlanAnalysis } from "@/app/types"
 
-const anthropic = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY,
-})
+const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY || "")
 
 // Extract memory from conversation (runs async, non-blocking)
 async function extractMemoryFromConversation(
@@ -29,7 +27,7 @@ async function extractMemoryFromConversation(
     // Build conversation content
     const conversationContent = `User: ${userMessage}\n\nAssistant: ${assistantResponse}`
 
-    // Use Claude to extract insights
+    // Use Gemini to extract insights
     const extractionPrompt = `Analyze this coaching conversation and extract key information about the coach. Return a JSON object with these fields (keep existing values if no new info):
 
 Current memory: ${JSON.stringify(currentMemory || {})}
@@ -47,21 +45,19 @@ Extract and return JSON with:
 
 Only add new information that's clearly stated. Don't invent details. If nothing new to add, return empty arrays/objects for those fields. Return ONLY valid JSON.`
 
-    const response = await anthropic.messages.create({
-      model: "claude-sonnet-4-20250514",
-      max_tokens: 1024,
-      messages: [{ role: "user", content: extractionPrompt }],
-    })
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" })
+    const result = await model.generateContent(extractionPrompt)
+    const response = result.response
+    const textContent = response.text()
 
-    const textContent = response.content.find(b => b.type === "text")
-    if (!textContent || textContent.type !== "text") {
+    if (!textContent) {
       return
     }
 
     // Parse extracted memory
     let extracted
     try {
-      let jsonText = textContent.text.trim()
+      let jsonText = textContent.trim()
       if (jsonText.startsWith("```json")) jsonText = jsonText.slice(7)
       if (jsonText.startsWith("```")) jsonText = jsonText.slice(3)
       if (jsonText.endsWith("```")) jsonText = jsonText.slice(0, -3)
@@ -300,22 +296,17 @@ export async function POST(request: Request) {
       })
     }
 
-    // Build messages array for Claude with sport-specific system prompt
+    // Build messages array for Gemini with sport-specific system prompt
     const systemPrompt = getSystemPrompt(userSport) + userContext
 
     // Trim history to last N messages
     const trimmedHistory = history.slice(-CHAT_CONFIG.maxHistoryMessages)
 
-    const claudeMessages: Anthropic.MessageParam[] = trimmedHistory.map((msg) => ({
-      role: msg.role as "user" | "assistant",
-      content: msg.content,
+    // Convert history to Gemini format
+    const geminiHistory = trimmedHistory.map((msg) => ({
+      role: msg.role === "user" ? "user" as const : "model" as const,
+      parts: [{ text: msg.content }],
     }))
-
-    // Add current message
-    claudeMessages.push({
-      role: "user",
-      content: fullMessage,
-    })
 
     // Create streaming response
     const stream = new ReadableStream({
@@ -324,29 +315,35 @@ export async function POST(request: Request) {
         let fullResponse = ""
 
         try {
-          // Create streaming request to Claude
-          const response = await anthropic.messages.create({
-            model: "claude-sonnet-4-20250514",
-            max_tokens: CHAT_CONFIG.maxTokens,
-            system: systemPrompt,
-            messages: claudeMessages,
-            stream: true,
+          // Create Gemini model with system instruction
+          const model = genAI.getGenerativeModel({
+            model: "gemini-2.0-flash",
+            systemInstruction: systemPrompt,
           })
 
-          // Process stream
-          for await (const event of response) {
-            if (event.type === "content_block_delta") {
-              const delta = event.delta
-              if ("text" in delta) {
-                fullResponse += delta.text
+          // Start chat with history
+          const chat = model.startChat({
+            history: geminiHistory,
+            generationConfig: {
+              maxOutputTokens: CHAT_CONFIG.maxTokens,
+            },
+          })
 
-                // Send chunk via SSE
-                const chunk = JSON.stringify({
-                  type: "chunk",
-                  content: delta.text,
-                })
-                controller.enqueue(encoder.encode(`data: ${chunk}\n\n`))
-              }
+          // Send message with streaming
+          const result = await chat.sendMessageStream(fullMessage)
+
+          // Process stream
+          for await (const chunk of result.stream) {
+            const text = chunk.text()
+            if (text) {
+              fullResponse += text
+
+              // Send chunk via SSE
+              const chunkData = JSON.stringify({
+                type: "chunk",
+                content: text,
+              })
+              controller.enqueue(encoder.encode(`data: ${chunkData}\n\n`))
             }
           }
 

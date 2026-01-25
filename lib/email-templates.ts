@@ -1,11 +1,24 @@
-// CoachReflect Email Templates
+// Coach Reflection Email Templates
 // Simple HTML templates - can be migrated to react-email later
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://coachreflect.app'
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://coachreflection.com'
 
 interface TemplateProps {
   name: string
   unsubscribeUrl?: string
+  // Weekly summary data
+  weeklySummary?: {
+    reflectionCount: number
+    messageCount: number
+    voiceNoteCount: number
+    sessionPlanCount: number
+    topPlayers: Array<{ name: string; count: number; sentiment: 'positive' | 'concern' | 'neutral' }>
+    topThemes: Array<{ name: string; count: number }>
+    streakDays: number
+    keyInsight?: string
+    weekStartDate: string
+    weekEndDate: string
+  }
 }
 
 function baseTemplate(content: string, props: TemplateProps): string {
@@ -15,12 +28,12 @@ function baseTemplate(content: string, props: TemplateProps): string {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CoachReflect</title>
+  <title>Coach Reflection</title>
 </head>
 <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #374151; max-width: 600px; margin: 0 auto; padding: 20px;">
   <div style="text-align: center; margin-bottom: 30px;">
     <span style="font-size: 32px;">🪞</span>
-    <h1 style="font-size: 24px; color: #92400e; margin: 10px 0;">CoachReflect</h1>
+    <h1 style="font-size: 24px; color: #92400e; margin: 10px 0;">Coach Reflection</h1>
   </div>
 
   ${content}
@@ -41,7 +54,7 @@ export const TEMPLATES: Record<string, (props: TemplateProps) => string> = {
   'welcome': (props) => baseTemplate(`
     <p>Hey ${props.name},</p>
 
-    <p>Welcome to CoachReflect! You've taken the first step toward becoming a more intentional coach.</p>
+    <p>Welcome to Coach Reflection! You've taken the first step toward becoming a more intentional coach.</p>
 
     <p>Here's how to get started:</p>
 
@@ -64,7 +77,7 @@ export const TEMPLATES: Record<string, (props: TemplateProps) => string> = {
       <a href="${APP_URL}/dashboard/reflect/new" style="background: #d97706; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; display: inline-block;">Start Your First Reflection</a>
     </p>
 
-    <p>Here's to your growth,<br>The CoachReflect Team</p>
+    <p>Here's to your growth,<br>The Coach Reflection Team</p>
   `, props),
 
   'first-reflection': (props) => baseTemplate(`
@@ -86,7 +99,7 @@ export const TEMPLATES: Record<string, (props: TemplateProps) => string> = {
       <a href="${APP_URL}/dashboard/reflect/new" style="background: #d97706; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; display: inline-block;">Add a Reflection</a>
     </p>
 
-    <p>Keep growing,<br>The CoachReflect Team</p>
+    <p>Keep growing,<br>The Coach Reflection Team</p>
   `, props),
 
   'reflection-tips': (props) => baseTemplate(`
@@ -119,7 +132,7 @@ export const TEMPLATES: Record<string, (props: TemplateProps) => string> = {
   'check-in': (props) => baseTemplate(`
     <p>Hey ${props.name},</p>
 
-    <p>It's been a week since you joined CoachReflect. How's it going?</p>
+    <p>It's been a week since you joined Coach Reflection. How's it going?</p>
 
     <p>If you've been reflecting regularly - brilliant! You're building a valuable coaching log.</p>
 
@@ -137,7 +150,7 @@ export const TEMPLATES: Record<string, (props: TemplateProps) => string> = {
   'upgrade-pitch': (props) => baseTemplate(`
     <p>Hey ${props.name},</p>
 
-    <p>You've been using CoachReflect for a couple of weeks now. Ready to unlock the full potential?</p>
+    <p>You've been using Coach Reflection for a couple of weeks now. Ready to unlock the full potential?</p>
 
     <p><strong>With Pro ($7.99/month), you get:</strong></p>
     <ul>
@@ -207,6 +220,110 @@ export const TEMPLATES: Record<string, (props: TemplateProps) => string> = {
 
     <p>You've got this.</p>
   `, props),
+
+  // Weekly summary email
+  'weekly-summary': (props) => {
+    const summary = props.weeklySummary
+    if (!summary) {
+      return baseTemplate(`
+        <p>Hey ${props.name},</p>
+        <p>Your weekly summary is being generated. Check back soon!</p>
+      `, props)
+    }
+
+    const hasActivity = summary.reflectionCount > 0 || summary.messageCount > 0
+
+    const playerSection = summary.topPlayers.length > 0 ? `
+      <div style="background: #f3f4f6; padding: 15px; border-radius: 8px; margin: 15px 0;">
+        <p style="margin: 0 0 10px 0;"><strong>Players Mentioned</strong></p>
+        ${summary.topPlayers.slice(0, 3).map(p => {
+          const sentimentColor = p.sentiment === 'positive' ? '#16a34a' : p.sentiment === 'concern' ? '#f59e0b' : '#6b7280'
+          return `<p style="margin: 5px 0; color: ${sentimentColor};">${p.name}: ${p.count}x</p>`
+        }).join('')}
+      </div>
+    ` : ''
+
+    const themeSection = summary.topThemes.length > 0 ? `
+      <div style="background: #f3f4f6; padding: 15px; border-radius: 8px; margin: 15px 0;">
+        <p style="margin: 0 0 10px 0;"><strong>Top Coaching Themes</strong></p>
+        ${summary.topThemes.slice(0, 3).map(t =>
+          `<p style="margin: 5px 0;">${t.name}: ${t.count}x</p>`
+        ).join('')}
+      </div>
+    ` : ''
+
+    const insightSection = summary.keyInsight ? `
+      <div style="background: #fef3c7; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 4px solid #d97706;">
+        <p style="margin: 0;"><strong>AI Insight:</strong> ${summary.keyInsight}</p>
+      </div>
+    ` : ''
+
+    const streakSection = summary.streakDays > 0 ? `
+      <div style="text-align: center; margin: 20px 0;">
+        <span style="font-size: 24px;">🔥</span>
+        <p style="margin: 5px 0; font-weight: bold;">${summary.streakDays} Day Streak!</p>
+      </div>
+    ` : ''
+
+    if (!hasActivity) {
+      return baseTemplate(`
+        <p>Hey ${props.name},</p>
+
+        <p>Here's your weekly coaching summary for ${summary.weekStartDate} - ${summary.weekEndDate}.</p>
+
+        <div style="background: #fef3c7; padding: 20px; border-radius: 8px; margin: 20px 0; text-align: center;">
+          <p style="margin: 0;">No reflections this week - that's okay! Even a quick reflection after your next session helps track your growth.</p>
+        </div>
+
+        <p style="text-align: center; margin: 30px 0;">
+          <a href="${APP_URL}/dashboard/chat" style="background: #d97706; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; display: inline-block;">Quick Chat Reflection</a>
+        </p>
+
+        <p>See you next week!</p>
+      `, props)
+    }
+
+    return baseTemplate(`
+      <p>Hey ${props.name},</p>
+
+      <p>Here's your weekly coaching summary for ${summary.weekStartDate} - ${summary.weekEndDate}.</p>
+
+      ${streakSection}
+
+      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 20px 0;">
+        <div style="background: #f3f4f6; padding: 15px; border-radius: 8px; text-align: center;">
+          <p style="font-size: 24px; margin: 0; font-weight: bold;">${summary.messageCount}</p>
+          <p style="margin: 5px 0; color: #6b7280; font-size: 14px;">Messages</p>
+        </div>
+        <div style="background: #f3f4f6; padding: 15px; border-radius: 8px; text-align: center;">
+          <p style="font-size: 24px; margin: 0; font-weight: bold;">${summary.reflectionCount}</p>
+          <p style="margin: 5px 0; color: #6b7280; font-size: 14px;">Reflections</p>
+        </div>
+        ${summary.voiceNoteCount > 0 ? `
+        <div style="background: #f3f4f6; padding: 15px; border-radius: 8px; text-align: center;">
+          <p style="font-size: 24px; margin: 0; font-weight: bold;">${summary.voiceNoteCount}</p>
+          <p style="margin: 5px 0; color: #6b7280; font-size: 14px;">Voice Notes</p>
+        </div>
+        ` : ''}
+        ${summary.sessionPlanCount > 0 ? `
+        <div style="background: #f3f4f6; padding: 15px; border-radius: 8px; text-align: center;">
+          <p style="font-size: 24px; margin: 0; font-weight: bold;">${summary.sessionPlanCount}</p>
+          <p style="margin: 5px 0; color: #6b7280; font-size: 14px;">Session Plans</p>
+        </div>
+        ` : ''}
+      </div>
+
+      ${playerSection}
+      ${themeSection}
+      ${insightSection}
+
+      <p style="text-align: center; margin: 30px 0;">
+        <a href="${APP_URL}/dashboard/analytics" style="background: #d97706; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; display: inline-block;">View Full Analytics</a>
+      </p>
+
+      <p>Keep growing!<br>The Coach Reflection Team</p>
+    `, props)
+  },
 }
 
 export function renderTemplate(templateName: string, props: TemplateProps): string | null {

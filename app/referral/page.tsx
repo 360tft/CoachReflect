@@ -3,7 +3,7 @@ import type { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: "Refer a Coach",
-  description: "Share CoachReflect with other football coaches. Help them improve their sessions through reflection.",
+  description: "Share Coach Reflection with other football coaches. Help them improve their sessions through reflection.",
 }
 
 export default function ReferralPage() {
@@ -11,7 +11,7 @@ export default function ReferralPage() {
     <div className="min-h-screen bg-background">
       <header className="container mx-auto px-4 py-6">
         <Link href="/" className="flex items-center gap-2">
-          <span className="text-xl font-bold">CoachReflect</span>
+          <span className="text-xl font-bold">Coach Reflection</span>
         </Link>
       </header>
 
@@ -27,14 +27,14 @@ export default function ReferralPage() {
             Referral Program Coming Soon
           </h2>
           <p className="text-amber-700 dark:text-amber-300">
-            We&apos;re building a referral program that will reward you for sharing CoachReflect with other coaches.
+            We&apos;re building a referral program that will reward you for sharing Coach Reflection with other coaches.
             Stay tuned for updates!
           </p>
         </div>
 
         {/* Why Refer */}
         <section className="mb-12">
-          <h2 className="text-2xl font-bold mb-4">Why Share CoachReflect?</h2>
+          <h2 className="text-2xl font-bold mb-4">Why Share Coach Reflection?</h2>
           <div className="grid gap-4 md:grid-cols-2">
             <div className="p-4 border rounded-lg">
               <h3 className="font-semibold mb-2">Help Coaches Improve</h3>
@@ -46,7 +46,7 @@ export default function ReferralPage() {
             <div className="p-4 border rounded-lg">
               <h3 className="font-semibold mb-2">Build a Better Community</h3>
               <p className="text-sm text-muted-foreground">
-                The more coaches using CoachReflect, the more we can learn about
+                The more coaches using Coach Reflection, the more we can learn about
                 what helps coaches improve.
               </p>
             </div>
@@ -60,7 +60,7 @@ export default function ReferralPage() {
             <div className="p-4 border rounded-lg">
               <h3 className="font-semibold mb-2">Easy to Share</h3>
               <p className="text-sm text-muted-foreground">
-                Just send them to coachreflect.com. They can try it free and
+                Just send them to coachreflection.com. They can try it free and
                 see the value for themselves.
               </p>
             </div>
@@ -78,7 +78,7 @@ export default function ReferralPage() {
               <div>
                 <h3 className="font-semibold">Share the Link</h3>
                 <p className="text-sm text-muted-foreground">
-                  Send <span className="font-mono bg-muted px-2 py-1 rounded">coachreflect.com</span> to
+                  Send <span className="font-mono bg-muted px-2 py-1 rounded">coachreflection.com</span> to
                   coaches in your network, club, or coaching community.
                 </p>
               </div>
@@ -115,7 +115,7 @@ export default function ReferralPage() {
             We&apos;ll email you when the referral program is ready with your unique referral link.
           </p>
           <p className="text-sm text-muted-foreground">
-            Already using CoachReflect? You&apos;ll automatically be notified via email.
+            Already using Coach Reflection? You&apos;ll automatically be notified via email.
           </p>
         </div>
 

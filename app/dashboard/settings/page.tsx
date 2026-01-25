@@ -7,6 +7,9 @@ import { ProfileForm } from "./profile-form"
 import { BillingToggle } from "./billing-toggle"
 import { PushNotificationToggle } from "@/app/components/push-notification-prompt"
 import { AccountActions } from "./account-actions"
+import { CPDExport } from "./cpd-export"
+import { EmailPreferences } from "./email-preferences"
+import { ReminderSettings } from "./reminder-settings"
 
 export default async function SettingsPage() {
   const supabase = await createClient()
@@ -41,16 +44,28 @@ export default async function SettingsPage() {
         email={user.email || ""}
       />
 
-      {/* Notifications */}
+      {/* Push Notifications */}
       <Card>
         <CardHeader>
-          <CardTitle>Notifications</CardTitle>
-          <CardDescription>Manage how you receive updates</CardDescription>
+          <CardTitle>Push Notifications</CardTitle>
+          <CardDescription>Get notified on your device</CardDescription>
         </CardHeader>
         <CardContent>
           <PushNotificationToggle />
         </CardContent>
       </Card>
+
+      {/* Reflection Reminders */}
+      <ReminderSettings />
+
+      {/* Email Preferences */}
+      <EmailPreferences
+        weeklySummaryEnabled={profile?.weekly_summary_enabled ?? true}
+        emailNotificationsEnabled={profile?.email_notifications_enabled ?? true}
+      />
+
+      {/* CPD Export */}
+      <CPDExport isSubscribed={subscriptionTier !== "free"} />
 
       {/* Subscription */}
       <Card>
@@ -105,14 +120,14 @@ export default async function SettingsPage() {
       <Card>
         <CardHeader>
           <CardTitle>Help & Support</CardTitle>
-          <CardDescription>Get help using CoachReflect</CardDescription>
+          <CardDescription>Get help using Coach Reflection</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex items-center justify-between py-3 border-b">
             <div>
               <p className="font-medium">Help Center</p>
               <p className="text-sm text-muted-foreground">
-                FAQs and guides for getting the most out of CoachReflect
+                FAQs and guides for getting the most out of Coach Reflection
               </p>
             </div>
             <Link href="/help">
@@ -126,7 +141,7 @@ export default async function SettingsPage() {
                 Need help? Reach out to our support team
               </p>
             </div>
-            <a href="mailto:support@coachreflect.com">
+            <a href="mailto:support@coachreflection.com">
               <Button variant="outline">Email Support</Button>
             </a>
           </div>
@@ -137,7 +152,7 @@ export default async function SettingsPage() {
       <Card className="border-amber-200 dark:border-amber-800 bg-amber-50/50 dark:bg-amber-950/30">
         <CardHeader>
           <CardTitle>Refer a Coach</CardTitle>
-          <CardDescription>Share CoachReflect with other coaches</CardDescription>
+          <CardDescription>Share Coach Reflection with other coaches</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="flex items-center justify-between">

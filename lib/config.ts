@@ -1,4 +1,4 @@
-// CoachReflect - Centralized Configuration
+// Coach Reflection - Centralized Configuration
 // Single source of truth for pricing, limits, and settings
 
 // =============================================================================
@@ -206,10 +206,10 @@ export const FEATURES = {
 // =============================================================================
 
 export const APP_CONFIG = {
-  name: 'CoachReflect',
+  name: 'Coach Reflection',
   tagline: 'Grow as a Coach Through Guided Reflection',
-  url: process.env.NEXT_PUBLIC_APP_URL || 'https://coachreflect.com',
-  supportEmail: 'support@coachreflect.com',
+  url: process.env.NEXT_PUBLIC_APP_URL || 'https://coachreflection.com',
+  supportEmail: 'support@coachreflection.com',
 
   // Sponsors
   maxSponsorSlots: 5,

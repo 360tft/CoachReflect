@@ -1,4 +1,4 @@
-# CoachReflect - Claude Session Context
+# Coach Reflection - Claude Session Context
 
 ---
 
@@ -47,24 +47,24 @@ When asked to "check compliance" or "align with FootballGPT", run this process:
 4. **Apply brand adaptations** (see table below)
 5. **Report gaps** - List missing features with implementation priority
 
-### Brand Adaptations (FootballGPT → CoachReflect)
+### Brand Adaptations (FootballGPT → Coach Reflection)
 
-| FootballGPT | CoachReflect |
+| FootballGPT | Coach Reflection |
 |-------------|--------------|
 | `#16a34a` (green) | `#E5A11C` (gold - 360TFT brand) |
-| `FootballGPT` | `CoachReflect` |
+| `FootballGPT` | `Coach Reflection` |
 | `chat` / `messages` | `reflections` / `journal entries` |
 | `AI assistant` | `reflection companion` |
 | `coach` / `player` | `coach` (same) |
 | `Football Coaching Academy` | `Football Coaching Academy` (same ecosystem) |
-| `footballgpt.co` | `coachreflect.com` |
+| `footballgpt.co` | `coachreflection.com` |
 | Advisor modes | Reflection prompts / guided questions |
 
 ---
 
 ## ✅ FOOTBALLGPT PARITY COMPLETE (17/17 Features + Brand Assets)
 
-**CoachReflect has reached full feature parity with FootballGPT.**
+**Coach Reflection has reached full feature parity with FootballGPT.**
 
 ### Reference Implementation
 - **Blueprint repo:** `/home/kevin/FootballGPT`
@@ -184,11 +184,11 @@ This repo MUST maintain 3 documents for potential acquisition. Update them whene
 
 ## Product Overview
 
-CoachReflect is a reflective journaling app for football coaches. It helps coaches capture post-session thoughts, track patterns over time, and get AI-powered insights to improve their coaching.
+Coach Reflection is a reflective journaling app for football coaches. It helps coaches capture post-session thoughts, track patterns over time, and get AI-powered insights to improve their coaching.
 
 **Target User:** Grassroots to semi-pro football coaches who want to systematically improve through reflection.
 
-**Core Value Prop:** Turn post-session chaos into structured growth. Most coaches think about sessions but don't capture insights - CoachReflect makes reflection quick, guided, and actionable.
+**Core Value Prop:** Turn post-session chaos into structured growth. Most coaches think about sessions but don't capture insights - Coach Reflection makes reflection quick, guided, and actionable.
 
 ---
 
@@ -262,6 +262,56 @@ See `supabase/migrations/` for full schema. Key tables:
 
 ---
 
+## INFRASTRUCTURE SETUP (2026-01-24)
+
+### Domain & DNS ✅ COMPLETE
+
+**Domain:** coachreflection.com (Namecheap)
+
+| Record | Host | Value | Status |
+|--------|------|-------|--------|
+| A | @ | 76.76.21.21 | ✅ Vercel |
+| CNAME | www | cname.vercel-dns.com | ✅ Vercel |
+| TXT | @ | v=spf1 include:amazonses.com include:resend.com ~all | ✅ SPF |
+| TXT | resend._domainkey | DKIM key | ✅ Resend |
+| MX | send | feedback-smtp.eu-west-1.amazonses.com (pri 10) | ✅ Resend |
+| TXT | send | v=spf1 include:amazonses.com ~all | ✅ Resend |
+
+**Resend Domain:** ✅ Verified
+
+### Vercel Environment Variables ✅ COMPLETE
+
+| Variable | Status | Source |
+|----------|--------|--------|
+| NEXT_PUBLIC_APP_URL | ✅ | https://coachreflection.com |
+| RESEND_API_KEY | ✅ | Resend |
+| GOOGLE_CLIENT_ID | ✅ | Google Cloud (reused from FootballGPT) |
+| GOOGLE_CLIENT_SECRET | ✅ | Google Cloud (reused from FootballGPT) |
+| UPSTASH_REDIS_REST_URL | ✅ | Upstash (reused from FootballGPT) |
+| UPSTASH_REDIS_REST_TOKEN | ✅ | Upstash (reused from FootballGPT) |
+| OPENAI_API_KEY | ✅ | OpenAI (reused from FootballGPT) |
+| GOOGLE_AI_API_KEY | ✅ | Google AI (reused from FootballGPT) |
+| CRON_SECRET | ✅ | Auto-generated |
+| ADMIN_EMAILS | ✅ | kevin@360tft.com |
+
+### Still Needed (When Ready to Launch)
+
+| Item | Triggers Cost? | Status |
+|------|---------------|--------|
+| Supabase project | **Yes** | ⏳ Pending |
+| Supabase env vars | - | ⏳ After project created |
+| Stripe products/prices | No | ⏳ Pending |
+| Stripe env vars | - | ⏳ After products created |
+| Add domain to Vercel | No | ⏳ Pending |
+| Google OAuth redirect URI | No | ⏳ After Supabase created |
+
+### Google OAuth Note
+
+When Supabase project is created, add this redirect URI to Google Cloud Console:
+- `https://[SUPABASE_PROJECT_REF].supabase.co/auth/v1/callback`
+
+---
+
 ## Session Plan Upload Feature (V2 Spec)
 
 ### User Flow
@@ -332,7 +382,7 @@ Use Claude Vision with structured extraction prompt:
 
 ## DEPLOYMENT TODO (Updated 2026-01-16)
 
-Before CoachReflect goes fully live with clubs and analytics:
+Before Coach Reflection goes fully live with clubs and analytics:
 
 ### Stripe Setup (12 prices to create)
 - [ ] Pro Monthly ($7.99) → `NEXT_PUBLIC_STRIPE_PRO_PRICE_ID`

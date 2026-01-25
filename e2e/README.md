@@ -1,4 +1,4 @@
-# CoachReflect E2E Tests
+# Coach Reflection E2E Tests
 
 End-to-end tests using Playwright for critical user journeys.
 
@@ -53,7 +53,7 @@ npx playwright test --grep "reflection"
 - `auth.spec.ts` - Login, signup flows
 - `authenticated.spec.ts` - Protected routes (dashboard, billing, settings)
 
-### CoachReflect-Specific Tests
+### Coach Reflection-Specific Tests
 
 - `reflection.spec.ts` - Creating new reflections, multi-turn conversations
 - `history.spec.ts` - Viewing past reflections, history list

@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next'
 import { getPublishedBlogPosts } from '@/lib/blog'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://coachreflect.com'
+  const baseUrl = 'https://coachreflection.com'
   const lastModified = new Date()
 
   // Static pages

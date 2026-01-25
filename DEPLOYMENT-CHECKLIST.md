@@ -1,4 +1,4 @@
-# CoachReflect Deployment Checklist
+# Coach Reflection Deployment Checklist
 
 **Status:** Code Complete - Ready for Production Deploy
 **Estimated Time:** 40 minutes
@@ -51,9 +51,9 @@ From Supabase Dashboard → Settings → API:
 
 ### Configure Auth
 1. Go to Authentication → URL Configuration
-2. Set Site URL: `https://coachreflect.com` (or your domain)
+2. Set Site URL: `https://coachreflection.com` (or your domain)
 3. Add Redirect URLs:
-   - `https://coachreflect.com/api/auth/callback`
+   - `https://coachreflection.com/api/auth/callback`
    - `http://localhost:3000/api/auth/callback` (for local dev)
 
 ---
@@ -62,10 +62,10 @@ From Supabase Dashboard → Settings → API:
 
 ### Create Products
 1. Go to https://dashboard.stripe.com/products
-2. Create product: **CoachReflect Pro**
+2. Create product: **Coach Reflection Pro**
    - Monthly: $9.99/month → save Price ID
    - Annual: $99/year → save Price ID
-3. Create product: **CoachReflect Sponsor** (optional)
+3. Create product: **Coach Reflection Sponsor** (optional)
    - Monthly: $99/month → save Price ID
 
 ### Get Credentials
@@ -75,7 +75,7 @@ From Stripe Dashboard → Developers → API keys:
 
 ### Configure Webhook (after Vercel deploy)
 1. Go to Developers → Webhooks
-2. Add endpoint: `https://coachreflect.com/api/stripe/webhook`
+2. Add endpoint: `https://coachreflection.com/api/stripe/webhook`
 3. Events to send:
    - `checkout.session.completed`
    - `customer.subscription.created`
@@ -91,7 +91,7 @@ From Stripe Dashboard → Developers → API keys:
 
 ### Import Project
 1. Go to https://vercel.com/new
-2. Import from GitHub: `CoachReflect`
+2. Import from GitHub: `Coach Reflection`
 3. Framework: Next.js (auto-detected)
 
 ### Environment Variables
@@ -110,11 +110,14 @@ NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_...
 NEXT_PUBLIC_STRIPE_PRO_PRICE_ID=price_...
 NEXT_PUBLIC_STRIPE_PRO_ANNUAL_PRICE_ID=price_...
 
-# Anthropic (Claude AI)
-ANTHROPIC_API_KEY=sk-ant-...
+# Google AI (Gemini) - Main AI provider
+GOOGLE_AI_API_KEY=your-google-ai-api-key
+
+# OpenAI (Whisper) - Voice transcription only
+OPENAI_API_KEY=sk-...
 
 # App Config
-NEXT_PUBLIC_APP_URL=https://coachreflect.com
+NEXT_PUBLIC_APP_URL=https://coachreflection.com
 CRON_SECRET=generate-random-string-here
 ADMIN_EMAILS=kevin@360tft.com
 
@@ -139,7 +142,7 @@ SENTRY_PROJECT=...
 
 ### Configure Domain
 1. Go to Settings → Domains
-2. Add domain: `coachreflect.com`
+2. Add domain: `coachreflection.com`
 3. Follow DNS instructions
 
 ---
@@ -175,7 +178,7 @@ SENTRY_PROJECT=...
 
 ### iOS
 ```bash
-cd /home/kevin/CoachReflect
+cd /home/kevin/Coach Reflection
 npm run build
 npx cap sync ios
 npx cap open ios
@@ -211,17 +214,17 @@ If something breaks:
 ### Weekly Checks
 - [ ] User signups
 - [ ] Conversion rate (free → pro)
-- [ ] AI usage (Claude API costs)
+- [ ] AI usage (Gemini API costs)
 - [ ] Error trends
 
 ---
 
 ## Credentials Storage
 
-After deployment, create `/home/kevin/CoachReflect/docs/CREDENTIALS.md` (gitignored):
+After deployment, create `/home/kevin/Coach Reflection/docs/CREDENTIALS.md` (gitignored):
 
 ```markdown
-# CoachReflect Credentials
+# Coach Reflection Credentials
 
 ## Supabase
 - Project URL: https://xxx.supabase.co
@@ -231,15 +234,15 @@ After deployment, create `/home/kevin/CoachReflect/docs/CREDENTIALS.md` (gitigno
 ## Stripe
 - Dashboard: https://dashboard.stripe.com
 - Mode: Live
-- Webhook endpoint: https://coachreflect.com/api/stripe/webhook
+- Webhook endpoint: https://coachreflection.com/api/stripe/webhook
 
 ## Vercel
 - Project: https://vercel.com/xxx/coachreflect
-- Domain: coachreflect.com
+- Domain: coachreflection.com
 
-## Anthropic
-- Dashboard: https://console.anthropic.com
-- API Key: sk-ant-... (in Vercel env)
+## Google AI
+- Dashboard: https://aistudio.google.com/
+- API Key: in Vercel env (GOOGLE_AI_API_KEY)
 ```
 
 ---

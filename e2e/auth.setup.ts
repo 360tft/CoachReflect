@@ -24,7 +24,7 @@ setup('authenticate', async ({ page }) => {
 
   console.log(`🔐 Logging in as ${testEmail}...`)
 
-  // Go to login page (CoachReflect uses (auth) route group)
+  // Go to login page (Coach Reflection uses (auth) route group)
   const baseUrl = process.env.PLAYWRIGHT_TEST_BASE_URL || 'http://localhost:3000'
   await page.goto(`${baseUrl}/login`)
   await page.waitForLoadState('networkidle')

@@ -1,14 +1,12 @@
 import { NextResponse } from "next/server"
-import Anthropic from "@anthropic-ai/sdk"
+import { GoogleGenerativeAI } from "@google/generative-ai"
 import { createClient } from "@/lib/supabase/server"
 import { createAdminClient } from "@/lib/supabase/admin"
 import { checkRateLimit, RATE_LIMITS } from "@/lib/rate-limit"
 import { SPORT_NAMES, getSportTerminology } from "@/lib/chat-config"
 import type { SessionPlanAnalysis } from "@/app/types"
 
-const anthropic = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY,
-})
+const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY || "")
 
 function getSessionPlanAnalysisPrompt(sport: string): string {
   const sportName = SPORT_NAMES[sport] || sport
@@ -127,50 +125,41 @@ export async function POST(request: Request) {
 
       const imageBuffer = await imageResponse.arrayBuffer()
       const base64Image = Buffer.from(imageBuffer).toString('base64')
-      const mediaType = attachment.mime_type as "image/jpeg" | "image/png" | "image/gif" | "image/webp"
 
-      // Analyze with Claude Vision
-      const response = await anthropic.messages.create({
-        model: "claude-sonnet-4-20250514",
-        max_tokens: 2048,
-        messages: [
-          {
-            role: "user",
-            content: [
-              {
-                type: "image",
-                source: {
-                  type: "base64",
-                  media_type: mediaType,
-                  data: base64Image,
-                },
-              },
-              {
-                type: "text",
-                text: getSessionPlanAnalysisPrompt(userSport),
-              },
-            ],
+      // Map mime type to Gemini format
+      const mimeType = attachment.mime_type as string
+
+      // Analyze with Gemini Vision
+      const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" })
+
+      const result = await model.generateContent([
+        {
+          inlineData: {
+            mimeType: mimeType,
+            data: base64Image,
           },
-        ],
-      })
+        },
+        { text: getSessionPlanAnalysisPrompt(userSport) },
+      ])
 
-      // Extract text response
-      const textContent = response.content.find(b => b.type === "text")
-      if (!textContent || textContent.type !== "text") {
-        throw new Error("No text response from Claude")
+      const response = result.response
+      const textContent = response.text()
+
+      if (!textContent) {
+        throw new Error("No text response from Gemini")
       }
 
       // Parse JSON response
       let analysis: SessionPlanAnalysis
       try {
-        let jsonText = textContent.text.trim()
+        let jsonText = textContent.trim()
         // Remove markdown code blocks if present
         if (jsonText.startsWith("```json")) jsonText = jsonText.slice(7)
         if (jsonText.startsWith("```")) jsonText = jsonText.slice(3)
         if (jsonText.endsWith("```")) jsonText = jsonText.slice(0, -3)
         analysis = JSON.parse(jsonText.trim())
       } catch {
-        console.error("Failed to parse Claude response:", textContent.text)
+        console.error("Failed to parse Gemini response:", textContent)
         throw new Error("Failed to parse session plan analysis")
       }
 

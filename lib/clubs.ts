@@ -1,4 +1,4 @@
-// Club License System for CoachReflect
+// Club License System for Coach Reflection
 // Allows teams/clubs to purchase group subscriptions
 
 import { createAdminClient } from "@/lib/supabase/admin"

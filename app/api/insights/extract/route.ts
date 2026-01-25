@@ -1,13 +1,11 @@
 import { NextResponse } from "next/server"
-import Anthropic from "@anthropic-ai/sdk"
+import { GoogleGenerativeAI } from "@google/generative-ai"
 import { createClient } from "@/lib/supabase/server"
 import { createAdminClient } from "@/lib/supabase/admin"
 import { checkRateLimit, RATE_LIMITS } from "@/lib/rate-limit"
 import { SPORT_NAMES, getSportTerminology } from "@/lib/chat-config"
 
-const anthropic = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY,
-})
+const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY || "")
 
 // Default coaching themes to look for (applicable to all sports)
 const COACHING_THEMES = [
@@ -124,15 +122,13 @@ export async function POST(request: Request) {
     // Build the extraction prompt with sport-specific terminology
     const prompt = getExtractionPrompt(userSport, conversation_text)
 
-    // Call Claude for extraction
-    const response = await anthropic.messages.create({
-      model: "claude-sonnet-4-20250514",
-      max_tokens: 1024,
-      messages: [{ role: "user", content: prompt }],
-    })
+    // Call Gemini for extraction
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" })
+    const result = await model.generateContent(prompt)
+    const response = result.response
+    const textContent = response.text()
 
-    const textContent = response.content.find(b => b.type === "text")
-    if (!textContent || textContent.type !== "text") {
+    if (!textContent) {
       return NextResponse.json(
         { error: "Failed to extract insights" },
         { status: 500 }
@@ -142,13 +138,13 @@ export async function POST(request: Request) {
     // Parse the response
     let extracted: ExtractedInsight
     try {
-      let jsonText = textContent.text.trim()
+      let jsonText = textContent.trim()
       if (jsonText.startsWith("```json")) jsonText = jsonText.slice(7)
       if (jsonText.startsWith("```")) jsonText = jsonText.slice(3)
       if (jsonText.endsWith("```")) jsonText = jsonText.slice(0, -3)
       extracted = JSON.parse(jsonText.trim())
     } catch {
-      console.error("Failed to parse extraction response:", textContent.text)
+      console.error("Failed to parse extraction response:", textContent)
       return NextResponse.json(
         { error: "Failed to parse extraction results" },
         { status: 500 }
@@ -205,18 +201,16 @@ export async function extractInsightsBackground(
   try {
     const prompt = getExtractionPrompt(sport, conversationText)
 
-    const response = await anthropic.messages.create({
-      model: "claude-sonnet-4-20250514",
-      max_tokens: 1024,
-      messages: [{ role: "user", content: prompt }],
-    })
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" })
+    const result = await model.generateContent(prompt)
+    const response = result.response
+    const textContent = response.text()
 
-    const textContent = response.content.find(b => b.type === "text")
-    if (!textContent || textContent.type !== "text") return
+    if (!textContent) return
 
     let extracted: ExtractedInsight
     try {
-      let jsonText = textContent.text.trim()
+      let jsonText = textContent.trim()
       if (jsonText.startsWith("```json")) jsonText = jsonText.slice(7)
       if (jsonText.startsWith("```")) jsonText = jsonText.slice(3)
       if (jsonText.endsWith("```")) jsonText = jsonText.slice(0, -3)

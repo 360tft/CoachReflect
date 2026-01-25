@@ -16,7 +16,7 @@ const testimonials: Testimonial[] = [
     id: '1',
     name: 'James Wilson',
     location: 'Manchester United Academy',
-    quote: 'CoachReflect has transformed how I think about my sessions. I can see patterns in my coaching I never noticed before.',
+    quote: 'Coach Reflection has transformed how I think about my sessions. I can see patterns in my coaching I never noticed before.',
     avatar: 'JW',
   },
   {

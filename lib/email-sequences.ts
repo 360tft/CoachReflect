@@ -1,6 +1,6 @@
-// CoachReflect Email Sequence Configuration
+// Coach Reflection Email Sequence Configuration
 
-export type SequenceName = 'onboarding' | 'winback' | 'streak_recovery'
+export type SequenceName = 'onboarding' | 'winback' | 'streak_recovery' | 'weekly_summary'
 
 export interface SequenceStep {
   day: number        // Days since sequence started
@@ -10,7 +10,7 @@ export interface SequenceStep {
 
 // Onboarding sequence for new users
 export const ONBOARDING_SEQUENCE: SequenceStep[] = [
-  { day: 0, template: 'welcome', subject: 'Welcome to CoachReflect' },
+  { day: 0, template: 'welcome', subject: 'Welcome to Coach Reflection' },
   { day: 1, template: 'first-reflection', subject: 'Your first reflection takes 2 minutes' },
   { day: 3, template: 'reflection-tips', subject: '3 questions that unlock coaching growth' },
   { day: 7, template: 'check-in', subject: 'How are your reflections going?' },
@@ -28,6 +28,11 @@ export const STREAK_RECOVERY_SEQUENCE: SequenceStep[] = [
   { day: 0, template: 'streak-broken', subject: 'Your reflection streak - get back on track' },
 ]
 
+// Weekly summary (recurring, not a sequence - just a single template)
+export const WEEKLY_SUMMARY_SEQUENCE: SequenceStep[] = [
+  { day: 0, template: 'weekly-summary', subject: 'Your Week in Coaching' },
+]
+
 // Get sequence by name
 export function getSequence(name: SequenceName): SequenceStep[] {
   switch (name) {
@@ -37,6 +42,8 @@ export function getSequence(name: SequenceName): SequenceStep[] {
       return WINBACK_SEQUENCE
     case 'streak_recovery':
       return STREAK_RECOVERY_SEQUENCE
+    case 'weekly_summary':
+      return WEEKLY_SUMMARY_SEQUENCE
     default:
       return []
   }

@@ -1,8 +1,8 @@
-# CoachReflect Technical Documentation
+# Coach Reflection Technical Documentation
 
 ## Overview
 
-CoachReflect is a reflective journaling app for football coaches. Coaches log sessions, upload session plans (analyzed by AI), and capture guided reflections with AI-powered insights.
+Coach Reflection is a reflective journaling app for football coaches. Coaches log sessions, upload session plans (analyzed by AI), and capture guided reflections with AI-powered insights.
 
 ## Tech Stack
 
@@ -15,18 +15,19 @@ CoachReflect is a reflective journaling app for football coaches. Coaches log se
 | Database | Supabase (PostgreSQL) |
 | Auth | Supabase Auth |
 | Storage | Supabase Storage |
-| AI | Anthropic Claude API (Vision + Text) |
+| AI (Chat/Analysis) | Google Gemini 2.0 Flash (Vision + Text) |
+| AI (Voice) | OpenAI Whisper (Transcription) |
 | Payments | Stripe |
 | Hosting | Vercel |
 
 ## Project Structure
 
 ```
-CoachReflect/
+Coach Reflection/
 ├── app/
 │   ├── (auth)/                    # Auth pages (login, signup)
 │   ├── api/                       # API routes
-│   │   ├── analyze-plan/          # Claude Vision for session plans
+│   │   ├── analyze-plan/          # Gemini Vision for session plans
 │   │   ├── auth/callback/         # OAuth callback
 │   │   ├── reflections/           # Reflection CRUD + AI analysis
 │   │   ├── sessions/              # Session CRUD
@@ -175,14 +176,14 @@ All tables have RLS enabled. Users can only access their own data.
 
 ## AI Integration
 
-### Session Plan Analysis (Claude Vision)
+### Session Plan Analysis (Gemini Vision)
 - Accepts image upload (JPG, PNG, WebP up to 10MB)
-- Sends to Claude Vision API
+- Sends to Gemini Vision API
 - Extracts: title, objectives, drills, coaching points, equipment, duration
 - Returns structured JSON with confidence score
 
-### Reflection Analysis (Claude Text)
-- Sends reflection content to Claude API
+### Reflection Analysis (Gemini Text)
+- Sends reflection content to Gemini API
 - Generates: summary, insights, action items
 - Saves to reflection record
 
@@ -194,8 +195,11 @@ NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
 SUPABASE_SERVICE_ROLE_KEY=
 
-# Anthropic
-ANTHROPIC_API_KEY=
+# Google AI (Gemini) - Main AI provider
+GOOGLE_AI_API_KEY=
+
+# OpenAI (Whisper) - Voice transcription
+OPENAI_API_KEY=
 
 # Stripe
 STRIPE_SECRET_KEY=
@@ -242,4 +246,4 @@ npm start
 | `lib/supabase/server.ts` | Server-side Supabase client |
 | `app/dashboard/layout.tsx` | Dashboard layout with navigation |
 | `app/dashboard/reflect/new/page.tsx` | Multi-step reflection form |
-| `app/api/analyze-plan/route.ts` | Claude Vision integration |
+| `app/api/analyze-plan/route.ts` | Gemini Vision integration |

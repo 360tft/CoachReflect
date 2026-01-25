@@ -1,4 +1,4 @@
-# CoachReflect Mobile - Quick Start
+# Coach Reflection Mobile - Quick Start
 
 ## One-Time Setup (5 minutes)
 
@@ -87,14 +87,14 @@ npm run cap:sync
 ### 3. Configure App Metadata
 
 **iOS (in Xcode):**
-- Bundle ID: `com.coachreflect.app`
-- Display Name: `CoachReflect`
+- Bundle ID: `com.coachreflection.com`
+- Display Name: `Coach Reflection`
 - Version: Match your app version
 - Add app icons
 
 **Android (in Android Studio):**
-- Application ID: `com.coachreflect.app`
-- App Name: `CoachReflect`
+- Application ID: `com.coachreflection.com`
+- App Name: `Coach Reflection`
 - Version: Match your app version
 - Add app icons
 
@@ -127,7 +127,7 @@ npm run android
 
 ## Architecture
 
-**CoachReflect uses "live update" mode:**
+**Coach Reflection uses "live update" mode:**
 - Mobile app loads web version from server URL
 - All backend APIs work identically to web
 - Single codebase for web and mobile

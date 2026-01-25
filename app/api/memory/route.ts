@@ -123,11 +123,9 @@ export async function POST(request: Request) {
       .eq("user_id", user.id)
       .single()
 
-    // Use Claude to extract insights
-    const Anthropic = (await import("@anthropic-ai/sdk")).default
-    const anthropic = new Anthropic({
-      apiKey: process.env.ANTHROPIC_API_KEY,
-    })
+    // Use Gemini to extract insights
+    const { GoogleGenerativeAI } = await import("@google/generative-ai")
+    const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY || "")
 
     const extractionPrompt = `Analyze this coaching conversation and extract key information about the coach. Return a JSON object with these fields (keep existing values if no new info):
 
@@ -146,27 +144,25 @@ Extract and return JSON with:
 
 Only add new information that's clearly stated. Don't invent details. Return ONLY valid JSON.`
 
-    const response = await anthropic.messages.create({
-      model: "claude-sonnet-4-20250514",
-      max_tokens: 1024,
-      messages: [{ role: "user", content: extractionPrompt }],
-    })
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" })
+    const result = await model.generateContent(extractionPrompt)
+    const response = result.response
+    const textContent = response.text()
 
-    const textContent = response.content.find(b => b.type === "text")
-    if (!textContent || textContent.type !== "text") {
+    if (!textContent) {
       return NextResponse.json({ error: "Failed to extract memory" }, { status: 500 })
     }
 
     // Parse extracted memory
     let extracted
     try {
-      let jsonText = textContent.text.trim()
+      let jsonText = textContent.trim()
       if (jsonText.startsWith("```json")) jsonText = jsonText.slice(7)
       if (jsonText.startsWith("```")) jsonText = jsonText.slice(3)
       if (jsonText.endsWith("```")) jsonText = jsonText.slice(0, -3)
       extracted = JSON.parse(jsonText.trim())
     } catch {
-      console.error("Failed to parse memory extraction:", textContent.text)
+      console.error("Failed to parse memory extraction:", textContent)
       return NextResponse.json({ error: "Failed to parse extraction" }, { status: 500 })
     }
 

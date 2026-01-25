@@ -33,6 +33,7 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 !.env.example
+!.env.setup.template
 
 # credentials (never commit)
 docs/CREDENTIALS.md
@@ -58,3 +59,4 @@ e2e/.auth/
 test-results/
 playwright-report/
 .playwright/
+.env*.local

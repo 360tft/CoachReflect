@@ -29,11 +29,11 @@ This covers:
 - Privacy policy requirements
 - Troubleshooting
 
-## CoachReflect-Specific Config
+## Coach Reflection-Specific Config
 
 | Setting | Value |
 |---------|-------|
-| Bundle ID (iOS) | com.coachreflect.app |
-| Package Name (Android) | com.coachreflect.app |
+| Bundle ID (iOS) | com.coachreflection.com |
+| Package Name (Android) | com.coachreflection.com |
 | Brand Color | #E5A11C (gold) |
 | Production URL | https://coachreflect.vercel.app |

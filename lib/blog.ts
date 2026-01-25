@@ -1,4 +1,4 @@
-import Anthropic from "@anthropic-ai/sdk"
+import { GoogleGenerativeAI } from "@google/generative-ai"
 import { createClient } from "@supabase/supabase-js"
 
 // Safe admin client that won't throw during build
@@ -35,7 +35,7 @@ interface GeneratedBlogPost {
   slug: string
 }
 
-const BLOG_SYSTEM_PROMPT = `You are a football coaching expert writing SEO-optimized blog posts for CoachReflect, an AI-powered reflection tool for football coaches.
+const BLOG_SYSTEM_PROMPT = `You are a football coaching expert writing SEO-optimized blog posts for Coach Reflection, an AI-powered reflection tool for football coaches.
 
 Write in-depth, helpful content that:
 - Answers the question thoroughly (1500-2500 words)
@@ -44,7 +44,7 @@ Write in-depth, helpful content that:
 - Uses a friendly, knowledgeable, and supportive tone (like a fellow coach sharing insights)
 - Includes a "Key Takeaways" section near the top
 - Addresses common follow-up questions coaches might have
-- Ends with a call-to-action to use CoachReflect for tracking coaching reflections
+- Ends with a call-to-action to use Coach Reflection for tracking coaching reflections
 
 Writing style guidelines:
 - Write in second person ("you") to engage coaches
@@ -74,12 +74,10 @@ IMPORTANT: Return your response as valid JSON with this exact structure:
 Do not include any text before or after the JSON. Only output the JSON object.`
 
 /**
- * Generate a blog post from a question using Claude AI
+ * Generate a blog post from a question using Gemini AI
  */
 export async function generateBlogPost(question: QuestionData): Promise<GeneratedBlogPost> {
-  const anthropic = new Anthropic({
-    apiKey: process.env.ANTHROPIC_API_KEY,
-  })
+  const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY || "")
 
   const topicContext = question.topics?.length
     ? `Related topics: ${question.topics.join(", ")}`
@@ -97,21 +95,18 @@ Context:
 The blog post should thoroughly answer this question and related follow-up questions that coaches might have.`
 
   try {
-    const response = await anthropic.messages.create({
-      model: "claude-sonnet-4-20250514",
-      max_tokens: 8192,
-      messages: [
-        { role: "user", content: BLOG_SYSTEM_PROMPT },
-        { role: "user", content: prompt },
-      ],
+    const model = genAI.getGenerativeModel({
+      model: "gemini-2.0-flash",
+      systemInstruction: BLOG_SYSTEM_PROMPT,
     })
 
-    const textContent = response.content.find(b => b.type === "text")
-    if (!textContent || textContent.type !== "text") {
+    const result = await model.generateContent(prompt)
+    const response = result.response
+    const responseText = response.text()
+
+    if (!responseText) {
       throw new Error("No text content in response")
     }
-
-    const responseText = textContent.text
 
     // Parse the JSON response
     // Try to extract JSON from the response (in case there's extra text)

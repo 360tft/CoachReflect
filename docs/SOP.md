@@ -1,4 +1,4 @@
-# CoachReflect Standard Operating Procedures
+# Coach Reflection Standard Operating Procedures
 
 ## Daily Operations
 

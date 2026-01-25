@@ -21,20 +21,20 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "CoachReflect - AI-Powered Reflection for Sports Coaches",
-    template: "%s | CoachReflect",
+    default: "Coach Reflection - AI-Powered Reflection for Sports Coaches",
+    template: "%s | Coach Reflection",
   },
   description: "Transform your coaching with guided post-session reflections. Track patterns, identify athlete progress, and grow as a coach with AI-powered insights. For football, rugby, basketball, and more.",
   keywords: ["sports coaching", "coach reflection", "session review", "coaching development", "athlete tracking", "coaching journal", "coach app", "session planning", "football coaching", "rugby coaching", "basketball coaching"],
   authors: [{ name: "360TFT" }],
   creator: "360TFT",
   publisher: "SVMS Consultancy Limited",
-  metadataBase: new URL("https://coachreflect.com"),
+  metadataBase: new URL("https://coachreflection.com"),
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "CoachReflect",
+    title: "Coach Reflection",
   },
   formatDetection: {
     telephone: false,
@@ -49,22 +49,22 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_GB",
-    url: "https://coachreflect.com",
-    siteName: "CoachReflect",
-    title: "CoachReflect - AI-Powered Reflection for Sports Coaches",
+    url: "https://coachreflection.com",
+    siteName: "Coach Reflection",
+    title: "Coach Reflection - AI-Powered Reflection for Sports Coaches",
     description: "Transform your coaching with guided post-session reflections. Track patterns, identify athlete progress, and grow as a coach with AI-powered insights. For football, rugby, basketball, and more.",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "CoachReflect - AI-Powered Coaching Journal",
+        alt: "Coach Reflection - AI-Powered Coaching Journal",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "CoachReflect - AI-Powered Reflection for Football Coaches",
+    title: "Coach Reflection - AI-Powered Reflection for Football Coaches",
     description: "Transform your coaching with guided post-session reflections. Track patterns, identify player progress, and grow as a coach with AI-powered insights.",
     images: ["/og-image.png"],
     creator: "@360_tft",

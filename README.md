@@ -1,4 +1,4 @@
-# CoachReflect
+# Coach Reflection
 
 AI-powered coaching journal for football coaches. Reflect on sessions, get AI insights, track progress, and build confidence in your coaching identity.
 
@@ -28,7 +28,7 @@ This project uses [`next/font`](https://nextjs.org/docs/app/building-your-applic
 
 ### Mobile Development
 
-CoachReflect supports iOS and Android via Capacitor.
+Coach Reflection supports iOS and Android via Capacitor.
 
 **Quick start:**
 ```bash

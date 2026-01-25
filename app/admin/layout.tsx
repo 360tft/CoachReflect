@@ -24,7 +24,7 @@ export default async function AdminLayout({
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center gap-4">
               <Link href="/admin" className="text-xl font-bold text-primary">
-                CoachReflect Admin
+                Coach Reflection Admin
               </Link>
               <span className="text-xs bg-red-100 text-red-800 px-2 py-1 rounded font-medium">
                 ADMIN

@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
       .single()
 
     if (existingShare) {
-      const shareUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'https://coachreflect.com'}/share/${existingShare.share_id}`
+      const shareUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'https://coachreflection.com'}/share/${existingShare.share_id}`
       return NextResponse.json({
         shareId: existingShare.share_id,
         shareUrl,
@@ -68,7 +68,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Failed to create share link' }, { status: 500 })
     }
 
-    const shareUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'https://coachreflect.com'}/share/${data.share_id}`
+    const shareUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'https://coachreflection.com'}/share/${data.share_id}`
 
     return NextResponse.json({
       shareId: data.share_id,

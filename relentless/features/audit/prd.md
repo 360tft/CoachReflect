@@ -1,6 +1,6 @@
 # PRD: Existing App Audit & Gap Analysis
 
-**Target App:** CoachReflect (/home/kevin/CoachReflect)
+**Target App:** Coach Reflection (/home/kevin/Coach Reflection)
 **Reference:** `/home/kevin/FootballGPT` (gold standard)
 **Creates:** Gap analysis and improvement tasks
 
@@ -218,7 +218,7 @@ Run this manually first to catch critical issues:
 # Check for hardcoded secrets
 grep -r "sk_live" --include="*.ts" --include="*.tsx" src/
 grep -r "supabase_service" --include="*.ts" --include="*.tsx" src/
-grep -r "ANTHROPIC_API_KEY" --include="*.ts" --include="*.tsx" src/
+grep -r "GOOGLE_AI_API_KEY" --include="*.ts" --include="*.tsx" src/
 
 # Check for client-side free tier
 grep -r "localStorage" --include="*.ts" --include="*.tsx" src/ | grep -i "usage\|limit\|free\|message"

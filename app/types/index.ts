@@ -1,4 +1,4 @@
-// CoachReflect Types
+// Coach Reflection Types
 
 export interface Profile {
   id: string

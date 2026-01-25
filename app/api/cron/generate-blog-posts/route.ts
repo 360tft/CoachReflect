@@ -13,8 +13,8 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   }
 
-  // Skip if no Anthropic API key configured
-  if (!process.env.ANTHROPIC_API_KEY) {
+  // Skip if no Google AI API key configured
+  if (!process.env.GOOGLE_AI_API_KEY) {
     return NextResponse.json({ message: "AI not configured" }, { status: 200 })
   }
 

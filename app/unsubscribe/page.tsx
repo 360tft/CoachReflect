@@ -92,8 +92,8 @@ function UnsubscribeContent() {
             </CardTitle>
             <CardDescription>
               {action === "unsubscribed"
-                ? "You've been unsubscribed from all CoachReflect emails."
-                : "You've been resubscribed to CoachReflect emails."
+                ? "You've been unsubscribed from all Coach Reflection emails."
+                : "You've been resubscribed to Coach Reflection emails."
               }
             </CardDescription>
           </CardHeader>
@@ -124,7 +124,7 @@ function UnsubscribeContent() {
         <CardHeader className="text-center">
           <CardTitle>Email Preferences</CardTitle>
           <CardDescription>
-            Manage your email notifications from CoachReflect
+            Manage your email notifications from Coach Reflection
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">

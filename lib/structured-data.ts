@@ -1,7 +1,7 @@
 // JSON-LD Structured Data generators for SEO
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://coachreflect.com'
-const SITE_NAME = 'CoachReflect'
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://coachreflection.com'
+const SITE_NAME = 'Coach Reflection'
 const ORGANIZATION_NAME = '360TFT'
 const PARENT_ORGANIZATION = 'SVMS Consultancy Limited'
 
@@ -66,7 +66,7 @@ export function generateOrganizationSchema() {
     contactPoint: {
       '@type': 'ContactPoint',
       contactType: 'customer support',
-      email: 'support@coachreflect.com'
+      email: 'support@coachreflection.com'
     }
   }
 }
@@ -206,7 +206,7 @@ export function generateBlogPostSchema(
     },
     isPartOf: {
       '@type': 'Blog',
-      name: 'CoachReflect Blog',
+      name: 'Coach Reflection Blog',
       url: `${SITE_URL}/blog`
     }
   }

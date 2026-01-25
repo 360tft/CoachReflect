@@ -3,7 +3,7 @@ import { redirect } from "next/navigation"
 import { ChatInterface } from "@/app/components/chat-interface"
 
 export const metadata = {
-  title: "Coach Chat | CoachReflect",
+  title: "Coach Chat | Coach Reflection",
   description: "AI-powered coaching reflection conversations",
 }
 

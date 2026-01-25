@@ -4,7 +4,7 @@ import { isAdminUser } from "@/lib/admin"
 import { AdminDashboard } from "./admin-dashboard"
 
 export const metadata = {
-  title: "Admin Dashboard | CoachReflect",
+  title: "Admin Dashboard | Coach Reflection",
 }
 
 export default async function AdminPage() {

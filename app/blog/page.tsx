@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description: "Expert coaching advice and answers to the most popular coaching questions. Tips on session planning, player development, tactics, and more.",
   keywords: ["football coaching blog", "coaching tips", "coaching advice", "session planning", "player development"],
   openGraph: {
-    title: "Coaching Blog - Expert Tips & Guides | CoachReflect",
+    title: "Coaching Blog - Expert Tips & Guides | Coach Reflection",
     description: "Expert coaching advice and answers to the most popular coaching questions.",
   },
 }
@@ -111,7 +111,7 @@ export default async function BlogPage() {
             <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
               <span className="text-primary-foreground font-bold text-sm">CR</span>
             </div>
-            <span className="font-semibold text-foreground">CoachReflect</span>
+            <span className="font-semibold text-foreground">Coach Reflection</span>
           </Link>
         </div>
       </header>
@@ -219,7 +219,7 @@ export default async function BlogPage() {
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex items-center gap-2">
               <span className="text-sm text-muted-foreground">
-                CoachReflect by 360TFT
+                Coach Reflection by 360TFT
               </span>
             </div>
             <div className="flex gap-6 text-sm text-muted-foreground">

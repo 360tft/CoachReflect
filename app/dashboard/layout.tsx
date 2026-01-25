@@ -60,7 +60,7 @@ export default async function DashboardLayout({
         <div className="container mx-auto px-4 py-3 flex items-center justify-between">
           <Link href="/dashboard" className="flex items-center gap-2">
             <span className="text-2xl">🪞</span>
-            <span className="font-bold text-lg text-amber-800 dark:text-amber-200">CoachReflect</span>
+            <span className="font-bold text-lg text-amber-800 dark:text-amber-200">Coach Reflection</span>
           </Link>
 
           <div className="flex items-center gap-4">
@@ -96,7 +96,8 @@ export default async function DashboardLayout({
             <NavLink href="/dashboard/reflect/new">New Reflection</NavLink>
             <NavLink href="/dashboard/chat">Coach Chat</NavLink>
             <NavLink href="/dashboard/history">History</NavLink>
-            <NavLink href="/dashboard/referrals">Referrals</NavLink>
+            <NavLink href="/dashboard/analytics">Analytics</NavLink>
+            <NavLink href="/dashboard/players">Players</NavLink>
             <NavLink href="/dashboard/settings">Settings</NavLink>
           </div>
         </div>

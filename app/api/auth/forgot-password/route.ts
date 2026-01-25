@@ -82,7 +82,7 @@ export async function POST(request: NextRequest) {
 
     // Send password reset email
     const supabase = await createClient()
-    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://coachreflect.com"
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://coachreflection.com"
 
     const { error } = await supabase.auth.resetPasswordForEmail(email.trim().toLowerCase(), {
       redirectTo: `${baseUrl}/api/auth/callback?type=recovery`,

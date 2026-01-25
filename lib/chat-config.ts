@@ -1,4 +1,4 @@
-// CoachReflect Chat Configuration
+// Coach Reflection Chat Configuration
 
 export const CHAT_CONFIG = {
   maxTokens: 2048,

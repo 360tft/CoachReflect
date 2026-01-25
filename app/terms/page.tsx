@@ -5,7 +5,7 @@ export default function TermsPage() {
     <div className="min-h-screen bg-background">
       <header className="container mx-auto px-4 py-6">
         <Link href="/" className="flex items-center gap-2">
-          <span className="text-xl font-bold">CoachReflect</span>
+          <span className="text-xl font-bold">Coach Reflection</span>
         </Link>
       </header>
 
@@ -17,7 +17,7 @@ export default function TermsPage() {
           <section>
             <h2 className="text-xl font-semibold mb-3">1. Acceptance of Terms</h2>
             <p className="text-muted-foreground">
-              By accessing or using CoachReflect, you agree to be bound by these Terms of Service.
+              By accessing or using Coach Reflection, you agree to be bound by these Terms of Service.
               If you do not agree to these terms, please do not use our service.
             </p>
           </section>
@@ -25,7 +25,7 @@ export default function TermsPage() {
           <section>
             <h2 className="text-xl font-semibold mb-3">2. Description of Service</h2>
             <p className="text-muted-foreground">
-              CoachReflect is a reflective journaling application for football coaches.
+              Coach Reflection is a reflective journaling application for football coaches.
               We provide tools for logging coaching sessions, capturing reflections,
               uploading session plans for AI analysis, and generating insights to improve coaching practice.
             </p>
@@ -44,7 +44,7 @@ export default function TermsPage() {
           <section>
             <h2 className="text-xl font-semibold mb-3">4. Subscription and Payments</h2>
             <p className="text-muted-foreground mb-2">
-              CoachReflect offers free and paid subscription tiers:
+              Coach Reflection offers free and paid subscription tiers:
             </p>
             <ul className="list-disc list-inside text-muted-foreground space-y-1">
               <li>Free tier: Limited to 5 reflections per month</li>
@@ -94,7 +94,7 @@ export default function TermsPage() {
           <section>
             <h2 className="text-xl font-semibold mb-3">8. Intellectual Property</h2>
             <p className="text-muted-foreground">
-              The CoachReflect application, including its design, features, and branding,
+              The Coach Reflection application, including its design, features, and branding,
               is owned by us and protected by intellectual property laws. You may not copy,
               modify, or distribute our application without permission.
             </p>
@@ -103,7 +103,7 @@ export default function TermsPage() {
           <section>
             <h2 className="text-xl font-semibold mb-3">9. Limitation of Liability</h2>
             <p className="text-muted-foreground">
-              CoachReflect is provided &quot;as is&quot; without warranties of any kind. We are not
+              Coach Reflection is provided &quot;as is&quot; without warranties of any kind. We are not
               liable for any indirect, incidental, or consequential damages arising from
               your use of the service. Our total liability is limited to the amount you
               paid for the service in the past 12 months.
@@ -140,8 +140,8 @@ export default function TermsPage() {
             <h2 className="text-xl font-semibold mb-3">13. Contact</h2>
             <p className="text-muted-foreground">
               For questions about these terms, contact us at{" "}
-              <a href="mailto:support@coachreflect.com" className="text-primary hover:underline">
-                support@coachreflect.com
+              <a href="mailto:support@coachreflection.com" className="text-primary hover:underline">
+                support@coachreflection.com
               </a>
             </p>
           </section>

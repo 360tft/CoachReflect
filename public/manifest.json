@@ -1,6 +1,6 @@
 {
-  "name": "CoachReflect - AI Reflection for Coaches",
-  "short_name": "CoachReflect",
+  "name": "Coach Reflection - AI Reflection for Coaches",
+  "short_name": "Coach Reflection",
   "description": "Transform your coaching with guided post-session reflections. Track patterns, identify player progress, and grow as a coach with AI-powered insights.",
   "start_url": "/",
   "display": "standalone",

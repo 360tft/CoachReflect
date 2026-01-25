@@ -1,6 +1,6 @@
-# Recommended Capacitor Plugins for CoachReflect
+# Recommended Capacitor Plugins for Coach Reflection
 
-These are optional plugins you might want to add based on CoachReflect's features.
+These are optional plugins you might want to add based on Coach Reflection's features.
 
 ## Currently Configured
 
@@ -55,7 +55,7 @@ import { Share } from '@capacitor/share';
 await Share.share({
   title: 'My Coaching Reflection',
   text: 'Check out my latest coaching insight',
-  url: 'https://coachreflect.app/share/123',
+  url: 'https://coachreflection.com/share/123',
 });
 ```
 
@@ -241,7 +241,7 @@ npm run cap:sync
 import { PluginName } from '@capacitor/[plugin-name]';
 ```
 
-## My Recommendation for CoachReflect
+## My Recommendation for Coach Reflection
 
 **Install now (before app store submission):**
 1. @capacitor/app - Essential for deep links and app lifecycle

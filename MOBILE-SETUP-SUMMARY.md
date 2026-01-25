@@ -1,4 +1,4 @@
-# Mobile Setup Summary - CoachReflect
+# Mobile Setup Summary - Coach Reflection
 
 ## What Was Done
 
@@ -12,8 +12,8 @@ All packages installed successfully (v8.0.0).
 ### 2. Created Configuration Files
 
 **capacitor.config.ts** - Main Capacitor configuration
-- App ID: `com.coachreflect.app`
-- App Name: `CoachReflect`
+- App ID: `com.coachreflection.com`
+- App Name: `Coach Reflection`
 - Configured for "live update" mode (loads from server URL)
 - Push notification support configured
 
@@ -45,7 +45,7 @@ Added Capacitor-specific directories to ignore:
 
 ## Architecture Decision: "Live Update" Mode
 
-CoachReflect has extensive backend API routes that cannot be bundled into a static mobile app. Therefore, we're using Capacitor in "live update" mode:
+Coach Reflection has extensive backend API routes that cannot be bundled into a static mobile app. Therefore, we're using Capacitor in "live update" mode:
 
 **How it works:**
 - The mobile app is a native wrapper around a WebView
@@ -111,14 +111,14 @@ CoachReflect has extensive backend API routes that cannot be bundled into a stat
    ```
 
 3. **Configure iOS (in Xcode):**
-   - Bundle Identifier: `com.coachreflect.app`
-   - Display Name: `CoachReflect`
+   - Bundle Identifier: `com.coachreflection.com`
+   - Display Name: `Coach Reflection`
    - App icons
    - Version and build number
    - Push notification entitlements (if using)
 
 4. **Configure Android (in Android Studio):**
-   - Application ID: `com.coachreflect.app`
+   - Application ID: `com.coachreflection.com`
    - App name in `strings.xml`
    - App icons
    - Version name and code

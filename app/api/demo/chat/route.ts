@@ -1,14 +1,12 @@
 import { NextResponse } from "next/server"
-import Anthropic from "@anthropic-ai/sdk"
+import { GoogleGenerativeAI } from "@google/generative-ai"
 import { checkRateLimit } from "@/lib/rate-limit"
-import { SYSTEM_PROMPT, CHAT_CONFIG } from "@/lib/chat-config"
+import { SYSTEM_PROMPT } from "@/lib/chat-config"
 import { DEMO_CONFIG } from "@/lib/demo"
 import { headers } from "next/headers"
 import type { ChatMessage } from "@/app/types"
 
-const anthropic = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY,
-})
+const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY || "")
 
 // Stricter rate limit for demo: 5 requests per minute per IP
 const DEMO_RATE_LIMIT = {
@@ -89,16 +87,11 @@ This coach is trying the demo. Be extra welcoming and helpful. Show them the val
     // Trim history for demo (less context)
     const trimmedHistory = history.slice(-6)
 
-    const claudeMessages: Anthropic.MessageParam[] = trimmedHistory.map((msg) => ({
-      role: msg.role as "user" | "assistant",
-      content: msg.content,
+    // Convert history to Gemini format
+    const geminiHistory = trimmedHistory.map((msg) => ({
+      role: msg.role === "user" ? "user" as const : "model" as const,
+      parts: [{ text: msg.content }],
     }))
-
-    // Add current message
-    claudeMessages.push({
-      role: "user",
-      content: message,
-    })
 
     // Create streaming response
     const stream = new ReadableStream({
@@ -107,29 +100,35 @@ This coach is trying the demo. Be extra welcoming and helpful. Show them the val
         let fullResponse = ""
 
         try {
-          // Create streaming request to Claude
-          const response = await anthropic.messages.create({
-            model: "claude-sonnet-4-20250514",
-            max_tokens: 1500, // Shorter for demo
-            system: demoSystemPrompt,
-            messages: claudeMessages,
-            stream: true,
+          // Create Gemini model with system instruction
+          const model = genAI.getGenerativeModel({
+            model: "gemini-2.0-flash",
+            systemInstruction: demoSystemPrompt,
           })
 
-          // Process stream
-          for await (const event of response) {
-            if (event.type === "content_block_delta") {
-              const delta = event.delta
-              if ("text" in delta) {
-                fullResponse += delta.text
+          // Start chat with history
+          const chat = model.startChat({
+            history: geminiHistory,
+            generationConfig: {
+              maxOutputTokens: 1500, // Shorter for demo
+            },
+          })
 
-                // Send chunk via SSE
-                const chunk = JSON.stringify({
-                  type: "chunk",
-                  content: delta.text,
-                })
-                controller.enqueue(encoder.encode(`data: ${chunk}\n\n`))
-              }
+          // Send message with streaming
+          const result = await chat.sendMessageStream(message)
+
+          // Process stream
+          for await (const chunk of result.stream) {
+            const text = chunk.text()
+            if (text) {
+              fullResponse += text
+
+              // Send chunk via SSE
+              const chunkData = JSON.stringify({
+                type: "chunk",
+                content: text,
+              })
+              controller.enqueue(encoder.encode(`data: ${chunkData}\n\n`))
             }
           }
 

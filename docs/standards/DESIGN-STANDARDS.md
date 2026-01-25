@@ -96,7 +96,7 @@ All products use dark mode as default. Light mode is optional.
 |---------|---------|------------|---------|------|
 | CruiseGPT | #0077B6 | #1a1a2e | #242438 | #ffffff |
 | RefereeGPT | #E5A11C | #0A0A0A | #111111 | #ffffff |
-| CoachReflect | #E5A11C | #0A0A0A | #111111 | #ffffff |
+| Coach Reflection | #E5A11C | #0A0A0A | #111111 | #ffffff |
 | FitGPT | #10b981 | #0A0A0A | #111111 | #ffffff |
 
 ### Color Rules
@@ -401,4 +401,4 @@ Before shipping any UI:
 ---
 
 *Last Updated: January 2026*
-*Applies to: CruiseGPT, RefereeGPT, CoachReflect, FitGPT, and all future products*
+*Applies to: CruiseGPT, RefereeGPT, Coach Reflection, FitGPT, and all future products*

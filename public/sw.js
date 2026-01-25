@@ -20,7 +20,7 @@ self.addEventListener('push', (event) => {
   try {
     const data = event.data.json();
     const options = {
-      body: data.body || 'New notification from CoachReflect',
+      body: data.body || 'New notification from Coach Reflection',
       icon: data.icon || '/icon-192.png',
       badge: data.badge || '/icon-192.png',
       tag: data.tag || 'coachreflect-notification',
@@ -30,7 +30,7 @@ self.addEventListener('push', (event) => {
     };
 
     event.waitUntil(
-      self.registration.showNotification(data.title || 'CoachReflect', options)
+      self.registration.showNotification(data.title || 'Coach Reflection', options)
     );
   } catch (error) {
     console.error('Push notification error:', error);

@@ -1,5 +1,5 @@
 // POST /api/sponsors/checkout - Create Stripe checkout for sponsor subscription
-// Sponsors pay monthly to advertise on CoachReflect
+// Sponsors pay monthly to advertise on Coach Reflection
 
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'

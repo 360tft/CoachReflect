@@ -3,13 +3,13 @@ import type { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: "Help Center",
-  description: "Get help using CoachReflect. FAQs, guides, and support for football coaches.",
+  description: "Get help using Coach Reflection. FAQs, guides, and support for football coaches.",
 }
 
 const faqs = [
   {
-    question: "What is CoachReflect?",
-    answer: "CoachReflect is an AI-powered reflection and journaling tool designed specifically for football coaches. It helps you track your coaching sessions, identify patterns over time, and grow as a coach through guided post-session reflections."
+    question: "What is Coach Reflection?",
+    answer: "Coach Reflection is an AI-powered reflection and journaling tool designed specifically for football coaches. It helps you track your coaching sessions, identify patterns over time, and grow as a coach through guided post-session reflections."
   },
   {
     question: "How do I create a reflection?",
@@ -46,13 +46,13 @@ export default function HelpPage() {
     <div className="min-h-screen bg-background">
       <header className="container mx-auto px-4 py-6">
         <Link href="/" className="flex items-center gap-2">
-          <span className="text-xl font-bold">CoachReflect</span>
+          <span className="text-xl font-bold">Coach Reflection</span>
         </Link>
       </header>
 
       <main className="container mx-auto px-4 py-8 max-w-3xl">
         <h1 className="text-3xl font-bold mb-2">Help Center</h1>
-        <p className="text-muted-foreground mb-8">Find answers to common questions about CoachReflect</p>
+        <p className="text-muted-foreground mb-8">Find answers to common questions about Coach Reflection</p>
 
         {/* Quick Links */}
         <div className="grid gap-4 md:grid-cols-3 mb-12">
@@ -71,7 +71,7 @@ export default function HelpPage() {
             <p className="text-sm text-muted-foreground">Manage your profile and subscription</p>
           </Link>
           <a
-            href="mailto:support@coachreflect.com"
+            href="mailto:support@coachreflection.com"
             className="p-4 border rounded-lg hover:border-amber-500 transition-colors"
           >
             <h3 className="font-semibold mb-1">Contact Support</h3>
@@ -97,7 +97,7 @@ export default function HelpPage() {
             Can not find what you are looking for? Our support team is here to help.
           </p>
           <a
-            href="mailto:support@coachreflect.com"
+            href="mailto:support@coachreflection.com"
             className="inline-flex items-center gap-2 px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-lg transition-colors"
           >
             Email Support

@@ -1,4 +1,4 @@
-# SEO Implementation - CoachReflect
+# SEO Implementation - Coach Reflection
 
 ## Files Created
 
@@ -19,7 +19,7 @@ Configured to:
 - Block dashboard (/dashboard/)
 - Block admin (/admin/)
 - Block share pages (/share/) - user-generated content not ready for indexing
-- Point to sitemap at https://coachreflect.com/sitemap.xml
+- Point to sitemap at https://coachreflection.com/sitemap.xml
 
 ### 3. Updated `/app/layout.tsx`
 
@@ -46,13 +46,13 @@ Includes:
 
 Before deploying to production:
 
-- [ ] Update domain in sitemap.ts if different from https://coachreflect.com
+- [ ] Update domain in sitemap.ts if different from https://coachreflection.com
 - [ ] Create `/public/og-image.png` (1200x630px) for social sharing
 - [ ] Create `/public/logo.png` for schema.org
 - [ ] Add Google Search Console verification code to layout.tsx metadata.verification
 - [ ] Submit sitemap to Google Search Console: https://search.google.com/search-console
-- [ ] Test robots.txt: https://coachreflect.com/robots.txt
-- [ ] Test sitemap: https://coachreflect.com/sitemap.xml
+- [ ] Test robots.txt: https://coachreflection.com/robots.txt
+- [ ] Test sitemap: https://coachreflection.com/sitemap.xml
 - [ ] Validate structured data: https://search.google.com/test/rich-results
 
 ## SEO Best Practices Implemented

@@ -7,7 +7,7 @@ import { PricingSection } from "@/app/components/pricing-section"
 import { Footer } from "@/app/components/footer"
 import { AskAI } from "@/app/components/ask-ai"
 
-const COACHREFLECT_AI_PROMPT = `As a sports coach who wants to improve but doesn't track what I actually coach, explain what CoachReflect is.
+const COACHREFLECT_AI_PROMPT = `As a sports coach who wants to improve but doesn't track what I actually coach, explain what Coach Reflection is.
 
 Cover: How does the reflection/journaling process work? What do I log after each session? How does it help me identify patterns and gaps in my coaching? Is there AI-powered feedback? How is this different from just keeping notes? What sports does it support? What's the pricing model?`
 
@@ -17,7 +17,7 @@ export default function Home() {
       {/* Header */}
       <header className="container mx-auto px-4 py-6 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <span className="text-xl font-bold text-amber-800 dark:text-amber-200">CoachReflect</span>
+          <span className="text-xl font-bold text-amber-800 dark:text-amber-200">Coach Reflection</span>
         </div>
         <div className="flex items-center gap-4">
           <Link href="/login">
@@ -65,7 +65,7 @@ export default function Home() {
           No credit card required. Free forever for basic use.
         </p>
         <AskAI
-          question="What is CoachReflect?"
+          question="What is Coach Reflection?"
           prompt={COACHREFLECT_AI_PROMPT}
           className="mt-6"
         />

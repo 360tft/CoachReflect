@@ -1,10 +1,8 @@
 import { NextResponse } from "next/server"
-import Anthropic from "@anthropic-ai/sdk"
+import { GoogleGenerativeAI } from "@google/generative-ai"
 import { createClient } from "@/lib/supabase/server"
 
-const anthropic = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY,
-})
+const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY || "")
 
 const ANALYSIS_PROMPT = `You are a supportive football coaching expert analyzing a coach's post-session reflection.
 
@@ -105,21 +103,13 @@ Mood: ${reflection.mood_rating}/5
 Energy: ${reflection.energy_rating}/5
 `
 
-    // Call Claude API
-    const response = await anthropic.messages.create({
-      model: "claude-sonnet-4-20250514",
-      max_tokens: 1024,
-      messages: [
-        {
-          role: "user",
-          content: `${ANALYSIS_PROMPT}\n\nReflection to analyze:\n${context}`,
-        },
-      ],
-    })
+    // Call Gemini API
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" })
+    const result = await model.generateContent(`${ANALYSIS_PROMPT}\n\nReflection to analyze:\n${context}`)
+    const response = result.response
+    const textContent = response.text()
 
-    // Extract text content
-    const textContent = response.content.find((block) => block.type === "text")
-    if (!textContent || textContent.type !== "text") {
+    if (!textContent) {
       return NextResponse.json(
         { error: "Failed to generate analysis" },
         { status: 500 }
@@ -129,7 +119,7 @@ Energy: ${reflection.energy_rating}/5
     // Parse JSON response
     let analysis
     try {
-      let jsonText = textContent.text.trim()
+      let jsonText = textContent.trim()
       if (jsonText.startsWith("```json")) {
         jsonText = jsonText.slice(7)
       }
