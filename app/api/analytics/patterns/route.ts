@@ -86,9 +86,7 @@ export async function GET(request: NextRequest) {
 
     // Determine max allowed weeks based on tier
     let maxWeeks: number
-    if (tier === "pro_plus" || hasClub) {
-      maxWeeks = -1 // unlimited
-    } else if (tier === "pro") {
+    if (tier === "pro" || hasClub) {
       maxWeeks = LIMITS.PRO.analyticsWeeks
     } else {
       maxWeeks = LIMITS.FREE.analyticsWeeks

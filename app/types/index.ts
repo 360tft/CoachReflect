@@ -7,7 +7,7 @@ export interface Profile {
   club_name: string | null
   age_group: string | null
   coaching_level: 'grassroots' | 'academy' | 'semi-pro' | 'professional' | null
-  subscription_tier: 'free' | 'pro' | 'pro_plus'
+  subscription_tier: 'free' | 'pro'
   stripe_customer_id: string | null
   reflections_this_month: number
   reflection_count_period: string | null
@@ -17,7 +17,7 @@ export interface Profile {
   updated_at: string
 }
 
-export type SubscriptionTier = 'free' | 'pro' | 'pro_plus'
+export type SubscriptionTier = 'free' | 'pro'
 
 export const SUBSCRIPTION_LIMITS = {
   free: {
@@ -26,11 +26,6 @@ export const SUBSCRIPTION_LIMITS = {
     session_plan_upload: false,
   },
   pro: {
-    reflections_per_month: Infinity,
-    ai_features: true,
-    session_plan_upload: true,
-  },
-  pro_plus: {
     reflections_per_month: Infinity,
     ai_features: true,
     session_plan_upload: true,
@@ -573,7 +568,6 @@ export const COACHING_THEME_CATEGORIES: { id: ThemeCategory; label: string }[] =
 export const VOICE_NOTE_LIMITS = {
   free: 3,        // 3 voice notes per month
   pro: 999999,    // Effectively unlimited
-  pro_plus: 999999,
 } as const
 
 export const VOICE_MAX_DURATION_SECONDS = 300  // 5 minutes

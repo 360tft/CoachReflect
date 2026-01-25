@@ -22,20 +22,6 @@ export const PRICING = {
     },
   },
 
-  // Pro+ (Team/Advanced features)
-  PRO_PLUS: {
-    monthly: {
-      price: 29,
-      stripePriceId: process.env.STRIPE_PRO_PLUS_PRICE_ID || '',
-    },
-    annual: {
-      price: 290,
-      stripePriceId: process.env.STRIPE_PRO_PLUS_ANNUAL_PRICE_ID || '',
-      savings: 17,
-      monthlyEquivalent: 24.17,
-    },
-  },
-
   // Sponsor/Partner
   SPONSOR: {
     monthly: {
@@ -154,13 +140,6 @@ export const LIMITS = {
     voiceNotesPerMonth: -1,
     sessionPlansPerMonth: -1,
     historyDays: -1,
-    analyticsWeeks: 12,
-  },
-  PRO_PLUS: {
-    messagesPerDay: -1,
-    voiceNotesPerMonth: -1,
-    sessionPlansPerMonth: -1,
-    historyDays: -1,
     analyticsWeeks: -1, // unlimited
   },
 } as const
@@ -178,6 +157,7 @@ export const FEATURES = {
     analytics: true, // limited to 4 weeks
     export: false,
     memory: false,
+    cpdDocumentation: false,
   },
   PRO: {
     chat: true,
@@ -187,16 +167,6 @@ export const FEATURES = {
     analytics: true,
     export: true,
     memory: true,
-  },
-  PRO_PLUS: {
-    chat: true,
-    voiceNotes: true,
-    sessionPlanUpload: true,
-    themeExtraction: true,
-    analytics: true,
-    export: true,
-    memory: true,
-    teamAnalytics: true,
     cpdDocumentation: true,
   },
 } as const
@@ -239,20 +209,18 @@ export function getAnnualSavings(monthlyPrice: number, annualPrice: number): num
   return Math.round(((yearlyAtMonthly - annualPrice) / yearlyAtMonthly) * 100)
 }
 
-export function getTierLimits(tier: 'free' | 'pro' | 'pro_plus') {
+export function getTierLimits(tier: 'free' | 'pro') {
   const tierMap = {
     free: LIMITS.FREE,
     pro: LIMITS.PRO,
-    pro_plus: LIMITS.PRO_PLUS,
   }
   return tierMap[tier]
 }
 
-export function getTierFeatures(tier: 'free' | 'pro' | 'pro_plus') {
+export function getTierFeatures(tier: 'free' | 'pro') {
   const tierMap = {
     free: FEATURES.FREE,
     pro: FEATURES.PRO,
-    pro_plus: FEATURES.PRO_PLUS,
   }
   return tierMap[tier]
 }

@@ -18,6 +18,7 @@ export default function Home() {
       <header className="container mx-auto px-4 py-6 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <span className="text-xl font-bold">Coach Reflection</span>
+          <span className="text-sm text-muted-foreground">by 360TFT</span>
         </div>
         <div className="flex items-center gap-4">
           <Link href="/login">
@@ -45,19 +46,19 @@ export default function Home() {
           Football, Rugby, Basketball, Tennis, Swimming, and 10+ more sports
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link href="/demo">
+          <Link href="/signup">
             <Button size="lg">
-              Try Demo - 3 Free Messages
+              Get Started Free
             </Button>
           </Link>
-          <Link href="/signup">
+          <Link href="/login">
             <Button size="lg" variant="outline">
-              Sign Up Free
+              Sign In
             </Button>
           </Link>
         </div>
         <p className="text-sm text-muted-foreground mt-4">
-          No credit card required. Free forever for basic use.
+          Free tier available. No credit card required.
         </p>
         <AskAI
           question="What is Coach Reflection?"
@@ -182,88 +183,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="container mx-auto px-4 py-20">
-        <div className="bg-muted/30 rounded-2xl p-8 md:p-12">
-          <h2 className="text-3xl font-bold text-center mb-4">Coaches Are Growing</h2>
-          <p className="text-center text-muted-foreground mb-12">
-            Join coaches who are using reflection to level up their practice
-          </p>
-          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            <Card className="bg-background border">
-              <CardContent className="pt-6">
-                <div className="flex gap-1 mb-3 text-primary">
-                  {"★★★★★".split("").map((star, i) => (
-                    <span key={i}>{star}</span>
-                  ))}
-                </div>
-                <p className="text-muted-foreground mb-4">
-                  &quot;I used to finish sessions and forget what worked by the next day.
-                  Now I have a clear record of what&apos;s actually improving my players.
-                  The AI insights spotted a pattern I completely missed.&quot;
-                </p>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                    <span className="text-primary font-bold text-sm">SM</span>
-                  </div>
-                  <div>
-                    <p className="font-medium text-sm">Sarah M.</p>
-                    <p className="text-xs text-muted-foreground">U12 Girls Coach</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-background border">
-              <CardContent className="pt-6">
-                <div className="flex gap-1 mb-3 text-primary">
-                  {"★★★★★".split("").map((star, i) => (
-                    <span key={i}>{star}</span>
-                  ))}
-                </div>
-                <p className="text-muted-foreground mb-4">
-                  &quot;The session plan upload is brilliant. I just snap a photo of my
-                  whiteboard notes and it understands everything. Saves me 10 minutes
-                  of typing after every training.&quot;
-                </p>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                    <span className="text-primary font-bold text-sm">JT</span>
-                  </div>
-                  <div>
-                    <p className="font-medium text-sm">James T.</p>
-                    <p className="text-xs text-muted-foreground">Academy Coach</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-background border">
-              <CardContent className="pt-6">
-                <div className="flex gap-1 mb-3 text-primary">
-                  {"★★★★★".split("").map((star, i) => (
-                    <span key={i}>{star}</span>
-                  ))}
-                </div>
-                <p className="text-muted-foreground mb-4">
-                  &quot;I&apos;ve been coaching for 15 years and thought I knew my patterns.
-                  Looking back at 3 months of reflections showed me I was always
-                  rushing the warm-up. Simple fix, huge impact.&quot;
-                </p>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                    <span className="text-primary font-bold text-sm">MK</span>
-                  </div>
-                  <div>
-                    <p className="font-medium text-sm">Mike K.</p>
-                    <p className="text-xs text-muted-foreground">Senior Team Manager</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
 
       {/* Pricing */}
       <PricingSection />
@@ -278,14 +197,14 @@ export default function Home() {
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/demo">
-              <Button size="lg" variant="secondary">
-                Try Demo Free
+            <Link href="/signup">
+              <Button size="lg" className="bg-white text-foreground hover:bg-white/90">
+                Get Started Free
               </Button>
             </Link>
-            <Link href="/signup">
-              <Button size="lg" variant="outline" className="border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/10">
-                Sign Up
+            <Link href="/login">
+              <Button size="lg" variant="outline" className="border-white/40 text-white hover:bg-white/10">
+                Sign In
               </Button>
             </Link>
           </CardContent>

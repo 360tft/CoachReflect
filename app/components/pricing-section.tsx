@@ -78,7 +78,7 @@ export function PricingSection() {
 
       {!showClubs ? (
         // Individual Plans
-        <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
           {/* Free */}
           <Card>
             <CardHeader>
@@ -146,58 +146,17 @@ export function PricingSection() {
                   <span className="text-green-500">+</span> Theme extraction
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="text-green-500">+</span> 12 weeks analytics
+                  <span className="text-green-500">+</span> Full analytics history
                 </li>
                 <li className="flex items-center gap-2">
                   <span className="text-green-500">+</span> Export reflections
                 </li>
-              </ul>
-              <Link href={`/signup?plan=pro&billing=${billing}`} className="block mt-6">
-                <Button className="w-full bg-brand hover:bg-brand-hover">Start Pro</Button>
-              </Link>
-            </CardContent>
-          </Card>
-
-          {/* Pro+ */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Pro+</CardTitle>
-              <CardDescription>For coaching leads</CardDescription>
-              <div className="mt-4">
-                <span className="text-3xl font-bold">
-                  {billing === "monthly"
-                    ? formatPrice(PRICING.PRO_PLUS.monthly.price)
-                    : formatPrice(PRICING.PRO_PLUS.annual.price)
-                  }
-                </span>
-                <span className="text-lg font-normal">{proPeriod}</span>
-                {billing === "annual" && (
-                  <p className="text-sm text-green-600 dark:text-green-400 mt-1">
-                    Just {formatPrice(PRICING.PRO_PLUS.annual.monthlyEquivalent)}/mo
-                  </p>
-                )}
-              </div>
-            </CardHeader>
-            <CardContent>
-              <ul className="space-y-2 text-sm">
-                <li className="flex items-center gap-2">
-                  <span className="text-green-500">+</span> Everything in Pro
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="text-green-500">+</span> Unlimited analytics
-                </li>
                 <li className="flex items-center gap-2">
                   <span className="text-green-500">+</span> CPD documentation
                 </li>
-                <li className="flex items-center gap-2">
-                  <span className="text-green-500">+</span> Advanced exports
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="text-green-500">+</span> Priority support
-                </li>
               </ul>
-              <Link href={`/signup?plan=pro_plus&billing=${billing}`} className="block mt-6">
-                <Button variant="outline" className="w-full">Start Pro+</Button>
+              <Link href={`/signup?plan=pro&billing=${billing}`} className="block mt-6">
+                <Button className="w-full bg-brand hover:bg-brand-hover">Start Pro</Button>
               </Link>
             </CardContent>
           </Card>
