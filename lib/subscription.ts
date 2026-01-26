@@ -4,6 +4,13 @@
 import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 
+// Admin emails get Pro+ access - loaded from environment variable
+// Format: comma-separated emails (e.g., "admin@example.com")
+const ADMIN_EMAILS: string[] = (process.env.ADMIN_EMAILS || '')
+  .split(',')
+  .map(email => email.trim().toLowerCase())
+  .filter(email => email.length > 0)
+
 // Pro testers whitelist - loaded from environment variable
 // Format: comma-separated emails (e.g., "email1@example.com,email2@example.com")
 const PRO_TESTERS_WHITELIST: string[] = (process.env.PRO_TESTERS_WHITELIST || '')
@@ -147,8 +154,19 @@ export async function hasActiveSubscription(userId: string): Promise<boolean> {
 export async function getSubscriptionInfo(userId: string): Promise<SubscriptionInfo> {
   const supabase = await createClient()
 
-  // 1. Check if user is in Pro testers whitelist
   const { data: { user } } = await supabase.auth.getUser()
+
+  // 1. Check if user is admin - gets Pro+ access
+  if (user?.email && ADMIN_EMAILS.includes(user.email.toLowerCase())) {
+    return {
+      tier: 'pro_plus',
+      type: 'tester',
+      isActive: true,
+      expiresAt: null,
+    }
+  }
+
+  // 2. Check if user is in Pro testers whitelist
   if (user?.email && PRO_TESTERS_WHITELIST.includes(user.email.toLowerCase())) {
     return {
       tier: 'pro',

@@ -25,5 +25,15 @@ export {
   StreakBrokenEmail,
 } from './templates/winback'
 
+// Engagement emails
+export {
+  LastChanceEmail,
+  PowerUserEmail,
+  InactiveReengagementEmail,
+  SocialProofEmail,
+  FeatureHighlightVoiceEmail,
+  FeatureHighlightAnalyticsEmail,
+} from './templates/engagement'
+
 // Base layout for custom emails
 export { BaseLayout } from './components/base-layout'
