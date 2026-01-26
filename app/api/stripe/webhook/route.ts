@@ -41,8 +41,7 @@ export async function POST(request: Request) {
       signature,
       process.env.STRIPE_WEBHOOK_SECRET!
     )
-  } catch (err) {
-    console.error("Webhook signature verification failed:", err)
+  } catch {
     return NextResponse.json({ error: "Invalid signature" }, { status: 400 })
   }
 
@@ -98,6 +97,11 @@ export async function POST(request: Request) {
                 stripe_customer_id: session.customer as string,
               })
               .eq("user_id", userId)
+
+            // Process referral conversion - credit referrer with free month if applicable
+            await supabase.rpc("process_referral_conversion", {
+              p_referred_id: userId,
+            })
           }
         }
         break
@@ -189,8 +193,7 @@ export async function POST(request: Request) {
     processedEvents.set(event.id, Date.now())
 
     return NextResponse.json({ received: true })
-  } catch (error) {
-    console.error("Webhook processing error:", error)
+  } catch {
     return NextResponse.json({ error: "Webhook processing failed" }, { status: 500 })
   }
 }
