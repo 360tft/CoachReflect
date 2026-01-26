@@ -99,9 +99,45 @@ export async function POST(request: Request) {
               .eq("user_id", userId)
 
             // Process referral conversion - credit referrer with free month if applicable
-            await supabase.rpc("process_referral_conversion", {
-              p_referred_id: userId,
-            })
+            // First, check if this user was referred
+            const { data: referral } = await supabase
+              .from("referrals")
+              .select("referrer_id, status")
+              .eq("referred_id", userId)
+              .in("status", ["pending", "signed_up"])
+              .single()
+
+            if (referral) {
+              // Get referrer's Stripe customer ID
+              const { data: referrerProfile } = await supabase
+                .from("profiles")
+                .select("stripe_customer_id")
+                .eq("user_id", referral.referrer_id)
+                .single()
+
+              // Add credit to referrer's Stripe account (1 month = ~$8)
+              if (referrerProfile?.stripe_customer_id) {
+                try {
+                  // Add $7.99 credit (negative amount = credit)
+                  await stripe.customers.createBalanceTransaction(
+                    referrerProfile.stripe_customer_id,
+                    {
+                      amount: -799, // -$7.99 in cents (credit)
+                      currency: "usd",
+                      description: "Referral reward: 1 month free Pro",
+                    }
+                  )
+                } catch (stripeError) {
+                  // Log but don't fail the webhook
+                  console.error("Failed to add referral credit:", stripeError)
+                }
+              }
+
+              // Update referral record via RPC
+              await supabase.rpc("process_referral_conversion", {
+                p_referred_id: userId,
+              })
+            }
           }
         }
         break

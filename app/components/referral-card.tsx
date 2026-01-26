@@ -86,8 +86,8 @@ export function ReferralCard() {
               </h3>
               <p className="text-sm text-muted-foreground">
                 {data.stats.total > 0
-                  ? `${data.stats.total} referral${data.stats.total !== 1 ? 's' : ''}, ${data.stats.totalRewards} days earned`
-                  : 'Get 7 days of Pro free for each friend who subscribes'
+                  ? `${data.stats.total} referral${data.stats.total !== 1 ? 's' : ''}, ${data.stats.totalRewards} month${data.stats.totalRewards !== 1 ? 's' : ''} earned`
+                  : 'Get 1 month of Pro free for each friend who subscribes'
                 }
               </p>
             </div>

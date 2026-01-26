@@ -113,7 +113,7 @@ export default function ReferralsPage() {
       <div>
         <h1 className="text-2xl font-bold">Refer Friends, Get Rewards</h1>
         <p className="text-muted-foreground">
-          Share Coach Reflection with fellow coaches and get 7 days of Pro free for each friend who subscribes
+          Share Coach Reflection with fellow coaches and get 1 month of Pro free for each friend who subscribes
         </p>
       </div>
 
@@ -218,7 +218,7 @@ export default function ReferralsPage() {
             </div>
             <div className="text-center p-4 bg-muted rounded-lg">
               <div className="text-2xl font-bold text-primary">{data.stats.totalRewards}</div>
-              <div className="text-xs text-muted-foreground">Days Earned</div>
+              <div className="text-xs text-muted-foreground">Months Earned</div>
             </div>
           </div>
         </CardContent>
@@ -237,7 +237,7 @@ export default function ReferralsPage() {
             </li>
             <li className="flex items-start gap-3">
               <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary text-white text-sm flex items-center justify-center font-semibold">2</span>
-              <span className="text-muted-foreground">When they sign up using your link and subscribe to Pro, you both get 7 days free</span>
+              <span className="text-muted-foreground">When they sign up using your link and subscribe to Pro, you get 1 month of Pro free</span>
             </li>
             <li className="flex items-start gap-3">
               <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary text-white text-sm flex items-center justify-center font-semibold">3</span>
@@ -265,7 +265,7 @@ export default function ReferralsPage() {
                       {new Date(referral.created_at).toLocaleDateString()}
                     </div>
                     <div className="text-xs text-muted-foreground">
-                      {referral.reward_amount} days reward
+                      {referral.reward_amount} month{referral.reward_amount !== 1 ? 's' : ''} reward
                     </div>
                   </div>
                   <span className={`text-xs px-2 py-1 rounded-full ${
