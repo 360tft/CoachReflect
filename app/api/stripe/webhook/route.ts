@@ -2,6 +2,7 @@ import { NextResponse } from "next/server"
 import Stripe from "stripe"
 import { createAdminClient } from "@/lib/supabase/admin"
 import { createClub, updateClubSubscription } from "@/lib/clubs"
+import { notifyNewProSubscription, notifySubscriptionCanceled } from "@/lib/email-sender"
 import type { ClubTier } from "@/lib/config"
 
 function getStripe() {
@@ -98,6 +99,12 @@ export async function POST(request: Request) {
               })
               .eq("user_id", userId)
 
+            // Notify admin of new Pro subscription
+            const { data: userData } = await supabase.auth.admin.getUserById(userId)
+            if (userData?.user?.email) {
+              await notifyNewProSubscription(userData.user.email, session.amount_total || undefined)
+            }
+
             // Process referral conversion - credit referrer with free month if applicable
             // First, check if this user was referred
             const { data: referral } = await supabase
@@ -191,6 +198,9 @@ export async function POST(request: Request) {
           const userId = subscription.metadata.user_id
 
           if (userId) {
+            // Get user email before updating
+            const { data: userData } = await supabase.auth.admin.getUserById(userId)
+
             await supabase
               .from("profiles")
               .update({
@@ -199,6 +209,11 @@ export async function POST(request: Request) {
                 subscription_period_end: null,
               })
               .eq("user_id", userId)
+
+            // Notify admin of cancellation
+            if (userData?.user?.email) {
+              await notifySubscriptionCanceled(userData.user.email)
+            }
           }
         }
         break

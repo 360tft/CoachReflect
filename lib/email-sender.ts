@@ -258,3 +258,36 @@ export async function notifyNewProSubscription(
     console.error('Failed to send Pro signup notification:', error)
   }
 }
+
+/**
+ * Notify admin of subscription cancellation
+ */
+export async function notifySubscriptionCanceled(
+  userEmail: string
+): Promise<void> {
+  const resend = getResendClient()
+  if (!resend) return
+
+  try {
+    await resend.emails.send({
+      from: FROM_EMAIL,
+      to: ADMIN_EMAIL,
+      subject: 'Subscription Canceled - Coach Reflection',
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #dc2626;">Subscription Canceled</h2>
+          <p>A user has canceled their Pro subscription:</p>
+          <div style="background-color: #fef2f2; padding: 16px; border-radius: 8px; margin: 16px 0; border: 1px solid #dc2626;">
+            <p style="margin: 0;"><strong>Email:</strong> ${userEmail}</p>
+            <p style="margin: 8px 0 0 0;"><strong>Time:</strong> ${new Date().toLocaleString('en-GB', { timeZone: 'Europe/London' })}</p>
+          </div>
+          <p style="color: #6b7280; font-size: 14px;">
+            Consider sending a winback email or checking in with this user.
+          </p>
+        </div>
+      `,
+    })
+  } catch (error) {
+    console.error('Failed to send cancellation notification:', error)
+  }
+}
