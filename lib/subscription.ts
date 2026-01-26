@@ -13,7 +13,104 @@ const PRO_TESTERS_WHITELIST: string[] = (process.env.PRO_TESTERS_WHITELIST || ''
 
 export type SubscriptionStatus = 'active' | 'trialing' | 'cancelled' | 'past_due' | 'unpaid' | 'incomplete' | null
 
-export type SubscriptionTier = 'free' | 'pro'
+export type SubscriptionTier = 'free' | 'pro' | 'pro_plus'
+
+// Tier feature limits
+export interface TierLimits {
+  voiceNotesPerMonth: number
+  hasSyllabus: boolean
+  hasAdvancedAnalytics: boolean
+}
+
+export const TIER_LIMITS: Record<SubscriptionTier, TierLimits> = {
+  free: {
+    voiceNotesPerMonth: 0,
+    hasSyllabus: false,
+    hasAdvancedAnalytics: false,
+  },
+  pro: {
+    voiceNotesPerMonth: 4,
+    hasSyllabus: false,
+    hasAdvancedAnalytics: false,
+  },
+  pro_plus: {
+    voiceNotesPerMonth: 12,
+    hasSyllabus: true,
+    hasAdvancedAnalytics: true,
+  },
+}
+
+// Club members get Pro+ equivalent
+export const CLUB_MEMBER_LIMITS: TierLimits = {
+  voiceNotesPerMonth: 12,
+  hasSyllabus: true,
+  hasAdvancedAnalytics: true,
+}
+
+// Pricing configuration (single source of truth)
+export const PRICING = {
+  individual: {
+    pro: {
+      monthly: 9.99,
+      yearly: 99,
+      yearlyMonthly: 8.25,
+    },
+    pro_plus: {
+      monthly: 19.99,
+      yearly: 199,
+      yearlyMonthly: 16.58,
+    },
+  },
+  club: {
+    club: {
+      coaches: 5,
+      monthly: 79,
+      yearly: 790,
+      yearlyMonthly: 65.83,
+    },
+    club_plus: {
+      coaches: 15,
+      monthly: 239,
+      yearly: 2390,
+      yearlyMonthly: 199.17,
+    },
+    academy: {
+      coaches: 30,
+      monthly: 479,
+      yearly: 4790,
+      yearlyMonthly: 399.17,
+    },
+  },
+} as const
+
+/**
+ * Get the voice note limit for a subscription tier
+ */
+export function getVoiceNoteLimit(tier: SubscriptionTier | string): number {
+  const limits = TIER_LIMITS[tier as SubscriptionTier]
+  return limits?.voiceNotesPerMonth ?? 0
+}
+
+/**
+ * Check if a tier has syllabus feature
+ */
+export function hasSyllabusFeature(tier: SubscriptionTier | string, isClubMember: boolean = false): boolean {
+  if (isClubMember) return true
+  const limits = TIER_LIMITS[tier as SubscriptionTier]
+  return limits?.hasSyllabus ?? false
+}
+
+/**
+ * Get display name for tier
+ */
+export function getTierDisplayName(tier: SubscriptionTier | string): string {
+  switch (tier) {
+    case 'free': return 'Free'
+    case 'pro': return 'Pro'
+    case 'pro_plus': return 'Pro+'
+    default: return tier
+  }
+}
 
 export interface Subscription {
   id: string
@@ -69,7 +166,7 @@ export async function getSubscriptionInfo(userId: string): Promise<SubscriptionI
     .single()
 
   if (profile) {
-    const isPro = profile.subscription_tier === 'pro'
+    const isPro = profile.subscription_tier === 'pro' || profile.subscription_tier === 'pro_plus'
     const isActive = profile.subscription_status === 'active'
     const notExpired = profile.subscription_period_end
       ? new Date(profile.subscription_period_end) > new Date()
@@ -77,7 +174,7 @@ export async function getSubscriptionInfo(userId: string): Promise<SubscriptionI
 
     if (isPro && isActive && notExpired) {
       return {
-        tier: 'pro',
+        tier: profile.subscription_tier as SubscriptionTier,
         type: 'individual',
         isActive: true,
         expiresAt: profile.subscription_period_end,

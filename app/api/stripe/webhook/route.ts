@@ -84,16 +84,31 @@ export async function POST(request: Request) {
         } else {
           // Handle individual subscription
           let userId = session.metadata?.supabase_user_id
-          if (!userId && session.subscription) {
+          let subscriptionTier: "pro" | "pro_plus" = "pro"
+
+          if (session.subscription) {
             const subData = await stripe.subscriptions.retrieve(session.subscription as string)
-            userId = subData.metadata.user_id
+            if (!userId) {
+              userId = subData.metadata.user_id
+            }
+
+            // Determine tier from price ID
+            const priceId = subData.items.data[0]?.price.id
+            const proPlusPriceIds = [
+              process.env.STRIPE_PRO_PLUS_PRICE_ID,
+              process.env.STRIPE_PRO_PLUS_ANNUAL_PRICE_ID,
+            ].filter(Boolean)
+
+            if (priceId && proPlusPriceIds.includes(priceId)) {
+              subscriptionTier = "pro_plus"
+            }
           }
 
           if (userId) {
             await supabase
               .from("profiles")
               .update({
-                subscription_tier: "pro",
+                subscription_tier: subscriptionTier,
                 subscription_status: "active",
                 stripe_customer_id: session.customer as string,
               })
@@ -122,14 +137,14 @@ export async function POST(request: Request) {
                 .eq("user_id", referral.referrer_id)
                 .single()
 
-              // Add credit to referrer's Stripe account (1 month = ~$8)
+              // Add credit to referrer's Stripe account (1 month = ~$10)
               if (referrerProfile?.stripe_customer_id) {
                 try {
-                  // Add $7.99 credit (negative amount = credit)
+                  // Add $9.99 credit (negative amount = credit)
                   await stripe.customers.createBalanceTransaction(
                     referrerProfile.stripe_customer_id,
                     {
-                      amount: -799, // -$7.99 in cents (credit)
+                      amount: -999, // -$9.99 in cents (credit)
                       currency: "usd",
                       description: "Referral reward: 1 month free Pro",
                     }
@@ -168,7 +183,19 @@ export async function POST(request: Request) {
 
           if (userId) {
             const status = subscription.status
-            const tier = status === "active" ? "pro" : "free"
+
+            // Determine tier from price ID
+            let tier: "free" | "pro" | "pro_plus" = "free"
+            if (status === "active") {
+              const priceId = subscription.items.data[0]?.price.id
+              const proPlusPriceIds = [
+                process.env.STRIPE_PRO_PLUS_PRICE_ID,
+                process.env.STRIPE_PRO_PLUS_ANNUAL_PRICE_ID,
+              ].filter(Boolean)
+
+              tier = priceId && proPlusPriceIds.includes(priceId) ? "pro_plus" : "pro"
+            }
+
             const periodEnd = subscription.current_period_end
               ? new Date(subscription.current_period_end * 1000).toISOString()
               : null

@@ -14,9 +14,15 @@ export function PricingSection() {
   const proPrice = billing === "monthly"
     ? formatPrice(PRICING.PRO.monthly.price)
     : formatPrice(PRICING.PRO.annual.price)
+  const proPlusPrice = billing === "monthly"
+    ? formatPrice(PRICING.PRO_PLUS.monthly.price)
+    : formatPrice(PRICING.PRO_PLUS.annual.price)
   const proPeriod = billing === "monthly" ? "/month" : "/year"
   const proMonthly = billing === "annual"
     ? `${formatPrice(PRICING.PRO.annual.monthlyEquivalent)}/mo`
+    : null
+  const proPlusMonthly = billing === "annual"
+    ? `${formatPrice(PRICING.PRO_PLUS.annual.monthlyEquivalent)}/mo`
     : null
 
   return (
@@ -78,7 +84,7 @@ export function PricingSection() {
 
       {!showClubs ? (
         // Individual Plans
-        <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
           {/* Free */}
           <Card>
             <CardHeader>
@@ -92,9 +98,6 @@ export function PricingSection() {
                   <span className="text-green-500">+</span> 5 messages/day
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="text-green-500">+</span> 3 voice notes/month
-                </li>
-                <li className="flex items-center gap-2">
                   <span className="text-green-500">+</span> Guided prompts
                 </li>
                 <li className="flex items-center gap-2">
@@ -102,6 +105,12 @@ export function PricingSection() {
                 </li>
                 <li className="flex items-center gap-2">
                   <span className="text-green-500">+</span> 4 weeks analytics
+                </li>
+                <li className="flex items-center gap-2 text-muted-foreground">
+                  <span className="text-muted-foreground">-</span> No voice notes
+                </li>
+                <li className="flex items-center gap-2 text-muted-foreground">
+                  <span className="text-muted-foreground">-</span> No syllabus upload
                 </li>
               </ul>
               <Link href="/signup" className="block mt-6">
@@ -134,7 +143,7 @@ export function PricingSection() {
                   <span className="text-green-500">+</span> Unlimited messages
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="text-green-500">+</span> Unlimited voice notes
+                  <span className="text-green-500">+</span> 4 voice notes/month
                 </li>
                 <li className="flex items-center gap-2">
                   <span className="text-green-500">+</span> Session plan upload
@@ -160,12 +169,51 @@ export function PricingSection() {
               </Link>
             </CardContent>
           </Card>
+
+          {/* Pro+ */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Pro+</CardTitle>
+              <CardDescription>For serious coaches</CardDescription>
+              <div className="mt-4">
+                <span className="text-3xl font-bold">{proPlusPrice}</span>
+                <span className="text-lg font-normal">{proPeriod}</span>
+                {proPlusMonthly && (
+                  <p className="text-sm text-green-600 dark:text-green-400 mt-1">
+                    Just {proPlusMonthly}
+                  </p>
+                )}
+              </div>
+            </CardHeader>
+            <CardContent>
+              <ul className="space-y-2 text-sm">
+                <li className="flex items-center gap-2">
+                  <span className="text-green-500">+</span> Everything in Pro
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="text-green-500">+</span> 12 voice notes/month
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="text-green-500">+</span> Syllabus upload
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="text-green-500">+</span> AI learns your philosophy
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="text-green-500">+</span> Advanced analytics
+                </li>
+              </ul>
+              <Link href={`/signup?plan=pro_plus&billing=${billing}`} className="block mt-6">
+                <Button variant="outline" className="w-full">Start Pro+</Button>
+              </Link>
+            </CardContent>
+          </Card>
         </div>
       ) : (
         // Club Plans
         <div>
           <p className="text-center text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Get Pro access for your entire coaching staff. Save up to 59% compared to individual subscriptions.
+            Every coach gets Pro+ access: 12 voice notes/month, syllabus upload, and AI that learns your club philosophy.
           </p>
           <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {CLUB_TIERS.map((tier) => {

@@ -220,14 +220,14 @@ export function UpgradePitchEmail({ name, unsubscribeUrl }: OnboardingEmailProps
       </Text>
 
       <Text style={paragraph}>
-        <strong>With Pro ($7.99/month), you get:</strong>
+        <strong>With Pro ($9.99/month), you get:</strong>
       </Text>
 
       <ul style={list}>
         <li>Unlimited reflections</li>
+        <li>4 voice notes per month for hands-free reflection</li>
         <li>AI-powered insights that spot patterns across your sessions</li>
         <li>Session plan upload with automatic analysis</li>
-        <li>Unlimited coaching conversations</li>
       </ul>
 
       <Text style={paragraph}>

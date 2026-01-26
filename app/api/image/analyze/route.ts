@@ -136,7 +136,7 @@ export async function POST(request: Request) {
       const mimeType = attachment.mime_type as string
 
       // Analyze with Gemini Vision
-      const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" })
+      const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" })
 
       const result = await model.generateContent([
         {

@@ -18,9 +18,10 @@ export async function POST(request: Request) {
       return NextResponse.redirect(new URL("/login", request.url))
     }
 
-    // Check for billing period from form data
+    // Check for billing period and plan from form data
     const formData = await request.formData().catch(() => null)
     const billingPeriod = formData?.get("billing") as string || "monthly"
+    const plan = formData?.get("plan") as string || "pro"
 
     // Get or create Stripe customer
     const { data: profile } = await supabase
@@ -49,10 +50,17 @@ export async function POST(request: Request) {
         .eq("user_id", user.id)
     }
 
-    // Select price based on billing period
-    const priceId = billingPeriod === "annual"
-      ? process.env.NEXT_PUBLIC_STRIPE_PRO_ANNUAL_PRICE_ID
-      : process.env.NEXT_PUBLIC_STRIPE_PRO_PRICE_ID
+    // Select price based on plan and billing period
+    let priceId: string | undefined
+    if (plan === "pro_plus") {
+      priceId = billingPeriod === "annual"
+        ? process.env.STRIPE_PRO_PLUS_ANNUAL_PRICE_ID
+        : process.env.STRIPE_PRO_PLUS_PRICE_ID
+    } else {
+      priceId = billingPeriod === "annual"
+        ? process.env.NEXT_PUBLIC_STRIPE_PRO_ANNUAL_PRICE_ID
+        : process.env.NEXT_PUBLIC_STRIPE_PRO_PRICE_ID
+    }
 
     if (!priceId) {
       return NextResponse.json({ error: "Price not configured" }, { status: 500 })

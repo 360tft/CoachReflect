@@ -152,12 +152,12 @@ export const TEMPLATES: Record<string, (props: TemplateProps) => string> = {
 
     <p>You've been using Coach Reflection for a couple of weeks now. Ready to unlock the full potential?</p>
 
-    <p><strong>With Pro ($7.99/month), you get:</strong></p>
+    <p><strong>With Pro ($9.99/month), you get:</strong></p>
     <ul>
       <li>Unlimited reflections</li>
+      <li>4 voice notes per month for hands-free reflection</li>
       <li>AI-powered insights that spot patterns across your sessions</li>
       <li>Session plan upload with automatic analysis</li>
-      <li>Unlimited coaching conversations</li>
     </ul>
 
     <p>Most coaches say the AI insights alone are worth it - they notice things you might miss.</p>

@@ -11,14 +11,28 @@ export const PRICING = {
   // Individual Pro
   PRO: {
     monthly: {
-      price: 7.99,
+      price: 9.99,
       stripePriceId: process.env.NEXT_PUBLIC_STRIPE_PRO_PRICE_ID || '',
     },
     annual: {
-      price: 79,
+      price: 99,
       stripePriceId: process.env.NEXT_PUBLIC_STRIPE_PRO_ANNUAL_PRICE_ID || '',
-      savings: 17, // ~17% off ($7.99 * 12 = $95.88, save $16.88)
-      monthlyEquivalent: 6.58,
+      savings: 17, // 2 months free (~17% off)
+      monthlyEquivalent: 8.25,
+    },
+  },
+
+  // Individual Pro+ (includes syllabus)
+  PRO_PLUS: {
+    monthly: {
+      price: 19.99,
+      stripePriceId: process.env.STRIPE_PRO_PLUS_PRICE_ID || '',
+    },
+    annual: {
+      price: 199,
+      stripePriceId: process.env.STRIPE_PRO_PLUS_ANNUAL_PRICE_ID || '',
+      savings: 17, // 2 months free (~17% off)
+      monthlyEquivalent: 16.58,
     },
   },
 
@@ -63,34 +77,38 @@ export interface ClubTierConfig {
 export const CLUB_TIERS: ClubTierConfig[] = [
   {
     id: 'small_club',
-    name: 'Small Club',
+    name: 'Club',
     maxSeats: 5,
-    monthlyPrice: 29,
-    annualPrice: 259,
-    perCoachMonthly: 5.80,
-    discount: '27% off',
+    monthlyPrice: 79,
+    annualPrice: 790,
+    perCoachMonthly: 15.80,
+    discount: '20% off Pro+',
     stripePriceIdMonthly: process.env.STRIPE_PRICE_CLUB_SMALL_MONTHLY || '',
     stripePriceIdAnnual: process.env.STRIPE_PRICE_CLUB_SMALL_ANNUAL || '',
     features: [
       'Up to 5 coach accounts',
-      'All Pro features for each coach',
+      'All Pro+ features for each coach',
+      '12 voice notes per coach/month',
+      'Club syllabus upload',
       'Shared analytics dashboard',
       'Club admin portal',
     ],
   },
   {
     id: 'club',
-    name: 'Club',
+    name: 'Club+',
     maxSeats: 15,
-    monthlyPrice: 59,
-    annualPrice: 529,
-    perCoachMonthly: 3.93,
-    discount: '51% off',
+    monthlyPrice: 239,
+    annualPrice: 2390,
+    perCoachMonthly: 15.93,
+    discount: '20% off Pro+',
     stripePriceIdMonthly: process.env.STRIPE_PRICE_CLUB_MONTHLY || '',
     stripePriceIdAnnual: process.env.STRIPE_PRICE_CLUB_ANNUAL || '',
     features: [
       'Up to 15 coach accounts',
-      'All Pro features for each coach',
+      'All Pro+ features for each coach',
+      '12 voice notes per coach/month',
+      'Club syllabus upload',
       'Shared analytics dashboard',
       'Club admin portal',
       'Priority support',
@@ -101,15 +119,17 @@ export const CLUB_TIERS: ClubTierConfig[] = [
     id: 'academy',
     name: 'Academy',
     maxSeats: 30,
-    monthlyPrice: 99,
-    annualPrice: 899,
-    perCoachMonthly: 3.30,
-    discount: '59% off',
+    monthlyPrice: 479,
+    annualPrice: 4790,
+    perCoachMonthly: 15.97,
+    discount: '20% off Pro+',
     stripePriceIdMonthly: process.env.STRIPE_PRICE_CLUB_ACADEMY_MONTHLY || '',
     stripePriceIdAnnual: process.env.STRIPE_PRICE_CLUB_ACADEMY_ANNUAL || '',
     features: [
       'Up to 30 coach accounts',
-      'All Pro features for each coach',
+      'All Pro+ features for each coach',
+      '12 voice notes per coach/month',
+      'Club syllabus upload',
       'Shared analytics dashboard',
       'Club admin portal',
       'Priority support',
@@ -130,17 +150,27 @@ export function getClubTier(tierId: ClubTier): ClubTierConfig | undefined {
 export const LIMITS = {
   FREE: {
     messagesPerDay: 5,
-    voiceNotesPerMonth: 3,
+    voiceNotesPerMonth: 0,
     sessionPlansPerMonth: 0,
     historyDays: 14, // 2 weeks
     analyticsWeeks: 4,
+    hasSyllabus: false,
   },
   PRO: {
     messagesPerDay: -1, // unlimited
-    voiceNotesPerMonth: -1,
+    voiceNotesPerMonth: 4,
     sessionPlansPerMonth: -1,
     historyDays: -1,
     analyticsWeeks: -1, // unlimited
+    hasSyllabus: false,
+  },
+  PRO_PLUS: {
+    messagesPerDay: -1, // unlimited
+    voiceNotesPerMonth: 12,
+    sessionPlansPerMonth: -1,
+    historyDays: -1,
+    analyticsWeeks: -1, // unlimited
+    hasSyllabus: true,
   },
 } as const
 
@@ -209,18 +239,20 @@ export function getAnnualSavings(monthlyPrice: number, annualPrice: number): num
   return Math.round(((yearlyAtMonthly - annualPrice) / yearlyAtMonthly) * 100)
 }
 
-export function getTierLimits(tier: 'free' | 'pro') {
+export function getTierLimits(tier: 'free' | 'pro' | 'pro_plus') {
   const tierMap = {
     free: LIMITS.FREE,
     pro: LIMITS.PRO,
+    pro_plus: LIMITS.PRO_PLUS,
   }
-  return tierMap[tier]
+  return tierMap[tier] || LIMITS.FREE
 }
 
-export function getTierFeatures(tier: 'free' | 'pro') {
+export function getTierFeatures(tier: 'free' | 'pro' | 'pro_plus') {
   const tierMap = {
     free: FEATURES.FREE,
     pro: FEATURES.PRO,
+    pro_plus: FEATURES.PRO,
   }
-  return tierMap[tier]
+  return tierMap[tier] || FEATURES.FREE
 }

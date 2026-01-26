@@ -144,7 +144,7 @@ Extract and return JSON with:
 
 Only add new information that's clearly stated. Don't invent details. Return ONLY valid JSON.`
 
-    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" })
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" })
     const result = await model.generateContent(extractionPrompt)
     const response = result.response
     const textContent = response.text()

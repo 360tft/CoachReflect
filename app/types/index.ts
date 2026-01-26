@@ -7,7 +7,7 @@ export interface Profile {
   club_name: string | null
   age_group: string | null
   coaching_level: 'grassroots' | 'academy' | 'semi-pro' | 'professional' | null
-  subscription_tier: 'free' | 'pro'
+  subscription_tier: 'free' | 'pro' | 'pro_plus'
   stripe_customer_id: string | null
   reflections_this_month: number
   reflection_count_period: string | null
@@ -17,18 +17,29 @@ export interface Profile {
   updated_at: string
 }
 
-export type SubscriptionTier = 'free' | 'pro'
+export type SubscriptionTier = 'free' | 'pro' | 'pro_plus'
 
 export const SUBSCRIPTION_LIMITS = {
   free: {
     reflections_per_month: 5,
     ai_features: false,
     session_plan_upload: false,
+    voice_notes_per_month: 0,
+    has_syllabus: false,
   },
   pro: {
     reflections_per_month: Infinity,
     ai_features: true,
     session_plan_upload: true,
+    voice_notes_per_month: 4,
+    has_syllabus: false,
+  },
+  pro_plus: {
+    reflections_per_month: Infinity,
+    ai_features: true,
+    session_plan_upload: true,
+    voice_notes_per_month: 12,
+    has_syllabus: true,
   },
 } as const
 
@@ -566,12 +577,13 @@ export const COACHING_THEME_CATEGORIES: { id: ThemeCategory; label: string }[] =
 // ==================== Voice Limits ====================
 
 export const VOICE_NOTE_LIMITS = {
-  free: 3,        // 3 voice notes per month
-  pro: 999999,    // Effectively unlimited
+  free: 0,        // No voice notes
+  pro: 4,         // 4 voice notes per month
+  pro_plus: 12,   // 12 voice notes per month
 } as const
 
 export const VOICE_MAX_DURATION_SECONDS = 300  // 5 minutes
-export const VOICE_MAX_FILE_SIZE_BYTES = 50 * 1024 * 1024  // 50MB
+export const VOICE_MAX_FILE_SIZE_BYTES = 200 * 1024 * 1024  // 200MB for 120min recordings
 
 export const SUPPORTED_AUDIO_TYPES = [
   'audio/mpeg',     // .mp3

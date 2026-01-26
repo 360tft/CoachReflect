@@ -136,7 +136,7 @@ export async function POST(request: Request) {
     // Use AI to extract structured data
     const prompt = getExtractionPrompt(userSport, conversationText)
 
-    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" })
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" })
     const result = await model.generateContent(prompt)
     const response = result.response
     const textContent = response.text()
@@ -342,7 +342,7 @@ export async function extractInsightsBackground(
   try {
     const prompt = getExtractionPrompt(sport, conversationText)
 
-    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" })
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" })
     const result = await model.generateContent(prompt)
     const response = result.response
     const textContent = response.text()

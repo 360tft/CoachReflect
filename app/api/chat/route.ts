@@ -45,7 +45,7 @@ Extract and return JSON with:
 
 Only add new information that's clearly stated. Don't invent details. If nothing new to add, return empty arrays/objects for those fields. Return ONLY valid JSON.`
 
-    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" })
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" })
     const result = await model.generateContent(extractionPrompt)
     const response = result.response
     const textContent = response.text()
@@ -269,7 +269,11 @@ export async function POST(request: Request) {
 
     // Get user memory if exists (Pro feature)
     let userContext = ""
+    let syllabusContext = ""
+
     if (isSubscribed) {
+      const adminClient = createAdminClient()
+
       const { data: memory } = await supabase
         .from("user_memory")
         .select("*")
@@ -286,6 +290,39 @@ export async function POST(request: Request) {
         },
         memory || undefined
       )
+
+      // Fetch syllabus (personal or club) for Pro+ users
+      // Check for personal syllabus first
+      const { data: personalSyllabus } = await adminClient
+        .from('syllabi')
+        .select('title, extracted_text, processing_status')
+        .eq('user_id', user.id)
+        .is('club_id', null)
+        .single()
+
+      if (personalSyllabus?.extracted_text && personalSyllabus.processing_status === 'completed') {
+        syllabusContext = `\n\n[Coach's Syllabus: "${personalSyllabus.title}"]\n${personalSyllabus.extracted_text}`
+      } else {
+        // Check for club syllabus
+        const { data: membership } = await adminClient
+          .from('club_members')
+          .select('club_id')
+          .eq('user_id', user.id)
+          .eq('status', 'active')
+          .single()
+
+        if (membership?.club_id) {
+          const { data: clubSyllabus } = await adminClient
+            .from('syllabi')
+            .select('title, extracted_text, processing_status')
+            .eq('club_id', membership.club_id)
+            .single()
+
+          if (clubSyllabus?.extracted_text && clubSyllabus.processing_status === 'completed') {
+            syllabusContext = `\n\n[Club Syllabus: "${clubSyllabus.title}"]\n${clubSyllabus.extracted_text}`
+          }
+        }
+      }
     } else {
       userContext = buildUserContext({
         display_name: profile?.display_name,
@@ -306,7 +343,7 @@ export async function POST(request: Request) {
     const basePrompt = isReflection
       ? getReflectionSystemPrompt(userSport)
       : getSystemPrompt(userSport)
-    const systemPrompt = basePrompt + userContext
+    const systemPrompt = basePrompt + userContext + syllabusContext
 
     // Trim history to last N messages
     const trimmedHistory = history.slice(-CHAT_CONFIG.maxHistoryMessages)
@@ -326,7 +363,7 @@ export async function POST(request: Request) {
         try {
           // Create Gemini model with system instruction
           const model = genAI.getGenerativeModel({
-            model: "gemini-2.0-flash",
+            model: "gemini-2.5-flash",
             systemInstruction: systemPrompt,
           })
 

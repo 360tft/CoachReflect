@@ -92,9 +92,16 @@ export function generateSoftwareApplicationSchema() {
       {
         '@type': 'Offer',
         name: 'Pro Monthly',
-        price: '7.99',
+        price: '9.99',
         priceCurrency: 'USD',
-        description: 'Unlimited reflections, AI insights, advanced analytics, session plan analysis'
+        description: 'Unlimited reflections, 4 voice notes/month, AI insights, session plan analysis'
+      },
+      {
+        '@type': 'Offer',
+        name: 'Pro+ Monthly',
+        price: '19.99',
+        priceCurrency: 'USD',
+        description: 'Everything in Pro plus 12 voice notes/month and syllabus upload'
       }
     ],
     description: 'AI-powered reflection and journaling tool for football coaches. Track sessions, identify patterns, and grow as a coach with guided post-session reflections.',

@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server"
+import { createAdminClient } from "@/lib/supabase/admin"
 import Link from "next/link"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card"
 import { Button } from "@/app/components/ui/button"
@@ -10,6 +11,8 @@ import { AccountActions } from "./account-actions"
 import { CPDExport } from "./cpd-export"
 import { EmailPreferences } from "./email-preferences"
 import { ReminderSettings } from "./reminder-settings"
+import { SyllabusUpload } from "./syllabus-upload"
+import { hasSyllabusFeature, getVoiceNoteLimit, getTierDisplayName } from "@/lib/subscription"
 
 export default async function SettingsPage() {
   const supabase = await createClient()
@@ -28,6 +31,28 @@ export default async function SettingsPage() {
   const subscriptionTier = profile?.subscription_tier || "free"
   const limits = SUBSCRIPTION_LIMITS[subscriptionTier as keyof typeof SUBSCRIPTION_LIMITS]
 
+  // Fetch syllabus
+  const adminClient = createAdminClient()
+  const { data: syllabus } = await adminClient
+    .from('syllabi')
+    .select('*')
+    .eq('user_id', user.id)
+    .is('club_id', null)
+    .single()
+
+  // Check if user is club member
+  const { data: membership } = await adminClient
+    .from('club_members')
+    .select('club_id')
+    .eq('user_id', user.id)
+    .eq('status', 'active')
+    .single()
+
+  const isClubMember = !!membership?.club_id
+  const canUploadSyllabus = hasSyllabusFeature(subscriptionTier, isClubMember)
+  const voiceNoteLimit = getVoiceNoteLimit(subscriptionTier)
+  const voiceNotesUsed = profile?.voice_notes_used_this_month || 0
+
   return (
     <div className="max-w-2xl mx-auto space-y-6">
       <h1 className="text-2xl font-bold">Settings</h1>
@@ -41,7 +66,7 @@ export default async function SettingsPage() {
         <CardContent className="space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="font-medium capitalize">{subscriptionTier} Plan</p>
+              <p className="font-medium">{getTierDisplayName(subscriptionTier)} Plan</p>
               <p className="text-sm text-muted-foreground">
                 {subscriptionTier === "free"
                   ? `${profile?.reflections_this_month || 0}/${limits.reflections_per_month} reflections this month`
@@ -51,7 +76,7 @@ export default async function SettingsPage() {
             </div>
             {subscriptionTier === "free" && (
               <div className="text-right">
-                <p className="text-2xl font-bold">$7.99<span className="text-sm font-normal">/mo</span></p>
+                <p className="text-2xl font-bold">$9.99<span className="text-sm font-normal">/mo</span></p>
               </div>
             )}
           </div>
@@ -74,7 +99,7 @@ export default async function SettingsPage() {
             </div>
           ) : (
             <div className="space-y-2">
-              <p className="text-sm text-green-600 dark:text-green-400">You have Pro access</p>
+              <p className="text-sm text-green-600 dark:text-green-400">You have {getTierDisplayName(subscriptionTier)} access</p>
               {profile?.stripe_customer_id ? (
                 <form action="/api/stripe/portal" method="POST">
                   <Button type="submit" variant="outline">
@@ -82,7 +107,7 @@ export default async function SettingsPage() {
                   </Button>
                 </form>
               ) : (
-                <p className="text-xs text-muted-foreground">Pro access granted manually</p>
+                <p className="text-xs text-muted-foreground">{getTierDisplayName(subscriptionTier)} access granted manually</p>
               )}
             </div>
           )}
@@ -120,6 +145,37 @@ export default async function SettingsPage() {
         weeklySummaryEnabled={profile?.weekly_summary_enabled ?? true}
         emailNotificationsEnabled={profile?.email_notifications_enabled ?? true}
       />
+
+      {/* Syllabus Upload */}
+      <SyllabusUpload
+        initialSyllabus={syllabus}
+        canUpload={canUploadSyllabus}
+        subscriptionTier={subscriptionTier}
+      />
+
+      {/* Voice Notes Usage */}
+      {subscriptionTier !== 'free' && (
+        <Card>
+          <CardHeader>
+            <CardTitle>Voice Notes</CardTitle>
+            <CardDescription>Your monthly voice note usage</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-2xl font-bold">{voiceNotesUsed} / {voiceNoteLimit}</p>
+                <p className="text-sm text-muted-foreground">voice notes this month</p>
+              </div>
+              <div className="w-32 h-2 bg-muted rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-primary rounded-full transition-all"
+                  style={{ width: `${Math.min((voiceNotesUsed / voiceNoteLimit) * 100, 100)}%` }}
+                />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* CPD Export */}
       <CPDExport isSubscribed={subscriptionTier !== "free"} />

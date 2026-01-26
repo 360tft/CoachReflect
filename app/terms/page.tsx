@@ -47,8 +47,9 @@ export default function TermsPage() {
               Coach Reflection offers free and paid subscription tiers:
             </p>
             <ul className="list-disc list-inside text-muted-foreground space-y-1">
-              <li>Free tier: Limited to 5 reflections per month</li>
-              <li>Pro tier ($7.99/month): Unlimited reflections, AI insights, session plan analysis</li>
+              <li>Free tier: Limited to 5 reflections per month, no voice notes</li>
+              <li>Pro tier ($9.99/month): Unlimited reflections, 4 voice notes/month, AI insights</li>
+              <li>Pro+ tier ($19.99/month): Everything in Pro plus 12 voice notes/month and syllabus upload</li>
             </ul>
             <p className="text-muted-foreground mt-2">
               Subscriptions automatically renew unless cancelled. You can cancel anytime through

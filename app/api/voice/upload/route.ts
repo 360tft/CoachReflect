@@ -5,7 +5,7 @@ import { validateAudioFile } from "@/lib/whisper"
 import { nanoid } from "nanoid"
 import type { VoiceUploadResponse } from "@/app/types"
 
-const MAX_FILE_SIZE = 50 * 1024 * 1024  // 50MB
+const MAX_FILE_SIZE = 200 * 1024 * 1024  // 200MB for up to 120min recordings
 
 // Type for the RPC function response
 interface VoiceLimitCheck {
@@ -49,9 +49,12 @@ export async function POST(request: NextRequest) {
     }
 
     if (limitCheck && !limitCheck.allowed) {
+      const upgradeMessage = limitCheck.limit_count === 0
+        ? "Voice notes require a Pro subscription."
+        : `Voice note limit reached (${limitCheck.current_count}/${limitCheck.limit_count} this month). Upgrade for more.`
       return NextResponse.json(
         {
-          error: "Voice note limit reached. Upgrade to Pro for unlimited voice notes.",
+          error: upgradeMessage,
           current_count: limitCheck.current_count,
           limit_count: limitCheck.limit_count,
         },
@@ -138,10 +141,8 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // 8. Increment voice note count (for free tier tracking)
-    if (limitCheck && !limitCheck.is_pro) {
-      await adminClient.rpc('increment_voice_note_count', { p_user_id: user.id })
-    }
+    // 8. Increment voice note count for all users (everyone has limits now)
+    await adminClient.rpc('increment_voice_note_count', { p_user_id: user.id })
 
     const response: VoiceUploadResponse = {
       attachment_id: attachment.id,
