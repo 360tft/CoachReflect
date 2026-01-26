@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ServiceWorkerRegister } from "@/app/components/service-worker-register";
 import { Analytics } from "@/app/components/analytics";
+import { ThemeProvider } from "@/app/components/theme-provider";
 import {
   generateWebsiteSchema,
   generateOrganizationSchema,
@@ -101,7 +102,7 @@ export default function RootLayout({
               (function() {
                 try {
                   var theme = localStorage.getItem('theme');
-                  if (theme === 'dark') {
+                  if (theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches) || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
                     document.documentElement.classList.add('dark');
                   }
                 } catch (e) {}
@@ -135,9 +136,11 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         suppressHydrationWarning
       >
-        <Analytics />
-        <ServiceWorkerRegister />
-        {children}
+        <ThemeProvider>
+          <Analytics />
+          <ServiceWorkerRegister />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

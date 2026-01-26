@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server"
 import { Button } from "@/app/components/ui/button"
 import { BottomNav } from "@/app/components/bottom-nav"
 import { PWAInstallPrompt } from "@/app/components/pwa-install-prompt"
+import { ThemeToggle } from "@/app/components/theme-toggle"
 import { isAdminUser } from "@/lib/admin"
 
 async function signOut() {
@@ -85,6 +86,7 @@ export default async function DashboardLayout({
                 Pro
               </span>
             )}
+            <ThemeToggle />
             <form action={signOut}>
               <Button variant="ghost" size="sm" type="submit">
                 Sign Out
