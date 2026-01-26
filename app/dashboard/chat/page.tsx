@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server"
 import { redirect } from "next/navigation"
 import { ChatInterface } from "@/app/components/chat-interface"
+import { ProfilePrompt } from "@/app/components/profile-prompt"
 
 export const metadata = {
   title: "Coach Chat | Coach Reflection",
@@ -15,14 +16,21 @@ export default async function ChatPage() {
     redirect("/login")
   }
 
-  // Get profile for subscription status
+  // Get profile for subscription status and profile completeness
   const { data: profile } = await supabase
     .from("profiles")
-    .select("subscription_tier")
+    .select("subscription_tier, display_name, age_group, coaching_level, sport")
     .eq("user_id", user.id)
     .single()
 
   const isSubscribed = profile?.subscription_tier !== "free"
+
+  // Check if profile is complete enough
+  const isProfileComplete = !!(
+    profile?.display_name &&
+    profile?.age_group &&
+    profile?.sport
+  )
 
   // Get today's message count for free tier
   let remaining = 5
@@ -39,8 +47,11 @@ export default async function ChatPage() {
   }
 
   return (
-    <div className="h-full">
-      <ChatInterface isSubscribed={isSubscribed} initialRemaining={remaining} />
+    <div className="h-full flex flex-col">
+      {!isProfileComplete && <ProfilePrompt />}
+      <div className="flex-1">
+        <ChatInterface isSubscribed={isSubscribed} initialRemaining={remaining} />
+      </div>
     </div>
   )
 }

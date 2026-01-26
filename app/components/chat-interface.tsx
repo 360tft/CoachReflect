@@ -47,7 +47,6 @@ export function ChatInterface({ isSubscribed, initialRemaining = 5 }: ChatInterf
         setConversations(data.conversations || [])
       }
     } catch (err) {
-      console.error("Failed to load conversations:", err)
     }
   }
 
@@ -67,7 +66,6 @@ export function ChatInterface({ isSubscribed, initialRemaining = 5 }: ChatInterf
         setShowSidebar(false)
       }
     } catch (err) {
-      console.error("Failed to load conversation:", err)
     }
   }
 
@@ -92,7 +90,6 @@ export function ChatInterface({ isSubscribed, initialRemaining = 5 }: ChatInterf
         }
       }
     } catch (err) {
-      console.error("Failed to delete conversation:", err)
     }
   }
 
@@ -282,10 +279,8 @@ export function ChatInterface({ isSubscribed, initialRemaining = 5 }: ChatInterf
         .then(res => res.json())
         .then(() => {
           setReflectionSaved(true)
-          console.log("Reflection auto-saved")
         })
         .catch(err => {
-          console.error("Auto-save failed:", err)
           // Don't show error to user - it's a background operation
         })
     }
