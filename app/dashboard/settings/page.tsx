@@ -42,7 +42,7 @@ export default async function SettingsPage() {
 
   // Check if user is club member
   const { data: membership } = await adminClient
-    .from('club_members')
+    .from('club_memberships')
     .select('club_id')
     .eq('user_id', user.id)
     .eq('status', 'active')
@@ -113,6 +113,35 @@ export default async function SettingsPage() {
           )}
         </CardContent>
       </Card>
+
+      {/* Start a Club - for individual users */}
+      {!isClubMember && (
+        <Card>
+          <CardHeader>
+            <CardTitle>Start a Club</CardTitle>
+            <CardDescription>Get your whole coaching team reflecting</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="p-4 rounded-lg bg-muted/50 border">
+              <p className="font-medium text-foreground mb-2">
+                Club plans include Pro+ for every coach
+              </p>
+              <ul className="text-sm text-muted-foreground space-y-1">
+                <li>• 12 voice notes/month per coach</li>
+                <li>• Shared club syllabus upload</li>
+                <li>• AI learns your club philosophy</li>
+                <li>• Central billing for all coaches</li>
+                <li>• From just $5.80/coach/month</li>
+              </ul>
+            </div>
+            <Link href="/signup?plan=club">
+              <Button variant="outline" className="w-full">
+                View Club Plans
+              </Button>
+            </Link>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Profile - Editable Form */}
       <ProfileForm

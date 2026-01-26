@@ -431,6 +431,29 @@ export const TEMPLATES: Record<string, (props: TemplateProps) => string> = {
       <p>Keep growing!<br>The Coach Reflection Team</p>
     `, props)
   },
+
+  'daily-reminder': (props) => baseTemplate(`
+    <p>Hey ${props.name},</p>
+
+    <p>This is your scheduled reminder to reflect on today's session.</p>
+
+    <p>Taking just 2 minutes to capture your thoughts helps you:</p>
+    <ul>
+      <li>Spot patterns you might otherwise miss</li>
+      <li>Track player development over time</li>
+      <li>Build a record of your coaching journey</li>
+    </ul>
+
+    <p style="text-align: center; margin: 30px 0;">
+      <a href="${APP_URL}/dashboard/chat" style="background: #d97706; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; display: inline-block;">Reflect Now</a>
+    </p>
+
+    <p style="font-size: 14px; color: #6b7280;">
+      Tip: Try starting with "Today's session was..." and let the AI guide you from there.
+    </p>
+
+    <p>Keep growing,<br>The Coach Reflection Team</p>
+  `, props),
 }
 
 export function renderTemplate(templateName: string, props: TemplateProps): string | null {
