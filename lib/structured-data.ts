@@ -66,7 +66,7 @@ export function generateOrganizationSchema() {
     contactPoint: {
       '@type': 'ContactPoint',
       contactType: 'customer support',
-      email: 'support@coachreflection.com'
+      email: 'admin@360tft.com'
     }
   }
 }
