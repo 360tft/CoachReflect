@@ -135,40 +135,38 @@ export async function GET(request: NextRequest) {
       .eq("attachment_type", "image")
       .gte("created_at", startDate.toISOString())
 
-    // Aggregate player mentions
+    // Aggregate player mentions (stored as individual rows with insight_type='player_mention')
     const playerMap = new Map<string, PlayerMention>()
     insights?.forEach(insight => {
-      const players = insight.players_mentioned as Array<{
-        name: string
-        sentiment: 'positive' | 'concern' | 'neutral'
-      }> || []
+      if (insight.insight_type === 'player_mention' && insight.name) {
+        const playerName = insight.name as string
+        const context = (insight.context as 'positive' | 'concern' | 'neutral') || 'neutral'
 
-      players.forEach(player => {
-        const existing = playerMap.get(player.name.toLowerCase()) || {
-          name: player.name,
+        const existing = playerMap.get(playerName.toLowerCase()) || {
+          name: playerName,
           count: 0,
           sentiment: { positive: 0, concern: 0, neutral: 0 }
         }
         existing.count++
-        existing.sentiment[player.sentiment]++
-        playerMap.set(player.name.toLowerCase(), existing)
-      })
+        if (context === 'positive' || context === 'concern' || context === 'neutral') {
+          existing.sentiment[context]++
+        }
+        playerMap.set(playerName.toLowerCase(), existing)
+      }
     })
 
-    // Aggregate themes
+    // Aggregate themes (stored as individual rows with insight_type='theme')
     const themeMap = new Map<string, { count: number; totalConfidence: number }>()
     insights?.forEach(insight => {
-      const themes = insight.themes as Array<{
-        theme_id: string
-        confidence: number
-      }> || []
+      if (insight.insight_type === 'theme' && insight.name) {
+        const themeName = insight.name as string
+        const confidence = (insight.confidence as number) || 0.8
 
-      themes.forEach(theme => {
-        const existing = themeMap.get(theme.theme_id) || { count: 0, totalConfidence: 0 }
+        const existing = themeMap.get(themeName) || { count: 0, totalConfidence: 0 }
         existing.count++
-        existing.totalConfidence += theme.confidence
-        themeMap.set(theme.theme_id, existing)
-      })
+        existing.totalConfidence += confidence
+        themeMap.set(themeName, existing)
+      }
     })
 
     // Get theme names from coaching_themes table
@@ -239,8 +237,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(response)
 
-  } catch (error) {
-    console.error("Analytics error:", error)
+  } catch {
     return NextResponse.json(
       { error: "Failed to fetch analytics" },
       { status: 500 }

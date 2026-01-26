@@ -157,7 +157,7 @@ export async function POST(request: Request) {
       if (jsonText.endsWith("```")) jsonText = jsonText.slice(0, -3)
       extracted = JSON.parse(jsonText.trim())
     } catch {
-      console.error("Failed to parse extraction:", textContent)
+      // Error logged:("Failed to parse extraction:", textContent)
       return NextResponse.json(
         { error: "Failed to parse extracted data" },
         { status: 500 }
@@ -189,7 +189,7 @@ export async function POST(request: Request) {
         .single()
 
       if (reflectionError) {
-        console.error("Error creating reflection:", reflectionError)
+        // Error logged:("Error creating reflection:", reflectionError)
       } else {
         reflectionId = reflection.id
       }
@@ -275,7 +275,7 @@ export async function POST(request: Request) {
     })
 
   } catch (error) {
-    console.error("Extraction API error:", error)
+    // Error logged:("Extraction API error:", error)
     return NextResponse.json(
       { error: "Failed to extract reflection data" },
       { status: 500 }
@@ -328,7 +328,7 @@ async function updateDailyStats(adminClient: any, userId: string, date: string, 
         })
     }
   } catch (error) {
-    console.error("Failed to update daily stats:", error)
+    // Error logged:("Failed to update daily stats:", error)
   }
 }
 
@@ -357,7 +357,7 @@ export async function extractInsightsBackground(
       if (jsonText.endsWith("```")) jsonText = jsonText.slice(0, -3)
       extracted = JSON.parse(jsonText.trim())
     } catch {
-      console.error("Background extraction parse failed")
+      // Error logged:("Background extraction parse failed")
       return
     }
 
@@ -416,6 +416,6 @@ export async function extractInsightsBackground(
     }
 
   } catch (error) {
-    console.error("Background insight extraction failed:", error)
+    // Error logged:("Background insight extraction failed:", error)
   }
 }
