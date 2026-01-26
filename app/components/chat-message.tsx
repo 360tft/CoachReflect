@@ -51,15 +51,48 @@ export function ChatMessage({
           )}
 
           {/* Message content */}
-          <div className="prose prose-sm dark:prose-invert max-w-none">
-            {!hasContent && isLoading ? (
-              <span className="text-muted-foreground animate-pulse">
-                Thinking...
-              </span>
-            ) : (
-              <ReactMarkdown>{content}</ReactMarkdown>
-            )}
-          </div>
+          {!hasContent && isLoading ? (
+            <span className="text-muted-foreground animate-pulse">
+              Thinking...
+            </span>
+          ) : isUser ? (
+            <div className="whitespace-pre-wrap text-sm">{content}</div>
+          ) : (
+            <div className="prose prose-sm dark:prose-invert max-w-none prose-p:mb-4 prose-p:mt-0 prose-p:leading-relaxed prose-p:text-sm prose-ul:my-3 prose-ul:pl-5 prose-ol:my-3 prose-ol:pl-5 prose-li:my-1 prose-li:leading-relaxed prose-li:text-sm prose-headings:mt-6 prose-headings:mb-3 prose-headings:pt-3 prose-headings:border-t prose-headings:border-border prose-h2:text-base prose-h2:font-bold prose-h3:text-sm prose-h3:font-semibold prose-strong:text-inherit prose-code:bg-muted prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-xs prose-code:before:content-none prose-code:after:content-none prose-pre:bg-muted prose-pre:p-4 prose-pre:rounded-lg prose-blockquote:border-l-4 prose-blockquote:border-brand prose-blockquote:pl-4 prose-blockquote:italic [&>*:first-child]:mt-0 [&>*:first-child]:pt-0 [&>*:first-child]:border-t-0 [&_p+p]:mt-4 [&_ul+p]:mt-4 [&_ol+p]:mt-4 [&_p+ul]:mt-3 [&_p+ol]:mt-3 [&_h2+p]:mt-2 [&_h3+p]:mt-2 [&_p>strong:only-child]:block [&_p>strong:only-child]:mt-5 [&_p>strong:only-child]:mb-2 [&_p>strong:only-child]:text-sm [&_p>strong:only-child]:font-semibold prose-a:text-brand prose-a:underline prose-a:font-medium hover:prose-a:text-brand-hover">
+              <ReactMarkdown
+                components={{
+                  a: ({ href, children }) => (
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-brand underline font-medium hover:text-brand-hover"
+                    >
+                      {children}
+                    </a>
+                  ),
+                  p: ({ children, node }) => {
+                    const firstChild = node?.children?.[0]
+                    const isStrongOnly = node?.children?.length === 1 &&
+                      firstChild &&
+                      'tagName' in firstChild &&
+                      firstChild.tagName === 'strong'
+
+                    if (isStrongOnly) {
+                      return (
+                        <p className="!mt-6 !mb-3 !text-base !font-semibold text-foreground border-b border-border pb-1">
+                          {children}
+                        </p>
+                      )
+                    }
+                    return <p>{children}</p>
+                  },
+                }}
+              >
+                {content}
+              </ReactMarkdown>
+            </div>
+          )}
 
           {/* Follow-up suggestions */}
           {followUps && followUps.length > 0 && onFollowUpClick && (
