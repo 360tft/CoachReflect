@@ -19,7 +19,7 @@ export async function PATCH(
     const { id: userId } = await params
     const { tier } = await request.json()
 
-    if (!tier || !["free", "pro"].includes(tier)) {
+    if (!tier || !["free", "pro", "pro_plus"].includes(tier)) {
       return NextResponse.json({ error: "Invalid tier" }, { status: 400 })
     }
 
@@ -30,7 +30,7 @@ export async function PATCH(
       .from("profiles")
       .update({
         subscription_tier: tier,
-        subscription_status: tier === "pro" ? "active" : "canceled",
+        subscription_status: tier !== "free" ? "active" : "canceled",
       })
       .eq("user_id", userId)
 

@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server"
 import { createClient } from "@/lib/supabase/server"
 import { createClient as createAdminClient } from "@supabase/supabase-js"
-import { SUBSCRIPTION_LIMITS } from "@/app/types"
 import { checkRateLimit, RATE_LIMITS } from "@/lib/rate-limit"
 
 // Admin client for calling database functions
@@ -65,24 +64,6 @@ export async function POST(request: Request) {
       )
     }
 
-    // Check subscription limits
-    const { data: profile } = await supabase
-      .from("profiles")
-      .select("subscription_tier, reflections_this_month")
-      .eq("user_id", user.id)
-      .single()
-
-    const subscriptionTier = profile?.subscription_tier || "free"
-    const limits = SUBSCRIPTION_LIMITS[subscriptionTier as keyof typeof SUBSCRIPTION_LIMITS]
-    const reflectionsThisMonth = profile?.reflections_this_month || 0
-
-    if (subscriptionTier === "free" && reflectionsThisMonth >= limits.reflections_per_month) {
-      return NextResponse.json(
-        { error: "Monthly reflection limit reached. Upgrade to Pro for unlimited reflections." },
-        { status: 403 }
-      )
-    }
-
     const body = await request.json()
     const {
       session_id,
@@ -135,11 +116,10 @@ export async function POST(request: Request) {
       p_user_id: user.id,
     })
 
-    // Increment monthly reflection count
+    // Update last active timestamp
     await adminClient
       .from("profiles")
       .update({
-        reflections_this_month: (profile?.reflections_this_month || 0) + 1,
         last_active_at: new Date().toISOString(),
       })
       .eq("user_id", user.id)

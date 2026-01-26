@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server"
 import { createClient } from "@/lib/supabase/server"
 import { createAdminClient } from "@/lib/supabase/admin"
 import { checkRateLimit, RATE_LIMITS } from "@/lib/rate-limit"
+import { LIMITS } from "@/lib/config"
+import { hasClubAccess } from "@/lib/clubs"
 
 interface PlayerSummary {
   name: string
@@ -37,14 +39,37 @@ export async function GET(request: NextRequest) {
       )
     }
 
+    // Check subscription tier
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("subscription_tier")
+      .eq("user_id", user.id)
+      .single()
+
+    const tier = profile?.subscription_tier || "free"
+    const hasClub = await hasClubAccess(user.id)
+    const isSubscribed = tier !== "free" || hasClub
+
+    // Calculate date filter for free users
+    const historyDays = isSubscribed ? -1 : LIMITS.FREE.historyDays
+    const dateFilter = historyDays > 0
+      ? new Date(Date.now() - historyDays * 24 * 60 * 60 * 1000).toISOString()
+      : null
+
     const adminClient = createAdminClient()
 
-    // Fetch all insights
-    const { data: insights } = await adminClient
+    // Fetch insights (filtered by date for free users)
+    let query = adminClient
       .from("extracted_insights")
       .select("players_mentioned, created_at, session_date")
       .eq("user_id", user.id)
       .order("created_at", { ascending: false })
+
+    if (dateFilter) {
+      query = query.gte("created_at", dateFilter)
+    }
+
+    const { data: insights } = await query
 
     // Aggregate players
     const playerMap = new Map<string, {

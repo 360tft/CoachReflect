@@ -74,20 +74,51 @@ export function PlayersListClient({ isSubscribed }: PlayersListClientProps) {
 
   if (players.length === 0) {
     return (
-      <Card>
-        <CardContent className="py-12 text-center">
-          <div className="text-4xl mb-4">-</div>
-          <h3 className="font-semibold mb-2">No players mentioned yet</h3>
-          <p className="text-muted-foreground text-sm mb-4">
-            Start reflecting on your sessions and mention your players by name to track their development over time.
-          </p>
-          <Link href="/dashboard/chat">
-            <Button className="bg-brand hover:bg-brand-hover">
-              Start a Reflection
-            </Button>
-          </Link>
-        </CardContent>
-      </Card>
+      <div className="space-y-4">
+        {/* Upsell banner for free users */}
+        {!isSubscribed && (
+          <Card className="border-brand/30 bg-brand/5">
+            <CardContent className="py-4">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                  <p className="font-semibold">
+                    Free Plan: Limited to last 7 days
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    Player tracking is based on recent reflections. Upgrade to Pro to track player development across your full history.
+                  </p>
+                </div>
+                <Link href="/dashboard/settings">
+                  <Button className="bg-brand hover:bg-brand-hover whitespace-nowrap" size="sm">
+                    Upgrade to Pro
+                  </Button>
+                </Link>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        <Card>
+          <CardContent className="py-12 text-center">
+            <div className="text-4xl mb-4">-</div>
+            <h3 className="font-semibold mb-2">
+              {isSubscribed
+                ? "No players mentioned yet"
+                : "No players mentioned in the last 7 days"}
+            </h3>
+            <p className="text-muted-foreground text-sm mb-4">
+              {isSubscribed
+                ? "Start reflecting on your sessions and mention your players by name to track their development over time."
+                : "Mention players by name in your reflections. Upgrade to Pro to see all players from your full history."}
+            </p>
+            <Link href="/dashboard/chat">
+              <Button className="bg-brand hover:bg-brand-hover">
+                Start a Reflection
+              </Button>
+            </Link>
+          </CardContent>
+        </Card>
+      </div>
     )
   }
 
@@ -117,6 +148,29 @@ export function PlayersListClient({ isSubscribed }: PlayersListClientProps) {
 
   return (
     <div className="space-y-4">
+      {/* Upsell banner for free users */}
+      {!isSubscribed && (
+        <Card className="border-brand/30 bg-brand/5">
+          <CardContent className="py-4">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div>
+                <p className="font-semibold">
+                  Free Plan: Showing players from last 7 days only
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  Upgrade to Pro to track player development across your full history and access detailed timelines.
+                </p>
+              </div>
+              <Link href="/dashboard/settings">
+                <Button className="bg-brand hover:bg-brand-hover whitespace-nowrap" size="sm">
+                  Upgrade to Pro
+                </Button>
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       {/* Summary Stats */}
       <div className="grid grid-cols-3 gap-4 mb-6">
         <Card>
@@ -193,22 +247,6 @@ export function PlayersListClient({ isSubscribed }: PlayersListClientProps) {
         ))}
       </div>
 
-      {/* Upgrade CTA for free users */}
-      {!isSubscribed && (
-        <Card className="bg-brand/10 border-brand/20 mt-6">
-          <CardContent className="pt-6 text-center">
-            <h3 className="font-semibold mb-2">Unlock Player Timelines</h3>
-            <p className="text-sm text-muted-foreground mb-4">
-              Upgrade to Pro to view detailed player development timelines, add notes, and track progress over time.
-            </p>
-            <Link href="/pricing">
-              <Button className="bg-brand hover:bg-brand-hover">
-                Upgrade to Pro
-              </Button>
-            </Link>
-          </CardContent>
-        </Card>
-      )}
     </div>
   )
 }

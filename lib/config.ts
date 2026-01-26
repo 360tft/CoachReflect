@@ -152,8 +152,8 @@ export const LIMITS = {
     messagesPerDay: 5,
     voiceNotesPerMonth: 0,
     sessionPlansPerMonth: 0,
-    historyDays: 14, // 2 weeks
-    analyticsWeeks: 4,
+    historyDays: 7, // 1 week
+    analyticsWeeks: 1, // 1 week
     hasSyllabus: false,
   },
   PRO: {

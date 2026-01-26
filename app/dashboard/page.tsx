@@ -6,7 +6,7 @@ import { MoodChart } from "@/app/components/ui/mood-chart"
 import { StreakBadges } from "@/app/components/streak-badges"
 import { PushNotificationPrompt } from "@/app/components/push-notification-prompt"
 import { ReferralCard } from "@/app/components/referral-card"
-import { MOOD_OPTIONS, SUBSCRIPTION_LIMITS } from "@/app/types"
+import { MOOD_OPTIONS } from "@/app/types"
 
 export default async function DashboardPage() {
   const supabase = await createClient()
@@ -43,9 +43,6 @@ export default async function DashboardPage() {
     .rpc("get_reflection_stats", { user_uuid: user.id })
 
   const subscriptionTier = profile?.subscription_tier || "free"
-  const limits = SUBSCRIPTION_LIMITS[subscriptionTier as keyof typeof SUBSCRIPTION_LIMITS]
-  const reflectionsThisMonth = profile?.reflections_this_month || 0
-  const canReflect = subscriptionTier !== "free" || reflectionsThisMonth < limits.reflections_per_month
   const isFirstTime = !reflections || reflections.length === 0
 
   // First-time user onboarding
@@ -105,10 +102,9 @@ export default async function DashboardPage() {
             <div className="bg-muted/50 rounded-lg p-4 text-sm">
               <p className="font-medium mb-2">Your free account includes:</p>
               <ul className="space-y-1 text-muted-foreground">
-                <li>5 reflections per month</li>
                 <li>5 AI coach messages per day</li>
                 <li>Mood and energy tracking</li>
-                <li>4 weeks of analytics</li>
+                <li>7 days of history and analytics</li>
               </ul>
             </div>
 
@@ -157,27 +153,27 @@ export default async function DashboardPage() {
           </p>
         </div>
         <Link href="/dashboard/chat">
-          <Button size="lg" disabled={!canReflect}>
+          <Button size="lg">
             + Reflect
           </Button>
         </Link>
       </div>
 
-      {/* Free tier warning */}
-      {subscriptionTier === "free" && reflectionsThisMonth > 0 && (
-        <Card className="border bg-muted/50 dark:border dark:bg-background">
+      {/* Free tier upgrade prompt */}
+      {subscriptionTier === "free" && (
+        <Card className="border-brand/30 bg-brand/5">
           <CardContent className="py-4">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>
-                <p className="font-medium text-primary dark:text-primary">
-                  Free Plan: {reflectionsThisMonth}/{limits.reflections_per_month} reflections this month
+                <p className="font-medium">
+                  Free Plan: 5 messages per day, 7 days of history
                 </p>
-                <p className="text-sm text-primary dark:text-amber-300">
-                  Upgrade to Pro for unlimited reflections and AI insights
+                <p className="text-sm text-muted-foreground">
+                  Upgrade to Pro for unlimited messages, voice notes, and full analytics history
                 </p>
               </div>
               <Link href="/dashboard/settings">
-                <Button variant="outline" size="sm">
+                <Button className="bg-brand hover:bg-brand-hover" size="sm">
                   Upgrade to Pro
                 </Button>
               </Link>

@@ -264,8 +264,7 @@ export function ChatInterface({ isSubscribed, initialRemaining = 5 }: ChatInterf
       !loading &&
       conversationId &&
       !reflectionSaved &&
-      !autoSaveTriggered &&
-      isSubscribed // Only auto-save for Pro users to avoid API costs on free tier
+      !autoSaveTriggered
 
     if (shouldAutoSave) {
       setAutoSaveTriggered(true)
@@ -280,11 +279,11 @@ export function ChatInterface({ isSubscribed, initialRemaining = 5 }: ChatInterf
         .then(() => {
           setReflectionSaved(true)
         })
-        .catch(err => {
+        .catch(() => {
           // Don't show error to user - it's a background operation
         })
     }
-  }, [messages.length, loading, conversationId, reflectionSaved, autoSaveTriggered, isSubscribed])
+  }, [messages.length, loading, conversationId, reflectionSaved, autoSaveTriggered])
 
   // Reset reflection saved state when starting a new chat
   const startNewChatWithReset = useCallback(() => {

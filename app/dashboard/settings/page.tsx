@@ -69,8 +69,8 @@ export default async function SettingsPage() {
               <p className="font-medium">{getTierDisplayName(subscriptionTier)} Plan</p>
               <p className="text-sm text-muted-foreground">
                 {subscriptionTier === "free"
-                  ? `${profile?.reflections_this_month || 0}/${limits.reflections_per_month} reflections this month`
-                  : "Unlimited reflections"
+                  ? `${limits.messages_per_day} messages/day, ${limits.analytics_history_weeks * 7} days of history`
+                  : "Unlimited messages and full history"
                 }
               </p>
             </div>

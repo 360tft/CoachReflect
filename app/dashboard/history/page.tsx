@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server"
 import { Card, CardContent } from "@/app/components/ui/card"
 import { Button } from "@/app/components/ui/button"
 import { MOOD_OPTIONS, SESSION_TYPES } from "@/app/types"
+import { LIMITS } from "@/lib/config"
 
 export default async function HistoryPage() {
   const supabase = await createClient()
@@ -12,12 +13,32 @@ export default async function HistoryPage() {
     return null
   }
 
-  // Get all reflections
-  const { data: reflections } = await supabase
+  // Get profile to check subscription
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("subscription_tier")
+    .eq("user_id", user.id)
+    .single()
+
+  const tier = profile?.subscription_tier || "free"
+  const isSubscribed = tier !== "free"
+  const historyDays = isSubscribed ? LIMITS.PRO.historyDays : LIMITS.FREE.historyDays
+
+  // Calculate date filter for free users
+  const dateFilter = isSubscribed ? null : new Date(Date.now() - historyDays * 24 * 60 * 60 * 1000).toISOString()
+
+  // Get reflections (filtered by date for free users)
+  let query = supabase
     .from("reflections")
     .select("*, sessions(*)")
     .eq("user_id", user.id)
     .order("date", { ascending: false })
+
+  if (dateFilter) {
+    query = query.gte("date", dateFilter.split("T")[0])
+  }
+
+  const { data: reflections } = await query
 
   return (
     <div className="space-y-6">
@@ -25,13 +46,38 @@ export default async function HistoryPage() {
         <div>
           <h1 className="text-2xl font-bold">Reflection History</h1>
           <p className="text-muted-foreground">
-            Browse all your past reflections
+            {isSubscribed
+              ? "Browse all your past reflections"
+              : `Showing last ${historyDays} days`}
           </p>
         </div>
         <Link href="/dashboard/reflect/new">
           <Button>+ New Reflection</Button>
         </Link>
       </div>
+
+      {/* Upsell banner for free users */}
+      {!isSubscribed && (
+        <Card className="border-brand/30 bg-brand/5">
+          <CardContent className="py-4">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div>
+                <p className="font-semibold">
+                  Free Plan: Limited to last {historyDays} days
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  Upgrade to Pro to access your full reflection history and track patterns over time.
+                </p>
+              </div>
+              <Link href="/dashboard/settings">
+                <Button className="bg-brand hover:bg-brand-hover whitespace-nowrap" size="sm">
+                  Upgrade to Pro
+                </Button>
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {reflections && reflections.length > 0 ? (
         <div className="space-y-4">

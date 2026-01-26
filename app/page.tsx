@@ -6,12 +6,16 @@ import { GUIDED_PROMPTS, INSIGHT_TYPES, MOOD_OPTIONS } from "@/app/types"
 import { PricingSection } from "@/app/components/pricing-section"
 import { Footer } from "@/app/components/footer"
 import { AskAI } from "@/app/components/ask-ai"
+import { createClient } from "@/lib/supabase/server"
 
 const COACHREFLECT_AI_PROMPT = `As a sports coach who wants to improve but doesn't track what I actually coach, explain what Coach Reflection is.
 
 Cover: How does the reflection/journaling process work? What do I log after each session? How does it help me identify patterns and gaps in my coaching? Is there AI-powered feedback? How is this different from just keeping notes? What sports does it support? What's the pricing model?`
 
-export default function Home() {
+export default async function Home() {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  const isLoggedIn = !!user
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
@@ -26,12 +30,20 @@ export default function Home() {
           <span className="text-sm text-muted-foreground">by 360TFT</span>
         </Link>
         <div className="flex items-center gap-4">
-          <Link href="/login">
-            <Button variant="ghost">Sign in</Button>
-          </Link>
-          <Link href="/signup">
-            <Button>Get Started</Button>
-          </Link>
+          {isLoggedIn ? (
+            <Link href="/dashboard">
+              <Button>Go to Dashboard</Button>
+            </Link>
+          ) : (
+            <>
+              <Link href="/login">
+                <Button variant="ghost">Sign in</Button>
+              </Link>
+              <Link href="/signup">
+                <Button>Get Started</Button>
+              </Link>
+            </>
+          )}
         </div>
       </header>
 
@@ -51,16 +63,26 @@ export default function Home() {
           Football, Rugby, Basketball, Tennis, Swimming, and 10+ more sports
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link href="/signup">
-            <Button size="lg">
-              Get Started Free
-            </Button>
-          </Link>
-          <Link href="/login">
-            <Button size="lg" variant="outline">
-              Sign In
-            </Button>
-          </Link>
+          {isLoggedIn ? (
+            <Link href="/dashboard">
+              <Button size="lg">
+                Go to Dashboard
+              </Button>
+            </Link>
+          ) : (
+            <>
+              <Link href="/signup">
+                <Button size="lg">
+                  Get Started Free
+                </Button>
+              </Link>
+              <Link href="/login">
+                <Button size="lg" variant="outline">
+                  Sign In
+                </Button>
+              </Link>
+            </>
+          )}
         </div>
         <p className="text-sm text-muted-foreground mt-4">
           Free tier available. No credit card required.
@@ -241,16 +263,26 @@ export default function Home() {
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/signup">
-              <Button size="lg" className="!bg-white !text-gray-900 hover:!bg-gray-100">
-                Get Started Free
-              </Button>
-            </Link>
-            <Link href="/login">
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
-                Sign In
-              </Button>
-            </Link>
+            {isLoggedIn ? (
+              <Link href="/dashboard">
+                <Button size="lg" className="!bg-white !text-gray-900 hover:!bg-gray-100">
+                  Go to Dashboard
+                </Button>
+              </Link>
+            ) : (
+              <>
+                <Link href="/signup">
+                  <Button size="lg" className="!bg-white !text-gray-900 hover:!bg-gray-100">
+                    Get Started Free
+                  </Button>
+                </Link>
+                <Link href="/login">
+                  <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
+                    Sign In
+                  </Button>
+                </Link>
+              </>
+            )}
           </CardContent>
         </Card>
       </section>

@@ -4,6 +4,12 @@ import { withSentryConfig } from "@sentry/nextjs";
 const nextConfig: NextConfig = {
   // Empty turbopack config to silence Next.js 16 warning about webpack config
   turbopack: {},
+  // Exclude Google APIs from bundling (Turbopack compatibility)
+  serverExternalPackages: [
+    '@googleapis/searchconsole',
+    '@googleapis/analyticsdata',
+    'google-auth-library',
+  ],
   // Exclude .claude directory from webpack/turbopack watching (for webpack fallback)
   webpack: (config) => {
     config.watchOptions = {

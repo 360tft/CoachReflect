@@ -48,13 +48,14 @@ interface AnalyticsDashboardProps {
 }
 
 export function AnalyticsDashboard({ isSubscribed }: AnalyticsDashboardProps) {
-  const [period, setPeriod] = useState<"4w" | "8w" | "12w">("4w")
+  const [period, setPeriod] = useState<"1w" | "4w" | "8w" | "12w">(isSubscribed ? "4w" : "1w")
   const [data, setData] = useState<AnalyticsData | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
   const periods = [
-    { value: "4w", label: "4 Weeks", requiresPro: false },
+    { value: "1w", label: "7 Days", requiresPro: false },
+    { value: "4w", label: "4 Weeks", requiresPro: true },
     { value: "8w", label: "8 Weeks", requiresPro: true },
     { value: "12w", label: "12 Weeks", requiresPro: true },
   ] as const
@@ -115,6 +116,29 @@ export function AnalyticsDashboard({ isSubscribed }: AnalyticsDashboardProps) {
 
   return (
     <div className="space-y-6">
+      {/* Upsell banner for free users */}
+      {!isSubscribed && (
+        <Card className="border-brand/30 bg-brand/5">
+          <CardContent className="py-4">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div>
+                <p className="font-semibold">
+                  Free Plan: Limited to last 7 days
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  Upgrade to Pro to see your full analytics history, track player development over time, and identify long-term patterns.
+                </p>
+              </div>
+              <Link href="/dashboard/settings">
+                <Button className="bg-brand hover:bg-brand-hover whitespace-nowrap" size="sm">
+                  Upgrade to Pro
+                </Button>
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       {/* Period Selector */}
       <div className="flex items-center gap-2">
         {periods.map((p) => (
@@ -271,22 +295,6 @@ export function AnalyticsDashboard({ isSubscribed }: AnalyticsDashboardProps) {
         </Card>
       </div>
 
-      {/* Upgrade CTA for free users */}
-      {!isSubscribed && (
-        <Card className="bg-brand/10 border-brand/20">
-          <CardContent className="pt-6 text-center">
-            <h3 className="font-semibold mb-2">Unlock Full Analytics</h3>
-            <p className="text-sm text-muted-foreground mb-4">
-              Upgrade to Pro for full analytics history, theme extraction, and detailed insights.
-            </p>
-            <Link href="/pricing">
-              <Button className="bg-brand hover:bg-brand-hover">
-                Upgrade to Pro
-              </Button>
-            </Link>
-          </CardContent>
-        </Card>
-      )}
     </div>
   )
 }

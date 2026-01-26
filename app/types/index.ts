@@ -21,21 +21,24 @@ export type SubscriptionTier = 'free' | 'pro' | 'pro_plus'
 
 export const SUBSCRIPTION_LIMITS = {
   free: {
-    reflections_per_month: 5,
+    messages_per_day: 5,
+    analytics_history_weeks: 1,  // Limited to last 7 days
     ai_features: false,
     session_plan_upload: false,
     voice_notes_per_month: 0,
     has_syllabus: false,
   },
   pro: {
-    reflections_per_month: Infinity,
+    messages_per_day: Infinity,
+    analytics_history_weeks: Infinity,  // Full history
     ai_features: true,
     session_plan_upload: true,
     voice_notes_per_month: 4,
     has_syllabus: false,
   },
   pro_plus: {
-    reflections_per_month: Infinity,
+    messages_per_day: Infinity,
+    analytics_history_weeks: Infinity,  // Full history
     ai_features: true,
     session_plan_upload: true,
     voice_notes_per_month: 12,

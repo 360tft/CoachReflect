@@ -59,8 +59,7 @@ export default function AdminUsers() {
     fetchUsers()
   }
 
-  const toggleSubscription = async (userId: string, currentTier: string) => {
-    const newTier = currentTier === 'pro' ? 'free' : 'pro'
+  const updateSubscription = async (userId: string, newTier: string) => {
     setUpdating(userId)
     try {
       const res = await fetch(`/api/admin/users/${userId}/subscription`, {
@@ -77,6 +76,25 @@ export default function AdminUsers() {
       setError(err instanceof Error ? err.message : 'Failed to update subscription')
     } finally {
       setUpdating(null)
+    }
+  }
+
+  const getTierBadgeClass = (tier: string) => {
+    switch (tier) {
+      case 'pro_plus':
+        return 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400'
+      case 'pro':
+        return 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400'
+      default:
+        return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300'
+    }
+  }
+
+  const getTierLabel = (tier: string) => {
+    switch (tier) {
+      case 'pro_plus': return 'Pro+'
+      case 'pro': return 'Pro'
+      default: return 'Free'
     }
   }
 
@@ -154,13 +172,9 @@ export default function AdminUsers() {
                     </td>
                     <td className="px-4 py-4">
                       <span
-                        className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${
-                          user.subscription_tier === 'pro'
-                            ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400'
-                            : 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300'
-                        }`}
+                        className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${getTierBadgeClass(user.subscription_tier)}`}
                       >
-                        {user.subscription_tier === 'pro' ? 'Pro' : 'Free'}
+                        {getTierLabel(user.subscription_tier)}
                       </span>
                     </td>
                     <td className="px-4 py-4 text-sm text-gray-600 dark:text-gray-400">
@@ -174,22 +188,19 @@ export default function AdminUsers() {
                       {new Date(user.created_at).toLocaleDateString()}
                     </td>
                     <td className="px-4 py-4">
-                      <button
-                        onClick={() => toggleSubscription(user.id, user.subscription_tier)}
+                      <select
+                        value={user.subscription_tier}
+                        onChange={(e) => updateSubscription(user.id, e.target.value)}
                         disabled={updating === user.id}
-                        className={`px-3 py-1 text-xs font-medium rounded ${
-                          user.subscription_tier === 'pro'
-                            ? 'bg-red-100 text-red-700 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400'
-                            : 'bg-green-100 text-green-700 hover:bg-green-200 dark:bg-green-900/30 dark:text-green-400'
-                        } disabled:opacity-50`}
+                        className="px-2 py-1 text-sm border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 disabled:opacity-50"
                       >
-                        {updating === user.id
-                          ? 'Updating...'
-                          : user.subscription_tier === 'pro'
-                            ? 'Revoke Pro'
-                            : 'Grant Pro'
-                        }
-                      </button>
+                        <option value="free">Free</option>
+                        <option value="pro">Pro</option>
+                        <option value="pro_plus">Pro+</option>
+                      </select>
+                      {updating === user.id && (
+                        <span className="ml-2 text-xs text-gray-500">Updating...</span>
+                      )}
                     </td>
                   </tr>
                 ))}
