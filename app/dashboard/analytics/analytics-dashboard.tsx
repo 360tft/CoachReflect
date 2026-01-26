@@ -277,7 +277,7 @@ export function AnalyticsDashboard({ isSubscribed }: AnalyticsDashboardProps) {
           <CardContent className="pt-6 text-center">
             <h3 className="font-semibold mb-2">Unlock Full Analytics</h3>
             <p className="text-sm text-muted-foreground mb-4">
-              Upgrade to Pro for 12 weeks of history, theme extraction, and detailed insights.
+              Upgrade to Pro for full analytics history, theme extraction, and detailed insights.
             </p>
             <Link href="/pricing">
               <Button className="bg-brand hover:bg-brand-hover">
