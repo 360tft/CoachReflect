@@ -49,20 +49,20 @@ export function SportSelector({
           type="button"
           onClick={() => !disabled && setIsOpen(!isOpen)}
           disabled={disabled}
-          className="w-full flex items-center justify-between gap-2 px-4 py-3 bg-dark-card border border-dark-border rounded-lg text-left disabled:opacity-50 disabled:cursor-not-allowed hover:border-brand/50 transition-colors"
+          className="w-full flex items-center justify-between gap-2 px-4 py-3 bg-background border border-border rounded-lg text-left disabled:opacity-50 disabled:cursor-not-allowed hover:border-brand/50 transition-colors"
         >
           <span className="flex items-center gap-2">
             {selectedSport ? (
               <>
                 <span className="text-xl">{selectedSport.icon}</span>
-                <span className="text-white">{selectedSport.name}</span>
+                <span className="text-foreground">{selectedSport.name}</span>
               </>
             ) : (
-              <span className="text-gray-400">Select your sport</span>
+              <span className="text-muted-foreground">Select your sport</span>
             )}
           </span>
           <svg
-            className={`w-5 h-5 text-gray-400 transition-transform ${isOpen ? "rotate-180" : ""}`}
+            className={`w-5 h-5 text-muted-foreground transition-transform ${isOpen ? "rotate-180" : ""}`}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -77,7 +77,7 @@ export function SportSelector({
               className="fixed inset-0 z-10"
               onClick={() => setIsOpen(false)}
             />
-            <div className="absolute z-20 w-full mt-2 bg-dark-card border border-dark-border rounded-lg shadow-lg max-h-64 overflow-y-auto">
+            <div className="absolute z-20 w-full mt-2 bg-background border border-border rounded-lg shadow-lg max-h-64 overflow-y-auto">
               {SPORTS.map((sport) => (
                 <button
                   key={sport.id}
@@ -86,8 +86,8 @@ export function SportSelector({
                     onChange(sport.id)
                     setIsOpen(false)
                   }}
-                  className={`w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-dark-border/50 transition-colors ${
-                    value === sport.id ? "bg-brand/10 text-brand" : "text-white"
+                  className={`w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-muted transition-colors ${
+                    value === sport.id ? "bg-brand/10 text-brand" : "text-foreground"
                   }`}
                 >
                   <span className="text-xl">{sport.icon}</span>
@@ -122,7 +122,7 @@ export function SportSelector({
           className={`flex flex-col items-center gap-2 p-4 rounded-lg border transition-all disabled:opacity-50 disabled:cursor-not-allowed ${
             value === sport.id
               ? "bg-brand/10 border-brand text-brand"
-              : "bg-dark-card border-dark-border text-white hover:border-brand/50"
+              : "bg-background border-border text-foreground hover:border-brand/50"
           }`}
         >
           <span className="text-3xl">{sport.icon}</span>
@@ -139,9 +139,9 @@ export function SportBadge({ sportId }: { sportId: string }) {
   if (!sport) return null
 
   return (
-    <span className="inline-flex items-center gap-1.5 px-2 py-1 bg-dark-card border border-dark-border rounded-full text-sm">
+    <span className="inline-flex items-center gap-1.5 px-2 py-1 bg-muted border border-border rounded-full text-sm">
       <span>{sport.icon}</span>
-      <span className="text-gray-300">{sport.name}</span>
+      <span className="text-muted-foreground">{sport.name}</span>
     </span>
   )
 }

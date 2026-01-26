@@ -46,6 +46,17 @@ export async function middleware(request: NextRequest) {
   // Auth routes - redirect to dashboard if already authenticated
   if (request.nextUrl.pathname === '/login' || request.nextUrl.pathname === '/signup') {
     if (user) {
+      // If trying to sign up for a club while logged in, redirect to club creation
+      const plan = request.nextUrl.searchParams.get('plan')
+      if (plan === 'club') {
+        const clubUrl = new URL('/dashboard/club/create', request.url)
+        // Preserve tier and billing params
+        const tier = request.nextUrl.searchParams.get('tier')
+        const billing = request.nextUrl.searchParams.get('billing')
+        if (tier) clubUrl.searchParams.set('tier', tier)
+        if (billing) clubUrl.searchParams.set('billing', billing)
+        return NextResponse.redirect(clubUrl)
+      }
       return NextResponse.redirect(new URL('/dashboard', request.url))
     }
   }
