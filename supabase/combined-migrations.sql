@@ -1948,3 +1948,33 @@ CREATE INDEX IF NOT EXISTS idx_email_log_type ON email_log(email_type, created_a
 -- ==========================================
 -- DONE
 -- ==========================================
+
+-- ==========================================
+-- LIMIT HITS TRACKING TABLE
+-- Tracks when users hit their usage limits (for identifying upgrade candidates)
+-- ==========================================
+
+CREATE TABLE IF NOT EXISTS limit_hits (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE NOT NULL,
+  hit_date DATE NOT NULL DEFAULT CURRENT_DATE,
+  limit_type TEXT NOT NULL CHECK (limit_type IN ('messages', 'reflections', 'voice_notes')),
+  daily_limit INTEGER NOT NULL,
+  created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
+  UNIQUE(user_id, hit_date, limit_type)
+);
+
+CREATE INDEX IF NOT EXISTS idx_limit_hits_user ON limit_hits(user_id);
+CREATE INDEX IF NOT EXISTS idx_limit_hits_date ON limit_hits(hit_date DESC);
+CREATE INDEX IF NOT EXISTS idx_limit_hits_created ON limit_hits(created_at DESC);
+
+ALTER TABLE limit_hits ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Service role can manage limit_hits" ON limit_hits;
+CREATE POLICY "Service role can manage limit_hits" ON limit_hits
+  FOR ALL TO service_role
+  USING (true) WITH CHECK (true);
+
+-- Add email column to profiles if not exists (for admin queries)
+ALTER TABLE profiles ADD COLUMN IF NOT EXISTS email TEXT;
+
