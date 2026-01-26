@@ -83,6 +83,39 @@ export default async function AdminLayout({
                 </Link>
               </li>
             </ul>
+
+            {/* Marketing Section */}
+            <div className="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
+              <p className="px-4 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
+                Marketing
+              </p>
+              <ul className="space-y-1">
+                <li>
+                  <Link
+                    href="/admin/engagement"
+                    className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg"
+                  >
+                    Engagement
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/admin/recovery"
+                    className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg"
+                  >
+                    Recovery
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/admin/content"
+                    className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg"
+                  >
+                    Content Mining
+                  </Link>
+                </li>
+              </ul>
+            </div>
           </nav>
 
           {/* Main Content */}
