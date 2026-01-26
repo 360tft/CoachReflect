@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server"
 import { Button } from "@/app/components/ui/button"
 import { BottomNav } from "@/app/components/bottom-nav"
 import { PWAInstallPrompt } from "@/app/components/pwa-install-prompt"
+import { isAdminUser } from "@/lib/admin"
 
 async function signOut() {
   "use server"
@@ -52,6 +53,7 @@ export default async function DashboardLayout({
 
   const displayName = profile?.display_name || user.email?.split("@")[0] || "Coach"
   const subscriptionTier = profile?.subscription_tier || "free"
+  const isAdmin = isAdminUser(user.email, user.id)
 
   return (
     <div className="min-h-screen bg-background">
@@ -102,6 +104,14 @@ export default async function DashboardLayout({
             <NavLink href="/dashboard/analytics">Analytics</NavLink>
             <NavLink href="/dashboard/players">Players</NavLink>
             <NavLink href="/dashboard/settings">Settings</NavLink>
+            {isAdmin && (
+              <Link
+                href="/admin"
+                className="px-4 py-3 text-sm font-medium text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors whitespace-nowrap"
+              >
+                Admin
+              </Link>
+            )}
           </div>
         </div>
       </nav>
