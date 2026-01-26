@@ -10,9 +10,16 @@ export const metadata = {
 }
 
 export default async function PricingPage() {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  const isLoggedIn = !!user
+  let isLoggedIn = false
+
+  // Gracefully handle missing Supabase credentials (local dev without env vars)
+  try {
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    isLoggedIn = !!user
+  } catch {
+    // Supabase not configured - show logged out state
+  }
 
   return (
     <div className="min-h-screen bg-background">

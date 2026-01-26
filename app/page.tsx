@@ -6,6 +6,7 @@ import { GUIDED_PROMPTS, INSIGHT_TYPES, MOOD_OPTIONS } from "@/app/types"
 import { PricingSection } from "@/app/components/pricing-section"
 import { Footer } from "@/app/components/footer"
 import { AskAI } from "@/app/components/ask-ai"
+import { HeroScreenshot } from "@/app/components/hero-screenshot"
 import { createClient } from "@/lib/supabase/server"
 
 const COACHREFLECT_AI_PROMPT = `As a sports coach who wants to improve but doesn't track what I actually coach, explain what Coach Reflection is.
@@ -13,9 +14,17 @@ const COACHREFLECT_AI_PROMPT = `As a sports coach who wants to improve but doesn
 Cover: How does the reflection/journaling process work? What do I log after each session? How does it help me identify patterns and gaps in my coaching? Is there AI-powered feedback? How is this different from just keeping notes? What sports does it support? What's the pricing model?`
 
 export default async function Home() {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  const isLoggedIn = !!user
+  let isLoggedIn = false
+
+  // Gracefully handle missing Supabase credentials (local dev without env vars)
+  try {
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    isLoggedIn = !!user
+  } catch {
+    // Supabase not configured - show logged out state
+  }
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
@@ -92,6 +101,9 @@ export default async function Home() {
           prompt={COACHREFLECT_AI_PROMPT}
           className="mt-6"
         />
+
+        {/* Hero Screenshot */}
+        <HeroScreenshot />
       </section>
 
       {/* Guided Prompts Preview */}
