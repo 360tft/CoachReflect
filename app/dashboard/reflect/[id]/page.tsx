@@ -9,6 +9,7 @@ import { AnalyzeButton } from "./analyze-button"
 import { TrialAnalyzeButton } from "./trial-analyze-button"
 import { DeleteButton } from "./delete-button"
 import { ShareButton } from "@/app/components/share-button"
+import { EditableTitle } from "./editable-title"
 
 export default async function ReflectionPage({
   params,
@@ -54,9 +55,14 @@ export default async function ReflectionPage({
         <div>
           <div className="flex items-center gap-2 mb-2">
             <span className="text-sm font-medium">{mood?.label || "Neutral"}</span>
-            <h1 className="text-2xl font-bold">
-              {reflection.sessions?.title || "Untitled Session"}
-            </h1>
+            {reflection.sessions?.id ? (
+              <EditableTitle
+                sessionId={reflection.sessions.id}
+                initialTitle={reflection.sessions?.title || "Untitled Session"}
+              />
+            ) : (
+              <h1 className="text-2xl font-bold">Untitled Session</h1>
+            )}
           </div>
           <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
             <span>
