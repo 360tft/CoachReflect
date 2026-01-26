@@ -38,6 +38,8 @@ export function AdminDashboard() {
   const [metrics, setMetrics] = useState<Metrics | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [testEmailStatus, setTestEmailStatus] = useState<string | null>(null)
+  const [sendingTestEmail, setSendingTestEmail] = useState(false)
 
   useEffect(() => {
     fetchMetrics()
@@ -56,6 +58,32 @@ export function AdminDashboard() {
       setError(err instanceof Error ? err.message : "Unknown error")
     } finally {
       setLoading(false)
+    }
+  }
+
+  const sendTestEmail = async () => {
+    setSendingTestEmail(true)
+    setTestEmailStatus(null)
+    try {
+      const res = await fetch("/api/admin/test-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          to: "admin@360tft.com",
+          subject: "Test Email from Coach Reflection Admin",
+          message: "This is a test email to verify the email system is working correctly."
+        })
+      })
+      const data = await res.json()
+      if (res.ok) {
+        setTestEmailStatus(`Email sent successfully to ${data.sentTo}`)
+      } else {
+        setTestEmailStatus(`Error: ${data.error}${data.details ? ` - ${JSON.stringify(data.details)}` : ""}`)
+      }
+    } catch (err) {
+      setTestEmailStatus(`Error: ${err instanceof Error ? err.message : "Unknown error"}`)
+    } finally {
+      setSendingTestEmail(false)
     }
   }
 
@@ -229,6 +257,29 @@ export function AdminDashboard() {
                 </div>
               ))}
             </div>
+          )}
+        </CardContent>
+      </Card>
+
+      {/* Test Email */}
+      <Card className="mt-6">
+        <CardHeader>
+          <CardTitle>Test Email System</CardTitle>
+          <CardDescription>Send a test email to verify Resend is configured correctly</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center gap-4">
+            <Button
+              onClick={sendTestEmail}
+              disabled={sendingTestEmail}
+            >
+              {sendingTestEmail ? "Sending..." : "Send Test Email to admin@360tft.com"}
+            </Button>
+          </div>
+          {testEmailStatus && (
+            <p className={`mt-4 text-sm ${testEmailStatus.startsWith("Error") ? "text-red-600" : "text-green-600"}`}>
+              {testEmailStatus}
+            </p>
           )}
         </CardContent>
       </Card>
