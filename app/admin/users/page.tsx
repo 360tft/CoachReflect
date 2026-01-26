@@ -27,6 +27,7 @@ export default function AdminUsers() {
   const [error, setError] = useState<string | null>(null)
   const [search, setSearch] = useState('')
   const [page, setPage] = useState(1)
+  const [updating, setUpdating] = useState<string | null>(null)
 
   const fetchUsers = useCallback(async () => {
     try {
@@ -56,6 +57,27 @@ export default function AdminUsers() {
     e.preventDefault()
     setPage(1)
     fetchUsers()
+  }
+
+  const toggleSubscription = async (userId: string, currentTier: string) => {
+    const newTier = currentTier === 'pro' ? 'free' : 'pro'
+    setUpdating(userId)
+    try {
+      const res = await fetch(`/api/admin/users/${userId}/subscription`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ tier: newTier })
+      })
+      if (!res.ok) throw new Error('Failed to update')
+      // Update local state
+      setUsers(users.map(u =>
+        u.id === userId ? { ...u, subscription_tier: newTier } : u
+      ))
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to update subscription')
+    } finally {
+      setUpdating(null)
+    }
   }
 
   return (
@@ -112,6 +134,9 @@ export default function AdminUsers() {
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     Joined
                   </th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    Actions
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
@@ -147,6 +172,24 @@ export default function AdminUsers() {
                     </td>
                     <td className="px-4 py-4 text-sm text-gray-600 dark:text-gray-400">
                       {new Date(user.created_at).toLocaleDateString()}
+                    </td>
+                    <td className="px-4 py-4">
+                      <button
+                        onClick={() => toggleSubscription(user.id, user.subscription_tier)}
+                        disabled={updating === user.id}
+                        className={`px-3 py-1 text-xs font-medium rounded ${
+                          user.subscription_tier === 'pro'
+                            ? 'bg-red-100 text-red-700 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400'
+                            : 'bg-green-100 text-green-700 hover:bg-green-200 dark:bg-green-900/30 dark:text-green-400'
+                        } disabled:opacity-50`}
+                      >
+                        {updating === user.id
+                          ? 'Updating...'
+                          : user.subscription_tier === 'pro'
+                            ? 'Revoke Pro'
+                            : 'Grant Pro'
+                        }
+                      </button>
                     </td>
                   </tr>
                 ))}
