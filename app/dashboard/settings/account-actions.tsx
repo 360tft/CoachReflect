@@ -25,12 +25,12 @@ export function AccountActions() {
         throw new Error(data.error || 'Failed to export data')
       }
 
-      // Get the JSON data and trigger download
+      // Get the data and trigger download
       const blob = await res.blob()
       const url = window.URL.createObjectURL(blob)
       const a = document.createElement('a')
       a.href = url
-      a.download = `coachreflect-data-export-${new Date().toISOString().split('T')[0]}.json`
+      a.download = `coachreflect-data-export-${new Date().toISOString().split('T')[0]}.txt`
       document.body.appendChild(a)
       a.click()
       window.URL.revokeObjectURL(url)

@@ -2,10 +2,12 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import { format } from "date-fns"
 import Link from "next/link"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card"
 import { Button } from "@/app/components/ui/button"
 import { ImageUpload } from "@/app/components/ui/image-upload"
+import { DatePicker } from "@/app/components/ui/date-picker"
 import {
   SESSION_TYPES,
   GUIDED_PROMPTS,
@@ -31,7 +33,7 @@ export default function NewReflectionPage() {
   // Session details state
   const [sessionTitle, setSessionTitle] = useState("")
   const [sessionType, setSessionType] = useState<SessionType>("training")
-  const [sessionDate, setSessionDate] = useState(new Date().toISOString().split("T")[0])
+  const [sessionDate, setSessionDate] = useState<Date | undefined>(new Date())
   const [duration, setDuration] = useState<number | "">("")
   const [playersPresent, setPlayersPresent] = useState<number | "">("")
 
@@ -125,7 +127,7 @@ export default function NewReflectionPage() {
         body: JSON.stringify({
           title: sessionTitle || "Untitled Session",
           session_type: sessionType,
-          date: sessionDate,
+          date: sessionDate ? format(sessionDate, 'yyyy-MM-dd') : null,
           duration_minutes: duration || null,
           players_present: playersPresent || null,
         }),
@@ -144,7 +146,7 @@ export default function NewReflectionPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           session_id: session.id,
-          date: sessionDate,
+          date: sessionDate ? format(sessionDate, 'yyyy-MM-dd') : null,
           what_worked: whatWorked,
           what_didnt_work: whatDidntWork,
           player_standouts: playerStandouts,
@@ -297,11 +299,10 @@ export default function NewReflectionPage() {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium mb-2">Date</label>
-                  <input
-                    type="date"
-                    value={sessionDate}
-                    onChange={(e) => setSessionDate(e.target.value)}
-                    className="w-full px-3 py-2 border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary"
+                  <DatePicker
+                    date={sessionDate}
+                    onDateChange={setSessionDate}
+                    placeholder="Select session date"
                   />
                 </div>
                 <div>

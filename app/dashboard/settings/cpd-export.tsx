@@ -1,8 +1,10 @@
 "use client"
 
 import { useState } from "react"
+import { format } from "date-fns"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card"
 import { Button } from "@/app/components/ui/button"
+import { DatePicker } from "@/app/components/ui/date-picker"
 import Link from "next/link"
 
 interface CPDExportProps {
@@ -10,26 +12,28 @@ interface CPDExportProps {
 }
 
 export function CPDExport({ isSubscribed }: CPDExportProps) {
-  const [startDate, setStartDate] = useState(() => {
+  const [startDate, setStartDate] = useState<Date | undefined>(() => {
     const date = new Date()
     date.setMonth(date.getMonth() - 1)
-    return date.toISOString().split('T')[0]
+    return date
   })
-  const [endDate, setEndDate] = useState(() => {
-    return new Date().toISOString().split('T')[0]
+  const [endDate, setEndDate] = useState<Date | undefined>(() => {
+    return new Date()
   })
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   const handleExport = async () => {
-    if (!isSubscribed) return
+    if (!isSubscribed || !startDate || !endDate) return
 
     setLoading(true)
     setError(null)
 
     try {
+      const start = format(startDate, 'yyyy-MM-dd')
+      const end = format(endDate, 'yyyy-MM-dd')
       // Open in new tab for printing
-      window.open(`/api/export/cpd?start=${startDate}&end=${endDate}&format=html`, '_blank')
+      window.open(`/api/export/cpd?start=${start}&end=${end}&format=html`, '_blank')
     } catch {
       setError("Failed to generate export")
     } finally {
@@ -62,20 +66,18 @@ export function CPDExport({ isSubscribed }: CPDExportProps) {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="text-sm font-medium mb-1 block">Start Date</label>
-                <input
-                  type="date"
-                  value={startDate}
-                  onChange={(e) => setStartDate(e.target.value)}
-                  className="w-full px-3 py-2 border rounded-lg bg-background text-sm"
+                <DatePicker
+                  date={startDate}
+                  onDateChange={setStartDate}
+                  placeholder="Select start date"
                 />
               </div>
               <div>
                 <label className="text-sm font-medium mb-1 block">End Date</label>
-                <input
-                  type="date"
-                  value={endDate}
-                  onChange={(e) => setEndDate(e.target.value)}
-                  className="w-full px-3 py-2 border rounded-lg bg-background text-sm"
+                <DatePicker
+                  date={endDate}
+                  onDateChange={setEndDate}
+                  placeholder="Select end date"
                 />
               </div>
             </div>
