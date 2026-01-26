@@ -149,7 +149,7 @@ export default async function SettingsPage() {
                 Need help? Reach out to our support team
               </p>
             </div>
-            <a href="mailto:support@coachreflection.com">
+            <a href="mailto:admin@360tft.com">
               <Button variant="outline">Email Support</Button>
             </a>
           </div>

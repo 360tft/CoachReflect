@@ -101,15 +101,15 @@ function SignupForm() {
     // If user is auto-confirmed (email confirmation disabled), apply referral code
     if (data.user && storedReferralCode) {
       try {
-        await fetch('/api/referrals', {
+        await fetch('/api/referral', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ referralCode: storedReferralCode })
+          body: JSON.stringify({ referral_code: storedReferralCode })
         })
         // Clear the stored referral code
         sessionStorage.removeItem("referral_code")
-      } catch (err) {
-        console.error('Failed to apply referral code:', err)
+      } catch {
+        // Referral application failed silently - not critical
       }
     }
 

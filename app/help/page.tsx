@@ -71,7 +71,7 @@ export default function HelpPage() {
             <p className="text-sm text-muted-foreground">Manage your profile and subscription</p>
           </Link>
           <a
-            href="mailto:support@coachreflection.com"
+            href="mailto:admin@360tft.com"
             className="p-4 border rounded-lg hover:border-primary transition-colors"
           >
             <h3 className="font-semibold mb-1">Contact Support</h3>
@@ -97,7 +97,7 @@ export default function HelpPage() {
             Can not find what you are looking for? Our support team is here to help.
           </p>
           <a
-            href="mailto:support@coachreflection.com"
+            href="mailto:admin@360tft.com"
             className="inline-flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary/90 text-white rounded-lg transition-colors"
           >
             Email Support

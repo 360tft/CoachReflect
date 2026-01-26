@@ -87,7 +87,7 @@ export function AccountActions() {
           <div>
             <p className="font-medium">Export Your Data</p>
             <p className="text-sm text-muted-foreground">
-              Download all your reflections, sessions, and data as JSON
+              Download all your reflections and data
             </p>
           </div>
           <Button

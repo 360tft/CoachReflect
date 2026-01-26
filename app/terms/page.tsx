@@ -140,8 +140,8 @@ export default function TermsPage() {
             <h2 className="text-xl font-semibold mb-3">13. Contact</h2>
             <p className="text-muted-foreground">
               For questions about these terms, contact us at{" "}
-              <a href="mailto:support@coachreflection.com" className="text-primary hover:underline">
-                support@coachreflection.com
+              <a href="mailto:admin@360tft.com" className="text-primary hover:underline">
+                admin@360tft.com
               </a>
             </p>
           </section>
