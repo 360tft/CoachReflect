@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 /* Modern, clean design system */
 /* Primary accent: 360TFT Gold #E5A11C */
