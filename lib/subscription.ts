@@ -176,7 +176,7 @@ export async function getSubscriptionInfo(userId: string): Promise<SubscriptionI
     }
   }
 
-  // 2. Check individual subscription
+  // 3. Check individual subscription
   const { data: profile } = await supabase
     .from('profiles')
     .select('subscription_tier, subscription_status, subscription_period_end')
@@ -200,7 +200,7 @@ export async function getSubscriptionInfo(userId: string): Promise<SubscriptionI
     }
   }
 
-  // 3. Check club membership (use admin client to bypass RLS)
+  // 4. Check club membership (use admin client to bypass RLS)
   const adminClient = createAdminClient()
   const { data: membership } = await adminClient
     .from('club_memberships')
@@ -239,7 +239,7 @@ export async function getSubscriptionInfo(userId: string): Promise<SubscriptionI
     }
   }
 
-  // 4. Free tier
+  // 5. Free tier
   return {
     tier: 'free',
     type: 'free',
