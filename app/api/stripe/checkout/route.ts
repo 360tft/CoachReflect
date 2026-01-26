@@ -63,7 +63,14 @@ export async function POST(request: Request) {
     }
 
     if (!priceId) {
-      return NextResponse.json({ error: "Price not configured" }, { status: 500 })
+      const missingVar = plan === "pro_plus"
+        ? (billingPeriod === "annual" ? "STRIPE_PRO_PLUS_ANNUAL_PRICE_ID" : "STRIPE_PRO_PLUS_PRICE_ID")
+        : (billingPeriod === "annual" ? "NEXT_PUBLIC_STRIPE_PRO_ANNUAL_PRICE_ID" : "NEXT_PUBLIC_STRIPE_PRO_PRICE_ID")
+      console.error(`Missing Stripe price ID: ${missingVar}`)
+      return NextResponse.json({
+        error: "Price not configured",
+        details: `Missing environment variable: ${missingVar}`
+      }, { status: 500 })
     }
 
     // Create checkout session
@@ -93,6 +100,11 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Failed to create checkout session" }, { status: 500 })
   } catch (error) {
     console.error("Stripe checkout error:", error)
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 })
+    const message = error instanceof Error ? error.message : "Unknown error"
+    return NextResponse.json({
+      error: "Checkout failed",
+      details: message,
+      hint: message.includes("STRIPE") ? "Check Stripe environment variables" : undefined
+    }, { status: 500 })
   }
 }
