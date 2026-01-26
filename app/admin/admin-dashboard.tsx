@@ -28,6 +28,7 @@ interface Metrics {
   }
   recentSignups: Array<{
     id: string
+    email: string | null
     display_name: string | null
     subscription_tier: string
     created_at: string
@@ -235,8 +236,11 @@ export function AdminDashboard() {
                 >
                   <div>
                     <p className="font-medium">
-                      {signup.display_name || "Anonymous"}
+                      {signup.display_name || signup.email || "Unknown"}
                     </p>
+                    {signup.display_name && signup.email && (
+                      <p className="text-xs text-muted-foreground">{signup.email}</p>
+                    )}
                     <p className="text-sm text-muted-foreground">
                       {new Date(signup.created_at).toLocaleDateString("en-GB", {
                         day: "numeric",

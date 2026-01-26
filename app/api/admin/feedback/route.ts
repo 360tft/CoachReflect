@@ -45,21 +45,35 @@ export async function GET(request: NextRequest) {
 
     // Get user info for each feedback
     const userIds = [...new Set(feedback?.map(f => f.user_id) || [])]
-    const { data: profiles } = await adminClient
-      .from('profiles')
-      .select('id, email, display_name')
-      .in('id', userIds)
 
-    const profilesById = (profiles || []).reduce((acc, p) => {
-      acc[p.id] = p
-      return acc
-    }, {} as Record<string, { id: string; email: string; display_name: string | null }>)
+    // Get profiles by user_id (not id)
+    let profilesByUserId: Record<string, { user_id: string; display_name: string | null }> = {}
+    if (userIds.length > 0) {
+      const { data: profiles } = await adminClient
+        .from('profiles')
+        .select('user_id, display_name')
+        .in('user_id', userIds)
+
+      profilesByUserId = (profiles || []).reduce((acc, p) => {
+        acc[p.user_id] = p
+        return acc
+      }, {} as Record<string, { user_id: string; display_name: string | null }>)
+    }
+
+    // Get emails from auth.users
+    const userEmails: Record<string, string> = {}
+    for (const userId of userIds) {
+      const { data: userData } = await adminClient.auth.admin.getUserById(userId)
+      if (userData?.user?.email) {
+        userEmails[userId] = userData.user.email
+      }
+    }
 
     // Combine feedback with user info
     const feedbackWithUsers = feedback?.map(f => ({
       ...f,
-      user_email: profilesById[f.user_id]?.email || 'Unknown',
-      user_name: profilesById[f.user_id]?.display_name || 'Anonymous',
+      user_email: userEmails[f.user_id] || 'Unknown',
+      user_name: profilesByUserId[f.user_id]?.display_name || 'Anonymous',
     }))
 
     // Get counts

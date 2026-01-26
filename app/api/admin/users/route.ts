@@ -23,12 +23,12 @@ export async function GET(request: NextRequest) {
     // Sanitize search input
     const search = rawSearch.replace(/[^a-zA-Z0-9@.\-_\s]/g, '').slice(0, 100)
 
-    // Build query
+    // Build query - profiles table doesn't have email, so we get profiles first
     let query = adminClient
       .from('profiles')
       .select(`
         id,
-        email,
+        user_id,
         display_name,
         subscription_tier,
         created_at
@@ -38,55 +38,87 @@ export async function GET(request: NextRequest) {
 
     if (search && search.length >= 2) {
       const escapedSearch = search.replace(/%/g, '\\%').replace(/_/g, '\\_')
-      query = query.or(`email.ilike.%${escapedSearch}%,display_name.ilike.%${escapedSearch}%`)
+      query = query.ilike('display_name', `%${escapedSearch}%`)
     }
 
     const { data: profiles, count, error } = await query
 
     if (error) throw error
 
-    // Get reflection counts for each user
-    const userIds = profiles?.map(p => p.id) || []
+    // Get user_ids for related queries
+    const userIds = profiles?.map(p => p.user_id) || []
 
-    // Count reflections per user
-    const { data: reflectionCounts } = await adminClient
-      .from('reflections')
-      .select('user_id')
-      .in('user_id', userIds)
+    // Get emails from auth.users for each profile
+    const userEmails: Record<string, string> = {}
+    for (const userId of userIds) {
+      const { data: userData } = await adminClient.auth.admin.getUserById(userId)
+      if (userData?.user?.email) {
+        userEmails[userId] = userData.user.email
+      }
+    }
 
-    const reflectionsByUser = (reflectionCounts || []).reduce((acc, r) => {
-      acc[r.user_id] = (acc[r.user_id] || 0) + 1
-      return acc
-    }, {} as Record<string, number>)
+    // If searching by email, filter profiles that match
+    let filteredProfiles = profiles || []
+    if (search && search.length >= 2) {
+      const searchLower = search.toLowerCase()
+      filteredProfiles = filteredProfiles.filter(p =>
+        (p.display_name?.toLowerCase().includes(searchLower)) ||
+        (userEmails[p.user_id]?.toLowerCase().includes(searchLower))
+      )
+    }
 
-    // Count conversations per user
-    const { data: conversationCounts } = await adminClient
-      .from('conversations')
-      .select('user_id')
-      .in('user_id', userIds)
+    // Count reflections per user (only if we have userIds)
+    let reflectionsByUser: Record<string, number> = {}
+    if (userIds.length > 0) {
+      const { data: reflectionCounts } = await adminClient
+        .from('reflections')
+        .select('user_id')
+        .in('user_id', userIds)
 
-    const conversationsByUser = (conversationCounts || []).reduce((acc, c) => {
-      acc[c.user_id] = (acc[c.user_id] || 0) + 1
-      return acc
-    }, {} as Record<string, number>)
+      reflectionsByUser = (reflectionCounts || []).reduce((acc, r) => {
+        acc[r.user_id] = (acc[r.user_id] || 0) + 1
+        return acc
+      }, {} as Record<string, number>)
+    }
 
-    // Get streak info
-    const { data: streaks } = await adminClient
-      .from('streaks')
-      .select('user_id, current_streak')
-      .in('user_id', userIds)
+    // Count conversations per user (only if we have userIds)
+    let conversationsByUser: Record<string, number> = {}
+    if (userIds.length > 0) {
+      const { data: conversationCounts } = await adminClient
+        .from('conversations')
+        .select('user_id')
+        .in('user_id', userIds)
 
-    const streaksByUser = (streaks || []).reduce((acc, s) => {
-      acc[s.user_id] = s.current_streak
-      return acc
-    }, {} as Record<string, number>)
+      conversationsByUser = (conversationCounts || []).reduce((acc, c) => {
+        acc[c.user_id] = (acc[c.user_id] || 0) + 1
+        return acc
+      }, {} as Record<string, number>)
+    }
 
-    // Combine data
-    const users = profiles?.map(profile => ({
-      ...profile,
-      total_reflections: reflectionsByUser[profile.id] || 0,
-      total_conversations: conversationsByUser[profile.id] || 0,
-      current_streak: streaksByUser[profile.id] || 0,
+    // Get streak info (only if we have userIds)
+    let streaksByUser: Record<string, number> = {}
+    if (userIds.length > 0) {
+      const { data: streaks } = await adminClient
+        .from('streaks')
+        .select('user_id, current_streak')
+        .in('user_id', userIds)
+
+      streaksByUser = (streaks || []).reduce((acc, s) => {
+        acc[s.user_id] = s.current_streak
+        return acc
+      }, {} as Record<string, number>)
+    }
+
+    // Combine data - use user_id for lookups, add email from auth
+    const users = filteredProfiles.map(profile => ({
+      id: profile.user_id, // Use user_id as the id for frontend
+      email: userEmails[profile.user_id] || 'Unknown',
+      display_name: profile.display_name,
+      subscription_tier: profile.subscription_tier,
+      created_at: profile.created_at,
+      total_reflections: reflectionsByUser[profile.user_id] || 0,
+      total_conversations: conversationsByUser[profile.user_id] || 0,
+      current_streak: streaksByUser[profile.user_id] || 0,
     }))
 
     return NextResponse.json({

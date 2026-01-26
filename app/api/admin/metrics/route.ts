@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
 import { createClient } from "@/lib/supabase/server"
-import { createClient as createAdminClient } from "@supabase/supabase-js"
+import { createAdminClient } from "@/lib/supabase/admin"
 import { isAdminUser } from "@/lib/admin"
 
 export async function GET() {
@@ -19,10 +19,7 @@ export async function GET() {
     }
 
     // Use admin client for full access
-    const adminClient = createAdminClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.SUPABASE_SERVICE_ROLE_KEY!
-    )
+    const adminClient = createAdminClient()
 
     // Get date ranges
     const today = new Date()
@@ -65,8 +62,8 @@ export async function GET() {
       adminClient.from("feedback").select("rating").order("created_at", { ascending: false }).limit(100),
       // Emails sent this month
       adminClient.from("email_log").select("*", { count: "exact", head: true }).gte("sent_at", startOfMonth.toISOString()).is("error", null),
-      // Recent signups
-      adminClient.from("profiles").select("id, display_name, subscription_tier, created_at").order("created_at", { ascending: false }).limit(10),
+      // Recent signups (include user_id for fetching emails)
+      adminClient.from("profiles").select("id, user_id, display_name, subscription_tier, created_at").order("created_at", { ascending: false }).limit(10),
     ])
 
     // Calculate feedback stats
@@ -74,6 +71,21 @@ export async function GET() {
     const positiveCount = feedbackData.filter((f: { rating: string }) => f.rating === "positive").length
     const feedbackTotal = feedbackData.length
     const satisfactionRate = feedbackTotal > 0 ? Math.round((positiveCount / feedbackTotal) * 100) : null
+
+    // Fetch emails for recent signups from auth.users
+    const recentSignupsData = recentSignupsResult.data || []
+    const recentSignupsWithEmail = await Promise.all(
+      recentSignupsData.map(async (signup: { id: string; user_id: string; display_name: string | null; subscription_tier: string; created_at: string }) => {
+        const { data: userData } = await adminClient.auth.admin.getUserById(signup.user_id)
+        return {
+          id: signup.id,
+          email: userData?.user?.email || null,
+          display_name: signup.display_name,
+          subscription_tier: signup.subscription_tier,
+          created_at: signup.created_at,
+        }
+      })
+    )
 
     return NextResponse.json({
       users: {
@@ -97,7 +109,7 @@ export async function GET() {
       emails: {
         sentThisMonth: emailsSentResult.count || 0,
       },
-      recentSignups: recentSignupsResult.data || [],
+      recentSignups: recentSignupsWithEmail,
     })
 
   } catch (error) {
