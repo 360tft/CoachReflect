@@ -359,31 +359,11 @@ export function ChatInterface({ isSubscribed, initialRemaining = 5 }: ChatInterf
           {messages.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center">
               <h2 className="text-2xl font-semibold mb-2">Coaching Reflection Chat</h2>
-              <p className="text-muted-foreground mb-6 text-center max-w-md">
+              <p className="text-muted-foreground mb-8 text-center max-w-md">
                 Reflect on your sessions, talk through challenges, or plan your next training.
               </p>
 
-              {/* Quick-start buttons */}
-              <div className="flex flex-wrap gap-3 justify-center mb-8 max-w-lg">
-                {[
-                  "I just finished a session and want to reflect",
-                  "I want to reflect on a recent match",
-                  "I'm thinking about a specific player",
-                  "Help me plan my next session",
-                ].map((prompt) => (
-                  <Button
-                    key={prompt}
-                    variant="outline"
-                    className="text-left h-auto py-3 px-4 border-brand/30 hover:bg-brand/5 hover:border-brand/50"
-                    onClick={() => sendMessage(prompt)}
-                    disabled={loading}
-                  >
-                    {prompt}
-                  </Button>
-                ))}
-              </div>
-
-              {/* More starters */}
+              {/* Chat Starters */}
               <div className="grid gap-4 max-w-2xl">
                 {CHAT_STARTERS.map((category) => (
                   <div key={category.category}>
