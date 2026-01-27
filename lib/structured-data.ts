@@ -32,7 +32,7 @@ export function generateWebsiteSchema() {
       '@type': 'SearchAction',
       target: {
         '@type': 'EntryPoint',
-        urlTemplate: `${SITE_URL}/blog?search={search_term_string}`
+        urlTemplate: `${SITE_URL}/help?search={search_term_string}`
       },
       'query-input': 'required name=search_term_string'
     }
@@ -87,21 +87,21 @@ export function generateSoftwareApplicationSchema() {
         name: 'Free',
         price: '0',
         priceCurrency: 'USD',
-        description: 'Basic reflection tracking with limited monthly reflections'
+        description: '5 messages per day, guided prompts, mood tracking, 7 days of history'
       },
       {
         '@type': 'Offer',
         name: 'Pro Monthly',
-        price: '9.99',
+        price: '7.99',
         priceCurrency: 'USD',
-        description: 'Unlimited reflections, 4 voice notes/month, AI insights, session plan analysis'
+        description: 'Unlimited messages, voice notes, AI insights, session plan upload, full analytics history'
       },
       {
         '@type': 'Offer',
-        name: 'Pro+ Monthly',
-        price: '19.99',
+        name: 'Pro Annual',
+        price: '76.99',
         priceCurrency: 'USD',
-        description: 'Everything in Pro plus 12 voice notes/month and syllabus upload'
+        description: 'Everything in Pro, billed annually (save 20%)'
       }
     ],
     description: 'AI-powered reflection and journaling tool for football coaches. Track sessions, identify patterns, and grow as a coach with guided post-session reflections.',
