@@ -206,8 +206,6 @@ export async function GET(request: Request) {
     }
   }
 
-  console.log(`[Send Reminders] Sent: ${sent}, Errors: ${errors}`)
-
   return NextResponse.json({
     processed: schedules?.length || 0,
     sent,

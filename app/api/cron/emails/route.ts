@@ -239,8 +239,6 @@ export async function GET(request: Request) {
     }
   }
 
-  console.log(`[Cron Emails] Sent: ${sent}, Errors: ${errors}, Skipped: ${skipped}, Winback started: ${winbackStarted}`)
-
   return NextResponse.json({
     processed: sequences?.length || 0,
     sent,

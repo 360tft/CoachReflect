@@ -31,8 +31,6 @@ export async function GET(request: Request) {
       .select('*', { count: 'exact', head: true })
       .eq('voice_notes_reset_date', new Date().toISOString().split('T')[0])
 
-    console.log(`[Cron Reset Limits] Reset voice note counts for ${count || 0} profiles`)
-
     return NextResponse.json({
       success: true,
       message: `Reset voice note limits`,

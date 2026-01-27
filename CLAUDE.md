@@ -2,6 +2,16 @@
 
 ---
 
+## Mandatory Workflow
+
+See `/home/kevin/CLAUDE.md` → MANDATORY WORKFLOW section.
+Test credentials: `E2E_TEST_EMAIL` / `E2E_TEST_PASSWORD` in Vercel env vars.
+
+After every code change: run E2E tests, security scan, build check.
+When creating new features: ensure brand assets remain intact.
+
+---
+
 ## Code Review Standards (MANDATORY)
 
 Before ANY commit, follow the code review checklist at:

@@ -122,7 +122,6 @@ export async function sendTemplateEmail(
 ): Promise<EmailResult> {
   const resend = getResendClient()
   if (!resend) {
-    console.log('RESEND_API_KEY not set, skipping email')
     return { success: false, error: 'Email not configured' }
   }
 

@@ -182,8 +182,6 @@ export async function GET(request: Request) {
     }
   }
 
-  console.log(`[Weekly Summary] Sent: ${sent}, Errors: ${errors}, Skipped: ${skipped}`)
-
   return NextResponse.json({
     processed: profiles?.length || 0,
     sent,
