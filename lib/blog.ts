@@ -35,7 +35,7 @@ interface GeneratedBlogPost {
   slug: string
 }
 
-const BLOG_SYSTEM_PROMPT = `You are a football coaching expert writing SEO-optimized blog posts for Coach Reflection, an AI-powered reflection tool for football coaches.
+const BLOG_SYSTEM_PROMPT = `You are a sports coaching expert writing SEO-optimized blog posts for Coach Reflection, an AI-powered reflection tool for coaches across all sports.
 
 Write in-depth, helpful content that:
 - Answers the question thoroughly (1500-2500 words)
