@@ -42,8 +42,18 @@ export default async function DashboardPage() {
   const { data: stats } = await supabase
     .rpc("get_reflection_stats", { user_uuid: user.id })
 
+  // Get recent extracted insights (themes from reflections)
+  const { data: recentInsights } = await supabase
+    .from("extracted_insights")
+    .select("insight_type, name, context, snippet")
+    .eq("user_id", user.id)
+    .order("created_at", { ascending: false })
+    .limit(10)
+
   const subscriptionTier = profile?.subscription_tier || "free"
   const isFirstTime = !reflections || reflections.length === 0
+  const isEarlyUser = reflections && reflections.length >= 1 && reflections.length <= 3
+  const hasInsights = recentInsights && recentInsights.length > 0
 
   // First-time user onboarding
   if (isFirstTime) {
@@ -169,12 +179,12 @@ export default async function DashboardPage() {
                   Free Plan: 5 messages per day, 7 days of history
                 </p>
                 <p className="text-sm text-muted-foreground">
-                  Upgrade to Pro for unlimited messages, voice notes, and full analytics history
+                  Upgrade to Pro for unlimited messages, voice notes, AI insights, and full analytics history.
                 </p>
               </div>
               <Link href="/dashboard/settings">
                 <Button className="bg-brand hover:bg-brand-hover" size="sm">
-                  Upgrade to Pro
+                  Upgrade to Pro ($7.99/mo)
                 </Button>
               </Link>
             </div>
@@ -228,6 +238,81 @@ export default async function DashboardPage() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Post-first-reflection insight card */}
+      {isEarlyUser && hasInsights && (
+        <Card className="border bg-gradient-to-br from-background to-primary/5 dark:from-background dark:to-primary/10">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-lg">Based on your reflections, here is what I noticed</CardTitle>
+            <CardDescription>AI-extracted themes from your coaching sessions</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3">
+              {/* Themes */}
+              {recentInsights!.filter(i => i.insight_type === 'theme').length > 0 && (
+                <div>
+                  <p className="text-sm font-medium mb-1">Key themes</p>
+                  <div className="flex flex-wrap gap-2">
+                    {recentInsights!
+                      .filter(i => i.insight_type === 'theme')
+                      .slice(0, 5)
+                      .map((insight, idx) => (
+                        <span
+                          key={idx}
+                          className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary"
+                        >
+                          {insight.name}
+                        </span>
+                      ))}
+                  </div>
+                </div>
+              )}
+              {/* Players mentioned */}
+              {recentInsights!.filter(i => i.insight_type === 'player_mention').length > 0 && (
+                <div>
+                  <p className="text-sm font-medium mb-1">Players mentioned</p>
+                  <div className="flex flex-wrap gap-2">
+                    {recentInsights!
+                      .filter(i => i.insight_type === 'player_mention')
+                      .slice(0, 5)
+                      .map((insight, idx) => (
+                        <span
+                          key={idx}
+                          className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                            insight.context === 'positive'
+                              ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400'
+                              : insight.context === 'concern'
+                                ? 'bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400'
+                                : 'bg-muted text-muted-foreground'
+                          }`}
+                        >
+                          {insight.name}
+                        </span>
+                      ))}
+                  </div>
+                </div>
+              )}
+              {/* Challenges */}
+              {recentInsights!.filter(i => i.insight_type === 'challenge').length > 0 && (
+                <div>
+                  <p className="text-sm font-medium mb-1">Challenges spotted</p>
+                  <ul className="text-sm text-muted-foreground space-y-1">
+                    {recentInsights!
+                      .filter(i => i.insight_type === 'challenge')
+                      .slice(0, 3)
+                      .map((insight, idx) => (
+                        <li key={idx}>{insight.name}</li>
+                      ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+            <p className="text-xs text-muted-foreground mt-4">
+              Keep reflecting to build a deeper picture of your coaching patterns.
+            </p>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Streak and Badges */}
       <StreakBadges />

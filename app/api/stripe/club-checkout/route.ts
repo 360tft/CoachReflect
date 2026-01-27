@@ -1,14 +1,7 @@
 import { NextResponse } from "next/server"
-import Stripe from "stripe"
 import { createClient } from "@/lib/supabase/server"
 import { CLUB_TIERS } from "@/lib/config"
-
-function getStripe() {
-  if (!process.env.STRIPE_SECRET_KEY) {
-    throw new Error("STRIPE_SECRET_KEY is not set")
-  }
-  return new Stripe(process.env.STRIPE_SECRET_KEY)
-}
+import { getStripe } from "@/lib/stripe"
 
 // Map tier IDs to Stripe price env var names
 const TIER_PRICE_MAP: Record<string, { monthly: string; annual: string }> = {

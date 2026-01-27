@@ -126,12 +126,12 @@ export function AnalyticsDashboard({ isSubscribed }: AnalyticsDashboardProps) {
                   Free Plan: Limited to last 7 days
                 </p>
                 <p className="text-sm text-muted-foreground">
-                  Upgrade to Pro to see your full analytics history, track player development over time, and identify long-term patterns.
+                  Upgrade to Pro to see your full analytics history, track player development over time, and identify long-term coaching patterns.
                 </p>
               </div>
               <Link href="/dashboard/settings">
                 <Button className="bg-brand hover:bg-brand-hover whitespace-nowrap" size="sm">
-                  Upgrade to Pro
+                  Upgrade to Pro ($7.99/mo)
                 </Button>
               </Link>
             </div>

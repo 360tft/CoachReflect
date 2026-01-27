@@ -56,16 +56,16 @@ export async function GET(request: Request) {
         notifyNewFreeSignup(userEmail).catch(console.error)
 
         // Track signup event
-        adminClient.from('analytics_events').insert({
+        Promise.resolve(adminClient.from('analytics_events').insert({
           user_id: data.user.id,
           event_type: 'signup_completed',
           event_data: { provider, isOAuth: isOAuthUser },
           created_at: new Date().toISOString(),
-        }).then(() => {}).catch(console.error)
+        })).catch(console.error)
 
         // Set needs_mode_selection for OAuth users (no pre-signup form data)
         if (isOAuthUser) {
-          adminClient
+          Promise.resolve(adminClient
             .from('profiles')
             .update({
               auth_provider: provider,
@@ -73,8 +73,7 @@ export async function GET(request: Request) {
               updated_at: new Date().toISOString(),
             })
             .eq('user_id', data.user.id)
-            .then(() => {})
-            .catch(console.error)
+          ).catch(console.error)
         }
       }
 

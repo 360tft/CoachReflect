@@ -78,18 +78,18 @@ export default async function PricingPage() {
             </p>
           </div>
           <div>
-            <h3 className="font-semibold mb-2">What&apos;s the difference between Pro and Pro+?</h3>
+            <h3 className="font-semibold mb-2">What do I get with Pro?</h3>
             <p className="text-muted-foreground">
-              Pro gives you unlimited messages, 4 voice notes per month, and session plan uploads.
-              Pro+ adds 12 voice notes per month and the ability to upload your club syllabus
-              so the AI learns your coaching philosophy.
+              Pro gives you unlimited messages, voice notes, session plan uploads,
+              AI-powered insights, full analytics history, and an AI that learns your
+              coaching style over time.
             </p>
           </div>
           <div>
             <h3 className="font-semibold mb-2">Do you offer team/club pricing?</h3>
             <p className="text-muted-foreground">
-              Yes! Club plans give every coach Pro+ access at a discounted per-seat rate.
-              Perfect for academies and coaching teams.
+              Yes! If you need accounts for multiple coaches, get in touch and
+              we&apos;ll set up a plan that works for your club.
             </p>
           </div>
         </div>

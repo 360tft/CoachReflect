@@ -66,12 +66,12 @@ export default async function HistoryPage() {
                   Free Plan: Limited to last {historyDays} days
                 </p>
                 <p className="text-sm text-muted-foreground">
-                  Upgrade to Pro to access your full reflection history and track patterns over time.
+                  Your older reflections are saved. Upgrade to Pro to access your full history and track coaching patterns over time.
                 </p>
               </div>
               <Link href="/dashboard/settings">
                 <Button className="bg-brand hover:bg-brand-hover whitespace-nowrap" size="sm">
-                  Upgrade to Pro
+                  Upgrade to Pro ($7.99/mo)
                 </Button>
               </Link>
             </div>

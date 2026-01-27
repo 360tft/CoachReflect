@@ -24,18 +24,11 @@ Before ANY commit, follow the code review checklist at:
 
 **Before making ANY changes, check the master standards.**
 
-See `/home/kevin/CLAUDE.md` → "SAAS BEST PRACTICES (THE STANDARD)" for:
-- Project structure and folder conventions
-- Three Supabase clients pattern (client.ts, server.ts, admin.ts)
-- API route pattern (authenticate → rate limit → validate → check permissions → process)
-- Stripe integration patterns (checkout, webhook with idempotency)
-- Database-driven email sequences
-- Gamification implementation
-- Rate limiting with Redis + fallback
-- Required components checklist
-- Anti-patterns to avoid
-
+**Behavioural spec:** `/home/kevin/SAAS-STANDARD.md` - Exact code patterns every product must implement.
+**Master context:** `/home/kevin/CLAUDE.md` - Business goals, pricing, shared tech stack.
 **Reference Implementation:** `/home/kevin/FootballGPT`
+
+The SAAS-STANDARD.md defines the exact behavioural contract (auth triggers, email wiring, webhook actions, etc.). The audit script checks against it.
 
 ### Compliance Check Command
 
@@ -148,7 +141,7 @@ When asked to "check compliance" or "align with FootballGPT", run this process:
 
 ## Business Goals
 
-**Primary Objective**: Build MVP, validate with FCA community, grow to $5K MRR.
+**Primary Objective**: Live testing, validate with FCA community, grow to $5K MRR.
 
 **Brand**: 360 TFT product (subtle branding)
 **Price**: $7.99/mo (TBD)
@@ -225,7 +218,7 @@ Coach Reflection is a reflective journaling app for football coaches. It helps c
 
 ## Roadmap
 
-### V1 - MVP (Current)
+### V1 - MVP (LIVE)
 - [x] Landing page with waitlist
 - [x] Coming Soon login/signup
 - [ ] Enable Supabase for auth
@@ -287,9 +280,12 @@ See `supabase/migrations/` for full schema. Key tables:
 
 ## Current Status
 
-- Landing page deployed
-- Login/signup showing "Coming Soon" (no Supabase yet)
-- Waiting to enable Supabase when ready to validate demand
+**LIVE** - https://coachreflection.com
+
+- Full app deployed and in live testing
+- Auth, chat, reflections, analytics, admin dashboard all functional
+- Supabase, Stripe, Resend configured
+- Free and Pro/Pro+ tiers implemented
 
 ---
 

@@ -11,14 +11,14 @@ export const PRICING = {
   // Individual Pro
   PRO: {
     monthly: {
-      price: 9.99,
+      price: 7.99,
       stripePriceId: process.env.NEXT_PUBLIC_STRIPE_PRO_PRICE_ID || '',
     },
     annual: {
-      price: 99,
+      price: 76.99,
       stripePriceId: process.env.NEXT_PUBLIC_STRIPE_PRO_ANNUAL_PRICE_ID || '',
-      savings: 17, // 2 months free (~17% off)
-      monthlyEquivalent: 8.25,
+      savings: 20, // ~20% off
+      monthlyEquivalent: 6.42,
     },
   },
 

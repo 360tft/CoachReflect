@@ -4,6 +4,9 @@ import { createClient } from "@/lib/supabase/server"
 import { createAdminClient } from "@/lib/supabase/admin"
 import { checkRateLimit, RATE_LIMITS } from "@/lib/rate-limit"
 import { SPORT_NAMES, getSportTerminology } from "@/lib/chat-config"
+import { updateStreak } from "@/lib/gamification"
+import { sendStreakMilestoneEmail } from "@/lib/email-sender"
+import { isStreakMilestone } from "@/lib/email-sequences"
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY || "")
 
@@ -260,6 +263,29 @@ export async function POST(request: Request) {
 
     // Update coach daily stats
     await updateDailyStats(adminClient, user.id, sessionDate, extracted)
+
+    // Update streak and send milestone email if applicable
+    try {
+      const streakResult = await updateStreak(user.id)
+      if (streakResult.isNewDay && streakResult.isStreakMilestone) {
+        const streak = streakResult.streak
+        if (isStreakMilestone(streak)) {
+          const { data: userProfile } = await adminClient
+            .from("profiles")
+            .select("display_name")
+            .eq("user_id", user.id)
+            .single()
+
+          await sendStreakMilestoneEmail(
+            user.email!,
+            streak as 3 | 7 | 14 | 30,
+            { name: userProfile?.display_name || "Coach", userId: user.id }
+          )
+        }
+      }
+    } catch {
+      // Streak update is non-critical - don't fail the extraction
+    }
 
     return NextResponse.json({
       success: true,
