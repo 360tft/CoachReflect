@@ -194,6 +194,40 @@ async function logEmailSent(
 }
 
 /**
+ * Start onboarding email sequence for a new user
+ */
+export async function startOnboardingSequence(userId: string): Promise<{ success: boolean; error?: string }> {
+  try {
+    const supabase = createAdminClient()
+    const now = new Date()
+    const nextSendDate = new Date(now)
+    nextSendDate.setDate(nextSendDate.getDate() + 1)
+
+    await supabase.from('email_sequences').insert({
+      user_id: userId,
+      sequence_name: 'onboarding',
+      current_step: 1,
+      started_at: now.toISOString(),
+      next_send_at: nextSendDate.toISOString(),
+      completed: false,
+      paused: false,
+    })
+
+    return { success: true }
+  } catch (error) {
+    console.error('Failed to start onboarding sequence:', error)
+    return { success: false, error: String(error) }
+  }
+}
+
+/**
+ * Notify admin of new free signup (SAAS-STANDARD alias)
+ */
+export async function notifyNewFreeSignup(userEmail: string): Promise<void> {
+  return notifyNewSignup(userEmail)
+}
+
+/**
  * Notify admin of new signup
  */
 export async function notifyNewSignup(userEmail: string): Promise<void> {
@@ -289,5 +323,83 @@ export async function notifySubscriptionCanceled(
     })
   } catch (error) {
     console.error('Failed to send cancellation notification:', error)
+  }
+}
+
+/**
+ * SAAS-STANDARD alias for notifySubscriptionCanceled
+ */
+export async function notifySubscriptionCancelled(userEmail: string): Promise<void> {
+  return notifySubscriptionCanceled(userEmail)
+}
+
+/**
+ * Send pro welcome email to customer after subscription
+ */
+export async function sendProWelcomeEmail(userEmail: string): Promise<{ success: boolean; error?: string }> {
+  const resend = getResendClient()
+  if (!resend) return { success: false, error: 'Email not configured' }
+
+  try {
+    await resend.emails.send({
+      from: FROM_EMAIL,
+      to: userEmail,
+      subject: 'Welcome to Coach Reflection Pro!',
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #E5A11C;">Welcome to Pro!</h2>
+          <p>Thank you for upgrading to Coach Reflection Pro. You now have access to:</p>
+          <ul>
+            <li>Unlimited reflections</li>
+            <li>AI-powered coaching insights</li>
+            <li>Advanced pattern detection</li>
+            <li>Session plan analysis</li>
+          </ul>
+          <p>Start your next reflection now:</p>
+          <p><a href="${APP_URL}/dashboard" style="display: inline-block; background-color: #E5A11C; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: bold;">Open Dashboard</a></p>
+        </div>
+      `,
+    })
+    return { success: true }
+  } catch (error) {
+    console.error('Failed to send Pro welcome email:', error)
+    return { success: false, error: String(error) }
+  }
+}
+
+/**
+ * Notify admin of negative feedback
+ */
+export async function notifyNegativeFeedback(
+  userEmail: string | undefined,
+  contentText: string,
+  responseText: string,
+  feedbackText?: string,
+  contentType?: string
+): Promise<{ success: boolean; error?: string }> {
+  const resend = getResendClient()
+  if (!resend) return { success: false, error: 'Email not configured' }
+
+  try {
+    await resend.emails.send({
+      from: FROM_EMAIL,
+      to: ADMIN_EMAIL,
+      subject: 'Negative Feedback - Coach Reflection',
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #dc2626;">Negative Feedback Received</h2>
+          <div style="background-color: #fef2f2; padding: 16px; border-radius: 8px; margin: 16px 0; border: 1px solid #dc2626;">
+            <p style="margin: 0;"><strong>User:</strong> ${userEmail || 'Unknown'}</p>
+            ${contentType ? `<p style="margin: 8px 0 0 0;"><strong>Content Type:</strong> ${contentType}</p>` : ''}
+            ${feedbackText ? `<p style="margin: 8px 0 0 0;"><strong>Feedback:</strong> ${feedbackText}</p>` : ''}
+            <p style="margin: 8px 0 0 0;"><strong>Content:</strong> ${contentText.slice(0, 200)}${contentText.length > 200 ? '...' : ''}</p>
+          </div>
+        </div>
+      `,
+    })
+    return { success: true }
+  } catch (error) {
+    console.error('Failed to send negative feedback notification:', error)
+    return { success: false, error: String(error) }
   }
 }

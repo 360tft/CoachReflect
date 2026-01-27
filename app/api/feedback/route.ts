@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server"
 import { createClient } from "@/lib/supabase/server"
+import { checkRateLimit, RATE_LIMITS } from "@/lib/rate-limit"
+import { notifyNegativeFeedback } from "@/lib/email-sender"
 
 export async function POST(request: Request) {
   try {
@@ -8,6 +10,12 @@ export async function POST(request: Request) {
 
     if (!user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+    }
+
+    // Rate limiting
+    const rateLimitResult = await checkRateLimit(user.id, RATE_LIMITS.API)
+    if (!rateLimitResult.allowed) {
+      return NextResponse.json({ error: "Too many requests" }, { status: 429 })
     }
 
     const body = await request.json()
@@ -65,6 +73,17 @@ export async function POST(request: Request) {
         { error: "Failed to save feedback" },
         { status: 500 }
       )
+    }
+
+    // Notify admin on negative feedback
+    if (rating === "negative") {
+      notifyNegativeFeedback(
+        user.email,
+        content_text || "",
+        "",
+        feedback_text,
+        content_type
+      ).catch(console.error)
     }
 
     return NextResponse.json({ success: true, id: data.id })

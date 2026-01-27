@@ -2,15 +2,9 @@ import { NextResponse } from "next/server"
 import Stripe from "stripe"
 import { createAdminClient } from "@/lib/supabase/admin"
 import { createClub, updateClubSubscription } from "@/lib/clubs"
-import { notifyNewProSubscription, notifySubscriptionCanceled } from "@/lib/email-sender"
+import { notifyNewProSubscription, notifySubscriptionCanceled, sendProWelcomeEmail } from "@/lib/email-sender"
 import type { ClubTier } from "@/lib/config"
-
-function getStripe() {
-  if (!process.env.STRIPE_SECRET_KEY) {
-    throw new Error("STRIPE_SECRET_KEY is not set")
-  }
-  return new Stripe(process.env.STRIPE_SECRET_KEY)
-}
+import { getStripe } from "@/lib/stripe"
 
 // Idempotency: Track processed events to prevent duplicates
 const processedEvents = new Map<string, number>()
@@ -114,10 +108,11 @@ export async function POST(request: Request) {
               })
               .eq("user_id", userId)
 
-            // Notify admin of new Pro subscription
+            // Notify admin of new Pro subscription and send welcome email
             const { data: userData } = await supabase.auth.admin.getUserById(userId)
             if (userData?.user?.email) {
               await notifyNewProSubscription(userData.user.email, session.amount_total || undefined)
+              sendProWelcomeEmail(userData.user.email).catch(console.error)
             }
 
             // Process referral conversion - credit referrer with free month if applicable

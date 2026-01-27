@@ -12,13 +12,15 @@ export interface SequenceStep {
   subject: string    // Email subject line
 }
 
-// Onboarding sequence for new users
+// Onboarding sequence for new users (7 steps - SAAS-STANDARD compliant)
 export const ONBOARDING_SEQUENCE: SequenceStep[] = [
   { day: 0, template: 'welcome', subject: 'Welcome to Coach Reflection' },
-  { day: 1, template: 'first-reflection', subject: 'Your first reflection takes 2 minutes' },
-  { day: 3, template: 'reflection-tips', subject: '3 questions that unlock coaching growth' },
+  { day: 1, template: 'first-value', subject: 'Your first reflection takes 2 minutes' },
+  { day: 3, template: 'social-proof', subject: 'What coaches are reflecting on this week' },
+  { day: 5, template: 'feature-highlight', subject: 'AI insights that transform your coaching' },
   { day: 7, template: 'check-in', subject: 'How are your reflections going?' },
-  { day: 14, template: 'upgrade-pitch', subject: 'Ready for AI-powered insights?' },
+  { day: 10, template: 'upgrade-pitch', subject: 'Ready for AI-powered insights?' },
+  { day: 21, template: 'last-chance', subject: 'A thank you from the Coach Reflection team' },
 ]
 
 // Win-back sequence for inactive users (7+ days no activity)

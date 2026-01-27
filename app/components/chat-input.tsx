@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef, useCallback } from "react"
+import { useState, useRef, useCallback, useEffect } from "react"
 import { Button } from "@/app/components/ui/button"
 import { Textarea } from "@/app/components/ui/textarea"
 import {
@@ -63,6 +63,15 @@ export function ChatInput({
   const startTimeRef = useRef<number>(0)
 
   const [showUpgradeHint, setShowUpgradeHint] = useState<string | null>(null)
+
+  // Auto-resize textarea as user types
+  useEffect(() => {
+    const textarea = textareaRef.current
+    if (textarea) {
+      textarea.style.height = 'auto'
+      textarea.style.height = `${Math.min(textarea.scrollHeight, 200)}px`
+    }
+  }, [input])
 
   const isLimitReached = !isSubscribed && remaining <= 0
   const hasReadyAttachments = attachments.some(a => a.status === 'ready')
@@ -378,6 +387,11 @@ export function ChatInput({
       if (a.previewUrl) URL.revokeObjectURL(a.previewUrl)
     })
     setAttachments([])
+
+    // Reset textarea height
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto'
+    }
   }, [canSend, input, attachments, onSend])
 
   // Handle key down
@@ -618,7 +632,8 @@ export function ChatInput({
             onKeyDown={handleKeyDown}
             placeholder={isLimitReached ? 'Daily limit reached. Upgrade to continue...' : placeholder}
             disabled={disabled || isLimitReached || isRecording}
-            className="resize-none min-h-[60px] flex-1"
+            className="resize-none min-h-[60px] flex-1 overflow-y-auto"
+            style={{ maxHeight: '200px' }}
             rows={2}
           />
 

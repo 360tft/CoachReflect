@@ -1,7 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { NextResponse } from 'next/server'
-import { notifyNewSignup, sendTemplateEmail } from '@/lib/email-sender'
+import { notifyNewFreeSignup, sendTemplateEmail, startOnboardingSequence } from '@/lib/email-sender'
 
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url)
@@ -34,34 +34,48 @@ export async function GET(request: Request) {
         .eq('user_id', data.user.id)
         .single()
 
-      const isNewUser = profile &&
-        new Date(profile.created_at).getTime() > Date.now() - 60000 // Created within last minute
+      // Detect new user (created within last 5 minutes)
+      const createdAt = new Date(data.user.created_at)
+      const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000)
+      const isNewUser = createdAt > fiveMinutesAgo
+      const isOAuthUser = !!data.user.app_metadata?.provider && data.user.app_metadata.provider !== 'email'
+      const provider = (data.user.app_metadata?.provider as string) || 'email'
 
-      // For new users: send welcome email and notify admin
+      // For new users: send welcome email, start onboarding, notify admin
       if (isNewUser && userEmail) {
         // Send welcome email immediately
-        await sendTemplateEmail(userEmail, 'welcome', {
+        sendTemplateEmail(userEmail, 'welcome', {
           name: userName,
           userId: data.user.id,
-        })
+        }).catch(console.error)
 
         // Start onboarding email sequence
-        const now = new Date()
-        const nextSendDate = new Date(now)
-        nextSendDate.setDate(nextSendDate.getDate() + 1) // First follow-up email tomorrow
+        startOnboardingSequence(data.user.id).catch(console.error)
 
-        await adminClient.from('email_sequences').insert({
+        // Notify admin of new free signup
+        notifyNewFreeSignup(userEmail).catch(console.error)
+
+        // Track signup event
+        adminClient.from('analytics_events').insert({
           user_id: data.user.id,
-          sequence_name: 'onboarding',
-          current_step: 1, // Skip step 0 (welcome) since we just sent it
-          started_at: now.toISOString(),
-          next_send_at: nextSendDate.toISOString(),
-          completed: false,
-          paused: false,
-        })
+          event_type: 'signup_completed',
+          event_data: { provider, isOAuth: isOAuthUser },
+          created_at: new Date().toISOString(),
+        }).then(() => {}).catch(console.error)
 
-        // Notify admin of new signup
-        await notifyNewSignup(userEmail)
+        // Set needs_mode_selection for OAuth users (no pre-signup form data)
+        if (isOAuthUser) {
+          adminClient
+            .from('profiles')
+            .update({
+              auth_provider: provider,
+              needs_mode_selection: true,
+              updated_at: new Date().toISOString(),
+            })
+            .eq('user_id', data.user.id)
+            .then(() => {})
+            .catch(console.error)
+        }
       }
 
       // Check if user was referred (referral code in user metadata)
