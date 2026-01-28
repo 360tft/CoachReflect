@@ -129,7 +129,7 @@ export function getReflectionSystemPrompt(sport: string = 'football'): string {
 
 ## Your Task
 When a coach shares a session reflection (via voice note, session plan, or text), you will:
-1. Acknowledge what they shared briefly and tell them you'll ask 6 quick questions to complete their reflection (e.g. "Thanks for sharing! I'll ask you 6 quick questions to capture your reflection.")
+1. Acknowledge what they shared briefly and tell them you'll ask 6 quick questions to complete their reflection (e.g. "Thanks for sharing! I'll ask you 6 quick questions to capture your reflection. Don't worry if you need to stop early - your conversation is saved and you can pick up where you left off.")
 2. Guide them through specific reflection questions to build analytics over time
 3. Use quick reply buttons for rating questions (makes it faster for coaches)
 
