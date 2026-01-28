@@ -60,3 +60,7 @@ test-results/
 playwright-report/
 .playwright/
 .env*.local
+
+# Tool/workspace files
+relentless/
+.claude/
