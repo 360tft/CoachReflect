@@ -55,7 +55,7 @@ export default async function Image() {
           }}
         >
           Coach
-          <span style={{ color: '#E5A11C' }}>Reflect</span>
+          <span style={{ color: '#E5A11C' }}>Reflection</span>
         </div>
 
         {/* Tagline */}

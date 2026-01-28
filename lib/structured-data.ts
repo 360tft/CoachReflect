@@ -20,7 +20,7 @@ export function generateWebsiteSchema() {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: SITE_NAME,
-    alternateName: 'Coach Reflect',
+    alternateName: 'Coach Reflection',
     url: SITE_URL,
     description: 'AI-powered reflection and journaling tool for football coaches. Track sessions, identify patterns, and grow as a coach with guided post-session reflections.',
     publisher: {
