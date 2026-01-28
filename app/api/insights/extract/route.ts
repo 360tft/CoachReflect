@@ -105,7 +105,7 @@ export async function POST(request: Request) {
     const userSport = profile?.sport || "football"
 
     const body = await request.json()
-    const { conversationId, createReflection = true } = body
+    const { conversationId, createReflection = true, updateExisting = false } = body
 
     if (!conversationId) {
       return NextResponse.json(
@@ -170,31 +170,75 @@ export async function POST(request: Request) {
     const sessionDate = new Date().toISOString().split('T')[0]
     let reflectionId: string | null = null
 
-    // Create reflection record if requested
+    // Create or update reflection record if requested
     if (createReflection) {
-      const { data: reflection, error: reflectionError } = await adminClient
-        .from("reflections")
-        .insert({
-          user_id: user.id,
-          date: sessionDate,
-          mood_rating: extracted.mood_rating || null,
-          energy_rating: extracted.energy_rating || null,
-          what_worked: extracted.what_worked || null,
-          what_didnt_work: extracted.what_didnt_work || null,
-          player_standouts: extracted.player_standouts || null,
-          next_focus: extracted.next_focus || null,
-          ai_summary: extracted.ai_summary || null,
-          ai_insights: `Themes: ${(extracted.themes || []).join(', ')}. Sentiment: ${extracted.overall_sentiment || 'neutral'}`,
-          ai_action_items: [],
-          tags: extracted.themes || [],
-        })
-        .select()
-        .single()
+      const reflectionData = {
+        user_id: user.id,
+        date: sessionDate,
+        mood_rating: extracted.mood_rating || null,
+        energy_rating: extracted.energy_rating || null,
+        what_worked: extracted.what_worked || null,
+        what_didnt_work: extracted.what_didnt_work || null,
+        player_standouts: extracted.player_standouts || null,
+        next_focus: extracted.next_focus || null,
+        ai_summary: extracted.ai_summary || null,
+        ai_insights: `Themes: ${(extracted.themes || []).join(', ')}. Sentiment: ${extracted.overall_sentiment || 'neutral'}`,
+        ai_action_items: [],
+        tags: extracted.themes || [],
+      }
 
-      if (reflectionError) {
-        // Error logged:("Error creating reflection:", reflectionError)
+      if (updateExisting) {
+        // Look for existing reflection from today to update
+        const { data: existingReflection } = await adminClient
+          .from("reflections")
+          .select("id")
+          .eq("user_id", user.id)
+          .eq("date", sessionDate)
+          .order("created_at", { ascending: false })
+          .limit(1)
+          .single()
+
+        if (existingReflection) {
+          // Update existing reflection with complete data
+          const { data: updated, error: updateError } = await adminClient
+            .from("reflections")
+            .update(reflectionData)
+            .eq("id", existingReflection.id)
+            .select()
+            .single()
+
+          if (updateError) {
+            // Error logged:("Error updating reflection:", updateError)
+          } else {
+            reflectionId = updated.id
+          }
+        } else {
+          // No existing reflection, create new
+          const { data: reflection, error: reflectionError } = await adminClient
+            .from("reflections")
+            .insert(reflectionData)
+            .select()
+            .single()
+
+          if (reflectionError) {
+            // Error logged:("Error creating reflection:", reflectionError)
+          } else {
+            reflectionId = reflection.id
+          }
+        }
       } else {
-        reflectionId = reflection.id
+        // Standard insert (first extraction)
+        const { data: reflection, error: reflectionError } = await adminClient
+          .from("reflections")
+          .insert(reflectionData)
+          .select()
+          .single()
+
+        if (reflectionError) {
+          // Error logged:("Error creating reflection:", reflectionError)
+        } else {
+          reflectionId = reflection.id
+        }
       }
 
       // Update profile reflection count

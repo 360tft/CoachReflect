@@ -25,6 +25,7 @@ export function ChatInterface({ isSubscribed, initialRemaining = 5 }: ChatInterf
   const [activeQuickReply, setActiveQuickReply] = useState<ParsedQuickReply | null>(null)
   const [reflectionSaved, setReflectionSaved] = useState(false)
   const [autoSaveTriggered, setAutoSaveTriggered] = useState(false)
+  const [finalExtractionDone, setFinalExtractionDone] = useState(false)
 
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const abortControllerRef = useRef<AbortController | null>(null)
@@ -285,11 +286,37 @@ export function ChatInterface({ isSubscribed, initialRemaining = 5 }: ChatInterf
     }
   }, [messages.length, loading, conversationId, reflectionSaved, autoSaveTriggered])
 
+  // Final extraction when reflection is complete (AI sends [REFLECTION_COMPLETE] marker)
+  useEffect(() => {
+    if (finalExtractionDone || !conversationId || loading) return
+
+    // Check if last assistant message contains the completion marker
+    const lastAssistantMessage = [...messages].reverse().find(m => m.role === 'assistant')
+    if (lastAssistantMessage?.content.includes('[REFLECTION_COMPLETE]')) {
+      setFinalExtractionDone(true)
+
+      // Trigger final extraction with updateExisting to capture all data
+      fetch("/api/insights/extract", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ conversationId, createReflection: true, updateExisting: true }),
+      })
+        .then(res => res.json())
+        .then(() => {
+          setReflectionSaved(true)
+        })
+        .catch(() => {
+          // Silent fail - partial data already saved
+        })
+    }
+  }, [messages, loading, conversationId, finalExtractionDone])
+
   // Reset reflection saved state when starting a new chat
   const startNewChatWithReset = useCallback(() => {
     startNewChat()
     setReflectionSaved(false)
     setAutoSaveTriggered(false)
+    setFinalExtractionDone(false)
   }, [startNewChat])
 
   return (
@@ -393,7 +420,7 @@ export function ChatInterface({ isSubscribed, initialRemaining = 5 }: ChatInterf
               {messages.map((msg, i) => {
                 const isLastMessage = i === messages.length - 1
                 const displayContent = msg.role === 'assistant' && msg.content
-                  ? stripQuickReplyMarker(msg.content)
+                  ? stripQuickReplyMarker(msg.content).replace(/\[REFLECTION_COMPLETE\]/g, '').trim()
                   : msg.content
 
                 return (
