@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useRef, useEffect, useCallback } from "react"
+import ReactMarkdown from "react-markdown"
 import { Button } from "@/app/components/ui/button"
 import { Card, CardContent } from "@/app/components/ui/card"
 import { FeedbackButtons } from "@/app/components/feedback-buttons"
@@ -435,7 +436,9 @@ export function ChatInterface({ isSubscribed, initialRemaining = 5 }: ChatInterf
                     }`}>
                       <CardContent className="p-3">
                         <div className="prose prose-sm dark:prose-invert max-w-none">
-                          {displayContent || (
+                          {displayContent ? (
+                            <ReactMarkdown>{displayContent}</ReactMarkdown>
+                          ) : (
                             <span className="text-muted-foreground animate-pulse">
                               Thinking...
                             </span>
