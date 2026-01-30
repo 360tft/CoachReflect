@@ -477,3 +477,10 @@ Before Coach Reflection goes fully live with clubs and analytics:
 - [ ] Add webhook endpoint: `https://[your-domain]/api/stripe/webhook`
 - [ ] Enable events: `checkout.session.completed`, `customer.subscription.updated`, `customer.subscription.deleted`, `invoice.payment_failed`
 
+
+
+---
+
+## LEARNINGS (Auto-Updated Nightly)
+
+Read `LEARNINGS.md` at the start of every session for patterns and gotchas from previous work.

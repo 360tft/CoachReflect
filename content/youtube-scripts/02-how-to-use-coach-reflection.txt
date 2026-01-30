@@ -1,0 +1,195 @@
+You've signed up for Coach Reflection. Now what?
+
+In this video, I'll walk you through exactly how to use it. Step by step. From your first reflection to understanding your analytics. By the end, you'll know how to get the most out of structured reflection for your coaching development.
+
+Let's start with the basics.
+
+When you first sign up, you'll complete your profile. This takes about thirty seconds. Your name, your club or team, the sport you coach, the age group, and your coaching level.
+
+This information matters because it helps the AI give you relevant insights. A U9 grassroots football coach has different patterns than a U18 academy basketball coach. The AI adapts.
+
+Once your profile is set, you land on the dashboard. This is your home base. You'll see a few tabs: Reflect, History, Analytics, and Settings.
+
+The Reflect tab is where you'll spend most of your time. This is where you capture your post-session thoughts.
+
+Let me walk you through a reflection.
+
+After your session, open Coach Reflection. Tap the Reflect tab. You'll see the session log first.
+
+Session type. Is this a training session, a match, a friendly, a tournament, a trial, or individual work? Select the right one. This helps categorise your reflections later.
+
+Date. Usually today, but you can backdate if you're catching up.
+
+Duration. How long was the session? Just an approximation is fine.
+
+Players present. How many showed up? This context helps the AI understand your environment.
+
+Weather. Optional, but useful if conditions affected the session.
+
+General notes. Optional space for anything else. The pitch was waterlogged. We had to share with another team. A parent complained during the session. Whatever context matters.
+
+That's the session log. Takes about twenty seconds.
+
+Now the reflection itself. Five questions.
+
+Question one: What worked well today?
+
+Be specific. Don't just write "passing drill." Write "The triangle passing drill with the rotation worked better than last time. Players understood the movement pattern. Jake in particular got it quickly and helped explain it to others."
+
+Specific reflections are useful reflections. Generic ones aren't.
+
+Question two: What didn't go as planned?
+
+This isn't about beating yourself up. It's about honest observation. "The 4v4 game at the end fell apart because the teams were unbalanced. I should have reshuffled after five minutes when it was clear one team was dominant."
+
+Notice the pattern. Observation plus insight. What happened and what you'd do differently.
+
+Question three: Were there any player standouts?
+
+Both positive and needs-support. "Emma was brilliant today, most confident I've seen her. Really took on defenders. Ryan seemed withdrawn, barely engaged. Not sure if something's going on outside football."
+
+Over time, the AI tracks these mentions. You'll see which players appear frequently in your reflections and in what context.
+
+Question four: What areas need more work?
+
+Based on today's session, what should you focus on? "Receiving under pressure still needs work. Players are comfortable with the ball at their feet but panic when closed down quickly."
+
+This creates a running list of development priorities that you can review when planning future sessions.
+
+Question five: What will you focus on next session?
+
+This creates accountability. "Next session I'll start with a receiving practice that puts them under immediate pressure. No comfortable touches."
+
+When you come back to reflect on that next session, you'll see what you said you'd focus on. Did you actually do it? Did it work?
+
+After the five questions, two quick ratings.
+
+Mood. How do you feel after this session? One to five. Don't overthink it. Just a gut reaction.
+
+Energy. How's your energy level? One to five.
+
+These ratings seem simple, but they're powerful over time. If your average energy drops from four to two over six weeks, that's a warning sign. Burnout is coming. Coach Reflection spots it before you feel it.
+
+That's a complete reflection. Five questions, two ratings. Two to three minutes total.
+
+Hit submit. The AI analyses your reflection in a few seconds. It extracts themes, player mentions, and sentiment. This feeds into your analytics.
+
+Now let me show you the History tab.
+
+Every reflection you submit is saved here. You can scroll back through weeks and months of reflections. Search for specific topics or players.
+
+This is powerful when you're planning. You're about to coach "defending as a unit" and you want to remember what worked last time you covered it. Search your history. Find the reflections from that period. See what you learned.
+
+Without Coach Reflection, this information is lost in your memory, incomplete and biased by what you happen to remember. With Coach Reflection, it's all there, searchable and complete.
+
+Let me show you the Analytics tab.
+
+This is where the AI shows you patterns across your reflections.
+
+First, select a time period. Four weeks, eight weeks, or twelve weeks. The longer the period, the more data, but also the more general the insights.
+
+You'll see several sections.
+
+Mood and energy trends. A graph showing how your ratings have changed over time. Ideally, you want a steady line or an upward trend. A downward trend is a warning sign.
+
+Recurring themes. Topics that keep appearing in your reflections. Maybe "player behaviour" comes up frequently. Or "timing issues" or "weather disruptions." These patterns tell you what's consistently affecting your coaching.
+
+Player mentions. Who appears most in your reflections? Are they mentioned positively, as concerns, or neutrally? This shows where your attention is going and which players might need more or less focus.
+
+Top challenges. The things you've noted as problems repeatedly. If "players not listening to instructions" appears across multiple weeks, that's not a one-off issue. It's something to address systematically.
+
+Improvement trends. Areas where you've stopped mentioning problems. You used to struggle with "running out of time" but haven't mentioned it in six weeks. That's progress you might not have noticed.
+
+Suggestions. Based on your patterns, the AI gives you personalised recommendations. "Consider checking in with Ryan individually. He's appeared as a concern in your last four reflections." Or "Your energy ratings have dropped. Consider taking a lighter approach next week."
+
+This is the AI mentor aspect. It's reading everything you write, remembering everything, and pointing out what you'd otherwise miss.
+
+Let me talk about the Pro features.
+
+Session plan upload. If you're on Pro, you can photograph your handwritten session plan or upload a digital one. The AI uses vision technology to read it. It extracts your objectives, drills, timing, and coaching points.
+
+This is powerful because now your reflection is linked to your plan. You can compare what you intended versus what actually happened. The AI can ask: "Your plan said fifteen minutes for the technical practice. Did you stick to that? Why or why not?"
+
+Voice notes. Also a Pro feature. If you don't have time to type, you can record a voice note up to five minutes. The AI transcribes it and turns it into structured reflection.
+
+This is great for reflecting on the drive home. You're not looking at your phone, you're just talking through the session. The AI does the rest.
+
+Full analytics history. Free users can only see one week of history. Pro users can see their full history across months and years. This is where the real patterns emerge.
+
+Now let me show you some tips for getting the most out of Coach Reflection.
+
+Tip one: Reflect immediately after the session.
+
+The best time to reflect is right after the session, while everything is fresh. Waiting until the next day means you've forgotten the details. Waiting until the end of the week means you've forgotten everything.
+
+Keep your reflection short and do it immediately. Two minutes right after the session beats ten minutes three days later.
+
+Tip two: Be specific and honest.
+
+Vague reflections don't help. "It went okay" tells you nothing. "The warm-up was too long but the SSG worked really well once we reduced to 4v4" tells you something useful.
+
+And be honest. The AI isn't judging you. Nobody else sees your reflections. If the session was terrible, say so. That's how you learn.
+
+Tip three: Review your analytics monthly.
+
+Don't just reflect and forget. Once a month, spend five minutes looking at your analytics. What patterns is the AI showing you? What themes keep appearing? What do you need to address?
+
+This monthly review is where the real learning happens. Individual reflections are data. The patterns across reflections are insight.
+
+Tip four: Use player mentions consistently.
+
+When you mention a player, be consistent with names. "Jake" every time, not "Jake" sometimes and "J" other times. This helps the AI track player patterns accurately.
+
+Also mention players you might otherwise overlook. It's easy to notice the standouts and the problems. Try to mention the quiet players too. If you never mention someone, you're probably not giving them enough attention.
+
+Tip five: Don't skip the mood and energy ratings.
+
+They seem trivial, but they're one of the most valuable parts of Coach Reflection. These ratings catch burnout early. They show you seasonal patterns. They connect your wellbeing to your coaching quality.
+
+Two taps after each reflection. Don't skip them.
+
+Tip six: Connect reflections to actions.
+
+The "what will you focus on next session" question is crucial. And when you come back for your next reflection, check whether you actually did what you said you'd do.
+
+This creates a feedback loop. Plan, execute, reflect, adjust. Coach Reflection makes the loop visible.
+
+Let me talk about building the habit.
+
+Coach Reflection only works if you use it consistently. A reflection here and there won't show patterns. Consistent reflection over weeks and months will.
+
+Here's how to build the habit.
+
+Make it part of your post-session routine. Session ends. You pack up equipment. You say goodbye to players and parents. Then you open Coach Reflection and do your two-minute reflection. It's the last thing you do before you leave the venue.
+
+Set a reminder. If you tend to forget, set a phone reminder for thirty minutes after your usual session time.
+
+Start small. If five questions feel like too much, just answer three. Something is better than nothing. You can expand later.
+
+Track your streak. Coach Reflection shows your reflection streak. How many consecutive sessions have you reflected on? Try to keep the streak going. Gamification works.
+
+Tell someone. Tell a fellow coach that you're using Coach Reflection. Having accountability helps. Maybe they'll start using it too.
+
+The habit is the hard part. Once reflecting is automatic, the benefits compound.
+
+Let me give you a quick start checklist.
+
+One: Complete your profile. Sport, age group, level.
+
+Two: After your next session, do your first reflection. Take your time. Get a feel for the questions.
+
+Three: Do at least four reflections before looking at analytics. You need data before patterns can emerge.
+
+Four: After two weeks, review your analytics. What themes are appearing? What players are you mentioning?
+
+Five: After one month, do a deeper review. What have you learned? What's changed in your coaching?
+
+Six: Consider upgrading to Pro if you want voice notes, session plan upload, or full history access.
+
+That's how to use Coach Reflection.
+
+The link is in the description. Sign up free and start with your next session. Two to three minutes of structured reflection that compounds into real coaching development over time.
+
+Thanks for watching. If this was helpful, subscribe. More coaching content coming.
+
+See you in the next one.

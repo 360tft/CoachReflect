@@ -1,0 +1,149 @@
+You finish a session. You get in the car. Your mind is racing.
+
+That passing drill worked really well. Jake finally got it. But Emma seemed off today, quieter than usual. And that game at the end fell apart because the teams were unbalanced. Next time I should...
+
+And then your phone buzzes. You start driving. By the time you get home, those thoughts are gone. The insights from the session, the things you noticed, the ideas for next time, they've evaporated.
+
+Sound familiar?
+
+Every coach has this experience. We think deeply about our sessions. We notice things. We have insights. But we don't capture them. We don't build on them. We don't learn from them systematically.
+
+Professional coaches have support staff. They have video analysts. They have performance coaches who track everything. They have structured reflection built into their week.
+
+Grassroots coaches have none of that. We coach, we think, we forget, we repeat.
+
+What if you could capture those post-session thoughts? What if you could see patterns across weeks and months? What if you had something like a coaching mentor who remembered every session you ever ran and could spot things you're missing?
+
+That's what Coach Reflection does.
+
+In this video, I'll show you exactly how it works. How it helps you grow as a coach through guided reflection. And why the coaches using it are improving faster than those who aren't.
+
+Let me start with the problem we're solving.
+
+Most coaches reflect informally. You think about sessions in the car, in the shower, lying in bed. Sometimes you jot notes in a notebook. Sometimes you text yourself a reminder. But it's scattered, inconsistent, and you never look back at it.
+
+Even if you do write things down, you're writing randomly. Whatever comes to mind. There's no structure, no prompts to help you think deeper, no system to spot patterns.
+
+The result? You miss things. You repeat the same mistakes because you never identified them as patterns. You forget which players needed extra attention. You can't remember what worked three months ago when you were coaching the same topic.
+
+Reflection without structure is just thinking. Structured reflection is how you actually improve.
+
+That's what Coach Reflection provides. Structure. Prompts. Pattern detection. A system that makes reflection useful.
+
+Here's how it works.
+
+After each session, you open Coach Reflection and answer five guided questions. These aren't random questions. They're based on what actually helps coaches improve.
+
+What worked well today? This captures your wins. The things to repeat. The moments that clicked.
+
+What didn't go as planned? This captures the learning opportunities. The things to adjust. No judgment, just observation.
+
+Were there any player standouts? This tracks individual development over time. Who's improving? Who needs support? Who surprised you?
+
+What areas need more work? This identifies the focus for future sessions. The gaps you're seeing.
+
+What will you focus on next session? This creates accountability. It connects today to tomorrow.
+
+That's it. Five questions. Takes two to three minutes after a session. But the compound effect over weeks and months is enormous.
+
+You're not just thinking anymore. You're documenting. You're building a record of your coaching journey. And the AI is watching for patterns.
+
+Let me show you the pattern detection.
+
+After you've reflected on several sessions, Coach Reflection starts spotting things you'd miss.
+
+Recurring challenges. Maybe you've mentioned "players not listening during instructions" in four of your last eight reflections. You might not have noticed that pattern. The AI does. Now you know it's not a one-off problem. It's something to address systematically.
+
+Player patterns. You mention Jake positively in most reflections. You mention Emma as needing support repeatedly. The AI tracks this. You can see which players are progressing and which need more attention.
+
+Improvement trends. Over the past month, you've stopped mentioning "running out of time" as a problem. That's progress. You've improved your session timing without even realising it. The AI shows you this.
+
+Decline trends. Your energy ratings have dropped from an average of four to an average of two over the past six weeks. That's a burnout warning sign. The AI flags it before you hit a wall.
+
+This is like having a coaching mentor who reads everything you write, remembers everything, and points out what you'd otherwise miss.
+
+No human mentor could do this. They'd forget. They'd be biased. They wouldn't have access to all your reflections. AI can.
+
+Let me talk about the other features.
+
+Session logging. Before you reflect, you log basic session info. Training or match. Date, duration, players present. Weather if it affected things. This builds your coaching history.
+
+Mood and energy tracking. After each reflection, you rate your mood and energy on a simple scale. One to five. This creates a trend line over time. Coaches who track this spot burnout weeks before it would otherwise hit them.
+
+Session plan upload. This is a Pro feature. You can photograph your handwritten session plan or upload a digital one. The AI reads it using vision technology. It extracts your objectives, drills, timing, coaching points. Then it pre-populates your reflection questions based on what you planned versus what actually happened.
+
+Voice notes. Another Pro feature. If you don't have time to type, record a voice note. Up to five minutes. The AI transcribes it and turns it into structured reflection. You can reflect while driving home, hands-free.
+
+Analytics dashboard. See your coaching journey over four, eight, or twelve weeks. Mood trends. Energy trends. Recurring themes. Top players mentioned. Areas of focus. It's your coaching development visualised.
+
+CPD documentation. If your club or federation requires continuing professional development records, Coach Reflection can export your reflections as CPD documentation. Automatic proof that you're developing as a coach.
+
+Let me be clear about what this is and isn't.
+
+This is not session planning software. Use FootballGPT for that. This is reflection software. What happens after the session.
+
+This is not a replacement for thinking. It's a structure for thinking. The insights are still yours. The AI just helps you capture them and spot patterns.
+
+This is not just for football. Coach Reflection works for rugby, basketball, hockey, tennis, cricket, swimming, athletics, martial arts, and more. Any coach who wants to improve through reflection.
+
+This is not complicated. Five questions after each session. That's the core. Everything else is optional enhancement.
+
+Who is this for?
+
+Grassroots coaches who want to improve but don't have support staff. You're on your own. Coach Reflection gives you some of what professional coaches have.
+
+Academy and development coaches who need to track player progress systematically. The player mention feature is powerful for this.
+
+New coaches who are still building their coaching identity. Reflection accelerates your learning. Every session becomes data for improvement.
+
+Experienced coaches who've been winging it and want more structure. You've got decades of knowledge. Coach Reflection helps you organise it.
+
+Coaches at risk of burnout. The mood and energy tracking catches problems early. Prevention is better than cure.
+
+Coaches who need CPD documentation. Automatic. No extra work. Your reflections become your records.
+
+Let me talk about what coaches are saying.
+
+One grassroots coach told me he'd been coaching for eight years without any system for reflection. After using Coach Reflection for three months, he identified that player behaviour issues always spiked in the last fifteen minutes of his sessions. He realised his sessions were too long. He shortened them by ten minutes and the behaviour problems almost disappeared.
+
+He would never have spotted that pattern without structured reflection over time.
+
+Another coach used the player tracking to identify that she was mentioning certain players constantly and others almost never. She realised she was giving uneven attention. Now she consciously rotates her focus and her reflections show a more balanced distribution of player mentions.
+
+A coach at a development centre uses the CPD export to satisfy his federation's requirements. He used to spend hours at the end of each quarter putting together development evidence. Now it's automatic.
+
+These aren't dramatic transformations. They're steady improvements that compound over time. That's what structured reflection does.
+
+How do you get started?
+
+Go to coachreflection.com. Sign up for free. No credit card required.
+
+The free tier gives you five reflections per day. For most coaches, that's plenty. You're probably not running five sessions a day.
+
+Complete your profile. Tell us your sport, your age group, your level. This helps the AI give you relevant insights.
+
+After your next session, open Coach Reflection and answer the five questions. It takes two to three minutes. That's it.
+
+Do this consistently. After every session. The magic is in the consistency. One reflection is data. Fifty reflections is a pattern. A hundred reflections is a coaching development system.
+
+The free tier limits your analytics to one week of history. If you want to see patterns over months, upgrade to Pro. Nine ninety-nine per month or ninety-nine per year.
+
+Pro also unlocks voice notes, session plan upload, and full analytics history.
+
+Pro Plus at nineteen ninety-nine per month adds syllabus upload. You can upload your club's coaching syllabus or philosophy document and the AI learns your specific approach. Reflections become personalised to your coaching framework.
+
+For clubs, there are team plans. Five to thirty coaches with shared analytics and club syllabus features.
+
+But start free. See if structured reflection works for you. Upgrade when you need more.
+
+Let me summarise.
+
+Coach Reflection is an AI-powered coaching journal. It gives you structure for reflection with five guided questions after each session. It tracks your mood and energy to spot burnout early. It identifies patterns you'd miss, like recurring challenges and player development trends. It builds a complete record of your coaching journey. And it turns your reflections into CPD documentation automatically.
+
+Most coaches think about their sessions. With Coach Reflection, you learn from them.
+
+The link is in the description. Sign up free. Start your next session knowing that your post-session thoughts will be captured, analysed, and turned into coaching growth.
+
+Thanks for watching. If you found this useful, subscribe. More coaching content coming soon.
+
+See you in the next one.
