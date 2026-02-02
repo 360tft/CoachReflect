@@ -4,7 +4,7 @@ import { createAdminClient } from "@/lib/supabase/admin"
 import { isAdminUser } from "@/lib/admin"
 import { Resend } from "resend"
 
-const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || "Coach Reflection <hello@coachreflection.com>"
+const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || "Coach Reflection <hello@send.coachreflection.com>"
 
 function getResendClient() {
   if (!process.env.RESEND_API_KEY) {

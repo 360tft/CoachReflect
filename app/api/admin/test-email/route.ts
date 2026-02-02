@@ -3,7 +3,7 @@ import { createClient } from "@/lib/supabase/server"
 import { isAdminUser } from "@/lib/admin"
 import { Resend } from "resend"
 
-const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || "Coach Reflection <hello@coachreflection.com>"
+const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || "Coach Reflection <hello@send.coachreflection.com>"
 
 export async function POST(request: Request) {
   try {

@@ -31,7 +31,7 @@ import {
 
 // Config
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://coachreflection.com'
-const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'Coach Reflection <hello@coachreflection.com>'
+const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'Coach Reflection <hello@send.coachreflection.com>'
 const ADMIN_EMAIL = process.env.ADMIN_EMAILS?.split(',')[0] || 'admin@360tft.com'
 
 // Lazy-load Resend client
