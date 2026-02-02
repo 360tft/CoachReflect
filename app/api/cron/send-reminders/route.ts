@@ -171,7 +171,7 @@ export async function GET(request: Request) {
 
           if (emailHtml) {
             await getResend().emails.send({
-              from: "Coach Reflection <reminders@coachreflection.com>",
+              from: process.env.RESEND_FROM_EMAIL || "Coach Reflection <reminders@send.coachreflection.com>",
               to: userData.user.email,
               subject: "Time to Reflect on Today's Session",
               html: emailHtml,

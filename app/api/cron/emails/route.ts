@@ -4,7 +4,7 @@ import { Resend } from "resend"
 import { getSequence, type SequenceName } from "@/lib/email-sequences"
 import { renderTemplate } from "@/lib/email-templates"
 
-const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'Coach Reflection <hello@coachreflection.com>'
+const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'Coach Reflection <hello@send.coachreflection.com>'
 const REPLY_TO_EMAIL = process.env.RESEND_REPLY_TO_EMAIL || 'admin@360tft.com'
 
 // Helper to add delay between sends
