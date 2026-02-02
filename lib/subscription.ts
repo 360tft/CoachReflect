@@ -24,34 +24,75 @@ export type SubscriptionTier = 'free' | 'pro' | 'pro_plus'
 
 // Tier feature limits
 export interface TierLimits {
+  /** @deprecated Use shortVoiceNotesPerMonth / fullRecordingsPerMonth instead */
   voiceNotesPerMonth: number
+  shortVoiceNotesPerMonth: number  // -1 = unlimited
+  fullRecordingsPerMonth: number   // -1 = unlimited
+  isSharedVoicePool: boolean       // Pro shares short+full in one pool
   hasSyllabus: boolean
   hasAdvancedAnalytics: boolean
+  hasStructuredReflection: boolean
+  hasCommunicationAnalysis: boolean
+  hasDevelopmentBlocks: boolean
+  hasCPDExport: boolean
+  hasAgeNudges: boolean
 }
 
 export const TIER_LIMITS: Record<SubscriptionTier, TierLimits> = {
   free: {
     voiceNotesPerMonth: 0,
+    shortVoiceNotesPerMonth: 0,
+    fullRecordingsPerMonth: 0,
+    isSharedVoicePool: false,
     hasSyllabus: false,
     hasAdvancedAnalytics: false,
+    hasStructuredReflection: false,
+    hasCommunicationAnalysis: false,
+    hasDevelopmentBlocks: false,
+    hasCPDExport: false,
+    hasAgeNudges: false,
   },
   pro: {
     voiceNotesPerMonth: 4,
+    shortVoiceNotesPerMonth: 4,   // shared pool
+    fullRecordingsPerMonth: 4,    // shared pool
+    isSharedVoicePool: true,
     hasSyllabus: false,
     hasAdvancedAnalytics: false,
+    hasStructuredReflection: true,
+    hasCommunicationAnalysis: false,
+    hasDevelopmentBlocks: false,
+    hasCPDExport: false,
+    hasAgeNudges: false,
   },
   pro_plus: {
-    voiceNotesPerMonth: 12,
+    voiceNotesPerMonth: -1,
+    shortVoiceNotesPerMonth: -1,  // unlimited
+    fullRecordingsPerMonth: 12,
+    isSharedVoicePool: false,
     hasSyllabus: true,
     hasAdvancedAnalytics: true,
+    hasStructuredReflection: true,
+    hasCommunicationAnalysis: true,
+    hasDevelopmentBlocks: true,
+    hasCPDExport: true,
+    hasAgeNudges: true,
   },
 }
 
 // Club members get Pro+ equivalent
 export const CLUB_MEMBER_LIMITS: TierLimits = {
-  voiceNotesPerMonth: 12,
+  voiceNotesPerMonth: -1,
+  shortVoiceNotesPerMonth: -1,
+  fullRecordingsPerMonth: 12,
+  isSharedVoicePool: false,
   hasSyllabus: true,
   hasAdvancedAnalytics: true,
+  hasStructuredReflection: true,
+  hasCommunicationAnalysis: true,
+  hasDevelopmentBlocks: true,
+  hasCPDExport: true,
+  hasAgeNudges: true,
 }
 
 // Pricing configuration (single source of truth)
@@ -92,10 +133,58 @@ export const PRICING = {
 
 /**
  * Get the voice note limit for a subscription tier
+ * @deprecated Use getVoiceLimits() instead for split short/full limits
  */
 export function getVoiceNoteLimit(tier: SubscriptionTier | string): number {
   const limits = TIER_LIMITS[tier as SubscriptionTier]
   return limits?.voiceNotesPerMonth ?? 0
+}
+
+/**
+ * Get split voice limits for a subscription tier
+ */
+export function getVoiceLimits(tier: SubscriptionTier | string, isClubMember: boolean = false): {
+  shortPerMonth: number
+  fullPerMonth: number
+  isSharedPool: boolean
+} {
+  const limits = isClubMember ? CLUB_MEMBER_LIMITS : TIER_LIMITS[tier as SubscriptionTier]
+  if (!limits) {
+    return { shortPerMonth: 0, fullPerMonth: 0, isSharedPool: false }
+  }
+  return {
+    shortPerMonth: limits.shortVoiceNotesPerMonth,
+    fullPerMonth: limits.fullRecordingsPerMonth,
+    isSharedPool: limits.isSharedVoicePool,
+  }
+}
+
+export type FeatureFlag =
+  | 'structuredReflection'
+  | 'communicationAnalysis'
+  | 'developmentBlocks'
+  | 'cpdExport'
+  | 'ageNudges'
+  | 'syllabus'
+  | 'advancedAnalytics'
+
+/**
+ * Check if a tier has a specific feature
+ */
+export function hasFeature(tier: SubscriptionTier | string, feature: FeatureFlag, isClubMember: boolean = false): boolean {
+  const limits = isClubMember ? CLUB_MEMBER_LIMITS : TIER_LIMITS[tier as SubscriptionTier]
+  if (!limits) return false
+
+  switch (feature) {
+    case 'structuredReflection': return limits.hasStructuredReflection
+    case 'communicationAnalysis': return limits.hasCommunicationAnalysis
+    case 'developmentBlocks': return limits.hasDevelopmentBlocks
+    case 'cpdExport': return limits.hasCPDExport
+    case 'ageNudges': return limits.hasAgeNudges
+    case 'syllabus': return limits.hasSyllabus
+    case 'advancedAnalytics': return limits.hasAdvancedAnalytics
+    default: return false
+  }
 }
 
 /**

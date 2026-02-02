@@ -26,7 +26,15 @@ export const SUBSCRIPTION_LIMITS = {
     ai_features: false,
     session_plan_upload: false,
     voice_notes_per_month: 0,
+    short_voice_notes_per_month: 0,
+    full_recordings_per_month: 0,
+    is_shared_voice_pool: false,
     has_syllabus: false,
+    has_structured_reflection: false,
+    has_communication_analysis: false,
+    has_development_blocks: false,
+    has_cpd_export: false,
+    has_age_nudges: false,
   },
   pro: {
     messages_per_day: Infinity,
@@ -34,15 +42,31 @@ export const SUBSCRIPTION_LIMITS = {
     ai_features: true,
     session_plan_upload: true,
     voice_notes_per_month: 4,
+    short_voice_notes_per_month: 4,   // shared pool
+    full_recordings_per_month: 4,     // shared pool
+    is_shared_voice_pool: true,
     has_syllabus: false,
+    has_structured_reflection: true,
+    has_communication_analysis: false,
+    has_development_blocks: false,
+    has_cpd_export: false,
+    has_age_nudges: false,
   },
   pro_plus: {
     messages_per_day: Infinity,
     analytics_history_weeks: Infinity,  // Full history
     ai_features: true,
     session_plan_upload: true,
-    voice_notes_per_month: 12,
+    voice_notes_per_month: -1,          // unlimited (short)
+    short_voice_notes_per_month: -1,    // unlimited
+    full_recordings_per_month: 12,
+    is_shared_voice_pool: false,
     has_syllabus: true,
+    has_structured_reflection: true,
+    has_communication_analysis: true,
+    has_development_blocks: true,
+    has_cpd_export: true,
+    has_age_nudges: true,
   },
 } as const
 
@@ -579,14 +603,31 @@ export const COACHING_THEME_CATEGORIES: { id: ThemeCategory; label: string }[] =
 
 // ==================== Voice Limits ====================
 
+/** @deprecated Use VOICE_LIMITS instead */
 export const VOICE_NOTE_LIMITS = {
   free: 0,        // No voice notes
-  pro: 4,         // 4 voice notes per month
-  pro_plus: 12,   // 12 voice notes per month
+  pro: 4,         // 4 voice notes per month (shared pool)
+  pro_plus: -1,   // Unlimited short voice notes
 } as const
 
-export const VOICE_MAX_DURATION_SECONDS = 300  // 5 minutes
-export const VOICE_MAX_FILE_SIZE_BYTES = 200 * 1024 * 1024  // 200MB for 120min recordings
+export const VOICE_LIMITS = {
+  free: { shortPerMonth: 0, fullPerMonth: 0, isSharedPool: false },
+  pro: { shortPerMonth: 4, fullPerMonth: 4, isSharedPool: true },     // 4 total shared
+  pro_plus: { shortPerMonth: -1, fullPerMonth: 12, isSharedPool: false }, // unlimited short, 12 full
+} as const
+
+export const VOICE_SHORT_THRESHOLD_SECONDS = 300  // < 5 min = short
+
+/** @deprecated Use tier-aware max durations from config */
+export const VOICE_MAX_DURATION_SECONDS = 300  // 5 minutes (kept for backwards compat)
+
+export const VOICE_MAX_FILE_SIZE = {
+  short: 10 * 1024 * 1024,   // 10MB for short voice notes
+  full: 100 * 1024 * 1024,   // 100MB for full recordings
+} as const
+
+/** @deprecated Use VOICE_MAX_FILE_SIZE instead */
+export const VOICE_MAX_FILE_SIZE_BYTES = 200 * 1024 * 1024  // 200MB (kept for backwards compat)
 
 export const SUPPORTED_AUDIO_TYPES = [
   'audio/mpeg',     // .mp3

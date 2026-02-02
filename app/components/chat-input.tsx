@@ -5,10 +5,14 @@ import { Button } from "@/app/components/ui/button"
 import { Textarea } from "@/app/components/ui/textarea"
 import {
   VOICE_MAX_DURATION_SECONDS,
+  VOICE_MAX_FILE_SIZE,
+  VOICE_SHORT_THRESHOLD_SECONDS,
   SUPPORTED_AUDIO_TYPES,
   type TranscriptionResponse,
   type SessionPlanAnalysis,
+  type SubscriptionTier,
 } from "@/app/types"
+import { VOICE_FULL_MAX_SECONDS } from "@/lib/config"
 
 interface ChatInputProps {
   onSend: (
@@ -20,6 +24,7 @@ interface ChatInputProps {
     }[]
   ) => void
   isSubscribed: boolean
+  subscriptionTier?: SubscriptionTier
   remaining?: number
   disabled?: boolean
   placeholder?: string
@@ -43,11 +48,19 @@ interface PendingAttachment {
 export function ChatInput({
   onSend,
   isSubscribed,
+  subscriptionTier = 'free',
   remaining = 5,
   disabled = false,
   placeholder = "Type your message...",
   onUpgradeClick,
 }: ChatInputProps) {
+  // Tier-aware recording limits
+  const maxRecordingDuration = subscriptionTier === 'pro_plus'
+    ? VOICE_FULL_MAX_SECONDS
+    : VOICE_MAX_DURATION_SECONDS
+  const maxVoiceFileSize = subscriptionTier === 'pro_plus'
+    ? VOICE_MAX_FILE_SIZE.full
+    : VOICE_MAX_FILE_SIZE.short
   const [input, setInput] = useState("")
   const [isRecording, setIsRecording] = useState(false)
   const [recordingDuration, setRecordingDuration] = useState(0)
@@ -93,7 +106,7 @@ export function ChatInput({
   }, [isSubscribed, onUpgradeClick])
 
   // Upload voice note and get transcription
-  const uploadAndTranscribe = useCallback(async (file: File | Blob, isBlob: boolean = false) => {
+  const uploadAndTranscribe = useCallback(async (file: File | Blob, isBlob: boolean = false, recordingDurationSecs?: number) => {
     const previewUrl = URL.createObjectURL(file)
     const newAttachment: PendingAttachment = {
       type: 'voice',
@@ -111,6 +124,9 @@ export function ChatInput({
       const formData = new FormData()
       const filename = isBlob ? `recording-${Date.now()}.webm` : (file as File).name
       formData.append('audio', file, filename)
+      if (recordingDurationSecs !== undefined) {
+        formData.append('duration', String(recordingDurationSecs))
+      }
 
       const uploadRes = await fetch('/api/voice/upload', {
         method: 'POST',
@@ -258,7 +274,8 @@ export function ChatInput({
       mediaRecorder.onstop = () => {
         stream.getTracks().forEach(track => track.stop())
         const blob = new Blob(chunksRef.current, { type: mediaRecorder.mimeType })
-        uploadAndTranscribe(blob, true)
+        const elapsed = Math.round((Date.now() - startTimeRef.current) / 1000)
+        uploadAndTranscribe(blob, true, elapsed)
       }
 
       mediaRecorder.start(1000)
@@ -269,7 +286,7 @@ export function ChatInput({
         const elapsed = Math.round((Date.now() - startTimeRef.current) / 1000)
         setRecordingDuration(elapsed)
 
-        if (elapsed >= VOICE_MAX_DURATION_SECONDS) {
+        if (elapsed >= maxRecordingDuration) {
           stopRecording()
         }
       }, 100)
@@ -312,11 +329,12 @@ export function ChatInput({
         setError('Unsupported audio format. Use MP3, M4A, WAV, WebM, OGG, or FLAC.')
         return
       }
-      if (file.size > 50 * 1024 * 1024) {
-        setError('File too large. Maximum 50MB.')
+      if (file.size > maxVoiceFileSize) {
+        const limitMB = Math.round(maxVoiceFileSize / (1024 * 1024))
+        setError(`File too large. Maximum ${limitMB}MB.`)
         return
       }
-      uploadAndTranscribe(file, false)
+      uploadAndTranscribe(file, false, undefined)
     } else {
       // Image upload with Claude Vision analysis
       if (!file.type.startsWith('image/')) {

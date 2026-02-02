@@ -151,6 +151,9 @@ export const LIMITS = {
   FREE: {
     messagesPerDay: 5,
     voiceNotesPerMonth: 0,
+    shortVoiceNotesPerMonth: 0,
+    fullRecordingsPerMonth: 0,
+    isSharedVoicePool: false,
     sessionPlansPerMonth: 0,
     historyDays: 7, // 1 week
     analyticsWeeks: 1, // 1 week
@@ -159,6 +162,9 @@ export const LIMITS = {
   PRO: {
     messagesPerDay: -1, // unlimited
     voiceNotesPerMonth: 4,
+    shortVoiceNotesPerMonth: 4,   // shared pool of 4
+    fullRecordingsPerMonth: 4,    // shared pool of 4
+    isSharedVoicePool: true,
     sessionPlansPerMonth: -1,
     historyDays: -1,
     analyticsWeeks: -1, // unlimited
@@ -166,13 +172,20 @@ export const LIMITS = {
   },
   PRO_PLUS: {
     messagesPerDay: -1, // unlimited
-    voiceNotesPerMonth: 12,
+    voiceNotesPerMonth: -1,
+    shortVoiceNotesPerMonth: -1,  // unlimited
+    fullRecordingsPerMonth: 12,
+    isSharedVoicePool: false,
     sessionPlansPerMonth: -1,
     historyDays: -1,
     analyticsWeeks: -1, // unlimited
     hasSyllabus: true,
   },
 } as const
+
+// Voice duration thresholds (seconds)
+export const VOICE_SHORT_MAX_SECONDS = 300     // 5 minutes
+export const VOICE_FULL_MAX_SECONDS = 7200     // 2 hours
 
 // =============================================================================
 // FEATURE FLAGS
@@ -181,13 +194,18 @@ export const LIMITS = {
 export const FEATURES = {
   FREE: {
     chat: true,
-    voiceNotes: true, // limited
+    voiceNotes: false,
     sessionPlanUpload: false,
     themeExtraction: false,
     analytics: true, // limited to 4 weeks
     export: false,
     memory: false,
     cpdDocumentation: false,
+    structuredReflection: false,
+    communicationAnalysis: false,
+    developmentBlocks: false,
+    cpdExport: false,
+    ageNudges: false,
   },
   PRO: {
     chat: true,
@@ -198,6 +216,26 @@ export const FEATURES = {
     export: true,
     memory: true,
     cpdDocumentation: true,
+    structuredReflection: true,
+    communicationAnalysis: false,
+    developmentBlocks: false,
+    cpdExport: false,
+    ageNudges: false,
+  },
+  PRO_PLUS: {
+    chat: true,
+    voiceNotes: true,
+    sessionPlanUpload: true,
+    themeExtraction: true,
+    analytics: true,
+    export: true,
+    memory: true,
+    cpdDocumentation: true,
+    structuredReflection: true,
+    communicationAnalysis: true,
+    developmentBlocks: true,
+    cpdExport: true,
+    ageNudges: true,
   },
 } as const
 
@@ -252,7 +290,7 @@ export function getTierFeatures(tier: 'free' | 'pro' | 'pro_plus') {
   const tierMap = {
     free: FEATURES.FREE,
     pro: FEATURES.PRO,
-    pro_plus: FEATURES.PRO,
+    pro_plus: FEATURES.PRO_PLUS,
   }
   return tierMap[tier] || FEATURES.FREE
 }

@@ -4,8 +4,7 @@ import { createAdminClient } from "@/lib/supabase/admin"
 import { validateAudioFile } from "@/lib/whisper"
 import { nanoid } from "nanoid"
 import type { VoiceUploadResponse } from "@/app/types"
-
-const MAX_FILE_SIZE = 200 * 1024 * 1024  // 200MB for up to 120min recordings
+import { VOICE_SHORT_THRESHOLD_SECONDS, VOICE_MAX_FILE_SIZE } from "@/app/types"
 
 // Type for the RPC function response
 interface VoiceLimitCheck {
@@ -28,12 +27,52 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // 2. Check voice note limit
+    // 2. Parse form data
+    const formData = await request.formData()
+    const file = formData.get('audio') as File | null
+    const sessionDate = formData.get('session_date') as string | null
+    const durationStr = formData.get('duration') as string | null
+    const durationSeconds = durationStr ? Math.round(parseFloat(durationStr)) : 0
+
+    if (!file) {
+      return NextResponse.json(
+        { error: "No audio file provided" },
+        { status: 400 }
+      )
+    }
+
+    // 3. Classify as short or full based on duration
+    const isShort = durationSeconds < VOICE_SHORT_THRESHOLD_SECONDS
+
+    // 4. Apply tier-aware file size limit
+    const maxFileSize = isShort ? VOICE_MAX_FILE_SIZE.short : VOICE_MAX_FILE_SIZE.full
+
+    if (file.size > maxFileSize) {
+      const limitMB = Math.round(maxFileSize / (1024 * 1024))
+      return NextResponse.json(
+        { error: `File too large. Maximum size is ${limitMB}MB${isShort ? ' for short voice notes' : ' for full recordings'}.` },
+        { status: 400 }
+      )
+    }
+
+    // 5. Validate audio format
+    const validation = validateAudioFile(file.size, file.type)
+    if (!validation.valid) {
+      return NextResponse.json(
+        { error: validation.error },
+        { status: 400 }
+      )
+    }
+
+    // 6. Check voice note limit (passing duration for split limit checking)
     const adminClient = createAdminClient()
     let limitCheck: VoiceLimitCheck | null = null
 
     const { data: limitData, error: limitError } = await adminClient
-      .rpc('check_voice_note_limit', { p_user_id: user.id })
+      .rpc('check_voice_note_limit', {
+        p_user_id: user.id,
+        p_duration_seconds: durationSeconds,
+      })
       .single()
 
     if (limitError) {
@@ -62,39 +101,11 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // 3. Parse form data
-    const formData = await request.formData()
-    const file = formData.get('audio') as File | null
-    const sessionDate = formData.get('session_date') as string | null
-
-    if (!file) {
-      return NextResponse.json(
-        { error: "No audio file provided" },
-        { status: 400 }
-      )
-    }
-
-    // 4. Validate file
-    const validation = validateAudioFile(file.size, file.type)
-    if (!validation.valid) {
-      return NextResponse.json(
-        { error: validation.error },
-        { status: 400 }
-      )
-    }
-
-    if (file.size > MAX_FILE_SIZE) {
-      return NextResponse.json(
-        { error: "File too large. Maximum size is 50MB." },
-        { status: 400 }
-      )
-    }
-
-    // 5. Generate unique storage path
+    // 7. Generate unique storage path
     const fileExt = file.name.split('.').pop() || 'mp3'
     const storagePath = `${user.id}/${nanoid()}.${fileExt}`
 
-    // 6. Upload to Supabase Storage
+    // 8. Upload to Supabase Storage
     const arrayBuffer = await file.arrayBuffer()
     const buffer = Buffer.from(arrayBuffer)
 
@@ -116,7 +127,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // 7. Create attachment record
+    // 9. Create attachment record
     const { data: attachment, error: insertError } = await adminClient
       .from('message_attachments')
       .insert({
@@ -141,8 +152,11 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // 8. Increment voice note count for all users (everyone has limits now)
-    await adminClient.rpc('increment_voice_note_count', { p_user_id: user.id })
+    // 10. Increment voice note count (passing duration for correct counter)
+    await adminClient.rpc('increment_voice_note_count', {
+      p_user_id: user.id,
+      p_duration_seconds: durationSeconds,
+    })
 
     const response: VoiceUploadResponse = {
       attachment_id: attachment.id,

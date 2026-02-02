@@ -223,17 +223,30 @@ export async function canSendMessage(userId: string, hasSubscription: boolean): 
 
 /**
  * Check if user can record a voice note
+ * @param durationSeconds - Expected duration in seconds (0 = short by default)
  */
-export async function canRecordVoiceNote(userId: string, tier: 'free' | 'pro' | 'pro_plus'): Promise<{
+export async function canRecordVoiceNote(userId: string, tier: 'free' | 'pro' | 'pro_plus', durationSeconds: number = 0): Promise<{
   allowed: boolean
   remaining: number
   reason?: string
 }> {
-  const limit = tier === 'pro_plus'
-    ? LIMITS.PRO_PLUS.voiceNotesPerMonth
-    : tier === 'pro'
-      ? LIMITS.PRO.voiceNotesPerMonth
-      : LIMITS.FREE.voiceNotesPerMonth
+  const isShort = durationSeconds < 300
+  const isSharedPool = tier === 'pro'
+
+  // Determine the applicable limit
+  let limit: number
+  if (tier === 'free') {
+    limit = 0
+  } else if (isSharedPool) {
+    // Pro: shared pool of 4
+    limit = LIMITS.PRO.shortVoiceNotesPerMonth
+  } else if (isShort) {
+    // Pro+: unlimited short
+    limit = LIMITS.PRO_PLUS.shortVoiceNotesPerMonth
+  } else {
+    // Pro+: 12 full recordings
+    limit = LIMITS.PRO_PLUS.fullRecordingsPerMonth
+  }
 
   // Free tier has 0 voice notes
   if (limit === 0) {
@@ -242,6 +255,11 @@ export async function canRecordVoiceNote(userId: string, tier: 'free' | 'pro' | 
       remaining: 0,
       reason: 'Voice notes are a Pro feature. Upgrade to record your reflections.',
     }
+  }
+
+  // Unlimited
+  if (limit === -1) {
+    return { allowed: true, remaining: -1 }
   }
 
   const usage = await getUserUsage(userId)

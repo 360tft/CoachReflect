@@ -2,7 +2,7 @@
 
 import { useState, useRef, useCallback, useEffect } from "react"
 import { Button } from "./ui/button"
-import { VOICE_MAX_DURATION_SECONDS, SUPPORTED_AUDIO_TYPES } from "@/app/types"
+import { VOICE_MAX_DURATION_SECONDS, VOICE_MAX_FILE_SIZE, SUPPORTED_AUDIO_TYPES } from "@/app/types"
 
 interface VoiceRecorderProps {
   onRecordingComplete: (blob: Blob, duration: number) => void
@@ -11,6 +11,7 @@ interface VoiceRecorderProps {
   hasRecording: boolean
   disabled?: boolean
   maxDuration?: number
+  maxFileSize?: number
 }
 
 export function VoiceRecorder({
@@ -20,6 +21,7 @@ export function VoiceRecorder({
   hasRecording,
   disabled = false,
   maxDuration = VOICE_MAX_DURATION_SECONDS,
+  maxFileSize = VOICE_MAX_FILE_SIZE.full,
 }: VoiceRecorderProps) {
   const [isRecording, setIsRecording] = useState(false)
   const [recordingDuration, setRecordingDuration] = useState(0)
@@ -151,9 +153,10 @@ export function VoiceRecorder({
       return
     }
 
-    // Validate size (50MB)
-    if (file.size > 50 * 1024 * 1024) {
-      setError('File too large. Maximum size is 50MB.')
+    // Validate size
+    if (file.size > maxFileSize) {
+      const limitMB = Math.round(maxFileSize / (1024 * 1024))
+      setError(`File too large. Maximum size is ${limitMB}MB.`)
       return
     }
 
@@ -284,7 +287,7 @@ export function VoiceRecorder({
           </div>
 
           <p className="text-xs text-muted-foreground">
-            MP3, M4A, WAV, WebM • Max {formatDuration(maxDuration)} • Max 50MB
+            MP3, M4A, WAV, WebM • Max {formatDuration(maxDuration)} • Max {Math.round(maxFileSize / (1024 * 1024))}MB
           </p>
         </div>
       )}
