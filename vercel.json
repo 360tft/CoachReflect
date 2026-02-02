@@ -5,6 +5,10 @@
       "schedule": "0 9 * * *"
     },
     {
+      "path": "/api/cron/seo-report",
+      "schedule": "0 7 * * 1"
+    },
+    {
       "path": "/api/cron/weekly-summary",
       "schedule": "0 8 * * 1"
     },
