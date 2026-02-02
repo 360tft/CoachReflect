@@ -432,8 +432,8 @@ export function ChatInput({
       {showUpgradeHint && (
         <div className="bg-amber-50 dark:bg-amber-950 border border-amber-200 dark:border-amber-800 rounded-lg p-3 mb-3">
           <p className="text-sm text-amber-700 dark:text-amber-300">
-            {showUpgradeHint === 'voice' && 'Voice notes are a Pro feature. '}
-            {showUpgradeHint === 'image' && 'Session plan uploads are a Pro feature. '}
+            {showUpgradeHint === 'voice' && 'Talk through your sessions instead of typing. '}
+            {showUpgradeHint === 'image' && 'Upload session plans and get AI feedback. '}
             <a href="/dashboard/settings" className="underline font-medium">Upgrade to Pro</a> to unlock.
           </p>
         </div>

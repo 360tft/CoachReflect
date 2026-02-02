@@ -8,7 +8,7 @@ export function BillingToggle() {
   const [plan, setPlan] = useState<"pro" | "pro_plus">("pro")
 
   const prices = {
-    pro: { monthly: 9.99, annual: 99 },
+    pro: { monthly: 7.99, annual: 76.99 },
     pro_plus: { monthly: 19.99, annual: 199 },
   }
 
@@ -29,7 +29,7 @@ export function BillingToggle() {
           }`}
         >
           <p className="font-semibold">Pro</p>
-          <p className="text-sm text-muted-foreground">4 voice notes/mo</p>
+          <p className="text-sm text-muted-foreground">Talk through your sessions</p>
         </button>
         <button
           type="button"
@@ -41,7 +41,7 @@ export function BillingToggle() {
           }`}
         >
           <p className="font-semibold">Pro+</p>
-          <p className="text-sm text-muted-foreground">12 voice notes + syllabus</p>
+          <p className="text-sm text-muted-foreground">Full recordings + deep analysis</p>
         </button>
       </div>
 
@@ -75,19 +75,27 @@ export function BillingToggle() {
       {/* What's included */}
       <div className="text-sm space-y-1">
         <p className="font-medium">What&apos;s included:</p>
-        <ul className="text-muted-foreground space-y-1">
-          <li>+ Unlimited reflections</li>
-          <li>+ {plan === "pro" ? "4" : "12"} voice notes per month</li>
-          <li>+ Session plan upload with AI analysis</li>
-          <li>+ AI-powered insights and patterns</li>
-          <li>+ Full analytics history</li>
-          {plan === "pro_plus" && (
-            <>
-              <li>+ Upload your coaching syllabus</li>
-              <li>+ AI learns your coaching philosophy</li>
-            </>
-          )}
-        </ul>
+        {plan === "pro" ? (
+          <ul className="text-muted-foreground space-y-1">
+            <li>+ Talk through sessions instead of typing (4 voice notes/month)</li>
+            <li>+ Structured reflections that ask the right questions</li>
+            <li>+ Upload session plans and get AI feedback</li>
+            <li>+ AI spots patterns across your reflections</li>
+            <li>+ Full history — nothing gets lost</li>
+            <li>+ Export your reflections</li>
+          </ul>
+        ) : (
+          <ul className="text-muted-foreground space-y-1">
+            <li>+ Everything in Pro, plus:</li>
+            <li>+ Unlimited voice notes — record quick thoughts any time</li>
+            <li>+ 12 full session recordings/month</li>
+            <li>+ Communication analysis — understand how you coach</li>
+            <li>+ Development blocks — track structured progression</li>
+            <li>+ CPD documentation — evidence your growth automatically</li>
+            <li>+ Age-appropriate nudges — tailored to your players</li>
+            <li>+ Upload your coaching syllabus</li>
+          </ul>
+        )}
       </div>
 
       {/* Price display */}

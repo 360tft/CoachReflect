@@ -6,7 +6,7 @@ import { createClient } from "@/lib/supabase/server"
 
 export const metadata = {
   title: "Pricing | Coach Reflection",
-  description: "Simple pricing for coaches. Start free, upgrade when you need more features like voice notes, session plan uploads, and AI insights.",
+  description: "Simple pricing for coaches. Start reflecting for free, upgrade to Pro to talk through sessions, or go Pro+ for unlimited voice notes, communication analysis, and CPD documentation.",
 }
 
 export default async function PricingPage() {
@@ -80,15 +80,26 @@ export default async function PricingPage() {
           <div>
             <h3 className="font-semibold mb-2">What do I get with Pro?</h3>
             <p className="text-muted-foreground">
-              Pro gives you unlimited messages, voice notes, session plan uploads,
-              AI-powered insights, full analytics history, and an AI that learns your
-              coaching style over time.
+              Pro lets you talk through sessions with voice notes instead of typing,
+              gives you structured reflections that ask the right questions, session plan
+              uploads with AI feedback, pattern detection across your reflections, full
+              history, and reflection exports.
+            </p>
+          </div>
+          <div>
+            <h3 className="font-semibold mb-2">What&apos;s the difference between Pro and Pro+?</h3>
+            <p className="text-muted-foreground">
+              Pro gives you 4 voice notes per month to capture quick thoughts. Pro+ gives you
+              unlimited short voice notes plus 12 full session recordings per month. Pro+ also
+              includes communication analysis, development blocks, CPD documentation, age-appropriate
+              nudges, and the ability to upload your coaching syllabus so the AI learns your philosophy.
             </p>
           </div>
           <div>
             <h3 className="font-semibold mb-2">Do you offer team/club pricing?</h3>
             <p className="text-muted-foreground">
-              Yes! If you need accounts for multiple coaches, get in touch and
+              Yes! Club plans give every coach Pro+ access with shared syllabus,
+              communication analysis, and central billing. Get in touch and
               we&apos;ll set up a plan that works for your club.
             </p>
           </div>

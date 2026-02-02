@@ -104,7 +104,7 @@ export function ChatInterface({ isSubscribed, initialRemaining = 5 }: ChatInterf
 
     // Check free tier limit
     if (!isSubscribed && remaining <= 0) {
-      setError("You've reached your 5 message daily limit. Upgrade to Pro for unlimited reflections — just $7.99/month.")
+      setError("You've used your 5 reflections for today. Upgrade to Pro to reflect without limits, talk through sessions, and let AI spot patterns — from $7.99/month.")
       return
     }
 
@@ -495,9 +495,9 @@ export function ChatInterface({ isSubscribed, initialRemaining = 5 }: ChatInterf
             <p className="text-sm text-primary dark:text-primary">
               {remaining} message{remaining === 1 ? "" : "s"} remaining today.{" "}
               <a href="/dashboard/settings" className="underline font-medium">
-                Upgrade to Pro ($7.99/mo)
+                Upgrade to Pro
               </a>{" "}
-              for unlimited reflections.
+              to reflect without limits and talk through sessions.
             </p>
           </div>
         )}
@@ -510,7 +510,7 @@ export function ChatInterface({ isSubscribed, initialRemaining = 5 }: ChatInterf
           disabled={loading}
           placeholder={
             !isSubscribed && remaining <= 0
-              ? "Daily limit reached. Upgrade to Pro ($7.99/mo) for unlimited..."
+              ? "Daily limit reached. Upgrade to Pro to keep reflecting..."
               : "Type your message, or add a voice note..."
           }
         />

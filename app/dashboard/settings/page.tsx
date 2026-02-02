@@ -12,7 +12,7 @@ import { CPDExport } from "./cpd-export"
 import { EmailPreferences } from "./email-preferences"
 import { ReminderSettings } from "./reminder-settings"
 import { SyllabusUpload } from "./syllabus-upload"
-import { hasSyllabusFeature, getVoiceNoteLimit, getTierDisplayName } from "@/lib/subscription"
+import { hasSyllabusFeature, getVoiceLimits, getTierDisplayName } from "@/lib/subscription"
 
 export default async function SettingsPage() {
   const supabase = await createClient()
@@ -50,7 +50,7 @@ export default async function SettingsPage() {
 
   const isClubMember = !!membership?.club_id
   const canUploadSyllabus = hasSyllabusFeature(subscriptionTier, isClubMember)
-  const voiceNoteLimit = getVoiceNoteLimit(subscriptionTier)
+  const voiceLimits = getVoiceLimits(subscriptionTier, isClubMember)
   const voiceNotesUsed = profile?.voice_notes_used_this_month || 0
 
   return (
@@ -85,14 +85,14 @@ export default async function SettingsPage() {
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-muted/50 border">
                 <p className="font-medium text-foreground mb-2">
-                  Upgrade to Pro
+                  Upgrade to Pro — Coach smarter
                 </p>
                 <ul className="text-sm text-muted-foreground space-y-1">
-                  <li>• Unlimited reflections</li>
-                  <li>• Voice note recording and transcription</li>
-                  <li>• Session plan upload with AI analysis</li>
-                  <li>• AI-powered insights and summaries</li>
-                  <li>• Pattern detection across reflections</li>
+                  <li>• Talk through sessions instead of typing</li>
+                  <li>• Structured reflections that ask the right questions</li>
+                  <li>• Upload session plans and get AI feedback</li>
+                  <li>• AI spots patterns across your reflections</li>
+                  <li>• Full history — nothing gets lost</li>
                 </ul>
               </div>
               <BillingToggle />
@@ -127,11 +127,11 @@ export default async function SettingsPage() {
                 Club plans include Pro+ for every coach
               </p>
               <ul className="text-sm text-muted-foreground space-y-1">
-                <li>• 12 voice notes/month per coach</li>
-                <li>• Shared club syllabus upload</li>
-                <li>• AI learns your club philosophy</li>
+                <li>• Unlimited voice notes + 12 full recordings per coach</li>
+                <li>• Communication analysis and development blocks</li>
+                <li>• Shared club syllabus — AI learns your philosophy</li>
+                <li>• CPD documentation for every coach</li>
                 <li>• Central billing for all coaches</li>
-                <li>• From just $5.80/coach/month</li>
               </ul>
             </div>
             <Link href="/signup?plan=club">
@@ -190,18 +190,39 @@ export default async function SettingsPage() {
             <CardDescription>Your monthly voice note usage</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-2xl font-bold">{voiceNotesUsed} / {voiceNoteLimit}</p>
-                <p className="text-sm text-muted-foreground">voice notes this month</p>
+            {voiceLimits.isSharedPool ? (
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-2xl font-bold">{voiceNotesUsed} / {voiceLimits.shortPerMonth}</p>
+                  <p className="text-sm text-muted-foreground">voice notes this month</p>
+                </div>
+                <div className="w-32 h-2 bg-muted rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-primary rounded-full transition-all"
+                    style={{ width: `${Math.min((voiceNotesUsed / voiceLimits.shortPerMonth) * 100, 100)}%` }}
+                  />
+                </div>
               </div>
-              <div className="w-32 h-2 bg-muted rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-primary rounded-full transition-all"
-                  style={{ width: `${Math.min((voiceNotesUsed / voiceNoteLimit) * 100, 100)}%` }}
-                />
+            ) : (
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-lg font-bold">
+                      {voiceLimits.shortPerMonth === -1 ? 'Unlimited' : `${voiceNotesUsed} / ${voiceLimits.shortPerMonth}`}
+                    </p>
+                    <p className="text-sm text-muted-foreground">short voice notes</p>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-lg font-bold">
+                      {voiceLimits.fullPerMonth === -1 ? 'Unlimited' : `${voiceLimits.fullPerMonth}/month`}
+                    </p>
+                    <p className="text-sm text-muted-foreground">full session recordings</p>
+                  </div>
+                </div>
               </div>
-            </div>
+            )}
           </CardContent>
         </Card>
       )}
