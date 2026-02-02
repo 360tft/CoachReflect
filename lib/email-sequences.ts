@@ -15,7 +15,7 @@ export interface SequenceStep {
 // Onboarding sequence for new users (7 steps - SAAS-STANDARD compliant)
 export const ONBOARDING_SEQUENCE: SequenceStep[] = [
   { day: 0, template: 'welcome', subject: 'Welcome to Coach Reflection' },
-  { day: 1, template: 'first-value', subject: 'Your first reflection takes 2 minutes' },
+  { day: 1, template: 'first-reflection', subject: 'Your first reflection takes 2 minutes' },
   { day: 3, template: 'social-proof', subject: 'What coaches are reflecting on this week' },
   { day: 5, template: 'feature-highlight', subject: 'AI insights that transform your coaching' },
   { day: 7, template: 'check-in', subject: 'How are your reflections going?' },

@@ -23,6 +23,11 @@ import {
   WinbackFeatureEmail,
   StreakBrokenEmail,
 } from '@/emails/templates/winback'
+import {
+  SocialProofEmail,
+  FeatureHighlightVoiceEmail,
+  LastChanceEmail,
+} from '@/emails/templates/engagement'
 
 // Config
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://coachreflection.com'
@@ -55,6 +60,9 @@ type TemplateName =
   | 'winback'
   | 'winback-feature'
   | 'streak-broken'
+  | 'social-proof'
+  | 'feature-highlight'
+  | 'last-chance'
 
 interface TemplateConfig {
   component: (props: { name: string; unsubscribeUrl?: string }) => ReactElement
@@ -109,6 +117,18 @@ const TEMPLATES: Record<TemplateName, TemplateConfig> = {
   'streak-broken': {
     component: StreakBrokenEmail,
     subject: 'Your reflection streak - get back on track',
+  },
+  'social-proof': {
+    component: SocialProofEmail,
+    subject: 'What coaches are reflecting on this week',
+  },
+  'feature-highlight': {
+    component: FeatureHighlightVoiceEmail,
+    subject: 'AI insights that transform your coaching',
+  },
+  'last-chance': {
+    component: LastChanceEmail,
+    subject: 'A thank you from the Coach Reflection team',
   },
 }
 
