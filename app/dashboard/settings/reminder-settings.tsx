@@ -4,6 +4,8 @@ import { useState, useEffect } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card"
 import { Button } from "@/app/components/ui/button"
 
+type DeliveryMethod = "email" | "push" | "both"
+
 interface ReminderSchedule {
   id: string
   reminder_type: string
@@ -11,6 +13,7 @@ interface ReminderSchedule {
   days_of_week: number[]
   time_of_day: string
   timezone: string
+  delivery_method: DeliveryMethod
 }
 
 const DAYS = [
@@ -44,6 +47,7 @@ export function ReminderSettings() {
   const [daysOfWeek, setDaysOfWeek] = useState([1, 2, 3, 4, 5]) // Mon-Fri
   const [timeOfDay, setTimeOfDay] = useState("19:00")
   const [timezone, setTimezone] = useState("Europe/London")
+  const [deliveryMethod, setDeliveryMethod] = useState<DeliveryMethod>("email")
 
   useEffect(() => {
     async function fetchReminders() {
@@ -62,6 +66,7 @@ export function ReminderSettings() {
           setDaysOfWeek(dailyReminder.days_of_week || [1, 2, 3, 4, 5])
           setTimeOfDay(dailyReminder.time_of_day?.substring(0, 5) || "19:00")
           setTimezone(dailyReminder.timezone || "Europe/London")
+          setDeliveryMethod(dailyReminder.delivery_method || "email")
         }
       } catch {
         console.error("Failed to fetch reminders")
@@ -85,6 +90,7 @@ export function ReminderSettings() {
           days_of_week: daysOfWeek,
           time_of_day: `${timeOfDay}:00`,
           timezone,
+          delivery_method: deliveryMethod,
         }),
       })
 
@@ -150,6 +156,35 @@ export function ReminderSettings() {
 
         {enabled && (
           <>
+            {/* Delivery method */}
+            <div>
+              <label className="text-sm font-medium mb-2 block">How to remind you</label>
+              <div className="flex gap-1">
+                {([
+                  { value: "email" as const, label: "Email" },
+                  { value: "push" as const, label: "Push" },
+                  { value: "both" as const, label: "Both" },
+                ]).map(option => (
+                  <button
+                    key={option.value}
+                    onClick={() => setDeliveryMethod(option.value)}
+                    className={`flex-1 px-3 py-1.5 rounded-md text-sm transition-colors ${
+                      deliveryMethod === option.value
+                        ? 'bg-brand text-white'
+                        : 'bg-muted hover:bg-muted/80'
+                    }`}
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </div>
+              <p className="text-xs text-muted-foreground mt-1">
+                {deliveryMethod === "email" && "We'll email you a reminder."}
+                {deliveryMethod === "push" && "Make sure notifications are enabled in your browser."}
+                {deliveryMethod === "both" && "You'll get an email and a push notification."}
+              </p>
+            </div>
+
             {/* Days selection */}
             <div>
               <label className="text-sm font-medium mb-2 block">Days</label>
@@ -211,9 +246,11 @@ export function ReminderSettings() {
           {saving ? "Saving..." : "Save Reminder Settings"}
         </Button>
 
-        <p className="text-xs text-center text-muted-foreground">
-          Make sure push notifications are enabled in your browser and on your device.
-        </p>
+        {enabled && deliveryMethod !== "email" && (
+          <p className="text-xs text-center text-muted-foreground">
+            Push notifications require browser permission. Check your browser settings if you don't receive them.
+          </p>
+        )}
       </CardContent>
     </Card>
   )

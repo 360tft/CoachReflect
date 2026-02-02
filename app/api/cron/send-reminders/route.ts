@@ -34,9 +34,7 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: "Missing Supabase config" }, { status: 500 })
   }
 
-  if (!VAPID_PUBLIC_KEY || !VAPID_PRIVATE_KEY) {
-    return NextResponse.json({ error: "Missing VAPID config" }, { status: 500 })
-  }
+  const vapidConfigured = !!(VAPID_PUBLIC_KEY && VAPID_PRIVATE_KEY)
 
   const supabase = createClient(supabaseUrl, supabaseServiceKey)
 
@@ -103,84 +101,87 @@ export async function GET(request: Request) {
         continue
       }
 
-      // Get user's push subscriptions
-      const { data: subscriptions } = await supabase
-        .from("push_subscriptions")
-        .select("*")
-        .eq("user_id", schedule.user_id)
-        .eq("is_active", true)
+      const deliveryMethod: string = schedule.delivery_method || "both"
+      const shouldSendPush = deliveryMethod === "push" || deliveryMethod === "both"
+      const shouldSendEmail = deliveryMethod === "email" || deliveryMethod === "both"
 
-      if (!subscriptions || subscriptions.length === 0) {
-        continue
-      }
-
-      // Send notification to all active subscriptions
-      const payload = JSON.stringify({
-        title: "Time to Reflect",
-        body: "How did today's session go? Take 2 minutes to reflect.",
-        icon: "/icon-192x192.png",
-        badge: "/badge-72x72.png",
-        data: {
-          url: "/dashboard/chat",
-          type: "reminder",
-        },
-      })
-
+      // Send push notifications if requested and VAPID is configured
       let sentToUser = false
-      for (const sub of subscriptions) {
-        try {
-          await webpush.sendNotification(
-            {
-              endpoint: sub.endpoint,
-              keys: {
-                p256dh: sub.p256dh,
-                auth: sub.auth,
-              },
-            },
-            payload
-          )
-          sentToUser = true
-        } catch (pushError) {
-          // If subscription is invalid, mark it inactive
-          if ((pushError as { statusCode?: number })?.statusCode === 410) {
-            await supabase
-              .from("push_subscriptions")
-              .update({ is_active: false })
-              .eq("id", sub.id)
-          }
-          console.error(`[Send Reminders] Push failed for sub ${sub.id}:`, pushError)
-        }
-      }
-
-      // Also send email reminder
-      let emailSent = false
-      try {
-        // Get user email and profile
-        const { data: userData } = await supabase.auth.admin.getUserById(schedule.user_id)
-        const { data: profile } = await supabase
-          .from("profiles")
-          .select("display_name, email_notifications_enabled")
+      if (shouldSendPush && vapidConfigured) {
+        const { data: subscriptions } = await supabase
+          .from("push_subscriptions")
+          .select("*")
           .eq("user_id", schedule.user_id)
-          .single()
+          .eq("is_active", true)
 
-        if (userData?.user?.email && profile?.email_notifications_enabled !== false) {
-          const emailHtml = renderTemplate("daily-reminder", {
-            name: profile?.display_name || "Coach",
-            unsubscribeUrl: `${process.env.NEXT_PUBLIC_APP_URL}/unsubscribe?user=${schedule.user_id}`,
+        if (subscriptions && subscriptions.length > 0) {
+          const payload = JSON.stringify({
+            title: "Time to Reflect",
+            body: "How did today's session go? Take 2 minutes to reflect.",
+            icon: "/icon-192x192.png",
+            badge: "/badge-72x72.png",
+            data: {
+              url: "/dashboard/chat",
+              type: "reminder",
+            },
           })
 
-          if (emailHtml) {
-            await getResend().emails.send({
-              from: process.env.RESEND_FROM_EMAIL || "Coach Reflection <reminders@send.coachreflection.com>",
-              to: userData.user.email,
-              subject: "Time to Reflect on Today's Session",
-              html: emailHtml,
-            })
-            emailSent = true
+          for (const sub of subscriptions) {
+            try {
+              await webpush.sendNotification(
+                {
+                  endpoint: sub.endpoint,
+                  keys: {
+                    p256dh: sub.p256dh,
+                    auth: sub.auth,
+                  },
+                },
+                payload
+              )
+              sentToUser = true
+            } catch (pushError) {
+              if ((pushError as { statusCode?: number })?.statusCode === 410) {
+                await supabase
+                  .from("push_subscriptions")
+                  .update({ is_active: false })
+                  .eq("id", sub.id)
+              }
+              console.error(`[Send Reminders] Push failed for sub ${sub.id}:`, pushError)
+            }
           }
         }
-      } catch (emailError) {
-        console.error(`[Send Reminders] Email failed for user ${schedule.user_id}:`, emailError)
+      }
+
+      // Send email reminder if requested
+      let emailSent = false
+      if (shouldSendEmail) {
+        try {
+          const { data: userData } = await supabase.auth.admin.getUserById(schedule.user_id)
+          const { data: profile } = await supabase
+            .from("profiles")
+            .select("display_name, email_notifications_enabled")
+            .eq("user_id", schedule.user_id)
+            .single()
+
+          if (userData?.user?.email && profile?.email_notifications_enabled !== false) {
+            const emailHtml = renderTemplate("daily-reminder", {
+              name: profile?.display_name || "Coach",
+              unsubscribeUrl: `${process.env.NEXT_PUBLIC_APP_URL}/unsubscribe?user=${schedule.user_id}`,
+            })
+
+            if (emailHtml) {
+              await getResend().emails.send({
+                from: process.env.RESEND_FROM_EMAIL || "Coach Reflection <reminders@send.coachreflection.com>",
+                to: userData.user.email,
+                subject: "Time to Reflect on Today's Session",
+                html: emailHtml,
+              })
+              emailSent = true
+            }
+          }
+        } catch (emailError) {
+          console.error(`[Send Reminders] Email failed for user ${schedule.user_id}:`, emailError)
+        }
       }
 
       if (sentToUser || emailSent) {

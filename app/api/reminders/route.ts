@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json()
-    const { reminder_type, enabled, days_of_week, time_of_day, timezone } = body
+    const { reminder_type, enabled, days_of_week, time_of_day, timezone, delivery_method } = body
 
     const validTypes = ['after_session', 'daily', 'custom']
     if (!validTypes.includes(reminder_type)) {
@@ -21,6 +21,11 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       )
     }
+
+    const validDeliveryMethods = ['email', 'push', 'both']
+    const safeDeliveryMethod = validDeliveryMethods.includes(delivery_method)
+      ? delivery_method
+      : 'email'
 
     // Upsert the reminder schedule
     const { data, error } = await supabase
@@ -32,6 +37,7 @@ export async function POST(request: NextRequest) {
         days_of_week: days_of_week ?? [1, 2, 3, 4, 5], // Mon-Fri default
         time_of_day: time_of_day ?? '19:00:00',
         timezone: timezone ?? 'Europe/London',
+        delivery_method: safeDeliveryMethod,
         updated_at: new Date().toISOString(),
       }, {
         onConflict: 'user_id,reminder_type',
