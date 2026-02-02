@@ -39,8 +39,8 @@ export function StreakBadges() {
       if (res.ok) {
         const data = await res.json()
         setStreak(data.streak)
-        setBadges(data.userBadges || [])
-        setNewBadges(data.newBadges || [])
+        setBadges((data.userBadges || []).filter((ub: UserBadgeData) => ub.badge))
+        setNewBadges((data.newBadges || []).filter(Boolean))
       }
     } catch (err) {
       console.error("Failed to fetch gamification data:", err)

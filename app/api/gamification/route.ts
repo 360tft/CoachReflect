@@ -62,15 +62,19 @@ export async function GET() {
         .in("id", unnotifiedBadges.map(ub => ub.id))
     }
 
+    // Filter out badges where the badge relationship is null (deleted badges)
+    const validUserBadges = (userBadges || []).filter(ub => ub.badge !== null)
+    const validUnnotified = unnotifiedBadges.filter(ub => ub.badge !== null)
+
     return NextResponse.json({
       streak: streak || {
         current_streak: 0,
         longest_streak: 0,
         total_active_days: 0,
       },
-      userBadges: userBadges || [],
+      userBadges: validUserBadges,
       allBadges: allBadges || [],
-      newBadges: unnotifiedBadges.map(ub => ub.badge),
+      newBadges: validUnnotified.map(ub => ub.badge),
     })
 
   } catch (error) {
