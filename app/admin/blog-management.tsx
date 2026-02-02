@@ -62,11 +62,8 @@ export function BlogManagement() {
 
     try {
       setGenerating(true)
-      const res = await fetch("/api/cron/generate-blog-posts", {
+      const res = await fetch("/api/admin/blog/generate", {
         method: "POST",
-        headers: {
-          Authorization: `Bearer ${prompt("Enter CRON_SECRET:")}`,
-        },
       })
       const data = await res.json()
       alert(`Result: ${data.message || data.error}`)

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 import { isAdminUser } from '@/lib/admin'
 
 export async function GET() {
@@ -12,18 +13,12 @@ export async function GET() {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 })
     }
 
+    const adminClient = createAdminClient()
+
     // Get recent limit hits
-    const { data: hits, error: hitsError } = await supabase
+    const { data: hits, error: hitsError } = await adminClient
       .from('limit_hits')
-      .select(`
-        id,
-        user_id,
-        hit_date,
-        limit_type,
-        daily_limit,
-        created_at,
-        profiles!inner(email)
-      `)
+      .select('id, user_id, hit_date, limit_type, daily_limit, created_at')
       .order('created_at', { ascending: false })
       .limit(100)
 
@@ -43,11 +38,15 @@ export async function GET() {
       throw hitsError
     }
 
+    // Get user emails in one call
+    const { data: authUsers } = await adminClient.auth.admin.listUsers()
+    const emailMap = new Map(authUsers.users.map(u => [u.id, u.email]))
+
     // Format hits with email
     const formattedHits = (hits || []).map(hit => ({
       id: hit.id,
       user_id: hit.user_id,
-      user_email: (hit.profiles as { email?: string })?.email || null,
+      user_email: emailMap.get(hit.user_id) || null,
       hit_date: hit.hit_date,
       limit_type: hit.limit_type,
       daily_limit: hit.daily_limit,

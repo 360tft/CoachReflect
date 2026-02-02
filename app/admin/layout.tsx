@@ -130,6 +130,14 @@ export default async function AdminLayout({
                     SEO Dashboard
                   </Link>
                 </li>
+                <li>
+                  <Link
+                    href="/admin/blog"
+                    className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg"
+                  >
+                    Blog
+                  </Link>
+                </li>
               </ul>
             </div>
           </nav>

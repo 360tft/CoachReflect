@@ -60,12 +60,12 @@ export async function GET(request: NextRequest) {
       }, {} as Record<string, { user_id: string; display_name: string | null }>)
     }
 
-    // Get emails from auth.users
+    // Get emails from auth.users in a single batch call
+    const { data: authUsers } = await adminClient.auth.admin.listUsers()
     const userEmails: Record<string, string> = {}
-    for (const userId of userIds) {
-      const { data: userData } = await adminClient.auth.admin.getUserById(userId)
-      if (userData?.user?.email) {
-        userEmails[userId] = userData.user.email
+    for (const authUser of authUsers.users) {
+      if (authUser.email && userIds.includes(authUser.id)) {
+        userEmails[authUser.id] = authUser.email
       }
     }
 

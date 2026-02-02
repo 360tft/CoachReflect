@@ -60,8 +60,8 @@ export async function GET() {
       adminClient.from("conversations").select("*", { count: "exact", head: true }),
       // Recent feedback
       adminClient.from("feedback").select("rating").order("created_at", { ascending: false }).limit(100),
-      // Emails sent this month
-      adminClient.from("email_log").select("*", { count: "exact", head: true }).gte("sent_at", startOfMonth.toISOString()).is("error", null),
+      // Emails sent this month (email_logs is used by admin engagement/recovery routes)
+      adminClient.from("email_logs").select("*", { count: "exact", head: true }).gte("sent_at", startOfMonth.toISOString()),
       // Recent signups (include user_id for fetching emails)
       adminClient.from("profiles").select("id, user_id, display_name, subscription_tier, created_at").order("created_at", { ascending: false }).limit(10),
     ])
@@ -72,18 +72,18 @@ export async function GET() {
     const feedbackTotal = feedbackData.length
     const satisfactionRate = feedbackTotal > 0 ? Math.round((positiveCount / feedbackTotal) * 100) : null
 
-    // Fetch emails for recent signups from auth.users
+    // Fetch emails for recent signups from auth.users (single batch call)
     const recentSignupsData = recentSignupsResult.data || []
-    const recentSignupsWithEmail = await Promise.all(
-      recentSignupsData.map(async (signup: { id: string; user_id: string; display_name: string | null; subscription_tier: string; created_at: string }) => {
-        const { data: userData } = await adminClient.auth.admin.getUserById(signup.user_id)
-        return {
-          id: signup.id,
-          email: userData?.user?.email || null,
-          display_name: signup.display_name,
-          subscription_tier: signup.subscription_tier,
-          created_at: signup.created_at,
-        }
+    const { data: authUsers } = await adminClient.auth.admin.listUsers()
+    const emailMap = new Map(authUsers.users.map(u => [u.id, u.email]))
+
+    const recentSignupsWithEmail = recentSignupsData.map(
+      (signup: { id: string; user_id: string; display_name: string | null; subscription_tier: string; created_at: string }) => ({
+        id: signup.id,
+        email: emailMap.get(signup.user_id) || null,
+        display_name: signup.display_name,
+        subscription_tier: signup.subscription_tier,
+        created_at: signup.created_at,
       })
     )
 
