@@ -427,7 +427,7 @@ export function ChatInput({
   }
 
   return (
-    <div className="border-t pt-4">
+    <div className="border-t pt-2 md:pt-4">
       {/* Upgrade hint for Pro features */}
       {showUpgradeHint && (
         <div className="bg-amber-50 dark:bg-amber-950 border border-amber-200 dark:border-amber-800 rounded-lg p-3 mb-3">
@@ -529,7 +529,7 @@ export function ChatInput({
       )}
 
       {/* Input area */}
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-2 md:gap-3">
         {/* Attachment buttons - horizontal row above input */}
         <div className="flex gap-2 flex-wrap">
           {/* Voice record button */}
@@ -650,9 +650,9 @@ export function ChatInput({
             onKeyDown={handleKeyDown}
             placeholder={isLimitReached ? 'Daily limit reached. Upgrade to continue...' : placeholder}
             disabled={disabled || isLimitReached || isRecording}
-            className="resize-none min-h-[60px] flex-1 overflow-y-auto"
+            className="resize-none min-h-[44px] md:min-h-[60px] flex-1 overflow-y-auto"
             style={{ maxHeight: '200px' }}
-            rows={2}
+            rows={1}
           />
 
           {/* Send button */}
@@ -666,7 +666,7 @@ export function ChatInput({
         </div>
       </div>
 
-      <p className="text-xs text-muted-foreground mt-2">
+      <p className="text-xs text-muted-foreground mt-1 hidden md:block">
         Press Enter to send, Shift+Enter for new line
       </p>
     </div>

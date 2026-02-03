@@ -57,9 +57,9 @@ export default async function DashboardLayout({
   const isAdmin = isAdminUser(user.email, user.id)
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b bg-card">
+    <div className="h-[100dvh] md:h-screen flex flex-col bg-background overflow-hidden">
+      {/* Header - fixed height */}
+      <header className="border-b bg-card shrink-0">
         <div className="container mx-auto px-4 py-3 flex items-center justify-between">
           <Link href="/dashboard" className="flex items-center gap-2">
             {/* Light mode logo (dark text) */}
@@ -96,8 +96,8 @@ export default async function DashboardLayout({
         </div>
       </header>
 
-      {/* Navigation */}
-      <nav className="border-b bg-card">
+      {/* Navigation - hidden on mobile where bottom nav is used */}
+      <nav className="border-b bg-card hidden md:block shrink-0">
         <div className="container mx-auto px-4">
           <div className="flex gap-1 overflow-x-auto">
             <NavLink href="/dashboard">Dashboard</NavLink>
@@ -121,9 +121,11 @@ export default async function DashboardLayout({
       {/* PWA Install Prompt */}
       <PWAInstallPrompt variant="banner" />
 
-      {/* Main content */}
-      <main className="container mx-auto px-4 py-6 pb-20 md:pb-6">
-        {children}
+      {/* Main content - fills remaining space, single scroll container */}
+      <main className="flex-1 min-h-0 overflow-y-auto pb-16 md:pb-0">
+        <div className="container mx-auto px-4 py-4 md:py-6 h-full">
+          {children}
+        </div>
       </main>
 
       {/* Mobile bottom navigation */}

@@ -49,7 +49,7 @@ export default async function ChatPage() {
   return (
     <div className="h-full flex flex-col">
       {!isProfileComplete && <ProfilePrompt />}
-      <div className="flex-1">
+      <div className="flex-1 min-h-0">
         <ChatInterface isSubscribed={isSubscribed} initialRemaining={remaining} />
       </div>
     </div>

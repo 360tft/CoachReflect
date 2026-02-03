@@ -321,7 +321,7 @@ export function ChatInterface({ isSubscribed, initialRemaining = 5 }: ChatInterf
   }, [startNewChat])
 
   return (
-    <div className="flex h-[calc(100vh-8rem)] gap-4">
+    <div className="flex h-full gap-4">
       {/* Sidebar - Conversations */}
       <div className={`
         ${showSidebar ? "block" : "hidden"}
