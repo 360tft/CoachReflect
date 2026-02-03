@@ -169,6 +169,92 @@ export const TEMPLATES: Record<string, (props: TemplateProps) => string> = {
     <p>Either way, keep reflecting. It's working.</p>
   `, props),
 
+  // Social proof email (day 3 of onboarding)
+  'social-proof': (props) => baseTemplate(`
+    <p>Hey ${props.name},</p>
+
+    <p>Thought you'd like to see what other coaches are saying about reflection:</p>
+
+    <div style="background: #f3f4f6; padding: 16px 20px; border-radius: 8px; margin: 16px 0; border-left: 4px solid #E5A11C;">
+      <p style="color: #374151; font-size: 15px; line-height: 1.6; margin: 0 0 8px; font-style: italic;">"I used to think I didn't have time to reflect. Now I realise I didn't have time NOT to. The patterns I've spotted in my coaching have changed how I approach every session."</p>
+      <p style="color: #6b7280; font-size: 14px; margin: 0;">— Academy coach, England</p>
+    </div>
+
+    <div style="background: #f3f4f6; padding: 16px 20px; border-radius: 8px; margin: 16px 0; border-left: 4px solid #E5A11C;">
+      <p style="color: #374151; font-size: 15px; line-height: 1.6; margin: 0 0 8px; font-style: italic;">"The voice notes are a game-changer. I record my thoughts on the drive home and the AI turns them into structured insights."</p>
+      <p style="color: #6b7280; font-size: 14px; margin: 0;">— Grassroots coach, Scotland</p>
+    </div>
+
+    <div style="background: #f3f4f6; padding: 16px 20px; border-radius: 8px; margin: 16px 0; border-left: 4px solid #E5A11C;">
+      <p style="color: #374151; font-size: 15px; line-height: 1.6; margin: 0 0 8px; font-style: italic;">"After 30 days of reflection, I can actually see my development as a coach. That's something I've never had before."</p>
+      <p style="color: #6b7280; font-size: 14px; margin: 0;">— Youth coach, Ireland</p>
+    </div>
+
+    <p>You're part of a growing community of coaches who take their development seriously.</p>
+
+    <p style="text-align: center; margin: 30px 0;">
+      <a href="${APP_URL}/dashboard" style="background: #d97706; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; display: inline-block;">Continue Your Journey</a>
+    </p>
+  `, props),
+
+  // Feature highlight email (day 5 of onboarding)
+  'feature-highlight': (props) => baseTemplate(`
+    <p>Hey ${props.name},</p>
+
+    <p>You've been typing your reflections. That works great.</p>
+
+    <p>But have you tried voice notes?</p>
+
+    <div style="background: #fffbeb; padding: 16px 20px; border-radius: 8px; margin: 16px 0; border-left: 4px solid #E5A11C;">
+      <p style="margin: 0 0 8px; font-weight: 600;">Voice Notes (Pro feature)</p>
+      <p style="color: #4b5563; font-size: 14px; margin: 4px 0;">Record your thoughts on the drive home</p>
+      <p style="color: #4b5563; font-size: 14px; margin: 4px 0;">AI transcribes and structures automatically</p>
+      <p style="color: #4b5563; font-size: 14px; margin: 4px 0;">Capture more detail when typing feels like a chore</p>
+      <p style="color: #4b5563; font-size: 14px; margin: 4px 0;">4 voice notes per month with Pro</p>
+    </div>
+
+    <p>Some coaches find they capture twice as much insight when they can just talk instead of type.</p>
+
+    <p>Worth trying if you ever feel like you have more to say than you write.</p>
+
+    <p>Kev</p>
+
+    <p style="text-align: center; margin: 30px 0;">
+      <a href="${APP_URL}/dashboard/settings" style="background: #d97706; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; display: inline-block;">See Pro Features</a>
+    </p>
+  `, props),
+
+  // Last chance email (day 21 of onboarding)
+  'last-chance': (props) => baseTemplate(`
+    <p>Hey ${props.name},</p>
+
+    <p>You've been using Coach Reflection for 3 weeks now.</p>
+
+    <p>Just wanted to say thanks for giving it a go.</p>
+
+    <p>I built this because I know how hard it is to find time to reflect. Between sessions, player development, and everything else, reflection often gets pushed aside.</p>
+
+    <p>If the free version is enough for you, keep using it. That's fine.</p>
+
+    <p>But if you want voice notes, AI insights, and unlimited reflections, I've got a thank you for sticking around:</p>
+
+    <div style="background: #fef3c7; padding: 24px; border-radius: 12px; margin: 24px 0; text-align: center; border: 2px solid #f59e0b;">
+      <p style="color: #92400e; font-size: 18px; font-weight: 700; margin: 0 0 8px;">20% off your first month of Pro</p>
+      <p style="color: #1f2937; font-size: 20px; font-weight: 700; margin: 0 0 12px; background: #ffffff; padding: 8px 16px; border-radius: 6px; display: inline-block;">Use code THANKYOU20 at checkout</p>
+      <p style="color: #374151; font-size: 15px; margin: 12px 0 4px;">That's $7.99 instead of $9.99.</p>
+      <p style="color: #6b7280; font-size: 14px; margin: 0 0 12px;">Voice notes. AI insights. Unlimited reflections.</p>
+      <p style="color: #dc2626; font-size: 13px; font-weight: 600; margin: 0;">Offer expires in 48 hours.</p>
+    </div>
+
+    <p>Thanks again for being here.</p>
+
+    <p>Kev</p>
+
+    <p style="text-align: center; margin: 30px 0;">
+      <a href="${APP_URL}/dashboard/settings" style="background: #f59e0b; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; display: inline-block;">Claim Your Discount</a>
+    </p>
+  `, props),
+
   // Winback emails
   'winback': (props) => baseTemplate(`
     <p>Hey ${props.name},</p>
