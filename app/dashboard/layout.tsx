@@ -59,7 +59,7 @@ export default async function DashboardLayout({
   return (
     <div className="h-[100dvh] md:h-screen flex flex-col bg-background overflow-hidden">
       {/* Header - fixed height */}
-      <header className="border-b bg-card shrink-0">
+      <header className="border-b bg-card/80 backdrop-blur-sm shrink-0">
         <div className="container mx-auto px-4 py-3 flex items-center justify-between">
           <Link href="/dashboard" className="flex items-center gap-2">
             {/* Light mode logo (dark text) */}

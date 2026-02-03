@@ -51,7 +51,7 @@ export function ChatInput({
   subscriptionTier = 'free',
   remaining = 5,
   disabled = false,
-  placeholder = "Type your message...",
+  placeholder = "How did your session go today?",
   onUpgradeClick,
 }: ChatInputProps) {
   // Tier-aware recording limits

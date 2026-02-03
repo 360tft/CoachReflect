@@ -386,7 +386,7 @@ export function ChatInterface({ isSubscribed, initialRemaining = 5 }: ChatInterf
         <div className="flex-1 overflow-y-auto space-y-4 pb-4">
           {messages.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center">
-              <h2 className="text-2xl font-semibold mb-2">Coaching Reflection Chat</h2>
+              <h2 className="text-2xl font-semibold mb-2">Hey Coach, what&apos;s on your mind?</h2>
               <p className="text-muted-foreground mb-8 text-center max-w-md">
                 Reflect on your sessions, talk through challenges, or plan your next training.
               </p>
@@ -404,7 +404,7 @@ export function ChatInterface({ isSubscribed, initialRemaining = 5 }: ChatInterf
                           key={prompt}
                           variant="outline"
                           size="sm"
-                          className="text-left h-auto py-2 px-3"
+                          className="text-left h-auto py-2 px-3 bg-amber-50/50 hover:bg-amber-100/50 dark:bg-amber-950/20 dark:hover:bg-amber-950/40 border-amber-200/50 dark:border-amber-800/30"
                           onClick={() => sendMessage(prompt)}
                           disabled={loading}
                         >
@@ -424,46 +424,66 @@ export function ChatInterface({ isSubscribed, initialRemaining = 5 }: ChatInterf
                   ? stripQuickReplyMarker(msg.content).replace(/\[REFLECTION_COMPLETE\]/g, '').trim()
                   : msg.content
 
+                // For the last assistant message, split trailing question into a prompt block
+                let bodyContent = displayContent
+                let trailingQuestion: string | null = null
+                if (msg.role === 'assistant' && isLastMessage && !loading && displayContent) {
+                  const lines = displayContent.split('\n').filter((l: string) => l.trim())
+                  const lastLine = lines[lines.length - 1]?.trim()
+                  if (lastLine && lastLine.endsWith('?') && lines.length > 1) {
+                    trailingQuestion = lastLine
+                    bodyContent = lines.slice(0, -1).join('\n')
+                  }
+                }
+
                 return (
                   <div
                     key={i}
                     className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
                   >
-                    <Card className={`max-w-[85%] ${
-                      msg.role === "user"
-                        ? "bg-primary/10 dark:bg-primary/10 border dark:border"
-                        : "bg-muted"
-                    }`}>
-                      <CardContent className="p-3">
-                        <div className="prose prose-sm dark:prose-invert max-w-none">
-                          {displayContent ? (
-                            <ReactMarkdown>{displayContent}</ReactMarkdown>
-                          ) : (
-                            <span className="text-muted-foreground animate-pulse">
-                              Thinking...
-                            </span>
-                          )}
-                        </div>
-                        {/* Show quick reply buttons for the last assistant message */}
-                        {msg.role === "assistant" && isLastMessage && activeQuickReply && !loading && (
-                          <QuickReplies
-                            type={activeQuickReply.type}
-                            options={activeQuickReply.options}
-                            onSelect={handleQuickReplySelect}
-                            disabled={loading}
-                          />
-                        )}
-                        {msg.role === "assistant" && msg.content && !loading && (
-                          <div className="mt-2 pt-2 border-t border-border/50">
-                            <FeedbackButtons
-                              contentType="chat_response"
-                              contentText={msg.content}
-                              conversationId={conversationId || undefined}
-                            />
+                    <div className="max-w-[85%] space-y-2">
+                      <Card className={`${
+                        msg.role === "user"
+                          ? "bg-primary/10 dark:bg-primary/10 border dark:border"
+                          : "bg-amber-50/50 dark:bg-amber-950/20"
+                      }`}>
+                        <CardContent className="p-3">
+                          <div className="prose prose-sm dark:prose-invert max-w-none">
+                            {bodyContent ? (
+                              <ReactMarkdown>{bodyContent}</ReactMarkdown>
+                            ) : (
+                              <span className="text-muted-foreground animate-pulse">
+                                Thinking...
+                              </span>
+                            )}
                           </div>
-                        )}
-                      </CardContent>
-                    </Card>
+                          {/* Show quick reply buttons for the last assistant message */}
+                          {msg.role === "assistant" && isLastMessage && activeQuickReply && !loading && (
+                            <QuickReplies
+                              type={activeQuickReply.type}
+                              options={activeQuickReply.options}
+                              onSelect={handleQuickReplySelect}
+                              disabled={loading}
+                            />
+                          )}
+                          {msg.role === "assistant" && msg.content && !loading && (
+                            <div className="mt-2 pt-2 border-t border-border/50">
+                              <FeedbackButtons
+                                contentType="chat_response"
+                                contentText={msg.content}
+                                conversationId={conversationId || undefined}
+                              />
+                            </div>
+                          )}
+                        </CardContent>
+                      </Card>
+                      {/* Trailing question pulled out as a distinct prompt */}
+                      {trailingQuestion && (
+                        <div className="bg-primary/5 dark:bg-primary/10 border border-primary/20 rounded-xl px-4 py-3">
+                          <p className="text-sm font-medium text-foreground">{trailingQuestion}</p>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 )
               })}

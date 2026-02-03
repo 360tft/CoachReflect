@@ -74,8 +74,10 @@ export function BottomNav() {
               }`}
               aria-current={isActive ? 'page' : undefined}
             >
-              {item.icon}
-              <span className="text-xs mt-1 font-medium">{item.label}</span>
+              <span className={`p-1.5 rounded-full transition-colors ${isActive ? 'bg-primary/10' : ''}`}>
+                {item.icon}
+              </span>
+              <span className="text-xs mt-0.5 font-medium">{item.label}</span>
             </Link>
           )
         })}

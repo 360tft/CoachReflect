@@ -404,42 +404,48 @@ export default function NewReflectionPage() {
               <div>
                 <label className="block text-sm font-medium mb-3">Your Mood</label>
                 <div className="flex justify-between gap-2">
-                  {MOOD_OPTIONS.map((option) => (
-                    <button
-                      key={option.value}
-                      type="button"
-                      onClick={() => setMoodRating(option.value)}
-                      className={`flex-1 p-3 rounded-lg border text-center transition-colors ${
-                        moodRating === option.value
-                          ? "border-primary bg-primary/10"
-                          : "border-border hover:border-primary/50"
-                      }`}
-                    >
-                      
-                      <span className="text-xs text-muted-foreground">{option.label}</span>
-                    </button>
-                  ))}
+                  {MOOD_OPTIONS.map((option) => {
+                    const moodColors = ['bg-red-50 border-red-200 dark:bg-red-950/30 dark:border-red-800', 'bg-orange-50 border-orange-200 dark:bg-orange-950/30 dark:border-orange-800', 'bg-stone-50 border-stone-200 dark:bg-stone-900/30 dark:border-stone-700', 'bg-emerald-50 border-emerald-200 dark:bg-emerald-950/30 dark:border-emerald-800', 'bg-amber-50 border-amber-300 dark:bg-amber-950/30 dark:border-amber-700']
+                    return (
+                      <button
+                        key={option.value}
+                        type="button"
+                        onClick={() => setMoodRating(option.value)}
+                        className={`flex-1 p-3 rounded-lg border text-center transition-all ${
+                          moodRating === option.value
+                            ? `${moodColors[option.value - 1]} ring-2 ring-primary/30 scale-105`
+                            : "border-border hover:border-primary/50"
+                        }`}
+                      >
+                        <span className="text-2xl block mb-1">{option.emoji}</span>
+                        <span className="text-xs text-muted-foreground">{option.label}</span>
+                      </button>
+                    )
+                  })}
                 </div>
               </div>
 
               <div>
                 <label className="block text-sm font-medium mb-3">Your Energy</label>
                 <div className="flex justify-between gap-2">
-                  {ENERGY_OPTIONS.map((option) => (
-                    <button
-                      key={option.value}
-                      type="button"
-                      onClick={() => setEnergyRating(option.value)}
-                      className={`flex-1 p-3 rounded-lg border text-center transition-colors ${
-                        energyRating === option.value
-                          ? "border-primary bg-primary/10"
-                          : "border-border hover:border-primary/50"
-                      }`}
-                    >
-                      
-                      <span className="text-xs text-muted-foreground">{option.label}</span>
-                    </button>
-                  ))}
+                  {ENERGY_OPTIONS.map((option) => {
+                    const energyColors = ['bg-stone-100 border-stone-300 dark:bg-stone-900/30 dark:border-stone-700', 'bg-stone-50 border-stone-200 dark:bg-stone-900/20 dark:border-stone-700', 'bg-stone-50 border-stone-200 dark:bg-stone-900/30 dark:border-stone-700', 'bg-amber-50 border-amber-200 dark:bg-amber-950/30 dark:border-amber-800', 'bg-amber-50 border-amber-300 dark:bg-amber-950/30 dark:border-amber-700']
+                    return (
+                      <button
+                        key={option.value}
+                        type="button"
+                        onClick={() => setEnergyRating(option.value)}
+                        className={`flex-1 p-3 rounded-lg border text-center transition-all ${
+                          energyRating === option.value
+                            ? `${energyColors[option.value - 1]} ring-2 ring-primary/30 scale-105`
+                            : "border-border hover:border-primary/50"
+                        }`}
+                      >
+                        <span className="text-2xl block mb-1">{option.emoji}</span>
+                        <span className="text-xs text-muted-foreground">{option.label}</span>
+                      </button>
+                    )
+                  })}
                 </div>
               </div>
 

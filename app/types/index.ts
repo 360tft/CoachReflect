@@ -214,19 +214,19 @@ export const GUIDED_PROMPTS: GuidedPrompt[] = [
 ]
 
 export const MOOD_OPTIONS = [
-  { value: 1, label: 'Frustrated', emoji: '' },
-  { value: 2, label: 'Disappointed', emoji: '' },
-  { value: 3, label: 'Neutral', emoji: '' },
-  { value: 4, label: 'Satisfied', emoji: '' },
-  { value: 5, label: 'Excellent', emoji: '' },
+  { value: 1, label: 'Frustrated', emoji: '\u{1F624}' },
+  { value: 2, label: 'Disappointed', emoji: '\u{1F61E}' },
+  { value: 3, label: 'Neutral', emoji: '\u{1F610}' },
+  { value: 4, label: 'Satisfied', emoji: '\u{1F60A}' },
+  { value: 5, label: 'Excellent', emoji: '\u{1F525}' },
 ]
 
 export const ENERGY_OPTIONS = [
-  { value: 1, label: 'Drained', emoji: '' },
-  { value: 2, label: 'Low', emoji: '' },
-  { value: 3, label: 'Normal', emoji: '' },
-  { value: 4, label: 'Energized', emoji: '' },
-  { value: 5, label: 'Fired Up', emoji: '' },
+  { value: 1, label: 'Drained', emoji: '\u{1F634}' },
+  { value: 2, label: 'Low', emoji: '\u{1F614}' },
+  { value: 3, label: 'Normal', emoji: '\u{1F610}' },
+  { value: 4, label: 'Energized', emoji: '\u{26A1}' },
+  { value: 5, label: 'Fired Up', emoji: '\u{1F525}' },
 ]
 
 // Session Plan types (for uploaded coaching plans)

@@ -57,7 +57,7 @@ export default async function Home() {
       </header>
 
       {/* Hero Section */}
-      <section className="container mx-auto px-4 py-20 text-center">
+      <section className="container mx-auto px-4 py-20 text-center bg-gradient-to-b from-amber-50/30 to-transparent dark:from-amber-950/10 dark:to-transparent">
         <Badge className="mb-4" variant="secondary">
           For Sports Coaches
         </Badge>
@@ -114,7 +114,7 @@ export default async function Home() {
         </p>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
           {GUIDED_PROMPTS.slice(0, 3).map((prompt) => (
-            <Card key={prompt.id} className="border">
+            <Card key={prompt.id} className="border border-l-4 border-l-primary">
               <CardHeader>
                 <CardTitle className="text-lg">{prompt.question}</CardTitle>
               </CardHeader>
@@ -133,7 +133,7 @@ export default async function Home() {
 
       {/* Mood Tracking */}
       <section className="container mx-auto px-4 py-20">
-        <div className="bg-muted/50 rounded-2xl p-8 md:p-12 max-w-4xl mx-auto text-center">
+        <div className="bg-amber-50/30 dark:bg-amber-950/10 rounded-2xl p-8 md:p-12 max-w-4xl mx-auto text-center">
           <h2 className="text-3xl font-bold mb-4">Track Your Coaching Journey</h2>
           <p className="text-muted-foreground mb-8">
             Log your mood and energy after each session to spot burnout early
@@ -179,7 +179,7 @@ export default async function Home() {
       <section className="container mx-auto px-4 py-20">
         <h2 className="text-3xl font-bold text-center mb-12">Everything You Need to Reflect & Grow</h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <Card className="border">
+          <Card className="border border-l-4 border-l-primary">
             <CardHeader>
               <CardTitle>Guided Journaling</CardTitle>
             </CardHeader>
@@ -189,7 +189,7 @@ export default async function Home() {
               </p>
             </CardContent>
           </Card>
-          <Card className="border">
+          <Card className="border border-l-4 border-l-amber-400">
             <CardHeader>
               <CardTitle>Pattern Detection</CardTitle>
             </CardHeader>
@@ -199,7 +199,7 @@ export default async function Home() {
               </p>
             </CardContent>
           </Card>
-          <Card className="border">
+          <Card className="border border-l-4 border-l-orange-400">
             <CardHeader>
               <CardTitle>Player Tracking</CardTitle>
             </CardHeader>
@@ -209,7 +209,7 @@ export default async function Home() {
               </p>
             </CardContent>
           </Card>
-          <Card className="border">
+          <Card className="border border-l-4 border-l-emerald-400">
             <CardHeader>
               <CardTitle>Progress Dashboard</CardTitle>
             </CardHeader>

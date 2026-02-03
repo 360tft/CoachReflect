@@ -60,9 +60,9 @@ export default async function DashboardPage() {
     return (
       <div className="max-w-2xl mx-auto space-y-6">
         {/* Welcome Card */}
-        <Card className="border bg-gradient-to-br from-background to-primary/5 dark:from-background dark:to-primary/10">
+        <Card className="border bg-gradient-to-br from-amber-50/50 to-orange-50/30 dark:from-amber-950/20 dark:to-orange-950/10">
           <CardHeader className="text-center pb-2">
-            
+
             <CardTitle className="text-2xl">
               Welcome to Coach Reflection, {profile?.display_name || "Coach"}!
             </CardTitle>
@@ -194,7 +194,7 @@ export default async function DashboardPage() {
 
       {/* Stats Grid */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <Card>
+        <Card className="border-l-4 border-l-primary">
           <CardHeader className="pb-2">
             <CardDescription>Total Reflections</CardDescription>
           </CardHeader>
@@ -202,7 +202,7 @@ export default async function DashboardPage() {
             <p className="text-3xl font-bold">{stats?.[0]?.total_reflections || 0}</p>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="border-l-4 border-l-amber-400">
           <CardHeader className="pb-2">
             <CardDescription>Avg Mood</CardDescription>
           </CardHeader>
@@ -210,25 +210,26 @@ export default async function DashboardPage() {
             <p className="text-3xl font-bold">
               {stats?.[0]?.avg_mood ? (
                 <>
+                  {MOOD_OPTIONS.find(m => m.value === Math.round(stats[0].avg_mood))?.emoji || ""}{" "}
                   {MOOD_OPTIONS.find(m => m.value === Math.round(stats[0].avg_mood))?.label || "Neutral"}
                 </>
               ) : (
-                "—"
+                "\u2014"
               )}
             </p>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="border-l-4 border-l-orange-400">
           <CardHeader className="pb-2">
             <CardDescription>Avg Energy</CardDescription>
           </CardHeader>
           <CardContent>
             <p className="text-3xl font-bold">
-              {stats?.[0]?.avg_energy ? `${stats[0].avg_energy}/5` : "—"}
+              {stats?.[0]?.avg_energy ? `${stats[0].avg_energy}/5` : "\u2014"}
             </p>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="border-l-4 border-l-emerald-400">
           <CardHeader className="pb-2">
             <CardDescription>This Month</CardDescription>
           </CardHeader>
@@ -241,7 +242,7 @@ export default async function DashboardPage() {
 
       {/* Post-first-reflection insight card */}
       {isEarlyUser && hasInsights && (
-        <Card className="border bg-gradient-to-br from-background to-primary/5 dark:from-background dark:to-primary/10">
+        <Card className="border bg-gradient-to-br from-amber-50/50 to-orange-50/30 dark:from-amber-950/20 dark:to-orange-950/10">
           <CardHeader className="pb-2">
             <CardTitle className="text-lg">Based on your reflections, here is what I noticed</CardTitle>
             <CardDescription>AI-extracted themes from your coaching sessions</CardDescription>
