@@ -2,7 +2,7 @@ import { NextResponse } from "next/server"
 import Stripe from "stripe"
 import { createAdminClient } from "@/lib/supabase/admin"
 import { createClub, updateClubSubscription } from "@/lib/clubs"
-import { notifyNewProSubscription, notifySubscriptionCanceled, sendProWelcomeEmail } from "@/lib/email-sender"
+import { notifyNewProSubscription, notifySubscriptionCanceled, sendProWelcomeEmail, sendAbandonedCheckoutEmail } from "@/lib/email-sender"
 import type { ClubTier } from "@/lib/config"
 import { getStripe } from "@/lib/stripe"
 
@@ -237,6 +237,20 @@ export async function POST(request: Request) {
               await notifySubscriptionCanceled(userData.user.email)
             }
           }
+        }
+        break
+      }
+
+      case "checkout.session.expired": {
+        const session = event.data.object as Stripe.Checkout.Session
+        const customerEmail = session.customer_details?.email || session.customer_email
+
+        if (customerEmail) {
+          // Build recovery URL - Stripe provides after_expiration.recovery.url if recovery is enabled
+          const recoveryUrl = (session as unknown as { after_expiration?: { recovery?: { url?: string } } })
+            .after_expiration?.recovery?.url || `${process.env.NEXT_PUBLIC_APP_URL || 'https://coachreflection.com'}/dashboard/settings`
+
+          await sendAbandonedCheckoutEmail(customerEmail, recoveryUrl)
         }
         break
       }

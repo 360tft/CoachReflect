@@ -21,6 +21,7 @@ import {
 import {
   WinbackEmail,
   WinbackFeatureEmail,
+  WinbackFinalEmail,
   StreakBrokenEmail,
 } from '@/emails/templates/winback'
 import {
@@ -59,6 +60,7 @@ type TemplateName =
   | 'streak-30'
   | 'winback'
   | 'winback-feature'
+  | 'winback-final'
   | 'streak-broken'
   | 'social-proof'
   | 'feature-highlight'
@@ -113,6 +115,10 @@ const TEMPLATES: Record<TemplateName, TemplateConfig> = {
   'winback-feature': {
     component: WinbackFeatureEmail,
     subject: 'New: Chat with your coaching AI',
+  },
+  'winback-final': {
+    component: WinbackFinalEmail,
+    subject: 'Quick reminder about Coach Reflection',
   },
   'streak-broken': {
     component: StreakBrokenEmail,
@@ -382,6 +388,78 @@ export async function sendProWelcomeEmail(userEmail: string): Promise<{ success:
     return { success: true }
   } catch (error) {
     console.error('Failed to send Pro welcome email:', error)
+    return { success: false, error: String(error) }
+  }
+}
+
+/**
+ * Send abandoned checkout recovery email
+ */
+export async function sendAbandonedCheckoutEmail(
+  userEmail: string,
+  recoveryUrl: string
+): Promise<EmailResult> {
+  const resend = getResendClient()
+  if (!resend) return { success: false, error: 'Email not configured' }
+
+  try {
+    await resend.emails.send({
+      from: FROM_EMAIL,
+      to: userEmail,
+      subject: 'Complete your Coach Reflection Pro upgrade',
+      html: `
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+          <div style="text-align: center; margin-bottom: 30px;">
+            <h1 style="font-size: 24px; color: #92400e; margin: 10px 0;">Coach Reflection</h1>
+          </div>
+
+          <p style="font-size: 16px; line-height: 1.6; color: #374151;">Hey there,</p>
+
+          <p style="font-size: 16px; line-height: 1.6; color: #374151;">
+            Looks like you started upgrading to Pro but didn't finish. No worries, these things happen.
+          </p>
+
+          <p style="font-size: 16px; line-height: 1.6; color: #374151;">
+            Just in case you still want it, here's what Pro gives you:
+          </p>
+
+          <ul style="font-size: 16px; line-height: 1.8; color: #374151;">
+            <li>Unlimited reflections</li>
+            <li>AI-powered coaching insights</li>
+            <li>Voice notes for hands-free reflection</li>
+            <li>Session plan analysis</li>
+            <li>Advanced pattern detection</li>
+          </ul>
+
+          <p style="text-align: center; margin: 30px 0;">
+            <a href="${recoveryUrl}" style="background: #E5A11C; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; display: inline-block; font-weight: bold; font-size: 16px;">Complete Your Upgrade</a>
+          </p>
+
+          <p style="font-size: 16px; line-height: 1.6; color: #374151;">
+            If you changed your mind, that's completely fine. The free version is yours to keep.
+          </p>
+
+          <p style="font-size: 16px; line-height: 1.6; color: #374151;">Kev</p>
+
+          <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 30px 0;">
+          <div style="text-align: center; color: #6b7280; font-size: 12px;">
+            <p>Part of the 360TFT family of coaching tools</p>
+          </div>
+        </div>
+      `,
+    })
+
+    // Log to email_log if we can find the user
+    const supabase = createAdminClient()
+    const { data: users } = await supabase.auth.admin.listUsers()
+    const user = users?.users?.find(u => u.email === userEmail)
+    if (user) {
+      await logEmailSent(user.id, 'checkout-recovery', 'Complete your Coach Reflection Pro upgrade')
+    }
+
+    return { success: true }
+  } catch (error) {
+    console.error('Failed to send abandoned checkout email:', error)
     return { success: false, error: String(error) }
   }
 }

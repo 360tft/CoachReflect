@@ -272,6 +272,29 @@ export const TEMPLATES: Record<string, (props: TemplateProps) => string> = {
     <p>We're here when you're ready.</p>
   `, props),
 
+  'winback-final': (props) => baseTemplate(`
+    <p>Hey ${props.name},</p>
+
+    <p>Last email about this, promise.</p>
+
+    <p>Coach Reflection is still here whenever you need it. Free to use, no pressure.</p>
+
+    <p>Here's all it takes:</p>
+    <ol>
+      <li>Open the app after your next session</li>
+      <li>Chat through what happened (2 minutes)</li>
+      <li>Watch your coaching patterns emerge over time</li>
+    </ol>
+
+    <p>That's it. No commitment, no upsell. Just a tool to help you grow.</p>
+
+    <p style="text-align: center; margin: 30px 0;">
+      <a href="${APP_URL}/dashboard/chat" style="background: #d97706; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; display: inline-block;">Open Coach Reflection</a>
+    </p>
+
+    <p>Kev</p>
+  `, props),
+
   'winback-feature': (props) => baseTemplate(`
     <p>Hey ${props.name},</p>
 
@@ -517,6 +540,29 @@ export const TEMPLATES: Record<string, (props: TemplateProps) => string> = {
       <p>Keep growing!<br>The Coach Reflection Team</p>
     `, props)
   },
+
+  'checkout-recovery': (props) => baseTemplate(`
+    <p>Hey ${props.name},</p>
+
+    <p>Looks like you started upgrading to Pro but didn't finish. No worries, these things happen.</p>
+
+    <p>Just in case you still want it, here's what Pro gives you:</p>
+    <ul>
+      <li>Unlimited reflections</li>
+      <li>AI-powered coaching insights</li>
+      <li>Voice notes for hands-free reflection</li>
+      <li>Session plan analysis</li>
+      <li>Advanced pattern detection</li>
+    </ul>
+
+    <p style="text-align: center; margin: 30px 0;">
+      <a href="${APP_URL}/dashboard/settings" style="background: #E5A11C; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; display: inline-block; font-weight: bold;">Complete Your Upgrade</a>
+    </p>
+
+    <p>If you changed your mind, that's completely fine. The free version is yours to keep.</p>
+
+    <p>Kev</p>
+  `, props),
 
   'daily-reminder': (props) => baseTemplate(`
     <p>Hey ${props.name},</p>

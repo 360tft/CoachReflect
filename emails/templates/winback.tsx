@@ -114,6 +114,49 @@ export function StreakBrokenEmail({ name, unsubscribeUrl }: WinbackEmailProps) {
   )
 }
 
+// Winback final email (day 7 - last email)
+export function WinbackFinalEmail({ name, unsubscribeUrl }: WinbackEmailProps) {
+  return (
+    <BaseLayout
+      preview="Last email about this, promise"
+      unsubscribeUrl={unsubscribeUrl}
+    >
+      <Text style={paragraph}>Hey {name},</Text>
+
+      <Text style={paragraph}>
+        Last email about this, promise.
+      </Text>
+
+      <Text style={paragraph}>
+        Coach Reflection is still here whenever you need it. Free to use, no
+        pressure.
+      </Text>
+
+      <Text style={paragraph}>Here's all it takes:</Text>
+
+      <ol style={list}>
+        <li>Open the app after your next session</li>
+        <li>Chat through what happened (2 minutes)</li>
+        <li>Watch your coaching patterns emerge over time</li>
+      </ol>
+
+      <Text style={paragraph}>
+        That's it. No commitment, no upsell. Just a tool to help you grow.
+      </Text>
+
+      <Section style={buttonContainer}>
+        <Button href={`${APP_URL}/dashboard/chat`} style={button}>
+          Open Coach Reflection
+        </Button>
+      </Section>
+
+      <Text style={paragraph}>
+        Kev
+      </Text>
+    </BaseLayout>
+  )
+}
+
 // Shared styles
 const paragraph = {
   fontSize: '16px',

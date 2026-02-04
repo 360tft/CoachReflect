@@ -27,6 +27,7 @@ export const ONBOARDING_SEQUENCE: SequenceStep[] = [
 export const WINBACK_SEQUENCE: SequenceStep[] = [
   { day: 0, template: 'winback', subject: 'Miss your reflections? We do too' },
   { day: 3, template: 'winback-feature', subject: "New: Chat with your coaching AI" },
+  { day: 7, template: 'winback-final', subject: 'Quick reminder about Coach Reflection' },
 ]
 
 // Streak recovery for users who broke their streak
