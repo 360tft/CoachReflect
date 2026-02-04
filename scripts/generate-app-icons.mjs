@@ -101,6 +101,7 @@ async function generatePlaceholderIcon(size, outputPath) {
   `;
 
   await sharp(Buffer.from(svg))
+    .flatten({ background: { r: 204, g: 143, b: 23 } })
     .png()
     .toFile(outputPath);
 }
@@ -114,6 +115,7 @@ async function resizeIcon(sourcePath, size, outputPath) {
       fit: 'cover',
       position: 'center',
     })
+    .flatten({ background: { r: 204, g: 143, b: 23 } })
     .png()
     .toFile(outputPath);
 }

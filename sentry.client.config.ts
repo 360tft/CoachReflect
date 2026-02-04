@@ -1,4 +1,8 @@
 import * as Sentry from '@sentry/nextjs'
+import { Capacitor } from '@capacitor/core'
+
+// Disable Session Replay on native platforms - it uses eval() which violates CSP
+const isNative = typeof window !== 'undefined' && Capacitor.isNativePlatform()
 
 Sentry.init({
   dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
@@ -10,18 +14,19 @@ Sentry.init({
   enabled: process.env.NODE_ENV === 'production',
 
   // Capture unhandled promise rejections
-  integrations: [
-    Sentry.browserTracingIntegration(),
-    Sentry.replayIntegration({
-      // Capture 10% of sessions, 100% of sessions with errors
-      maskAllText: true,
-      blockAllMedia: true,
-    }),
-  ],
+  integrations: isNative
+    ? [Sentry.browserTracingIntegration()]
+    : [
+        Sentry.browserTracingIntegration(),
+        Sentry.replayIntegration({
+          maskAllText: true,
+          blockAllMedia: true,
+        }),
+      ],
 
-  // Session replay - capture 10% normally, 100% on error
-  replaysSessionSampleRate: 0.1,
-  replaysOnErrorSampleRate: 1.0,
+  // Session replay - disabled on native (eval() violates CSP in webview)
+  replaysSessionSampleRate: isNative ? 0 : 0.1,
+  replaysOnErrorSampleRate: isNative ? 0 : 1.0,
 
   // Filter out noisy errors
   ignoreErrors: [

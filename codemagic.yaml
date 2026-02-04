@@ -1,0 +1,125 @@
+# Codemagic CI/CD for Coach Reflection iOS & Android Apps
+
+workflows:
+  ios-release:
+    name: iOS Release
+    max_build_duration: 60
+    instance_type: mac_mini_m2
+
+    integrations:
+      app_store_connect: Codemagic
+
+    environment:
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.coachreflection.app
+      vars:
+        XCODE_WORKSPACE: "ios/App/App.xcworkspace"
+        XCODE_PROJECT: "ios/App/App.xcodeproj"
+        XCODE_SCHEME: "App"
+        BUNDLE_ID: "com.coachreflection.app"
+      node: 22
+      xcode: latest
+
+    scripts:
+      - name: Install npm dependencies
+        script: |
+          npm ci
+
+      - name: Sync Capacitor iOS
+        script: |
+          npx cap sync ios
+
+      - name: Install CocoaPods
+        script: |
+          cd ios/App && pod install --repo-update || true
+
+      - name: Set up code signing
+        script: |
+          keychain initialize
+          app-store-connect fetch-signing-files "$BUNDLE_ID" \
+            --type IOS_APP_STORE \
+            --create
+          keychain add-certificates
+          xcode-project use-profiles
+
+      - name: Build IPA
+        script: |
+          cd ios/App
+          xcode-project build-ipa \
+            --workspace "App.xcworkspace" \
+            --scheme "$XCODE_SCHEME" || \
+          xcode-project build-ipa \
+            --project "App.xcodeproj" \
+            --scheme "$XCODE_SCHEME"
+
+    artifacts:
+      - ios/App/build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+
+    publishing:
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: true
+      email:
+        recipients:
+          - admin@360tft.com
+        notify:
+          success: true
+          failure: true
+
+  android-release:
+    name: Android Release
+    max_build_duration: 60
+    instance_type: mac_mini_m2
+
+    environment:
+      groups:
+        - android_credentials
+      vars:
+        PACKAGE_NAME: "com.coachreflection.app"
+      node: 22
+      java: 21
+
+    scripts:
+      - name: Install npm dependencies
+        script: |
+          npm ci
+
+      - name: Sync Capacitor Android
+        script: |
+          npx cap sync android
+
+      - name: Set up Android signing
+        script: |
+          echo "Setting up Android keystore..."
+          # Decode base64 keystore from environment variable
+          if [ -z "$ANDROID_KEYSTORE_BASE64" ]; then
+            echo "ERROR: ANDROID_KEYSTORE_BASE64 not set"
+            exit 1
+          fi
+          echo $ANDROID_KEYSTORE_BASE64 | base64 --decode > /tmp/keystore.jks
+          echo "Keystore decoded to /tmp/keystore.jks"
+
+          # Export variables for Gradle
+          echo "CM_KEYSTORE=/tmp/keystore.jks" >> $CM_ENV
+          echo "CM_KEYSTORE_PASSWORD=$ANDROID_KEYSTORE_PASSWORD" >> $CM_ENV
+          echo "CM_KEY_ALIAS=$ANDROID_KEY_ALIAS" >> $CM_ENV
+          echo "CM_KEY_PASSWORD=$ANDROID_KEY_PASSWORD" >> $CM_ENV
+
+      - name: Build Android App Bundle
+        script: |
+          cd android
+          ./gradlew bundleRelease
+
+    artifacts:
+      - android/app/build/outputs/**/*.aab
+      - android/app/build/outputs/**/*.apk
+
+    publishing:
+      email:
+        recipients:
+          - admin@360tft.com
+        notify:
+          success: true
+          failure: true

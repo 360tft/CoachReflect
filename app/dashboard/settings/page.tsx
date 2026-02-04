@@ -13,6 +13,7 @@ import { EmailPreferences } from "./email-preferences"
 import { ReminderSettings } from "./reminder-settings"
 import { SyllabusUpload } from "./syllabus-upload"
 import { hasSyllabusFeature, getVoiceLimits, getTierDisplayName } from "@/lib/subscription"
+import { NativeHidden } from "@/app/components/native-hidden"
 
 export default async function SettingsPage() {
   const supabase = await createClient()
@@ -101,11 +102,13 @@ export default async function SettingsPage() {
             <div className="space-y-2">
               <p className="text-sm text-green-600 dark:text-green-400">You have {getTierDisplayName(subscriptionTier)} access</p>
               {profile?.stripe_customer_id ? (
-                <form action="/api/stripe/portal" method="POST">
-                  <Button type="submit" variant="outline">
-                    Manage Billing
-                  </Button>
-                </form>
+                <NativeHidden>
+                  <form action="/api/stripe/portal" method="POST">
+                    <Button type="submit" variant="outline">
+                      Manage Billing
+                    </Button>
+                  </form>
+                </NativeHidden>
               ) : (
                 <p className="text-xs text-muted-foreground">{getTierDisplayName(subscriptionTier)} access granted manually</p>
               )}

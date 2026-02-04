@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app
 import { Button } from "@/app/components/ui/button"
 import { Badge } from "@/app/components/ui/badge"
 import { PRICING, type BillingPeriod, formatPrice } from "@/lib/config"
+import { NativeHidden } from "@/app/components/native-hidden"
 
 export function PricingSection() {
   const [billing, setBilling] = useState<BillingPeriod>("monthly")
@@ -92,9 +93,11 @@ export function PricingSection() {
                 <span className="text-muted-foreground mt-0.5">-</span> No AI insights
               </li>
             </ul>
-            <Link href="/signup" className="block mt-6">
-              <Button variant="outline" className="w-full">Get Started</Button>
-            </Link>
+            <NativeHidden>
+              <Link href="/signup" className="block mt-6">
+                <Button variant="outline" className="w-full">Get Started</Button>
+              </Link>
+            </NativeHidden>
           </CardContent>
         </Card>
 
@@ -140,9 +143,11 @@ export function PricingSection() {
                 <span className="text-green-500 mt-0.5">+</span> Export your reflections
               </li>
             </ul>
-            <Link href={`/signup?plan=pro&billing=${billing}`} className="block mt-6">
-              <Button className="w-full bg-brand hover:bg-brand-hover !text-white">Start Pro</Button>
-            </Link>
+            <NativeHidden>
+              <Link href={`/signup?plan=pro&billing=${billing}`} className="block mt-6">
+                <Button className="w-full bg-brand hover:bg-brand-hover !text-white">Start Pro</Button>
+              </Link>
+            </NativeHidden>
           </CardContent>
         </Card>
 
@@ -195,9 +200,11 @@ export function PricingSection() {
                 <span className="text-green-500 mt-0.5">+</span> Upload your coaching syllabus — AI learns your philosophy
               </li>
             </ul>
-            <Link href={`/signup?plan=pro_plus&billing=${billing}`} className="block mt-6">
-              <Button variant="outline" className="w-full">Start Pro+</Button>
-            </Link>
+            <NativeHidden>
+              <Link href={`/signup?plan=pro_plus&billing=${billing}`} className="block mt-6">
+                <Button variant="outline" className="w-full">Start Pro+</Button>
+              </Link>
+            </NativeHidden>
           </CardContent>
         </Card>
       </div>

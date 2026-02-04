@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { Button } from "@/app/components/ui/button"
+import { NativeHidden } from "@/app/components/native-hidden"
 
 export function BillingToggle() {
   const [billing, setBilling] = useState<"monthly" | "annual">("monthly")
@@ -110,13 +111,15 @@ export function BillingToggle() {
       </div>
 
       {/* Checkout form */}
-      <form action="/api/stripe/checkout" method="POST">
-        <input type="hidden" name="billing" value={billing} />
-        <input type="hidden" name="plan" value={plan} />
-        <Button type="submit" className="w-full">
-          Upgrade to {plan === "pro" ? "Pro" : "Pro+"} - ${currentPrice}/{billing === "monthly" ? "mo" : "yr"}
-        </Button>
-      </form>
+      <NativeHidden>
+        <form action="/api/stripe/checkout" method="POST">
+          <input type="hidden" name="billing" value={billing} />
+          <input type="hidden" name="plan" value={plan} />
+          <Button type="submit" className="w-full">
+            Upgrade to {plan === "pro" ? "Pro" : "Pro+"} - ${currentPrice}/{billing === "monthly" ? "mo" : "yr"}
+          </Button>
+        </form>
+      </NativeHidden>
     </div>
   )
 }

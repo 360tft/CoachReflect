@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { NativeHidden } from '@/app/components/native-hidden'
 
 export function Footer() {
   return (
@@ -39,6 +40,7 @@ export function Footer() {
         </div>
 
         {/* 360 TFT Products Cross-Promotion */}
+        <NativeHidden>
         <div className="pt-6 border-t border-border">
           <p className="text-center text-muted-foreground text-xs mb-4">
             More from 360 TFT
@@ -109,6 +111,7 @@ export function Footer() {
             </a>
           </div>
         </div>
+        </NativeHidden>
 
         {/* Company Info */}
         <div className="text-center mt-6 pt-4 border-t border-border">

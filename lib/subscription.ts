@@ -221,12 +221,15 @@ export interface Subscription {
   updated_at: string
 }
 
+export type SubscriptionSource = 'stripe' | 'apple' | 'google' | null
+
 export interface SubscriptionInfo {
   tier: SubscriptionTier
   type: 'individual' | 'club' | 'tester' | 'free'
   isActive: boolean
   expiresAt: string | null
   clubName?: string
+  source?: SubscriptionSource
 }
 
 /**
@@ -265,10 +268,10 @@ export async function getSubscriptionInfo(userId: string): Promise<SubscriptionI
     }
   }
 
-  // 3. Check individual subscription
+  // 3. Check individual subscription (Stripe or RevenueCat/IAP)
   const { data: profile } = await supabase
     .from('profiles')
-    .select('subscription_tier, subscription_status, subscription_period_end')
+    .select('subscription_tier, subscription_status, subscription_period_end, subscription_source')
     .eq('user_id', userId)
     .single()
 
@@ -285,6 +288,7 @@ export async function getSubscriptionInfo(userId: string): Promise<SubscriptionI
         type: 'individual',
         isActive: true,
         expiresAt: profile.subscription_period_end,
+        source: (profile.subscription_source as SubscriptionSource) || null,
       }
     }
   }
