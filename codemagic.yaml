@@ -30,10 +30,6 @@ workflows:
         script: |
           npx cap sync ios
 
-      - name: Install CocoaPods
-        script: |
-          cd ios/App && pod install --repo-update || true
-
       - name: Set up code signing
         script: |
           keychain initialize
@@ -41,14 +37,11 @@ workflows:
             --type IOS_APP_STORE \
             --create
           keychain add-certificates
-          xcode-project use-profiles --warn-only
+          xcode-project use-profiles --project "ios/App/App.xcodeproj"
 
       - name: Build IPA
         script: |
           cd ios/App
-          xcode-project build-ipa \
-            --workspace "App.xcworkspace" \
-            --scheme "$XCODE_SCHEME" || \
           xcode-project build-ipa \
             --project "App.xcodeproj" \
             --scheme "$XCODE_SCHEME"
