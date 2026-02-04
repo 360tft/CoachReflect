@@ -11,10 +11,13 @@ const REVENUECAT_ANDROID_API_KEY = process.env.NEXT_PUBLIC_REVENUECAT_ANDROID_AP
 export const PRODUCT_IDS = {
   PRO_MONTHLY: 'coachreflect_pro_monthly',
   PRO_ANNUAL: 'coachreflect_pro_annual',
+  PRO_PLUS_MONTHLY: 'coachreflect_proplus_monthly',
+  PRO_PLUS_ANNUAL: 'coachreflect_proplus_annual',
 }
 
-// Entitlement identifier in RevenueCat
+// Entitlement identifiers in RevenueCat
 export const ENTITLEMENT_ID = 'pro'
+export const ENTITLEMENT_PRO_PLUS_ID = 'pro_plus'
 
 let isInitialized = false
 
@@ -118,9 +121,9 @@ export async function purchasePackage(pkg: PurchasesPackage): Promise<{
   try {
     const result = await Purchases.purchasePackage({ aPackage: pkg })
 
-    const hasProAccess = result.customerInfo.entitlements.active[ENTITLEMENT_ID] !== undefined
+    const hasAccess = hasAnyEntitlement(result.customerInfo)
 
-    if (hasProAccess) {
+    if (hasAccess) {
       return { success: true, customerInfo: result.customerInfo }
     } else {
       return { success: false, error: 'Purchase completed but subscription not activated' }
@@ -152,7 +155,7 @@ export async function restorePurchases(): Promise<{
 
   try {
     const result = await Purchases.restorePurchases()
-    const hasProAccess = result.customerInfo.entitlements.active[ENTITLEMENT_ID] !== undefined
+    const hasProAccess = hasAnyEntitlement(result.customerInfo)
 
     return { success: true, hasProAccess, customerInfo: result.customerInfo }
   } catch (error: unknown) {
@@ -164,7 +167,15 @@ export async function restorePurchases(): Promise<{
 }
 
 /**
- * Check if user has active pro subscription via RevenueCat
+ * Check if a CustomerInfo object has any paid entitlement (pro or pro_plus)
+ */
+function hasAnyEntitlement(customerInfo: CustomerInfo): boolean {
+  const active = customerInfo.entitlements.active
+  return active[ENTITLEMENT_ID] !== undefined || active[ENTITLEMENT_PRO_PLUS_ID] !== undefined
+}
+
+/**
+ * Check if user has active pro or pro_plus subscription via RevenueCat
  */
 export async function checkProEntitlement(): Promise<boolean> {
   if (!isNativePlatform() || !isInitialized) {
@@ -173,7 +184,7 @@ export async function checkProEntitlement(): Promise<boolean> {
 
   try {
     const customerInfo = await Purchases.getCustomerInfo()
-    return customerInfo.customerInfo.entitlements.active[ENTITLEMENT_ID] !== undefined
+    return hasAnyEntitlement(customerInfo.customerInfo)
   } catch {
     return false
   }

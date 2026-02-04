@@ -2,6 +2,10 @@
 // Cost: ~$0.006 per minute of audio
 
 import OpenAI from 'openai'
+import { execFileSync } from 'child_process'
+import { writeFileSync, readFileSync, mkdirSync, rmSync } from 'fs'
+import { join } from 'path'
+import { randomUUID } from 'crypto'
 
 // Lazy-load OpenAI client
 let openaiClient: OpenAI | null = null
@@ -28,23 +32,36 @@ export interface TranscriptionOptions {
   prompt?: string    // Context hint for better accuracy
 }
 
+const WHISPER_MAX_FILE_SIZE = 25 * 1024 * 1024 // 25MB
+const CHUNK_DURATION_SECONDS = 600 // 10 minutes per chunk
+
 /**
- * Transcribe audio using OpenAI Whisper API
- *
- * @param audioBuffer - Audio file as Buffer
- * @param filename - Original filename (helps Whisper identify format)
- * @param options - Optional transcription settings
- * @returns Transcription result with text and metadata
+ * Transcribe audio, automatically chunking large files that exceed Whisper's 25MB limit.
+ * Uses ffmpeg to split large files into 10-minute segments, transcribes each,
+ * and stitches the results together.
  */
 export async function transcribeAudio(
   audioBuffer: Buffer,
   filename: string,
   options: TranscriptionOptions = {}
 ): Promise<TranscriptionResult> {
+  if (audioBuffer.length <= WHISPER_MAX_FILE_SIZE) {
+    return transcribeSingleFile(audioBuffer, filename, options)
+  }
+
+  return transcribeChunked(audioBuffer, filename, options)
+}
+
+/**
+ * Transcribe a single audio file (must be under 25MB)
+ */
+async function transcribeSingleFile(
+  audioBuffer: Buffer,
+  filename: string,
+  options: TranscriptionOptions = {}
+): Promise<TranscriptionResult> {
   const openai = getOpenAI()
 
-  // Create a File-like object for the API
-  // Convert Buffer to Uint8Array for File constructor compatibility
   const uint8Array = new Uint8Array(audioBuffer)
   const file = new File([uint8Array], filename, {
     type: getMimeType(filename),
@@ -71,19 +88,148 @@ export async function transcribeAudio(
 }
 
 /**
+ * Get the path to the ffmpeg binary from ffmpeg-static
+ */
+function getFfmpegPath(): string {
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    return require('ffmpeg-static') as string
+  } catch {
+    throw new Error('ffmpeg-static is not installed')
+  }
+}
+
+/**
+ * Transcribe a large audio file by splitting into chunks with ffmpeg.
+ * Re-encodes to mono 64kbps 16kHz MP3 (optimal for speech, minimises chunk size).
+ * Passes trailing context from each chunk to the next for continuity.
+ */
+async function transcribeChunked(
+  audioBuffer: Buffer,
+  filename: string,
+  options: TranscriptionOptions = {}
+): Promise<TranscriptionResult> {
+  const ffmpegPath = getFfmpegPath()
+  const tmpDir = join('/tmp', `whisper-chunk-${randomUUID()}`)
+  mkdirSync(tmpDir, { recursive: true })
+
+  const inputPath = join(tmpDir, `input_${filename.replace(/[^a-zA-Z0-9._-]/g, '_')}`)
+  writeFileSync(inputPath, audioBuffer)
+
+  try {
+    // Get total duration using ffmpeg (stderr output contains duration info)
+    let totalDuration = 0
+    try {
+      // Use ffmpeg to probe duration by attempting a null output
+      const result = execFileSync(ffmpegPath, [
+        '-i', inputPath,
+        '-f', 'null',
+        '-',
+      ], { encoding: 'utf-8', stdio: ['pipe', 'pipe', 'pipe'] })
+      // Duration parsing from stdout/stderr
+      const durationMatch = result.match(/Duration:\s*(\d+):(\d+):(\d+)\.(\d+)/)
+      if (durationMatch) {
+        totalDuration = parseInt(durationMatch[1]) * 3600
+          + parseInt(durationMatch[2]) * 60
+          + parseInt(durationMatch[3])
+      }
+    } catch (err: unknown) {
+      // ffmpeg writes info to stderr even on success
+      const stderr = err && typeof err === 'object' && 'stderr' in err ? String(err.stderr) : ''
+      const durationMatch = stderr.match(/Duration:\s*(\d+):(\d+):(\d+)\.(\d+)/)
+      if (durationMatch) {
+        totalDuration = parseInt(durationMatch[1]) * 3600
+          + parseInt(durationMatch[2]) * 60
+          + parseInt(durationMatch[3])
+      }
+    }
+
+    // If we couldn't get duration, estimate from file size (rough: 1MB per minute for compressed audio)
+    if (totalDuration === 0) {
+      totalDuration = Math.ceil(audioBuffer.length / (1024 * 1024)) * 60
+    }
+
+    const numChunks = Math.ceil(totalDuration / CHUNK_DURATION_SECONDS)
+
+    // Split into chunks, re-encoding to lightweight mono MP3
+    const chunkPaths: string[] = []
+    for (let i = 0; i < numChunks; i++) {
+      const startTime = i * CHUNK_DURATION_SECONDS
+      const chunkPath = join(tmpDir, `chunk_${i}.mp3`)
+
+      execFileSync(ffmpegPath, [
+        '-i', inputPath,
+        '-ss', String(startTime),
+        '-t', String(CHUNK_DURATION_SECONDS),
+        '-acodec', 'libmp3lame',
+        '-ab', '64k',
+        '-ar', '16000',
+        '-ac', '1',
+        '-y',
+        chunkPath,
+      ], { stdio: 'pipe' })
+
+      chunkPaths.push(chunkPath)
+    }
+
+    // Filter out empty chunks (last chunk might be empty if duration estimate was high)
+    const validChunkPaths = chunkPaths.filter(p => {
+      try {
+        const stat = readFileSync(p)
+        return stat.length > 1000 // ignore chunks smaller than 1KB
+      } catch {
+        return false
+      }
+    })
+
+    // Transcribe each chunk, passing trailing context for continuity
+    const transcriptions: string[] = []
+    let accumulatedDuration = 0
+    let previousContext = ''
+
+    for (const chunkPath of validChunkPaths) {
+      const chunkBuffer = readFileSync(chunkPath)
+
+      // Use the last ~200 chars of previous transcription as context prompt
+      const contextPrompt = previousContext
+        ? `${getCoachingPrompt()}\n\nPrevious context: ...${previousContext}`
+        : options.prompt || getCoachingPrompt()
+
+      const result = await transcribeSingleFile(chunkBuffer, 'chunk.mp3', {
+        ...options,
+        prompt: contextPrompt,
+      })
+
+      transcriptions.push(result.text)
+      accumulatedDuration += result.duration_seconds
+
+      // Keep last 200 chars for next chunk's context
+      previousContext = result.text.slice(-200)
+    }
+
+    return {
+      text: transcriptions.join(' '),
+      duration_seconds: accumulatedDuration || totalDuration,
+      language: 'en',
+    }
+  } finally {
+    // Clean up temp files
+    try {
+      rmSync(tmpDir, { recursive: true, force: true })
+    } catch {
+      // ignore cleanup errors
+    }
+  }
+}
+
+/**
  * Transcribe audio from a URL (Supabase Storage)
- *
- * @param audioUrl - URL to the audio file
- * @param filename - Original filename
- * @param options - Optional transcription settings
- * @returns Transcription result
  */
 export async function transcribeFromUrl(
   audioUrl: string,
   filename: string,
   options: TranscriptionOptions = {}
 ): Promise<TranscriptionResult> {
-  // Fetch the audio file
   const response = await fetch(audioUrl)
   if (!response.ok) {
     throw new Error(`Failed to fetch audio from URL: ${response.status}`)
@@ -113,7 +259,6 @@ function getMimeType(filename: string): string {
 
 /**
  * Coaching-specific prompt to improve transcription accuracy
- * Includes common football/coaching terminology
  */
 function getCoachingPrompt(): string {
   return `This is a football coaching voice note. Common terms include:
@@ -130,17 +275,18 @@ function getCoachingPrompt(): string {
  */
 export function estimateCost(durationSeconds: number): number {
   const minutes = durationSeconds / 60
-  return Math.ceil(minutes * 0.006 * 100) / 100  // Round up to cents
+  return Math.ceil(minutes * 0.006 * 100) / 100
 }
 
 /**
- * Validate audio file before transcription
+ * Validate audio file before transcription.
+ * No longer rejects files over 25MB since chunked transcription handles them.
  */
 export function validateAudioFile(
   fileSize: number,
   mimeType: string
 ): { valid: boolean; error?: string } {
-  const MAX_SIZE = 25 * 1024 * 1024  // 25MB (Whisper API limit)
+  const MAX_SIZE = 100 * 1024 * 1024 // 100MB (storage limit for Pro+)
   const SUPPORTED_TYPES = [
     'audio/mpeg',
     'audio/mp4',
@@ -154,11 +300,10 @@ export function validateAudioFile(
   if (fileSize > MAX_SIZE) {
     return {
       valid: false,
-      error: `File too large. Maximum size is 25MB, got ${Math.round(fileSize / 1024 / 1024)}MB`,
+      error: `File too large. Maximum size is 100MB, got ${Math.round(fileSize / 1024 / 1024)}MB`,
     }
   }
 
-  // Check if mime type starts with any supported type (handles codec suffixes like "audio/webm;codecs=opus")
   const baseType = mimeType.split(';')[0].trim()
   if (!SUPPORTED_TYPES.includes(baseType)) {
     return {

@@ -4,6 +4,9 @@ import { createAdminClient } from "@/lib/supabase/admin"
 import { transcribeAudio } from "@/lib/whisper"
 import type { TranscriptionResponse } from "@/app/types"
 
+// Allow up to 5 minutes for large file chunked transcription
+export const maxDuration = 300
+
 export async function POST(request: NextRequest) {
   try {
     // 1. Authenticate
