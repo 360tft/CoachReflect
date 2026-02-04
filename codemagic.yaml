@@ -30,6 +30,12 @@ workflows:
         script: |
           npx cap sync ios
 
+      - name: Auto-increment build number
+        script: |
+          # Use Codemagic build number for unique builds
+          cd ios/App
+          agvtool new-version -all $((${PROJECT_BUILD_NUMBER} + 1))
+
       - name: Set up code signing
         script: |
           keychain initialize
