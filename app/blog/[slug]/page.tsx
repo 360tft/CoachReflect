@@ -274,6 +274,48 @@ export default async function BlogPostPage({ params }: Props) {
                 Get Started Free
               </Link>
             </div>
+
+            {/* Explore Coach Reflection */}
+            <div className="mt-10 pt-6 border-t border-border">
+              <h3 className="text-sm font-semibold text-foreground mb-4 uppercase tracking-wide">
+                Explore Coach Reflection
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <Link
+                  href="/topics"
+                  className="block p-4 rounded-lg border border-border bg-card hover:border-primary transition-colors group"
+                >
+                  <p className="font-medium text-foreground group-hover:text-primary transition-colors text-sm">
+                    Browse Coaching Topics
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Explore topics to reflect on and grow
+                  </p>
+                </Link>
+                <Link
+                  href="/ai-coaching-journal"
+                  className="block p-4 rounded-lg border border-border bg-card hover:border-primary transition-colors group"
+                >
+                  <p className="font-medium text-foreground group-hover:text-primary transition-colors text-sm">
+                    AI Coaching Journal
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Reflect on sessions with AI-powered guidance
+                  </p>
+                </Link>
+                <Link
+                  href="/signup"
+                  className="block p-4 rounded-lg border border-border bg-card hover:border-primary transition-colors group"
+                >
+                  <p className="font-medium text-foreground group-hover:text-primary transition-colors text-sm">
+                    Get Started Free
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Create your account and start reflecting today
+                  </p>
+                </Link>
+              </div>
+            </div>
           </article>
 
           {/* Sidebar */}
