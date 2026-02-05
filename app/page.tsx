@@ -62,7 +62,7 @@ export default async function Home() {
           For Sports Coaches
         </Badge>
         <h1 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight">
-          Grow as a Coach Through<br />Guided Reflection
+          AI-Powered Coaching Reflection<br />to Help You Grow
         </h1>
         <p className="text-xl text-muted-foreground mb-4 max-w-2xl mx-auto">
           Transform your post-session thoughts into actionable insights.
@@ -163,7 +163,7 @@ export default async function Home() {
               <CardContent>
                 <p className="text-sm text-muted-foreground">
                   {insight.id === 'recurring_challenge' && "Spots issues that keep coming up across sessions"}
-                  {insight.id === 'player_pattern' && "Tracks individual player mentions and progress"}
+                  {insight.id === 'player_pattern' && "Tracks individual athlete mentions and progress"}
                   {insight.id === 'improvement_trend' && "Highlights areas where you're improving"}
                   {insight.id === 'decline_trend' && "Alerts you to areas needing attention"}
                   {insight.id === 'suggestion' && "Personalized recommendations based on your reflections"}
@@ -201,11 +201,11 @@ export default async function Home() {
           </Card>
           <Card className="border border-l-4 border-l-orange-400">
             <CardHeader>
-              <CardTitle>Player Tracking</CardTitle>
+              <CardTitle>Athlete Tracking</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground">
-                Track individual player mentions and development
+                Track individual athlete mentions and development
               </p>
             </CardContent>
           </Card>

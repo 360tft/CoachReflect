@@ -1,0 +1,99 @@
+# CoachReflect
+
+> AI-powered coaching reflection journal for sports coaches at all levels.
+
+CoachReflect is an AI-powered reflection tool that helps sports coaches capture, analyse, and learn from their coaching sessions. It provides guided post-session reflections, identifies patterns over time, and supports continuing professional development across football, rugby, basketball, tennis, swimming, and more.
+
+## What CoachReflect Does
+
+- Guides coaches through structured post-session reflections
+- Uses AI to surface insights and patterns from reflection history
+- Tracks player development notes and observations
+- Accepts session plan uploads with AI vision analysis
+- Supports voice note reflections for quick capture
+- Exports CPD records for continuing professional development
+
+## Target Users
+
+### Grassroots Coaches
+- Volunteer coaches wanting to improve session by session
+- Parents coaching their child's team for the first time
+- Community coaches building a reflective habit
+
+### Academy and Professional Coaches
+- Youth academy coaches tracking player development
+- Professional coaches documenting tactical decisions
+- Performance coaches reviewing training effectiveness
+
+### Coach Educators
+- Mentors reviewing a coach's reflective practice
+- FA and governing body tutors assessing CPD
+- Clubs licensing CoachReflect for their coaching staff
+
+## Sports Supported
+
+- Football (soccer)
+- Rugby (union and league)
+- Basketball
+- Tennis
+- Swimming
+- Cricket
+- Hockey
+- Athletics
+- And more
+
+## Pricing
+
+- **Free**: Basic reflections and limited AI insights
+- **Pro**: Unlimited reflections, full AI insights, pattern tracking, voice notes, CPD export, session plan analysis
+
+## Club Licensing
+
+CoachReflect offers club and organisation licensing for academies, grassroots clubs, and governing bodies who want to embed reflective practice across their coaching staff.
+
+## Key Features
+
+### Guided Post-Session Reflections
+- Structured prompts that guide coaches through what went well, what to improve, and next steps
+- Tailored to sport and session type
+- Quick capture or detailed deep-dive options
+
+### AI-Powered Insights
+- Pattern recognition across multiple reflections
+- Identifies recurring themes, strengths, and development areas
+- Suggests focus areas based on reflection history
+
+### Player Development Notes
+- Track individual player observations over time
+- Link player notes to specific sessions
+- Monitor progress across the season
+
+### Session Plan Upload with AI Vision
+- Upload session plans as images or PDFs
+- AI analyses the session structure and offers feedback
+- Links session plans to post-session reflections
+
+### Voice Note Reflections
+- Record reflections on the go after training
+- AI transcribes and structures the content
+- Perfect for time-poor coaches heading home from the pitch
+
+### CPD Export
+- Export reflection history as a professional CPD record
+- Formatted for FA, UEFA, and governing body requirements
+- Evidence of reflective practice for coaching qualifications
+
+## Company
+
+Built by 360TFT (360 Total Football Training).
+
+- Website: https://coachreflection.com
+- Support: hello@coachreflection.com
+- Location: United Kingdom
+
+## Links
+
+- Homepage: https://coachreflection.com
+- Privacy Policy: https://coachreflection.com/privacy
+- Terms of Service: https://coachreflection.com/terms
+- Support: https://coachreflection.com/support

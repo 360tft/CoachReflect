@@ -54,6 +54,22 @@ const categoryConfig: Record<string, { label: string; color: string }> = {
   general: { label: "General", color: "bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300" },
 }
 
+function extractFaqFromContent(content: string): Array<{question: string; answer: string}> {
+  const faqs: Array<{question: string; answer: string}> = []
+  const faqSection = content.split(/^## (?:FAQ|Frequently Asked Questions)/mi)[1]
+  if (!faqSection) return faqs
+
+  const matches = faqSection.matchAll(/^###\s+(.+?)$\n+([\s\S]*?)(?=^###|\Z)/gm)
+  for (const match of matches) {
+    const question = match[1].trim().replace(/\*\*/g, '')
+    const answer = match[2].trim().replace(/\n+/g, ' ').replace(/[#*`]/g, '').slice(0, 300)
+    if (question && answer) {
+      faqs.push({ question, answer })
+    }
+  }
+  return faqs
+}
+
 function formatDate(dateString: string): string {
   return new Date(dateString).toLocaleDateString("en-GB", {
     year: "numeric",
@@ -107,6 +123,7 @@ export default async function BlogPostPage({ params }: Props) {
   const categoryInfo = categoryConfig[post.category] || categoryConfig.general
   const readTime = Math.ceil((post.word_count || 1500) / 200)
   const renderedContent = renderMarkdown(post.content)
+  const faqs = extractFaqFromContent(post.content)
 
   return (
     <div className="min-h-screen bg-background">
@@ -140,6 +157,25 @@ export default async function BlogPostPage({ params }: Props) {
           }),
         }}
       />
+      {faqs.length > 0 && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              mainEntity: faqs.map(faq => ({
+                "@type": "Question",
+                name: faq.question,
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: faq.answer,
+                },
+              })),
+            }),
+          }}
+        />
+      )}
 
       {/* Header */}
       <header className="border-b border-border">

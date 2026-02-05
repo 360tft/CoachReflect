@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next'
 import { getPublishedBlogPosts } from '@/lib/blog'
+import { getAllTopicSlugs } from '@/lib/topics'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://coachreflection.com'
@@ -61,6 +62,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'monthly',
       priority: 0.5,
     },
+    {
+      url: `${baseUrl}/ai-coaching-journal`,
+      lastModified,
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
   ]
 
   // Blog posts
@@ -77,9 +84,26 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     console.error('Error fetching blog posts for sitemap:', error)
   }
 
+  // Topic pages (programmatic SEO)
+  const topicUrls: MetadataRoute.Sitemap = getAllTopicSlugs().map(slug => ({
+    url: `${baseUrl}/topics/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly' as const,
+    priority: 0.7,
+  }))
+
+  const topicsHubUrl: MetadataRoute.Sitemap = [
+    {
+      url: `${baseUrl}/topics`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+    },
+  ]
+
   // Note: Public share pages (/share/[id]) are intentionally excluded
   // These are user-generated reflection pages that should not be indexed
   // until we implement proper metadata and social sharing features
 
-  return [...staticPages, ...blogPages]
+  return [...staticPages, ...topicsHubUrl, ...topicUrls, ...blogPages]
 }

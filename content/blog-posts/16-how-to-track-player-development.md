@@ -12,7 +12,7 @@ publishDate: ""
 
 # How to Track Player Development Without Spreadsheets
 
-You know your players are developing. You can see it in sessions. You can feel it on match days. That striker who could not hold the ball up three months ago is now bringing others into play. The centre back who panicked under pressure is starting to play out from the back with confidence.
+You know your athletes are developing. You can see it in sessions. You can feel it on match days. That forward who could not hold the ball up three months ago is now bringing others into play. The defender who panicked under pressure is starting to distribute with confidence.
 
 You know this. But could you prove it?
 

@@ -153,7 +153,7 @@ export type InsightType =
 
 export const INSIGHT_TYPES: { id: InsightType; label: string; emoji: string }[] = [
   { id: 'recurring_challenge', label: 'Recurring Challenge', emoji: '' },
-  { id: 'player_pattern', label: 'Player Pattern', emoji: '' },
+  { id: 'player_pattern', label: 'Athlete Pattern', emoji: '' },
   { id: 'improvement_trend', label: 'Improvement Trend', emoji: '' },
   { id: 'decline_trend', label: 'Needs Attention', emoji: '' },
   { id: 'suggestion', label: 'Suggestion', emoji: '' },
@@ -180,20 +180,20 @@ export const GUIDED_PROMPTS: GuidedPrompt[] = [
     id: 'what_worked',
     category: 'performance',
     question: 'What worked well today?',
-    placeholder: 'The pressing from the front was excellent...',
-    tip: 'Think about tactics, exercises, or moments that clicked',
+    placeholder: 'The warm-up set the tone and the main activity clicked...',
+    tip: 'Think about exercises, coaching moments, or things that clicked',
   },
   {
     id: 'what_didnt_work',
-    category: 'performance', 
+    category: 'performance',
     question: "What didn't go as planned?",
-    placeholder: 'The transition from defense to attack was slow...',
+    placeholder: 'The group lost focus during the main activity...',
     tip: "Be honest - this is how we grow",
   },
   {
     id: 'player_standouts',
     category: 'players',
-    question: 'Any player standouts (positive or needs support)?',
+    question: 'Any athlete standouts (positive or needs support)?',
     placeholder: 'Jamie showed great leadership. Tom seemed distracted...',
     tip: 'Track individual progress over time',
   },
@@ -201,14 +201,14 @@ export const GUIDED_PROMPTS: GuidedPrompt[] = [
     id: 'areas_to_improve',
     category: 'development',
     question: 'What areas need more work?',
-    placeholder: 'Set pieces, communication in defense...',
+    placeholder: 'Communication, decision-making under pressure...',
     tip: 'These become focus areas for future sessions',
   },
   {
     id: 'next_focus',
     category: 'tactics',
     question: 'What will you focus on next session?',
-    placeholder: 'Quick transitions, 1v1 defending...',
+    placeholder: 'Build on today\'s theme, address weak areas...',
     tip: 'Turn reflections into action',
   },
 ]
@@ -323,10 +323,10 @@ export const CHAT_STARTERS = [
   {
     category: 'Challenges',
     prompts: [
-      "A player is struggling with confidence",
+      "An athlete is struggling with confidence",
       "How do I handle parents who interfere?",
-      "My team keeps making the same mistakes",
-      "I'm struggling with player motivation",
+      "My group keeps making the same mistakes",
+      "I'm struggling with athlete motivation",
     ]
   },
   {
@@ -342,8 +342,8 @@ export const CHAT_STARTERS = [
     category: 'Specific Situations',
     prompts: [
       "We lost badly today and morale is low",
-      "A star player is leaving the team",
-      "I need to give difficult feedback to a player",
+      "A key athlete is leaving the group",
+      "I need to give difficult feedback to an athlete",
       "How do I balance winning vs development?",
     ]
   },
@@ -593,7 +593,7 @@ export interface CoachingTheme {
 }
 
 export const COACHING_THEME_CATEGORIES: { id: ThemeCategory; label: string }[] = [
-  { id: 'player_behavior', label: 'Player Behavior' },
+  { id: 'player_behavior', label: 'Athlete Behaviour' },
   { id: 'tactical', label: 'Tactical' },
   { id: 'physical', label: 'Physical' },
   { id: 'mental', label: 'Mental' },
