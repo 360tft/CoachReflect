@@ -1,8 +1,9 @@
 "use client"
 
-import { useState, Suspense } from "react"
+import { useState, useEffect, Suspense } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import Link from "next/link"
+import { Capacitor } from "@capacitor/core"
 import { createClient } from "@/lib/supabase/client"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card"
 import { Button } from "@/app/components/ui/button"
@@ -36,9 +37,14 @@ function LoginForm() {
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
   const [googleLoading, setGoogleLoading] = useState(false)
+  const [isNative, setIsNative] = useState(false)
   const router = useRouter()
   const searchParams = useSearchParams()
   const redirectTo = searchParams.get("redirect") || "/dashboard"
+
+  useEffect(() => {
+    setIsNative(Capacitor.isNativePlatform())
+  }, [])
 
   const handleGoogleLogin = async () => {
     setError(null)
@@ -81,37 +87,46 @@ function LoginForm() {
 
   return (
     <>
-      {/* Google Sign In */}
-      <Button
-        type="button"
-        variant="outline"
-        className="w-full mb-4"
-        onClick={handleGoogleLogin}
-        disabled={googleLoading || loading}
-      >
-        {googleLoading ? (
-          "Connecting..."
-        ) : (
-          <>
-            <GoogleIcon />
-            <span className="ml-2">Continue with Google</span>
-          </>
-        )}
-      </Button>
+      {/* Google Sign In - hidden on native (doesn't work in WKWebView) */}
+      {!isNative && (
+        <>
+          <Button
+            type="button"
+            variant="outline"
+            className="w-full mb-4"
+            onClick={handleGoogleLogin}
+            disabled={googleLoading || loading}
+          >
+            {googleLoading ? (
+              "Connecting..."
+            ) : (
+              <>
+                <GoogleIcon />
+                <span className="ml-2">Continue with Google</span>
+              </>
+            )}
+          </Button>
 
-      <div className="relative my-4">
-        <div className="absolute inset-0 flex items-center">
-          <span className="w-full border-t" />
-        </div>
-        <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-card px-2 text-muted-foreground">Or continue with email</span>
-        </div>
-      </div>
+          <div className="relative my-4">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-card px-2 text-muted-foreground">Or continue with email</span>
+            </div>
+          </div>
+        </>
+      )}
 
       <form onSubmit={handleSubmit} className="space-y-4">
         {error && (
           <div className="p-3 text-sm text-red-600 bg-red-50 dark:bg-red-950 dark:text-red-400 rounded-lg">
             {error}
+          </div>
+        )}
+        {error && isNative && (
+          <div className="p-3 text-sm text-amber-700 bg-amber-50 dark:bg-amber-950 dark:text-amber-300 rounded-lg">
+            Signed up with Google? Visit coachreflection.com in your browser to set a password, then sign in here with email.
           </div>
         )}
         <div>

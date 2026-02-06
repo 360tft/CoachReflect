@@ -3,6 +3,7 @@
 import { useState, useEffect, Suspense } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import Link from "next/link"
+import { Capacitor } from "@capacitor/core"
 import { createClient } from "@/lib/supabase/client"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card"
 import { Button } from "@/app/components/ui/button"
@@ -37,9 +38,14 @@ function SignupForm() {
   const [loading, setLoading] = useState(false)
   const [googleLoading, setGoogleLoading] = useState(false)
   const [success, setSuccess] = useState(false)
+  const [isNative, setIsNative] = useState(false)
   const router = useRouter()
   const searchParams = useSearchParams()
   const referralCode = searchParams.get("ref")
+
+  useEffect(() => {
+    setIsNative(Capacitor.isNativePlatform())
+  }, [])
 
   // Store referral code in session storage for use after signup
   useEffect(() => {
@@ -156,32 +162,36 @@ function SignupForm() {
           </div>
         )}
 
-        {/* Google Sign Up */}
-        <Button
-          type="button"
-          variant="outline"
-          className="w-full mb-4"
-          onClick={handleGoogleSignup}
-          disabled={googleLoading || loading}
-        >
-          {googleLoading ? (
-            "Connecting..."
-          ) : (
-            <>
-              <GoogleIcon />
-              <span className="ml-2">Continue with Google</span>
-            </>
-          )}
-        </Button>
+        {/* Google Sign Up - hidden on native (doesn't work in WKWebView) */}
+        {!isNative && (
+          <>
+            <Button
+              type="button"
+              variant="outline"
+              className="w-full mb-4"
+              onClick={handleGoogleSignup}
+              disabled={googleLoading || loading}
+            >
+              {googleLoading ? (
+                "Connecting..."
+              ) : (
+                <>
+                  <GoogleIcon />
+                  <span className="ml-2">Continue with Google</span>
+                </>
+              )}
+            </Button>
 
-        <div className="relative my-4">
-          <div className="absolute inset-0 flex items-center">
-            <span className="w-full border-t" />
-          </div>
-          <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-card px-2 text-muted-foreground">Or continue with email</span>
-          </div>
-        </div>
+            <div className="relative my-4">
+              <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t" />
+              </div>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-card px-2 text-muted-foreground">Or continue with email</span>
+              </div>
+            </div>
+          </>
+        )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {error && (
