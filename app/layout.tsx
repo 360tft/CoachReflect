@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     template: "%s | Coach Reflection",
   },
   description: "Transform your coaching with guided post-session reflections. Track patterns, identify athlete progress, and grow as a coach with AI-powered insights. For football, rugby, basketball, and more.",
-  keywords: ["AI coaching journal", "AI coaching reflection", "AI coaching assistant", "AI sports coaching", "sports coaching", "coach reflection", "session review", "coaching development", "athlete tracking", "coaching journal", "coach app", "session planning", "football coaching", "rugby coaching", "basketball coaching", "AI coach reflection tool"],
+  keywords: ["AI coaching journal", "AI coaching reflection", "coaching reflection app", "coaching reflection tool", "reflective journal for coaches", "coach CPD log", "coaching CPD tracker", "coaching self evaluation tool", "post session reflection football", "voice note coaching journal", "coaching journal app", "session review", "coaching development", "athlete tracking", "coach app", "football coaching", "cricket coaching", "basketball coaching", "tennis coaching", "digital CPD portfolio coaching", "soccer reflection", "football reflection", "soccer coaching journal", "football coaching journal", "soccer post-match reflection", "football training reflection"],
   authors: [{ name: "360TFT" }],
   creator: "360TFT",
   publisher: "SVMS Consultancy Limited",
