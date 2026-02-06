@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation"
 import Link from "next/link"
 import { Capacitor } from "@capacitor/core"
 import { createClient } from "@/lib/supabase/client"
+import { loginFallback } from "./actions"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card"
 import { Button } from "@/app/components/ui/button"
 
@@ -118,7 +119,7 @@ function LoginForm() {
         </>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form action={loginFallback} onSubmit={handleSubmit} className="space-y-4">
         {error && (
           <div className="p-3 text-sm text-red-600 bg-red-50 dark:bg-red-950 dark:text-red-400 rounded-lg">
             {error}
