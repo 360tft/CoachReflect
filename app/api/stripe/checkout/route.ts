@@ -8,7 +8,7 @@ export async function POST(request: Request) {
     const { data: { user } } = await supabase.auth.getUser()
 
     if (!user) {
-      return NextResponse.redirect(new URL("/login", request.url))
+      return NextResponse.redirect(new URL("/login", request.url), 303)
     }
 
     // Determine if this is a JSON request (fetch) or form submission
@@ -103,7 +103,7 @@ export async function POST(request: Request) {
       if (isJson) {
         return NextResponse.json({ url: session.url })
       }
-      return NextResponse.redirect(session.url)
+      return NextResponse.redirect(session.url, 303)
     }
 
     return NextResponse.json({ error: "Failed to create checkout session" }, { status: 500 })
