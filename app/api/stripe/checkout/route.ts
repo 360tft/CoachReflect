@@ -13,7 +13,8 @@ export async function POST(request: Request) {
 
     // Determine if this is a JSON request (fetch) or form submission
     const contentType = request.headers.get("content-type") || ""
-    const isJson = contentType.includes("application/json")
+    const accept = request.headers.get("accept") || ""
+    const isJson = contentType.includes("application/json") || accept.includes("application/json")
 
     let billingPeriod = "monthly"
     let plan = "pro"

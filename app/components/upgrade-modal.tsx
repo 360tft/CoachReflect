@@ -50,25 +50,36 @@ const PRO_FEATURES = [
 
 export function UpgradeModal({ variant, isOpen, onClose }: UpgradeModalProps) {
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
   const config = VARIANT_CONFIG[variant]
 
   if (!isOpen) return null
 
   const handleUpgrade = async () => {
     setLoading(true)
+    setError(null)
     try {
       const res = await fetch('/api/stripe/checkout', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ priceId: PRICING.PRO.monthly.stripePriceId }),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({ plan: 'pro', billing_period: 'monthly' }),
       })
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({ error: 'Checkout failed' }))
+        setError(data.error || 'Something went wrong. Please try again.')
+        return
+      }
       const data = await res.json()
       if (data.url) {
         window.location.href = data.url
+      } else {
+        setError('Could not start checkout. Please try again.')
       }
     } catch {
-      // Fallback to settings page
-      window.location.href = '/dashboard/settings'
+      setError('Unable to connect to payment system. Please try again.')
     } finally {
       setLoading(false)
     }
@@ -122,6 +133,11 @@ export function UpgradeModal({ variant, isOpen, onClose }: UpgradeModalProps) {
           <span className="text-3xl font-bold">{formatPrice(PRICING.PRO.monthly.price)}</span>
           <span className="text-muted-foreground">/month</span>
         </div>
+
+        {/* Error message */}
+        {error && (
+          <p className="text-sm text-red-500 text-center mb-3">{error}</p>
+        )}
 
         {/* CTA */}
         <Button
