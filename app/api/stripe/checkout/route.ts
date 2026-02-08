@@ -76,7 +76,7 @@ export async function POST(request: Request) {
       }, { status: 500 })
     }
 
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://coachreflection.com"
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || request.headers.get("origin") || "https://coachreflection.com"
 
     // Create checkout session — matches FootballGPT's working pattern
     const session = await stripe.checkout.sessions.create({
