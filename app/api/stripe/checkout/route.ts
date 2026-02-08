@@ -8,18 +8,15 @@ export async function POST(request: Request) {
     const { data: { user } } = await supabase.auth.getUser()
 
     if (!user) {
-      return NextResponse.redirect(new URL("/login", request.url), 303)
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
-    // Determine if this is a JSON request (fetch) or form submission
+    // Parse request body — accept both JSON and form data
     const contentType = request.headers.get("content-type") || ""
-    const accept = request.headers.get("accept") || ""
-    const isJson = contentType.includes("application/json") || accept.includes("application/json")
-
     let billingPeriod = "monthly"
     let plan = "pro"
 
-    if (isJson) {
+    if (contentType.includes("application/json")) {
       const json = await request.json().catch(() => ({}))
       billingPeriod = json.billing_period || json.billing || "monthly"
       plan = json.plan || "pro"
@@ -79,41 +76,34 @@ export async function POST(request: Request) {
       }, { status: 500 })
     }
 
-    // Create checkout session
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://coachreflection.com"
+
+    // Create checkout session — matches FootballGPT's working pattern
     const session = await stripe.checkout.sessions.create({
       customer: customerId,
       mode: "subscription",
-      payment_method_types: ["card"],
+      allow_promotion_codes: true,
       line_items: [
         {
           price: priceId,
           quantity: 1,
         },
       ],
-      success_url: `${request.headers.get("origin")}/dashboard/settings?success=true`,
-      cancel_url: `${request.headers.get("origin")}/dashboard/settings?canceled=true`,
-      subscription_data: {
-        metadata: {
-          user_id: user.id,
-        },
+      success_url: `${appUrl}/dashboard/settings?success=true`,
+      cancel_url: `${appUrl}/dashboard/settings?canceled=true`,
+      metadata: {
+        user_id: user.id,
       },
     })
 
-    if (session.url) {
-      if (isJson) {
-        return NextResponse.json({ url: session.url })
-      }
-      return NextResponse.redirect(session.url, 303)
-    }
-
-    return NextResponse.json({ error: "Failed to create checkout session" }, { status: 500 })
+    // Always return JSON — client handles redirect
+    return NextResponse.json({ url: session.url })
   } catch (error) {
     console.error("Stripe checkout error:", error)
     const message = error instanceof Error ? error.message : "Unknown error"
     return NextResponse.json({
       error: "Checkout failed",
       details: message,
-      hint: message.includes("STRIPE") ? "Check Stripe environment variables" : undefined
     }, { status: 500 })
   }
 }

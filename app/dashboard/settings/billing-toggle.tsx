@@ -2,11 +2,12 @@
 
 import { useState } from "react"
 import { Button } from "@/app/components/ui/button"
-import { NativeHidden } from "@/app/components/native-hidden"
 
 export function BillingToggle() {
   const [billing, setBilling] = useState<"monthly" | "annual">("monthly")
   const [plan, setPlan] = useState<"pro" | "pro_plus">("pro")
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   const prices = {
     pro: { monthly: 7.99, annual: 76.99 },
@@ -110,16 +111,37 @@ export function BillingToggle() {
         )}
       </div>
 
-      {/* Checkout form */}
-      <NativeHidden>
-        <form action="/api/stripe/checkout" method="POST">
-          <input type="hidden" name="billing" value={billing} />
-          <input type="hidden" name="plan" value={plan} />
-          <Button type="submit" className="w-full">
-            Upgrade to {plan === "pro" ? "Pro" : "Pro+"} - ${currentPrice}/{billing === "monthly" ? "mo" : "yr"}
-          </Button>
-        </form>
-      </NativeHidden>
+      {/* Checkout */}
+      {error && (
+        <p className="text-sm text-red-500 text-center">{error}</p>
+      )}
+      <Button
+        className="w-full"
+        disabled={loading}
+        onClick={async () => {
+          setLoading(true)
+          setError(null)
+          try {
+            const res = await fetch('/api/stripe/checkout', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ plan, billing_period: billing }),
+            })
+            const data = await res.json()
+            if (data.url) {
+              window.location.href = data.url
+            } else {
+              setError(data.error || 'Could not start checkout. Please try again.')
+            }
+          } catch {
+            setError('Unable to connect to payment system. Please try again.')
+          } finally {
+            setLoading(false)
+          }
+        }}
+      >
+        {loading ? 'Loading...' : `Upgrade to ${plan === "pro" ? "Pro" : "Pro+"} - $${currentPrice}/${billing === "monthly" ? "mo" : "yr"}`}
+      </Button>
     </div>
   )
 }
