@@ -11,10 +11,22 @@ export async function POST(request: Request) {
       return NextResponse.redirect(new URL("/login", request.url))
     }
 
-    // Check for billing period and plan from form data
-    const formData = await request.formData().catch(() => null)
-    const billingPeriod = formData?.get("billing") as string || "monthly"
-    const plan = formData?.get("plan") as string || "pro"
+    // Determine if this is a JSON request (fetch) or form submission
+    const contentType = request.headers.get("content-type") || ""
+    const isJson = contentType.includes("application/json")
+
+    let billingPeriod = "monthly"
+    let plan = "pro"
+
+    if (isJson) {
+      const json = await request.json().catch(() => ({}))
+      billingPeriod = json.billing_period || json.billing || "monthly"
+      plan = json.plan || "pro"
+    } else {
+      const formData = await request.formData().catch(() => null)
+      billingPeriod = formData?.get("billing") as string || "monthly"
+      plan = formData?.get("plan") as string || "pro"
+    }
 
     // Get or create Stripe customer
     const { data: profile } = await supabase
@@ -87,6 +99,9 @@ export async function POST(request: Request) {
     })
 
     if (session.url) {
+      if (isJson) {
+        return NextResponse.json({ url: session.url })
+      }
       return NextResponse.redirect(session.url)
     }
 
