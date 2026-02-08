@@ -93,6 +93,7 @@ function SignupForm() {
       email,
       password,
       options: {
+        emailRedirectTo: `${window.location.origin}/api/auth/callback`,
         data: {
           referral_code: storedReferralCode, // Store in user metadata for processing
         },
