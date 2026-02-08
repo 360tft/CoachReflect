@@ -48,7 +48,7 @@ export function LastChanceEmail({ name, unsubscribeUrl }: EngagementEmailProps) 
       <Section style={offerBox}>
         <Text style={offerTitle}>20% off your first month of Pro</Text>
         <Text style={offerCode}>Use code THANKYOU20 at checkout</Text>
-        <Text style={offerPrice}>That's $7.99 instead of $9.99.</Text>
+        <Text style={offerPrice}>That's $6.39 instead of $7.99.</Text>
         <Text style={offerDetails}>Voice notes. AI insights. Unlimited reflections.</Text>
         <Text style={offerExpiry}>Offer expires in 48 hours.</Text>
       </Section>

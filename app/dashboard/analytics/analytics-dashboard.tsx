@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card"
 import { Button } from "@/app/components/ui/button"
-import Link from "next/link"
+import { UpgradeModal } from "@/app/components/upgrade-modal"
 
 interface PlayerMention {
   name: string
@@ -52,6 +52,7 @@ export function AnalyticsDashboard({ isSubscribed }: AnalyticsDashboardProps) {
   const [data, setData] = useState<AnalyticsData | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false)
 
   const periods = [
     { value: "1w", label: "7 Days", requiresPro: false },
@@ -129,15 +130,23 @@ export function AnalyticsDashboard({ isSubscribed }: AnalyticsDashboardProps) {
                   Upgrade to Pro to see your full analytics history, track player development over time, and identify long-term coaching patterns.
                 </p>
               </div>
-              <Link href="/dashboard/settings">
-                <Button className="bg-brand hover:bg-brand-hover whitespace-nowrap" size="sm">
-                  Upgrade to Pro ($7.99/mo)
-                </Button>
-              </Link>
+              <Button
+                onClick={() => setShowUpgradeModal(true)}
+                className="bg-brand hover:bg-brand-hover whitespace-nowrap"
+                size="sm"
+              >
+                Upgrade to Pro ($7.99/mo)
+              </Button>
             </div>
           </CardContent>
         </Card>
       )}
+
+      <UpgradeModal
+        variant="analytics"
+        isOpen={showUpgradeModal}
+        onClose={() => setShowUpgradeModal(false)}
+      />
 
       {/* Period Selector */}
       <div className="flex items-center gap-2">
@@ -146,8 +155,13 @@ export function AnalyticsDashboard({ isSubscribed }: AnalyticsDashboardProps) {
             key={p.value}
             variant={period === p.value ? "default" : "outline"}
             size="sm"
-            onClick={() => setPeriod(p.value)}
-            disabled={p.requiresPro && !isSubscribed}
+            onClick={() => {
+              if (p.requiresPro && !isSubscribed) {
+                setShowUpgradeModal(true)
+              } else {
+                setPeriod(p.value)
+              }
+            }}
           >
             {p.label}
             {p.requiresPro && !isSubscribed && (

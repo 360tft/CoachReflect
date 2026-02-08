@@ -6,6 +6,7 @@ import { MoodChart } from "@/app/components/ui/mood-chart"
 import { StreakBadges } from "@/app/components/streak-badges"
 import { PushNotificationPrompt } from "@/app/components/push-notification-prompt"
 import { ReferralCard } from "@/app/components/referral-card"
+import { ShareSummaryButton } from "./share-summary-button"
 import { MOOD_OPTIONS } from "@/app/types"
 
 export default async function DashboardPage() {
@@ -112,7 +113,7 @@ export default async function DashboardPage() {
             <div className="bg-muted/50 rounded-lg p-4 text-sm">
               <p className="font-medium mb-2">Your free account includes:</p>
               <ul className="space-y-1 text-muted-foreground">
-                <li>5 AI coach messages per day</li>
+                <li>2 AI coach messages per day</li>
                 <li>Mood and energy tracking</li>
                 <li>7 days of history and analytics</li>
               </ul>
@@ -162,11 +163,14 @@ export default async function DashboardPage() {
             Track your coaching journey through reflection
           </p>
         </div>
-        <Link href="/dashboard/chat">
-          <Button size="lg">
-            + Reflect
-          </Button>
-        </Link>
+        <div className="flex items-center gap-3">
+          <ShareSummaryButton />
+          <Link href="/dashboard/chat">
+            <Button size="lg">
+              + Reflect
+            </Button>
+          </Link>
+        </div>
       </div>
 
       {/* Free tier upgrade prompt */}
@@ -176,14 +180,14 @@ export default async function DashboardPage() {
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>
                 <p className="font-medium">
-                  Free Plan: 5 messages per day, 7 days of history
+                  Free Plan: 2 messages per day, 7 days of history
                 </p>
                 <p className="text-sm text-muted-foreground">
                   Upgrade to Pro for unlimited messages, voice notes, AI insights, and full analytics history.
                 </p>
               </div>
               <Link href="/dashboard/settings">
-                <Button className="bg-brand hover:bg-brand-hover" size="sm">
+                <Button className="bg-brand hover:bg-brand-hover !text-white" size="sm">
                   Upgrade to Pro ($7.99/mo)
                 </Button>
               </Link>

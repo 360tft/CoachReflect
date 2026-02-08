@@ -49,7 +49,7 @@ export function ChatInput({
   onSend,
   isSubscribed,
   subscriptionTier = 'free',
-  remaining = 5,
+  remaining = 2,
   disabled = false,
   placeholder = "How did your session go today?",
   onUpgradeClick,
@@ -94,12 +94,12 @@ export function ChatInput({
   // Handle Pro feature click for free users
   const handleProFeatureClick = useCallback((feature: string) => {
     if (!isSubscribed) {
-      setShowUpgradeHint(feature)
       if (onUpgradeClick) {
         onUpgradeClick()
+      } else {
+        setShowUpgradeHint(feature)
+        setTimeout(() => setShowUpgradeHint(null), 3000)
       }
-      // Auto-hide hint after 3 seconds
-      setTimeout(() => setShowUpgradeHint(null), 3000)
       return false
     }
     return true

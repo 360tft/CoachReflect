@@ -21,7 +21,7 @@ export type SubscriptionTier = 'free' | 'pro' | 'pro_plus'
 
 export const SUBSCRIPTION_LIMITS = {
   free: {
-    messages_per_day: 5,
+    messages_per_day: 2,
     analytics_history_weeks: 1,  // Limited to last 7 days
     ai_features: false,
     session_plan_upload: false,

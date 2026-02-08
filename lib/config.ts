@@ -149,7 +149,7 @@ export function getClubTier(tierId: ClubTier): ClubTierConfig | undefined {
 
 export const LIMITS = {
   FREE: {
-    messagesPerDay: 5,
+    messagesPerDay: 2,
     voiceNotesPerMonth: 0,
     shortVoiceNotesPerMonth: 0,
     fullRecordingsPerMonth: 0,

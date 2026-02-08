@@ -8,12 +8,12 @@ This guide explains Coach Reflection's Pro features and how to get the most from
 
 | Feature | Free | Pro | Pro+ |
 |---------|------|-----|------|
-| Reflections per day | 5 | Unlimited | Unlimited |
+| Reflections per day | 2 | Unlimited | Unlimited |
 | Analytics history | 1 week | Full | Full |
 | Voice notes | — | 4/month | 12/month |
 | Session plan upload | — | Yes | Yes |
 | Syllabus upload | — | — | Yes |
-| Price | $0 | $9.99/mo | $19.99/mo |
+| Price | $0 | $7.99/mo | $19.99/mo |
 
 ---
 
@@ -165,7 +165,7 @@ No extra work. Your development practice is your documentation.
 ### From the app:
 
 1. Go to Settings > Subscription
-2. Choose Pro ($9.99/mo) or Pro+ ($19.99/mo)
+2. Choose Pro ($7.99/mo) or Pro+ ($19.99/mo)
 3. Annual options save ~17%
 4. Complete payment via Stripe
 5. Features unlock immediately

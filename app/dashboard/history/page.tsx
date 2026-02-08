@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/app/components/ui/card"
 import { Button } from "@/app/components/ui/button"
 import { MOOD_OPTIONS, SESSION_TYPES } from "@/app/types"
 import { LIMITS } from "@/lib/config"
+import { HistoryUpgradeBanner } from "./history-upgrade-banner"
 
 export default async function HistoryPage() {
   const supabase = await createClient()
@@ -40,6 +41,18 @@ export default async function HistoryPage() {
 
   const { data: reflections } = await query
 
+  // Count total reflections (including those outside window) for free users
+  let totalCount = reflections?.length || 0
+  if (!isSubscribed) {
+    const { count } = await supabase
+      .from("reflections")
+      .select("*", { count: "exact", head: true })
+      .eq("user_id", user.id)
+    totalCount = count || 0
+  }
+
+  const hiddenCount = !isSubscribed ? totalCount - (reflections?.length || 0) : 0
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -56,27 +69,9 @@ export default async function HistoryPage() {
         </Link>
       </div>
 
-      {/* Upsell banner for free users */}
+      {/* Upgrade banner for free users */}
       {!isSubscribed && (
-        <Card className="border-brand/30 bg-brand/5">
-          <CardContent className="py-4">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-              <div>
-                <p className="font-semibold">
-                  Free Plan: Limited to last {historyDays} days
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  Your older reflections are saved. Upgrade to Pro to access your full history and track coaching patterns over time.
-                </p>
-              </div>
-              <Link href="/dashboard/settings">
-                <Button className="bg-brand hover:bg-brand-hover whitespace-nowrap" size="sm">
-                  Upgrade to Pro ($7.99/mo)
-                </Button>
-              </Link>
-            </div>
-          </CardContent>
-        </Card>
+        <HistoryUpgradeBanner historyDays={historyDays} hiddenCount={hiddenCount} />
       )}
 
       {reflections && reflections.length > 0 ? (

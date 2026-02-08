@@ -77,7 +77,7 @@ export default async function SettingsPage() {
             </div>
             {subscriptionTier === "free" && (
               <div className="text-right">
-                <p className="text-2xl font-bold">$9.99<span className="text-sm font-normal">/mo</span></p>
+                <p className="text-2xl font-bold">$7.99<span className="text-sm font-normal">/mo</span></p>
               </div>
             )}
           </div>

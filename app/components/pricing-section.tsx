@@ -75,7 +75,7 @@ export function PricingSection() {
           <CardContent>
             <ul className="space-y-2 text-sm">
               <li className="flex items-start gap-2">
-                <span className="text-green-500 mt-0.5">+</span> 5 reflections a day to build the habit
+                <span className="text-green-500 mt-0.5">+</span> 2 reflections a day to get started
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-500 mt-0.5">+</span> Guided prompts after every session

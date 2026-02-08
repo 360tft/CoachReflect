@@ -63,7 +63,7 @@ From Supabase Dashboard → Settings → API:
 ### Create Products
 1. Go to https://dashboard.stripe.com/products
 2. Create product: **Coach Reflection Pro**
-   - Monthly: $9.99/month → save Price ID
+   - Monthly: $7.99/month → save Price ID
    - Annual: $99/year → save Price ID
 3. Create product: **Coach Reflection Sponsor** (optional)
    - Monthly: $99/month → save Price ID

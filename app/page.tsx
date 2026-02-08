@@ -5,13 +5,8 @@ import { Badge } from "@/app/components/ui/badge"
 import { GUIDED_PROMPTS, INSIGHT_TYPES, MOOD_OPTIONS } from "@/app/types"
 import { PricingSection } from "@/app/components/pricing-section"
 import { Footer } from "@/app/components/footer"
-import { AskAI } from "@/app/components/ask-ai"
 import { HeroScreenshot } from "@/app/components/hero-screenshot"
 import { createClient } from "@/lib/supabase/server"
-
-const COACHREFLECT_AI_PROMPT = `As a sports coach who wants to improve but doesn't track what I actually coach, explain what Coach Reflection is.
-
-Cover: How does the reflection/journaling process work? What do I log after each session? How does it help me identify patterns and gaps in my coaching? Is there AI-powered feedback? How is this different from just keeping notes? What sports does it support? What's the pricing model?`
 
 export default async function Home() {
   let isLoggedIn = false
@@ -62,11 +57,11 @@ export default async function Home() {
           For Sports Coaches
         </Badge>
         <h1 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight">
-          AI-Powered Coaching Reflection<br />to Help You Grow
+          Remember what actually<br />worked in your session
         </h1>
         <p className="text-xl text-muted-foreground mb-4 max-w-2xl mx-auto">
-          Transform your post-session thoughts into actionable insights.
-          Track patterns, identify athlete progress, and unlock your coaching potential.
+          Most coaches think about sessions but never capture the insights.
+          Start reflecting in 2 minutes. AI spots the patterns you miss.
         </p>
         <p className="text-sm text-muted-foreground mb-8">
           Football, Rugby, Basketball, Tennis, Swimming, and 10+ more sports
@@ -82,7 +77,7 @@ export default async function Home() {
             <>
               <Link href="/signup">
                 <Button size="lg">
-                  Get Started Free
+                  Start Reflecting Free
                 </Button>
               </Link>
               <Link href="/login">
@@ -94,13 +89,8 @@ export default async function Home() {
           )}
         </div>
         <p className="text-sm text-muted-foreground mt-4">
-          Free tier available. No credit card required.
+          No credit card required. Start with 2 free reflections a day.
         </p>
-        <AskAI
-          question="What is Coach Reflection?"
-          prompt={COACHREFLECT_AI_PROMPT}
-          className="mt-6"
-        />
 
         {/* Hero Screenshot */}
         <HeroScreenshot />
@@ -269,9 +259,9 @@ export default async function Home() {
       <section className="container mx-auto px-4 py-20 text-center">
         <Card className="bg-primary text-primary-foreground border-0 max-w-2xl mx-auto">
           <CardHeader>
-            <CardTitle className="text-2xl">Ready to Become a Better Coach?</CardTitle>
+            <CardTitle className="text-2xl">Start capturing what works</CardTitle>
             <CardDescription className="text-primary-foreground/80">
-              Join coaches who are using reflection to accelerate their development
+              Two minutes after your session. That is all it takes.
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -285,7 +275,7 @@ export default async function Home() {
               <>
                 <Link href="/signup">
                   <Button size="lg" className="!bg-white !text-gray-900 hover:!bg-gray-100">
-                    Get Started Free
+                    Start Reflecting Free
                   </Button>
                 </Link>
                 <Link href="/login">

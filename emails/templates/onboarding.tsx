@@ -220,7 +220,7 @@ export function UpgradePitchEmail({ name, unsubscribeUrl }: OnboardingEmailProps
       </Text>
 
       <Text style={paragraph}>
-        <strong>With Pro ($9.99/month), you get:</strong>
+        <strong>With Pro ($7.99/month), you get:</strong>
       </Text>
 
       <ul style={list}>

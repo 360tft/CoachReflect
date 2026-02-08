@@ -7,14 +7,16 @@ import { Card, CardContent } from "@/app/components/ui/card"
 import { FeedbackButtons } from "@/app/components/feedback-buttons"
 import { ChatInput } from "@/app/components/chat-input"
 import { QuickReplies, parseQuickReplyFromMessage, stripQuickReplyMarker, type ParsedQuickReply } from "@/app/components/quick-replies"
+import { UpgradeModal } from "@/app/components/upgrade-modal"
 import { CHAT_STARTERS, type ChatMessage, type Conversation } from "@/app/types"
+import { LIMITS } from "@/lib/config"
 
 interface ChatInterfaceProps {
   isSubscribed: boolean
   initialRemaining?: number
 }
 
-export function ChatInterface({ isSubscribed, initialRemaining = 5 }: ChatInterfaceProps) {
+export function ChatInterface({ isSubscribed, initialRemaining = 2 }: ChatInterfaceProps) {
   const [messages, setMessages] = useState<ChatMessage[]>([])
   const [input, setInput] = useState("")
   const [loading, setLoading] = useState(false)
@@ -27,9 +29,13 @@ export function ChatInterface({ isSubscribed, initialRemaining = 5 }: ChatInterf
   const [reflectionSaved, setReflectionSaved] = useState(false)
   const [autoSaveTriggered, setAutoSaveTriggered] = useState(false)
   const [finalExtractionDone, setFinalExtractionDone] = useState(false)
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false)
+  const [upgradeModalVariant, setUpgradeModalVariant] = useState<'limit_reached' | 'voice_notes' | 'session_plan' | 'generic'>('limit_reached')
 
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const abortControllerRef = useRef<AbortController | null>(null)
+
+  const dailyLimit = LIMITS.FREE.messagesPerDay
 
   // Scroll to bottom when messages change
   useEffect(() => {
@@ -102,9 +108,10 @@ export function ChatInterface({ isSubscribed, initialRemaining = 5 }: ChatInterf
     const text = messageText || input.trim()
     if ((!text && !attachments?.length) || loading) return
 
-    // Check free tier limit
+    // Check free tier limit — show modal instead of text error
     if (!isSubscribed && remaining <= 0) {
-      setError("You've used your 5 reflections for today. Upgrade to Pro to reflect without limits, talk through sessions, and let AI spot patterns — from $7.99/month.")
+      setUpgradeModalVariant('limit_reached')
+      setShowUpgradeModal(true)
       return
     }
 
@@ -159,6 +166,8 @@ export function ChatInterface({ isSubscribed, initialRemaining = 5 }: ChatInterf
         const data = await res.json()
         if (data.limit_reached) {
           setRemaining(0)
+          setUpgradeModalVariant('limit_reached')
+          setShowUpgradeModal(true)
         }
         throw new Error(data.error || "Failed to send message")
       }
@@ -319,6 +328,26 @@ export function ChatInterface({ isSubscribed, initialRemaining = 5 }: ChatInterf
     setAutoSaveTriggered(false)
     setFinalExtractionDone(false)
   }, [startNewChat])
+
+  // Handle upgrade click from chat input (voice/image Pro features)
+  const handleUpgradeClick = useCallback((feature?: string) => {
+    if (feature === 'voice') {
+      setUpgradeModalVariant('voice_notes')
+    } else if (feature === 'image') {
+      setUpgradeModalVariant('session_plan')
+    } else {
+      setUpgradeModalVariant('generic')
+    }
+    setShowUpgradeModal(true)
+  }, [])
+
+  // Message counter colour
+  const getCounterColor = () => {
+    if (isSubscribed) return ''
+    if (remaining <= 0) return 'text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/50 border-red-200 dark:border-red-800'
+    if (remaining === 1) return 'text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/50 border-amber-200 dark:border-amber-800'
+    return 'text-muted-foreground bg-muted/50 border-transparent'
+  }
 
   return (
     <div className="flex h-full gap-4">
@@ -509,16 +538,24 @@ export function ChatInterface({ isSubscribed, initialRemaining = 5 }: ChatInterf
           </div>
         )}
 
-        {/* Free Tier Warning */}
-        {!isSubscribed && remaining <= 2 && remaining > 0 && (
-          <div className="bg-muted/50 dark:bg-background border border dark:border rounded-lg p-3 mb-4">
-            <p className="text-sm text-primary dark:text-primary">
-              {remaining} message{remaining === 1 ? "" : "s"} remaining today.{" "}
-              <a href="/dashboard/settings" className="underline font-medium">
-                Upgrade to Pro
-              </a>{" "}
-              to reflect without limits and talk through sessions.
-            </p>
+        {/* Message Counter - persistent bar above input for free users */}
+        {!isSubscribed && (
+          <div className={`flex items-center justify-between rounded-lg px-3 py-2 mb-2 text-sm border ${getCounterColor()}`}>
+            <span className="font-medium">
+              {remaining <= 0
+                ? 'No reflections remaining today'
+                : `${remaining} of ${dailyLimit} reflections remaining today`
+              }
+            </span>
+            <button
+              onClick={() => {
+                setUpgradeModalVariant('limit_reached')
+                setShowUpgradeModal(true)
+              }}
+              className="text-xs font-medium underline hover:no-underline"
+            >
+              Upgrade for unlimited
+            </button>
           </div>
         )}
 
@@ -528,6 +565,7 @@ export function ChatInterface({ isSubscribed, initialRemaining = 5 }: ChatInterf
           isSubscribed={isSubscribed}
           remaining={remaining}
           disabled={loading}
+          onUpgradeClick={() => handleUpgradeClick()}
           placeholder={
             !isSubscribed && remaining <= 0
               ? "Daily limit reached. Upgrade to Pro to keep reflecting..."
@@ -535,6 +573,13 @@ export function ChatInterface({ isSubscribed, initialRemaining = 5 }: ChatInterf
           }
         />
       </div>
+
+      {/* Upgrade Modal */}
+      <UpgradeModal
+        variant={upgradeModalVariant}
+        isOpen={showUpgradeModal}
+        onClose={() => setShowUpgradeModal(false)}
+      />
     </div>
   )
 }

@@ -59,7 +59,7 @@ export default async function PricingPage() {
           <div>
             <h3 className="font-semibold mb-2">Can I try before I buy?</h3>
             <p className="text-muted-foreground">
-              Yes! The free tier gives you 5 messages per day and 7 days of history.
+              Yes! The free tier gives you 2 messages per day and 7 days of history.
               No credit card required to start.
             </p>
           </div>

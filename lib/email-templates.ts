@@ -152,7 +152,7 @@ export const TEMPLATES: Record<string, (props: TemplateProps) => string> = {
 
     <p>You've been using Coach Reflection for a couple of weeks now. Ready to unlock the full potential?</p>
 
-    <p><strong>With Pro ($9.99/month), you get:</strong></p>
+    <p><strong>With Pro ($7.99/month), you get:</strong></p>
     <ul>
       <li>Unlimited reflections</li>
       <li>4 voice notes per month for hands-free reflection</li>
@@ -241,7 +241,7 @@ export const TEMPLATES: Record<string, (props: TemplateProps) => string> = {
     <div style="background: #fef3c7; padding: 24px; border-radius: 12px; margin: 24px 0; text-align: center; border: 2px solid #f59e0b;">
       <p style="color: #92400e; font-size: 18px; font-weight: 700; margin: 0 0 8px;">20% off your first month of Pro</p>
       <p style="color: #1f2937; font-size: 20px; font-weight: 700; margin: 0 0 12px; background: #ffffff; padding: 8px 16px; border-radius: 6px; display: inline-block;">Use code THANKYOU20 at checkout</p>
-      <p style="color: #374151; font-size: 15px; margin: 12px 0 4px;">That's $7.99 instead of $9.99.</p>
+      <p style="color: #374151; font-size: 15px; margin: 12px 0 4px;">That's $6.39 instead of $7.99.</p>
       <p style="color: #6b7280; font-size: 14px; margin: 0 0 12px;">Voice notes. AI insights. Unlimited reflections.</p>
       <p style="color: #dc2626; font-size: 13px; font-weight: 600; margin: 0;">Offer expires in 48 hours.</p>
     </div>

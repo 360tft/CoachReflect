@@ -10,35 +10,27 @@ interface Testimonial {
   avatar: string
 }
 
-// Placeholder testimonials (to be replaced with real ones)
 const testimonials: Testimonial[] = [
   {
     id: '1',
-    name: 'James Wilson',
-    location: 'Manchester United Academy',
-    quote: 'Coach Reflection has transformed how I think about my sessions. I can see patterns in my coaching I never noticed before.',
-    avatar: 'JW',
+    name: 'Stephen Kavanagh',
+    location: 'FCA Member',
+    quote: "I've been reflecting a lot more since joining this community and I've definitely made positive changes to my coaching.",
+    avatar: 'SK',
   },
   {
     id: '2',
-    name: 'Sophie Martinez',
-    location: 'Grassroots Coach, London',
-    quote: 'Finally, a tool that helps me process what happens on the pitch. The AI asks better questions than my coaching mentor!',
-    avatar: 'SM',
+    name: 'FCA Coach',
+    location: 'Football Coaching Academy',
+    quote: 'It is probably the best resource I have found in developing my coaching knowledge. The community is my home.',
+    avatar: 'FC',
   },
   {
     id: '3',
-    name: 'David Thompson',
-    location: 'Academy Coach, Birmingham',
-    quote: 'The reflection prompts help me improve every week. I feel more confident in my coaching decisions now.',
-    avatar: 'DT',
-  },
-  {
-    id: '4',
-    name: 'Maria Rodriguez',
-    location: 'Youth Coach, Madrid',
-    quote: 'This is what I needed. A place to think through sessions without judgment. My coaching has leveled up.',
-    avatar: 'MR',
+    name: 'Stephen Kavanagh',
+    location: 'FCA Member',
+    quote: "I've been focussing on better detail in my coaching which I've improved. Now it is giving specific feedback to players.",
+    avatar: 'SK',
   },
 ]
 

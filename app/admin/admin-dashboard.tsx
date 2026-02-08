@@ -207,12 +207,12 @@ export function AdminDashboard() {
           <CardHeader className="pb-2">
             <CardDescription>Est. MRR</CardDescription>
             <CardTitle className="text-3xl text-green-600">
-              ${(metrics.users.pro * 9.99).toFixed(0)}
+              ${(metrics.users.pro * 7.99).toFixed(0)}
             </CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-sm text-muted-foreground">
-              At $9.99/user (avg)
+              At $7.99/user (avg)
             </p>
           </CardContent>
         </Card>
