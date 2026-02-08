@@ -30,6 +30,16 @@ import {
   LastChanceEmail,
 } from '@/emails/templates/engagement'
 
+// HTML escape utility to prevent injection in email templates
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;')
+}
+
 // Config
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://coachreflection.com'
 const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'Coach Reflection <hello@send.coachreflection.com>'
@@ -269,7 +279,7 @@ export async function notifyNewSignup(userEmail: string): Promise<void> {
           <h2 style="color: #E5A11C;">New User Signed Up</h2>
           <p>A new user has signed up for Coach Reflection:</p>
           <div style="background-color: #f3f4f6; padding: 16px; border-radius: 8px; margin: 16px 0;">
-            <p style="margin: 0;"><strong>Email:</strong> ${userEmail}</p>
+            <p style="margin: 0;"><strong>Email:</strong> ${escapeHtml(userEmail)}</p>
             <p style="margin: 8px 0 0 0;"><strong>Time:</strong> ${new Date().toLocaleString('en-GB', { timeZone: 'Europe/London' })}</p>
           </div>
           <p style="color: #6b7280; font-size: 14px;">
@@ -303,7 +313,7 @@ export async function notifyNewProSubscription(
           <h2 style="color: #E5A11C;">New Pro Subscriber!</h2>
           <p>A user has upgraded to Pro:</p>
           <div style="background-color: #fef3c7; padding: 16px; border-radius: 8px; margin: 16px 0; border: 1px solid #E5A11C;">
-            <p style="margin: 0;"><strong>Email:</strong> ${userEmail}</p>
+            <p style="margin: 0;"><strong>Email:</strong> ${escapeHtml(userEmail)}</p>
             ${amount ? `<p style="margin: 8px 0 0 0;"><strong>Amount:</strong> $${(amount / 100).toFixed(2)}</p>` : ''}
             <p style="margin: 8px 0 0 0;"><strong>Time:</strong> ${new Date().toLocaleString('en-GB', { timeZone: 'Europe/London' })}</p>
           </div>
@@ -337,7 +347,7 @@ export async function notifySubscriptionCanceled(
           <h2 style="color: #dc2626;">Subscription Canceled</h2>
           <p>A user has canceled their Pro subscription:</p>
           <div style="background-color: #fef2f2; padding: 16px; border-radius: 8px; margin: 16px 0; border: 1px solid #dc2626;">
-            <p style="margin: 0;"><strong>Email:</strong> ${userEmail}</p>
+            <p style="margin: 0;"><strong>Email:</strong> ${escapeHtml(userEmail)}</p>
             <p style="margin: 8px 0 0 0;"><strong>Time:</strong> ${new Date().toLocaleString('en-GB', { timeZone: 'Europe/London' })}</p>
           </div>
           <p style="color: #6b7280; font-size: 14px;">
@@ -486,10 +496,10 @@ export async function notifyNegativeFeedback(
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #dc2626;">Negative Feedback Received</h2>
           <div style="background-color: #fef2f2; padding: 16px; border-radius: 8px; margin: 16px 0; border: 1px solid #dc2626;">
-            <p style="margin: 0;"><strong>User:</strong> ${userEmail || 'Unknown'}</p>
-            ${contentType ? `<p style="margin: 8px 0 0 0;"><strong>Content Type:</strong> ${contentType}</p>` : ''}
-            ${feedbackText ? `<p style="margin: 8px 0 0 0;"><strong>Feedback:</strong> ${feedbackText}</p>` : ''}
-            <p style="margin: 8px 0 0 0;"><strong>Content:</strong> ${contentText.slice(0, 200)}${contentText.length > 200 ? '...' : ''}</p>
+            <p style="margin: 0;"><strong>User:</strong> ${escapeHtml(userEmail || 'Unknown')}</p>
+            ${contentType ? `<p style="margin: 8px 0 0 0;"><strong>Content Type:</strong> ${escapeHtml(contentType)}</p>` : ''}
+            ${feedbackText ? `<p style="margin: 8px 0 0 0;"><strong>Feedback:</strong> ${escapeHtml(feedbackText)}</p>` : ''}
+            <p style="margin: 8px 0 0 0;"><strong>Content:</strong> ${escapeHtml(contentText.slice(0, 200))}${contentText.length > 200 ? '...' : ''}</p>
           </div>
         </div>
       `,

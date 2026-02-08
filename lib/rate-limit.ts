@@ -145,7 +145,7 @@ export async function checkRateLimit(
   // Fall back to in-memory if Redis not configured
   if (!rateLimiter) {
     if (process.env.NODE_ENV === 'production') {
-      console.warn('Rate limiting: Redis not configured, using in-memory fallback')
+      console.error('Rate limiting: Redis not configured, using in-memory fallback')
     }
     return checkRateLimitInMemory(identifier, config)
   }

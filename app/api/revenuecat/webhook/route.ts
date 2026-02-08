@@ -4,6 +4,19 @@ import { notifyNewProSubscription, notifySubscriptionCancelled, sendProWelcomeEm
 
 export const dynamic = 'force-dynamic'
 
+// Idempotency: Track processed events to prevent duplicates
+const processedEvents = new Map<string, number>()
+const EVENT_TTL = 5 * 60 * 1000 // 5 minutes
+
+function cleanupProcessedEvents() {
+  const now = Date.now()
+  for (const [eventId, timestamp] of processedEvents) {
+    if (now - timestamp > EVENT_TTL) {
+      processedEvents.delete(eventId)
+    }
+  }
+}
+
 // RevenueCat webhook event types
 // https://www.revenuecat.com/docs/webhooks
 type RevenueCatEventType =
@@ -91,7 +104,13 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
   }
 
-  const { type, app_user_id, product_id, expiration_at_ms, store, price } = event.event
+  const { type, app_user_id, product_id, expiration_at_ms, store, price, id: eventId } = event.event
+
+  // Idempotency check - prevent duplicate processing
+  cleanupProcessedEvents()
+  if (processedEvents.has(eventId)) {
+    return NextResponse.json({ received: true, duplicate: true })
+  }
 
   // Skip sandbox events in production
   if (event.event.environment === 'SANDBOX' && process.env.NODE_ENV === 'production') {
@@ -246,6 +265,9 @@ export async function POST(request: NextRequest) {
         // No action needed
         break
     }
+
+    // Mark event as processed
+    processedEvents.set(eventId, Date.now())
 
     return NextResponse.json({ received: true })
   } catch (error) {

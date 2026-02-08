@@ -27,6 +27,12 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Missing signature" }, { status: 400 })
   }
 
+  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET
+  if (!webhookSecret) {
+    console.error("[Stripe Webhook] STRIPE_WEBHOOK_SECRET not configured")
+    return NextResponse.json({ error: "Webhook secret not configured" }, { status: 500 })
+  }
+
   const stripe = getStripe()
   let event: Stripe.Event
 
@@ -34,7 +40,7 @@ export async function POST(request: Request) {
     event = stripe.webhooks.constructEvent(
       body,
       signature,
-      process.env.STRIPE_WEBHOOK_SECRET!
+      webhookSecret
     )
   } catch {
     return NextResponse.json({ error: "Invalid signature" }, { status: 400 })
@@ -132,14 +138,14 @@ export async function POST(request: Request) {
                 .eq("user_id", referral.referrer_id)
                 .single()
 
-              // Add credit to referrer's Stripe account (1 month = ~$10)
+              // Add credit to referrer's Stripe account (1 month = ~$8)
               if (referrerProfile?.stripe_customer_id) {
                 try {
-                  // Add $9.99 credit (negative amount = credit)
+                  // Add $7.99 credit (negative amount = credit)
                   await stripe.customers.createBalanceTransaction(
                     referrerProfile.stripe_customer_id,
                     {
-                      amount: -999, // -$9.99 in cents (credit)
+                      amount: -799, // -$7.99 in cents (credit)
                       currency: "usd",
                       description: "Referral reward: 1 month free Pro",
                     }

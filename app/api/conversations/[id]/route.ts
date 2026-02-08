@@ -33,11 +33,12 @@ export async function GET(
       )
     }
 
-    // Fetch messages
+    // Fetch messages (user_id filter for defense-in-depth)
     const { data: messages, error: msgError } = await supabase
       .from("messages")
       .select("*")
       .eq("conversation_id", id)
+      .eq("user_id", user.id)
       .order("created_at", { ascending: true })
 
     if (msgError) {
