@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/app/components/ui/ca
 import { Footer } from "@/app/components/footer"
 
 export const metadata: Metadata = {
-  title: "Coaching CPD Log - Track Your Professional Development | Coach Reflection",
+  title: "Coaching CPD Log - Track Your Professional Development",
   description: "Digital CPD log for sports coaches. Automatically generate CPD evidence from your coaching reflections. Track hours, export PDF portfolios and meet FA, UEFA and US Soccer CPD requirements. Free to start.",
   alternates: {
     canonical: "https://coachreflection.com/cpd-coaching-log",

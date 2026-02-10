@@ -5,21 +5,21 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/app/components/ui/ca
 import { Footer } from "@/app/components/footer"
 
 export const metadata: Metadata = {
-  title: "AI Coaching Journal - Reflect, Track & Grow as a Coach | Coach Reflection",
-  description: "Transform your coaching with an AI-powered coaching journal. Guided reflection prompts, pattern detection, player tracking, voice notes and CPD export. For football, rugby, basketball, tennis and 10+ sports. Free to start.",
+  title: "AI Coaching Journal - Become a Better Coach After Every Session",
+  description: "Become a better coach with an AI-powered coaching journal. Reflect for 2 minutes, the AI shows you what's working. Voice notes, pattern detection, player tracking and CPD export. Free to start.",
   alternates: {
     canonical: "https://coachreflection.com/ai-coaching-journal",
   },
   openGraph: {
-    title: "AI Coaching Journal - Reflect, Track & Grow as a Coach | Coach Reflection",
-    description: "Transform your coaching with an AI-powered coaching journal. Guided reflection prompts, pattern detection, player tracking and CPD export for sports coaches.",
+    title: "AI Coaching Journal - Become a Better Coach | Coach Reflection",
+    description: "Become a better coach with an AI-powered journal. 2-minute reflections, pattern detection, player tracking and CPD export for sports coaches.",
     url: "https://coachreflection.com/ai-coaching-journal",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "AI Coaching Journal - Reflect, Track & Grow as a Coach | Coach Reflection",
-    description: "AI-powered coaching journal with guided prompts, pattern detection and player tracking for sports coaches.",
+    title: "AI Coaching Journal - Become a Better Coach | Coach Reflection",
+    description: "AI-powered coaching journal. 2-minute reflections show you what's working and what isn't. Pattern detection and player tracking for sports coaches.",
   },
 }
 

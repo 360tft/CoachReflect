@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/app/components/ui/ca
 import { Footer } from "@/app/components/footer"
 
 export const metadata: Metadata = {
-  title: "Soccer Reflection Journal for Coaches | Coach Reflection",
+  title: "Soccer Reflection Journal for Coaches",
   description: "A structured soccer reflection journal that helps coaches review matches and practices. Guided prompts, AI insights, player tracking and pattern detection. Free to start.",
   alternates: {
     canonical: "https://coachreflection.com/soccer-reflection",

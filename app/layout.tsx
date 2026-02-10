@@ -22,10 +22,10 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Coach Reflection - AI-Powered Reflection for Sports Coaches",
+    default: "Coach Reflection - Become a Better Coach After Every Session",
     template: "%s | Coach Reflection",
   },
-  description: "Transform your coaching with guided post-session reflections. Track patterns, identify athlete progress, and grow as a coach with AI-powered insights. For football, rugby, basketball, and more.",
+  description: "Become a better coach after every session. Reflect for 2 minutes and the AI shows you what's working and what isn't. For football, rugby, basketball, and 10+ sports. Free to start.",
   keywords: ["AI coaching journal", "AI coaching reflection", "coaching reflection app", "coaching reflection tool", "reflective journal for coaches", "coach CPD log", "coaching CPD tracker", "coaching self evaluation tool", "post session reflection football", "voice note coaching journal", "coaching journal app", "session review", "coaching development", "athlete tracking", "coach app", "football coaching", "cricket coaching", "basketball coaching", "tennis coaching", "digital CPD portfolio coaching", "soccer reflection", "football reflection", "soccer coaching journal", "football coaching journal", "soccer post-match reflection", "football training reflection"],
   authors: [{ name: "360TFT" }],
   creator: "360TFT",
@@ -52,8 +52,8 @@ export const metadata: Metadata = {
     locale: "en_GB",
     url: "https://coachreflection.com",
     siteName: "Coach Reflection",
-    title: "Coach Reflection - AI-Powered Reflection for Sports Coaches",
-    description: "Transform your coaching with guided post-session reflections. Track patterns, identify athlete progress, and grow as a coach with AI-powered insights. For football, rugby, basketball, and more.",
+    title: "Coach Reflection - Become a Better Coach After Every Session",
+    description: "Become a better coach after every session. Reflect for 2 minutes and the AI shows you what's working and what isn't. For football, rugby, basketball, and 10+ sports.",
     images: [
       {
         url: "/og-image.png",
@@ -65,8 +65,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Coach Reflection - AI-Powered Reflection for Sports Coaches",
-    description: "Transform your coaching with guided post-session reflections. Track patterns, identify athlete progress, and grow as a coach with AI-powered insights.",
+    title: "Coach Reflection - Become a Better Coach After Every Session",
+    description: "Become a better coach after every session. Reflect for 2 minutes and the AI shows you what's working and what isn't. For football, rugby, basketball, and 10+ sports.",
     images: ["/og-image.png"],
     creator: "@360_tft",
   },

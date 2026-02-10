@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/app/components/ui/ca
 import { Footer } from "@/app/components/footer"
 
 export const metadata: Metadata = {
-  title: "Basketball Coaching Reflection App - Coach Journal & CPD | Coach Reflection",
+  title: "Basketball Coaching Reflection App - Coach Journal & CPD",
   description: "Reflect on your basketball coaching with AI-powered guided prompts. Track player development across practice sessions and games, analyse plays and rotations, and export CPD evidence. For youth and senior basketball coaches. Free to start.",
   alternates: {
     canonical: "https://coachreflection.com/coaching-reflection-basketball",

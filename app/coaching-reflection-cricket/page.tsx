@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/app/components/ui/ca
 import { Footer } from "@/app/components/footer"
 
 export const metadata: Metadata = {
-  title: "Cricket Coaching Reflection App - Umpire & Coach Journal | Coach Reflection",
+  title: "Cricket Coaching Reflection App - Umpire & Coach Journal",
   description: "Reflect on your cricket coaching with AI-powered guided prompts. Track player development across net sessions and match days, log umpire reflections, and export CPD evidence for ECB qualifications. Free to start.",
   alternates: {
     canonical: "https://coachreflection.com/coaching-reflection-cricket",
