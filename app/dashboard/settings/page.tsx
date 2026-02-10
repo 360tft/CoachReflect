@@ -86,14 +86,14 @@ export default async function SettingsPage() {
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-muted/50 border">
                 <p className="font-medium text-foreground mb-2">
-                  Upgrade to Pro — Coach smarter
+                  Upgrade to Pro — See what you&apos;re missing
                 </p>
                 <ul className="text-sm text-muted-foreground space-y-1">
-                  <li>• Talk through sessions instead of typing</li>
-                  <li>• Structured reflections that ask the right questions</li>
-                  <li>• Upload session plans and get AI feedback</li>
-                  <li>• AI spots patterns across your reflections</li>
-                  <li>• Full history — nothing gets lost</li>
+                  <li>• Reflect on the drive home (voice notes)</li>
+                  <li>• Never wonder what to write again</li>
+                  <li>• Get AI feedback before you coach</li>
+                  <li>• The AI remembers what you forget</li>
+                  <li>• Build a searchable coaching library</li>
                 </ul>
               </div>
               <BillingToggle />

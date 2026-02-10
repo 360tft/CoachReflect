@@ -415,9 +415,9 @@ export function ChatInterface({ isSubscribed, initialRemaining = 2 }: ChatInterf
         <div className="flex-1 overflow-y-auto space-y-4 pb-4">
           {messages.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center">
-              <h2 className="text-2xl font-semibold mb-2">Hey Coach, what&apos;s on your mind?</h2>
+              <h2 className="text-2xl font-semibold mb-2">What happened in your session?</h2>
               <p className="text-muted-foreground mb-8 text-center max-w-md">
-                Reflect on your sessions, talk through challenges, or plan your next training.
+                Tell me what went well, what didn&apos;t, and who stood out. I&apos;ll help you see what it means.
               </p>
 
               {/* Chat Starters */}
@@ -543,7 +543,7 @@ export function ChatInterface({ isSubscribed, initialRemaining = 2 }: ChatInterf
           <div className={`flex items-center justify-between rounded-lg px-3 py-2 mb-2 text-sm border ${getCounterColor()}`}>
             <span className="font-medium">
               {remaining <= 0
-                ? 'No reflections remaining today'
+                ? "You've used today's free reflections"
                 : `${remaining} of ${dailyLimit} reflections remaining today`
               }
             </span>

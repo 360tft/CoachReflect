@@ -57,11 +57,11 @@ export default async function Home() {
           For Sports Coaches
         </Badge>
         <h1 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight">
-          Remember what actually<br />worked in your session
+          Become a better coach<br />after every session
         </h1>
         <p className="text-xl text-muted-foreground mb-4 max-w-2xl mx-auto">
-          Most coaches think about sessions but never capture the insights.
-          Start reflecting in 2 minutes. AI spots the patterns you miss.
+          Most coaches forget 80% of what happened by the next day.
+          Reflect for 2 minutes and the AI shows you exactly what&apos;s working and what isn&apos;t.
         </p>
         <p className="text-sm text-muted-foreground mb-8">
           Football, Rugby, Basketball, Tennis, Swimming, and 10+ more sports
@@ -77,7 +77,7 @@ export default async function Home() {
             <>
               <Link href="/signup">
                 <Button size="lg">
-                  Start Reflecting Free
+                  Start Your Free Reflection
                 </Button>
               </Link>
               <Link href="/login">
@@ -89,7 +89,7 @@ export default async function Home() {
           )}
         </div>
         <p className="text-sm text-muted-foreground mt-4">
-          No credit card required. Start with 2 free reflections a day.
+          No credit card required. Try it after your next session.
         </p>
 
         {/* Hero Screenshot */}
@@ -98,9 +98,9 @@ export default async function Home() {
 
       {/* Guided Prompts Preview */}
       <section id="how-it-works" className="container mx-auto px-4 py-20">
-        <h2 className="text-3xl font-bold text-center mb-4">Guided Reflection Questions</h2>
+        <h2 className="text-3xl font-bold text-center mb-4">Know Exactly What&apos;s Working (and What Isn&apos;t)</h2>
         <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
-          Answer simple questions after each session. Our AI finds patterns and turns your thoughts into growth opportunities.
+          Answer three quick questions after each session. Within a week, you&apos;ll see patterns you&apos;ve been missing for years.
         </p>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
           {GUIDED_PROMPTS.slice(0, 3).map((prompt) => (
@@ -124,9 +124,9 @@ export default async function Home() {
       {/* Mood Tracking */}
       <section className="container mx-auto px-4 py-20">
         <div className="bg-amber-50/30 dark:bg-amber-950/10 rounded-2xl p-8 md:p-12 max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-4">Track Your Coaching Journey</h2>
+          <h2 className="text-3xl font-bold mb-4">Catch Burnout Before It Catches You</h2>
           <p className="text-muted-foreground mb-8">
-            Log your mood and energy after each session to spot burnout early
+            Energy dropping? Mood shifting? See it in the data before you feel it on the pitch.
           </p>
           <div className="flex justify-center gap-4 flex-wrap">
             {MOOD_OPTIONS.map((mood) => (
@@ -140,9 +140,9 @@ export default async function Home() {
 
       {/* AI Insights */}
       <section className="container mx-auto px-4 py-20">
-        <h2 className="text-3xl font-bold text-center mb-4">AI-Powered Insights</h2>
+        <h2 className="text-3xl font-bold text-center mb-4">Your AI Coaching Mentor That Never Forgets</h2>
         <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
-          Our AI analyzes your reflections over time to surface patterns you might miss
+          It remembers every session, every player, every challenge. After a few weeks, it shows you things about your coaching you didn&apos;t know.
         </p>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
           {INSIGHT_TYPES.slice(0, 6).map((insight) => (
@@ -167,45 +167,45 @@ export default async function Home() {
 
       {/* Features */}
       <section className="container mx-auto px-4 py-20">
-        <h2 className="text-3xl font-bold text-center mb-12">Everything You Need to Reflect & Grow</h2>
+        <h2 className="text-3xl font-bold text-center mb-12">What Changes When You Start Reflecting</h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           <Card className="border border-l-4 border-l-primary">
             <CardHeader>
-              <CardTitle>Guided Journaling</CardTitle>
+              <CardTitle>Never Blank-Page Again</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground">
-                Structured prompts based on coaching best practices
+                Guided prompts ask the right questions so you never stare at a blank screen
               </p>
             </CardContent>
           </Card>
           <Card className="border border-l-4 border-l-amber-400">
             <CardHeader>
-              <CardTitle>Pattern Detection</CardTitle>
+              <CardTitle>See What You&apos;ve Been Missing</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground">
-                AI spots recurring themes across your reflections
+                AI spots recurring themes and patterns across your sessions
               </p>
             </CardContent>
           </Card>
           <Card className="border border-l-4 border-l-orange-400">
             <CardHeader>
-              <CardTitle>Athlete Tracking</CardTitle>
+              <CardTitle>Know Which Players Need You</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground">
-                Track individual athlete mentions and development
+                Track which athletes keep coming up and who needs attention
               </p>
             </CardContent>
           </Card>
           <Card className="border border-l-4 border-l-emerald-400">
             <CardHeader>
-              <CardTitle>Progress Dashboard</CardTitle>
+              <CardTitle>Watch Yourself Improve</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground">
-                Visualize your growth and coaching patterns over time
+                See your coaching growth and patterns over weeks and months
               </p>
             </CardContent>
           </Card>
@@ -259,9 +259,9 @@ export default async function Home() {
       <section className="container mx-auto px-4 py-20 text-center">
         <Card className="bg-primary text-primary-foreground border-0 max-w-2xl mx-auto">
           <CardHeader>
-            <CardTitle className="text-2xl">Start capturing what works</CardTitle>
+            <CardTitle className="text-2xl">Your next session is a chance to get better</CardTitle>
             <CardDescription className="text-primary-foreground/80">
-              Two minutes after your session. That is all it takes.
+              Two minutes after your session. That&apos;s all it takes to start coaching with intention.
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -275,7 +275,7 @@ export default async function Home() {
               <>
                 <Link href="/signup">
                   <Button size="lg" className="!bg-white !text-gray-900 hover:!bg-gray-100">
-                    Start Reflecting Free
+                    Start Your Free Reflection
                   </Button>
                 </Link>
                 <Link href="/login">

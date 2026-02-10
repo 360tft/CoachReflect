@@ -68,7 +68,7 @@ export default async function DashboardPage() {
               Welcome to Coach Reflection, {profile?.display_name || "Coach"}!
             </CardTitle>
             <CardDescription className="text-base">
-              You&apos;re about to transform how you grow as a coach
+              Let&apos;s get your first reflection done.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -79,9 +79,9 @@ export default async function DashboardPage() {
                   1
                 </div>
                 <div>
-                  <p className="font-medium">Reflect after each session</p>
+                  <p className="font-medium">Tell us what happened</p>
                   <p className="text-sm text-muted-foreground">
-                    Answer guided questions: What worked? What didn&apos;t? Which players stood out?
+                    Open the app after your session. Type or use a voice note. Two minutes.
                   </p>
                 </div>
               </div>
@@ -90,9 +90,9 @@ export default async function DashboardPage() {
                   2
                 </div>
                 <div>
-                  <p className="font-medium">Track mood and energy</p>
+                  <p className="font-medium">Rate how it felt</p>
                   <p className="text-sm text-muted-foreground">
-                    Log how you felt after sessions to spot patterns and prevent burnout
+                    One tap. Helps you spot burnout before it hits.
                   </p>
                 </div>
               </div>
@@ -101,9 +101,9 @@ export default async function DashboardPage() {
                   3
                 </div>
                 <div>
-                  <p className="font-medium">Chat with your AI coach</p>
+                  <p className="font-medium">See what the AI spots</p>
                   <p className="text-sm text-muted-foreground">
-                    Get advice, talk through challenges, and plan your next session
+                    Patterns emerge after a few sessions. Things you didn&apos;t notice yourself.
                   </p>
                 </div>
               </div>
@@ -111,11 +111,11 @@ export default async function DashboardPage() {
 
             {/* Free tier info */}
             <div className="bg-muted/50 rounded-lg p-4 text-sm">
-              <p className="font-medium mb-2">Your free account includes:</p>
+              <p className="font-medium mb-2">Your free account:</p>
               <ul className="space-y-1 text-muted-foreground">
-                <li>2 AI coach messages per day</li>
-                <li>Mood and energy tracking</li>
-                <li>7 days of history and analytics</li>
+                <li>2 reflections per day to get started</li>
+                <li>Mood tracking to catch burnout early</li>
+                <li>7 days of history</li>
               </ul>
             </div>
 
@@ -180,15 +180,15 @@ export default async function DashboardPage() {
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>
                 <p className="font-medium">
-                  Free Plan: 2 messages per day, 7 days of history
+                  You&apos;re building a reflection habit
                 </p>
                 <p className="text-sm text-muted-foreground">
-                  Upgrade to Pro for unlimited messages, voice notes, AI insights, and full analytics history.
+                  Pro coaches get unlimited reflections, voice notes, and a full coaching library. Try free for 7 days.
                 </p>
               </div>
               <Link href="/dashboard/settings">
                 <Button className="bg-brand hover:bg-brand-hover !text-white" size="sm">
-                  Upgrade to Pro ($7.99/mo)
+                  Try Pro Free for 7 Days
                 </Button>
               </Link>
             </div>

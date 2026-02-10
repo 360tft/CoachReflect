@@ -47,9 +47,9 @@ export function WelcomeEmail({ name, unsubscribeUrl }: OnboardingEmailProps) {
 
       <Section style={stepBox}>
         <Text style={stepText}>
-          <strong>3. Watch the patterns emerge</strong>
+          <strong>3. See what you're doing right (and what to change)</strong>
           <br />
-          Over time, you'll see what makes you effective
+          After a few reflections, the AI shows you patterns you didn't notice
         </Text>
       </Section>
 

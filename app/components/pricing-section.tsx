@@ -29,9 +29,12 @@ export function PricingSection() {
 
   return (
     <section id="pricing" className="container mx-auto px-4 py-16">
-      <h2 className="text-3xl font-bold text-center mb-4">Simple Pricing</h2>
-      <p className="text-center text-muted-foreground mb-8">
-        Start free, upgrade when you need more
+      <h2 className="text-3xl font-bold text-center mb-4">Less Than a Coffee a Week</h2>
+      <p className="text-center text-muted-foreground mb-4">
+        Start free. Most coaches upgrade within the first week.
+      </p>
+      <p className="text-center text-sm font-medium text-foreground mb-8">
+        Try Pro free for 7 days. No charge until day 8. Cancel with one click.
       </p>
 
       {/* Billing Toggle */}
@@ -69,7 +72,7 @@ export function PricingSection() {
         <Card>
           <CardHeader>
             <CardTitle>Free</CardTitle>
-            <CardDescription>Start reflecting</CardDescription>
+            <CardDescription>See if it clicks</CardDescription>
             <div className="text-3xl font-bold mt-4">$0</div>
           </CardHeader>
           <CardContent>
@@ -108,7 +111,7 @@ export function PricingSection() {
           </div>
           <CardHeader>
             <CardTitle>Pro</CardTitle>
-            <CardDescription>Coach smarter</CardDescription>
+            <CardDescription>Coach with full clarity</CardDescription>
             <div className="mt-4">
               <span className="text-3xl font-bold">{proPrice}</span>
               <span className="text-lg font-normal">{proPeriod}</span>
@@ -124,23 +127,23 @@ export function PricingSection() {
             <ul className="space-y-2 text-sm">
               <li className="flex items-start gap-2">
                 <span className="text-green-500 mt-0.5">+</span>
-                <span><strong>Talk through sessions instead of typing</strong> (4 voice notes/month)</span>
+                <span><strong>Reflect on the drive home</strong> (4 voice notes/month)</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-500 mt-0.5">+</span>
-                <span><strong>Structured reflections</strong> that ask the right questions</span>
+                <span><strong>Never wonder &apos;what should I write?&apos;</strong> again</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-green-500 mt-0.5">+</span> Upload session plans and get AI feedback
+                <span className="text-green-500 mt-0.5">+</span> Get AI feedback on your plans before you coach
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-green-500 mt-0.5">+</span> AI spots patterns across your reflections
+                <span className="text-green-500 mt-0.5">+</span> The AI remembers what you forget
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-green-500 mt-0.5">+</span> Full history — nothing gets lost
+                <span className="text-green-500 mt-0.5">+</span> Build a coaching library you can search forever
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-green-500 mt-0.5">+</span> Export your reflections
+                <span className="text-green-500 mt-0.5">+</span> Evidence your development for CPD
               </li>
             </ul>
             <NativeHidden>
@@ -158,7 +161,7 @@ export function PricingSection() {
           </div>
           <CardHeader>
             <CardTitle>Pro+</CardTitle>
-            <CardDescription>Grow without limits</CardDescription>
+            <CardDescription>Accelerate your development</CardDescription>
             <div className="mt-4">
               <span className="text-3xl font-bold">{proPlusPrice}</span>
               <span className="text-lg font-normal">{proPlusPeriod}</span>

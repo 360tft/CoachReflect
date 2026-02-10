@@ -79,12 +79,12 @@ export function BillingToggle() {
         <p className="font-medium">What&apos;s included:</p>
         {plan === "pro" ? (
           <ul className="text-muted-foreground space-y-1">
-            <li>+ Talk through sessions instead of typing (4 voice notes/month)</li>
-            <li>+ Structured reflections that ask the right questions</li>
-            <li>+ Upload session plans and get AI feedback</li>
-            <li>+ AI spots patterns across your reflections</li>
-            <li>+ Full history — nothing gets lost</li>
-            <li>+ Export your reflections</li>
+            <li>+ Reflect on the drive home (4 voice notes/month)</li>
+            <li>+ Never wonder what to write again</li>
+            <li>+ Get AI feedback before you coach</li>
+            <li>+ The AI remembers what you forget</li>
+            <li>+ Searchable coaching library forever</li>
+            <li>+ CPD evidence generated automatically</li>
           </ul>
         ) : (
           <ul className="text-muted-foreground space-y-1">
@@ -110,6 +110,11 @@ export function BillingToggle() {
           </p>
         )}
       </div>
+
+      {/* Risk reversal */}
+      <p className="text-center text-sm text-muted-foreground">
+        7-day free trial. Cancel anytime. No charge until day 8.
+      </p>
 
       {/* Checkout */}
       {error && (

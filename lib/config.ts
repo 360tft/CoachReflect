@@ -245,7 +245,7 @@ export const FEATURES = {
 
 export const APP_CONFIG = {
   name: 'Coach Reflection',
-  tagline: 'Grow as a Coach Through Guided Reflection',
+  tagline: 'Become a Better Coach After Every Session',
   url: process.env.NEXT_PUBLIC_APP_URL || 'https://coachreflection.com',
   supportEmail: 'admin@360tft.com',
 

@@ -20,21 +20,22 @@ export function HistoryUpgradeBanner({ historyDays, hiddenCount }: HistoryUpgrad
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
               <p className="font-semibold">
-                Free Plan: Limited to last {historyDays} days
+                You have reflections you can&apos;t see
               </p>
               <p className="text-sm text-muted-foreground">
                 {hiddenCount > 0
-                  ? `You have ${hiddenCount} older reflection${hiddenCount === 1 ? '' : 's'} saved. Upgrade to Pro to access your full history and track coaching patterns over time.`
-                  : 'Your older reflections are saved. Upgrade to Pro to access your full history and track coaching patterns over time.'
+                  ? `You have ${hiddenCount} reflection${hiddenCount === 1 ? '' : 's'} with coaching insights you've already earned. Unlock your full history with Pro.`
+                  : "Your older reflections are saved with insights you've already earned. Unlock them with Pro."
                 }
               </p>
+              <p className="text-xs text-muted-foreground mt-1">Try free for 7 days.</p>
             </div>
             <Button
               onClick={() => setShowModal(true)}
               className="bg-brand hover:bg-brand-hover whitespace-nowrap"
               size="sm"
             >
-              Upgrade to Pro ($7.99/mo)
+              Unlock History — 7-Day Free Trial
             </Button>
           </div>
         </CardContent>

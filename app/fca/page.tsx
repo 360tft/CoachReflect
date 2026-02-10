@@ -175,6 +175,9 @@ export default function FCALandingPage() {
           <p className="text-sm text-muted-foreground mt-3">
             No credit card required. Takes 30 seconds to sign up.
           </p>
+          <p className="text-xs text-muted-foreground mt-2">
+            Pro is $7.99/month with a 7-day free trial. But the free version is enough to see if it works for you.
+          </p>
         </div>
       </section>
 

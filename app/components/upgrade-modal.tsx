@@ -14,38 +14,38 @@ interface UpgradeModalProps {
 
 const VARIANT_CONFIG: Record<ModalVariant, { title: string; subtitle: string }> = {
   limit_reached: {
-    title: "You're on a roll!",
-    subtitle: "You've used your 2 free reflections for today.",
+    title: "You're getting somewhere",
+    subtitle: "You've just used today's free reflections. Coaches who reflect consistently improve fastest.",
   },
   voice_notes: {
-    title: 'Talk through your sessions',
-    subtitle: 'Voice notes let you reflect hands-free on the drive home.',
+    title: 'Reflect on the drive home',
+    subtitle: "Record your thoughts on the way home. No typing, no forgetting.",
   },
   session_plan: {
-    title: 'Upload session plans',
-    subtitle: 'Get AI feedback on your session plans before and after coaching.',
+    title: 'Get feedback before you coach',
+    subtitle: 'Upload your session plan and the AI gives you feedback before you step on the pitch.',
   },
   history: {
-    title: 'Access your full history',
-    subtitle: 'Your older reflections are saved. Unlock them to track long-term patterns.',
+    title: 'Your coaching insights are waiting',
+    subtitle: "You have older reflections with coaching insights you've already earned. Unlock them.",
   },
   analytics: {
-    title: 'See the full picture',
+    title: 'See what 4+ weeks reveals',
     subtitle: 'Full analytics show patterns across months, not just the last week.',
   },
   generic: {
-    title: 'Upgrade to Pro',
-    subtitle: 'Get more from your coaching reflections.',
+    title: 'Get more from every session',
+    subtitle: 'Pro coaches reflect without limits and see patterns others miss.',
   },
 }
 
 const PRO_FEATURES = [
-  'Unlimited reflections every day',
-  'Voice notes for hands-free reflection',
-  'AI spots patterns across your sessions',
-  'Upload session plans for AI feedback',
-  'Full history — nothing gets lost',
-  'Export your reflections for CPD',
+  'Reflect after every session, not just two',
+  'Talk through sessions on the drive home',
+  'See patterns you\'ve been missing for years',
+  'Get AI feedback on session plans before you coach',
+  'Build a searchable coaching library forever',
+  'Evidence your development for CPD',
 ]
 
 export function UpgradeModal({ variant, isOpen, onClose }: UpgradeModalProps) {
@@ -129,10 +129,18 @@ export function UpgradeModal({ variant, isOpen, onClose }: UpgradeModalProps) {
         </ul>
 
         {/* Price */}
-        <div className="text-center mb-4">
+        <div className="text-center mb-2">
           <span className="text-3xl font-bold">{formatPrice(PRICING.PRO.monthly.price)}</span>
           <span className="text-muted-foreground">/month</span>
         </div>
+
+        {/* Risk reversal */}
+        <p className="text-center text-sm text-muted-foreground mb-1">
+          7-day free trial. No charge until day 8. Cancel anytime.
+        </p>
+        <p className="text-center text-xs text-muted-foreground mb-4">
+          Built by Kevin Middleton for the FCA community of 1,500+ coaches
+        </p>
 
         {/* Error message */}
         {error && (
@@ -145,7 +153,7 @@ export function UpgradeModal({ variant, isOpen, onClose }: UpgradeModalProps) {
           disabled={loading}
           className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-semibold py-6 text-base"
         >
-          {loading ? 'Loading...' : 'Upgrade to Pro'}
+          {loading ? 'Loading...' : 'Start 7-Day Free Trial'}
         </Button>
 
         {/* Dismiss */}
@@ -153,7 +161,7 @@ export function UpgradeModal({ variant, isOpen, onClose }: UpgradeModalProps) {
           onClick={onClose}
           className="w-full text-center text-sm text-muted-foreground mt-3 hover:text-foreground transition-colors"
         >
-          {variant === 'limit_reached' ? "I'll wait until tomorrow" : 'Maybe later'}
+          Not right now
         </button>
       </div>
     </div>
