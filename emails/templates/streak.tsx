@@ -193,6 +193,10 @@ export function Streak30Email({ name, unsubscribeUrl }: StreakEmailProps) {
         going - the insights only get richer from here.
       </Text>
 
+      <Text style={paragraph}>
+        You've earned this streak on the free plan. Imagine what you'd see with unlimited reflections, voice notes, and full history. Pro is free for 7 days if you want to find out.
+      </Text>
+
       <Section style={buttonContainer}>
         <Button
           href={`${APP_URL}/dashboard/analytics`}

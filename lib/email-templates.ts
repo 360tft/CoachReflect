@@ -145,6 +145,8 @@ export const TEMPLATES: Record<string, (props: TemplateProps) => string> = {
     </p>
 
     <p>Questions? Just reply to this email.</p>
+
+    <p style="font-size: 14px; color: #6b7280;">P.S. When you're ready for unlimited reflections and voice notes, Pro is free for 7 days. No card needed to start free, no charge until day 8 if you trial.</p>
   `, props),
 
   'upgrade-pitch': (props) => baseTemplate(`
@@ -270,6 +272,8 @@ export const TEMPLATES: Record<string, (props: TemplateProps) => string> = {
     </p>
 
     <p>We're here when you're ready.</p>
+
+    <p style="font-size: 14px; color: #6b7280;">P.S. Pro coaches get unlimited reflections and voice notes to capture thoughts on the drive home. Free for 7 days if you want to try.</p>
   `, props),
 
   'winback-final': (props) => baseTemplate(`
@@ -286,7 +290,9 @@ export const TEMPLATES: Record<string, (props: TemplateProps) => string> = {
       <li>Watch your coaching patterns emerge over time</li>
     </ol>
 
-    <p>That's it. No commitment, no upsell. Just a tool to help you grow.</p>
+    <p>That's it. Just a tool to help you grow.</p>
+
+    <p style="font-size: 14px; color: #6b7280;">P.S. If you do come back, Pro gives you unlimited reflections and voice notes. 7-day free trial, cancel anytime.</p>
 
     <p style="text-align: center; margin: 30px 0;">
       <a href="${APP_URL}/dashboard/chat" style="background: #d97706; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; display: inline-block;">Open Coach Reflection</a>
@@ -431,6 +437,8 @@ export const TEMPLATES: Record<string, (props: TemplateProps) => string> = {
     </p>
 
     <p>We're genuinely proud to have you as part of Coach Reflection. Keep going - the insights only get richer from here.</p>
+
+    <p>You've earned this streak on the free plan. Imagine what you'd see with unlimited reflections, voice notes, and full history. Pro is free for 7 days if you want to find out.</p>
 
     <p style="text-align: center; margin: 30px 0;">
       <a href="${APP_URL}/dashboard/analytics" style="background: #1f2937; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; display: inline-block;">See Your 30-Day Journey</a>

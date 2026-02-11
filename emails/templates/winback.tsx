@@ -42,6 +42,10 @@ export function WinbackEmail({ name, unsubscribeUrl }: WinbackEmailProps) {
       </Section>
 
       <Text style={paragraph}>We're here when you're ready.</Text>
+
+      <Text style={{ ...paragraph, fontSize: '14px', color: '#6b7280' }}>
+        P.S. Pro coaches get unlimited reflections and voice notes to capture thoughts on the drive home. Free for 7 days if you want to try.
+      </Text>
     </BaseLayout>
   )
 }
@@ -141,7 +145,7 @@ export function WinbackFinalEmail({ name, unsubscribeUrl }: WinbackEmailProps) {
       </ol>
 
       <Text style={paragraph}>
-        That's it. No commitment, no upsell. Just a tool to help you grow.
+        That's it. Just a tool to help you grow.
       </Text>
 
       <Section style={buttonContainer}>
@@ -149,6 +153,10 @@ export function WinbackFinalEmail({ name, unsubscribeUrl }: WinbackEmailProps) {
           Open Coach Reflection
         </Button>
       </Section>
+
+      <Text style={{ ...paragraph, fontSize: '14px', color: '#6b7280' }}>
+        P.S. If you do come back, Pro gives you unlimited reflections and voice notes. 7-day free trial, cancel anytime.
+      </Text>
 
       <Text style={paragraph}>
         Kev

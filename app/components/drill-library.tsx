@@ -151,16 +151,16 @@ export function DrillLibrary({ isPro }: DrillLibraryProps) {
             </svg>
           </div>
           <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-            Drill Library is a Pro Feature
+            Your Drill Library
           </h2>
           <p className="text-gray-500 dark:text-gray-400 mb-6 max-w-md mx-auto">
-            Save, organise, and revisit your favourite drills and set pieces. Upgrade to Pro to unlock your personal drill library.
+            Ask for any drill in chat — passing, pressing, set pieces — and save it here with animated pitch diagrams. Pro coaches build a library they can search forever.
           </p>
           <a
             href="/dashboard/settings"
             className="inline-flex items-center min-h-[44px] px-6 py-2 bg-[#E5A11C] hover:bg-[#d4940f] text-white font-medium rounded-lg transition-colors"
           >
-            Upgrade to Pro
+            Try Pro Free for 7 Days
           </a>
         </div>
       </>

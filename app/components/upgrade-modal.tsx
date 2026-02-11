@@ -15,37 +15,37 @@ interface UpgradeModalProps {
 const VARIANT_CONFIG: Record<ModalVariant, { title: string; subtitle: string }> = {
   limit_reached: {
     title: "You're getting somewhere",
-    subtitle: "You've just used today's free reflections. Coaches who reflect consistently improve fastest.",
+    subtitle: "You've hit today's limit. Coaches who reflect after every session improve 2x faster.",
   },
   voice_notes: {
     title: 'Reflect on the drive home',
-    subtitle: "Record your thoughts on the way home. No typing, no forgetting.",
+    subtitle: "Most coaching insights vanish within 20 minutes. Record them on the drive home before they're gone.",
   },
   session_plan: {
     title: 'Get feedback before you coach',
-    subtitle: 'Upload your session plan and the AI gives you feedback before you step on the pitch.',
+    subtitle: "Get feedback on your session plan before you step on the pitch. Walk out prepared, not hoping.",
   },
   history: {
     title: 'Your coaching insights are waiting',
-    subtitle: "You have older reflections with coaching insights you've already earned. Unlock them.",
+    subtitle: "Your older reflections hold patterns you can't see yet. Full history shows what's really changing.",
   },
   analytics: {
     title: 'See what 4+ weeks reveals',
-    subtitle: 'Full analytics show patterns across months, not just the last week.',
+    subtitle: "Four weeks of data reveals the patterns that one week hides. See what's actually shifting.",
   },
   generic: {
     title: 'Get more from every session',
-    subtitle: 'Pro coaches reflect without limits and see patterns others miss.',
+    subtitle: 'The coaches who improve fastest reflect after every session. No limits, no gaps.',
   },
 }
 
 const PRO_FEATURES = [
-  'Reflect after every session, not just two',
-  'Talk through sessions on the drive home',
-  'See patterns you\'ve been missing for years',
-  'Design sessions, drills, and SSGs — or get feedback on plans you\'ve got',
-  'Build a searchable coaching library forever',
-  'Evidence your development for CPD',
+  'Reflect after every session. Nothing slips through the cracks.',
+  'Voice notes on the drive home. Capture thoughts before they vanish.',
+  'AI spots patterns across sessions that you\'d never notice alone.',
+  'Design sessions and drills, or get honest feedback on your plans.',
+  'Build a coaching library you can search in 10 years.',
+  'CPD evidence generated automatically. No extra paperwork.',
 ]
 
 export function UpgradeModal({ variant, isOpen, onClose }: UpgradeModalProps) {

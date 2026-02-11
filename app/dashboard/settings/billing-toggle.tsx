@@ -31,7 +31,7 @@ export function BillingToggle() {
           }`}
         >
           <p className="font-semibold">Pro</p>
-          <p className="text-sm text-muted-foreground">Talk through your sessions</p>
+          <p className="text-sm text-muted-foreground">Reflect without limits</p>
         </button>
         <button
           type="button"
@@ -43,7 +43,7 @@ export function BillingToggle() {
           }`}
         >
           <p className="font-semibold">Pro+</p>
-          <p className="text-sm text-muted-foreground">Full recordings + deep analysis</p>
+          <p className="text-sm text-muted-foreground">The full picture of your coaching</p>
         </button>
       </div>
 
@@ -91,10 +91,10 @@ export function BillingToggle() {
             <li>+ Everything in Pro, plus:</li>
             <li>+ Unlimited voice notes — record quick thoughts any time</li>
             <li>+ 12 full session recordings/month</li>
-            <li>+ Communication analysis — understand how you coach</li>
-            <li>+ Development blocks — track structured progression</li>
+            <li>+ Hear how you actually coach — full session recordings analysed</li>
+            <li>+ Track progression across 6-week blocks</li>
             <li>+ CPD documentation — evidence your growth automatically</li>
-            <li>+ Age-appropriate nudges — tailored to your players</li>
+            <li>+ Coaching tips matched to your players' age group</li>
             <li>+ Upload your coaching syllabus</li>
           </ul>
         )}

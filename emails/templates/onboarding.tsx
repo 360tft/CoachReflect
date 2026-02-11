@@ -201,6 +201,10 @@ export function CheckInEmail({ name, unsubscribeUrl }: OnboardingEmailProps) {
       </Section>
 
       <Text style={paragraph}>Questions? Just reply to this email.</Text>
+
+      <Text style={{ ...paragraph, fontSize: '14px', color: '#6b7280' }}>
+        P.S. When you&apos;re ready for unlimited reflections and voice notes, Pro is free for 7 days. No card needed to start free, no charge until day 8 if you trial.
+      </Text>
     </BaseLayout>
   )
 }

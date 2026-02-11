@@ -180,10 +180,10 @@ export default async function DashboardPage() {
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>
                 <p className="font-medium">
-                  You&apos;re building a reflection habit
+                  You&apos;re building a habit. Pro takes it further.
                 </p>
                 <p className="text-sm text-muted-foreground">
-                  Pro coaches get unlimited reflections, voice notes, and a full coaching library. Try free for 7 days.
+                  Unlimited reflections, voice notes on the drive home, and a searchable coaching library. See what 7 days of Pro reveals.
                 </p>
               </div>
               <Link href="/dashboard/settings">

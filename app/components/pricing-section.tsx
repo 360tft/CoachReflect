@@ -31,7 +31,7 @@ export function PricingSection() {
     <section id="pricing" className="container mx-auto px-4 py-16">
       <h2 className="text-3xl font-bold text-center mb-4">Less Than a Coffee a Week</h2>
       <p className="text-center text-muted-foreground mb-4">
-        Start free. Most coaches upgrade within the first week.
+        Start free. Upgrade when you see the difference.
       </p>
       <p className="text-center text-sm font-medium text-foreground mb-8">
         Try Pro free for 7 days. No charge until day 8. Cancel with one click.
@@ -72,7 +72,7 @@ export function PricingSection() {
         <Card>
           <CardHeader>
             <CardTitle>Free</CardTitle>
-            <CardDescription>See if it clicks</CardDescription>
+            <CardDescription>Get started and see what reflection does</CardDescription>
             <div className="text-3xl font-bold mt-4">$0</div>
           </CardHeader>
           <CardContent>
@@ -88,6 +88,9 @@ export function PricingSection() {
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-500 mt-0.5">+</span> 7 days of history
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-green-500 mt-0.5">+</span> Ask for drills with animated pitch diagrams
               </li>
               <li className="flex items-start gap-2 text-muted-foreground">
                 <span className="text-muted-foreground mt-0.5">-</span> No voice notes
@@ -111,7 +114,7 @@ export function PricingSection() {
           </div>
           <CardHeader>
             <CardTitle>Pro</CardTitle>
-            <CardDescription>Coach with full clarity</CardDescription>
+            <CardDescription>Reflect without limits</CardDescription>
             <div className="mt-4">
               <span className="text-3xl font-bold">{proPrice}</span>
               <span className="text-lg font-normal">{proPeriod}</span>
@@ -161,7 +164,7 @@ export function PricingSection() {
           </div>
           <CardHeader>
             <CardTitle>Pro+</CardTitle>
-            <CardDescription>Accelerate your development</CardDescription>
+            <CardDescription>The full picture of your coaching</CardDescription>
             <div className="mt-4">
               <span className="text-3xl font-bold">{proPlusPrice}</span>
               <span className="text-lg font-normal">{proPlusPeriod}</span>
@@ -185,11 +188,11 @@ export function PricingSection() {
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-500 mt-0.5">+</span>
-                <span><strong>Communication analysis</strong> — understand how you coach, not just what</span>
+                <span><strong>Hear how you actually coach</strong> — full session recordings analysed</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-500 mt-0.5">+</span>
-                <span><strong>Development blocks</strong> — track structured progression</span>
+                <span><strong>Track progression across 6-week blocks</strong> — see what&apos;s working</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-500 mt-0.5">+</span>
@@ -197,7 +200,7 @@ export function PricingSection() {
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-500 mt-0.5">+</span>
-                <span><strong>Age-appropriate nudges</strong> — tailored to your players&apos; stage</span>
+                <span><strong>Coaching tips matched to your players&apos; age group</strong></span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-500 mt-0.5">+</span> Upload your coaching syllabus — AI learns your philosophy
