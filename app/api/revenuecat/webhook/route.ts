@@ -134,12 +134,15 @@ export async function POST(request: NextRequest) {
           ? new Date(expiration_at_ms).toISOString()
           : new Date(Date.now() + (isAnnual ? 365 : 30) * 24 * 60 * 60 * 1000).toISOString()
 
+        // Set status based on period type (TRIAL = trialing, otherwise active)
+        const subStatus = event.event.period_type === 'TRIAL' ? 'trialing' : 'active'
+
         // Update profiles table directly (CoachReflect pattern)
         const { error } = await adminClient
           .from('profiles')
           .update({
             subscription_tier: subscriptionTier,
-            subscription_status: 'active',
+            subscription_status: subStatus,
             subscription_period_end: expirationDate,
             subscription_source: subscriptionSource,
             revenuecat_app_user_id: userId,
