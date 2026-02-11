@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from "react"
 import ReactMarkdown from "react-markdown"
+import dynamic from "next/dynamic"
 import { Button } from "@/app/components/ui/button"
 import { Card, CardContent } from "@/app/components/ui/card"
 import { FeedbackButtons } from "@/app/components/feedback-buttons"
@@ -10,6 +11,13 @@ import { QuickReplies, parseQuickReplyFromMessage, stripQuickReplyMarker, type P
 import { UpgradeModal } from "@/app/components/upgrade-modal"
 import { CHAT_STARTERS, type ChatMessage, type Conversation } from "@/app/types"
 import { LIMITS } from "@/lib/config"
+import { extractDrillFromContent } from "@/lib/drill-parser"
+import type { DrillSchema } from "@/lib/drill-schema"
+
+const DrillAnimation = dynamic(
+  () => import("./drill-animation").then(mod => mod.DrillAnimation),
+  { ssr: false, loading: () => <div className="w-full h-[350px] bg-muted rounded-lg animate-pulse" /> }
+)
 
 interface ChatInterfaceProps {
   isSubscribed: boolean
@@ -31,6 +39,8 @@ export function ChatInterface({ isSubscribed, initialRemaining = 2 }: ChatInterf
   const [finalExtractionDone, setFinalExtractionDone] = useState(false)
   const [showUpgradeModal, setShowUpgradeModal] = useState(false)
   const [upgradeModalVariant, setUpgradeModalVariant] = useState<'limit_reached' | 'voice_notes' | 'session_plan' | 'generic'>('limit_reached')
+  const [savedDrillIds, setSavedDrillIds] = useState<Set<string>>(new Set())
+  const [savingDrillKey, setSavingDrillKey] = useState<string | null>(null)
 
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const abortControllerRef = useRef<AbortController | null>(null)
@@ -453,11 +463,19 @@ export function ChatInterface({ isSubscribed, initialRemaining = 2 }: ChatInterf
                   ? stripQuickReplyMarker(msg.content).replace(/\[REFLECTION_COMPLETE\]/g, '').trim()
                   : msg.content
 
-                // For the last assistant message, split trailing question into a prompt block
+                // Extract drills from assistant messages
                 let bodyContent = displayContent
+                let drills: DrillSchema[] = []
+                if (msg.role === 'assistant' && displayContent) {
+                  const extracted = extractDrillFromContent(displayContent)
+                  bodyContent = extracted.cleanContent
+                  drills = extracted.drills
+                }
+
+                // For the last assistant message, split trailing question into a prompt block
                 let trailingQuestion: string | null = null
-                if (msg.role === 'assistant' && isLastMessage && !loading && displayContent) {
-                  const lines = displayContent.split('\n').filter((l: string) => l.trim())
+                if (msg.role === 'assistant' && isLastMessage && !loading && bodyContent) {
+                  const lines = bodyContent.split('\n').filter((l: string) => l.trim())
                   const lastLine = lines[lines.length - 1]?.trim()
                   if (lastLine && lastLine.endsWith('?') && lines.length > 1) {
                     trailingQuestion = lastLine
@@ -486,6 +504,83 @@ export function ChatInterface({ isSubscribed, initialRemaining = 2 }: ChatInterf
                               </span>
                             )}
                           </div>
+
+                          {/* Render drill animations */}
+                          {drills.length > 0 && !loading && (
+                            <div className="mt-3 space-y-3">
+                              {drills.map((drill, drillIdx) => {
+                                const drillKey = `${i}-${drillIdx}`
+                                const isSaved = savedDrillIds.has(drillKey)
+                                const isSaving = savingDrillKey === drillKey
+
+                                const handleSaveDrill = async () => {
+                                  setSavingDrillKey(drillKey)
+                                  try {
+                                    const res = await fetch('/api/drills', {
+                                      method: 'POST',
+                                      headers: { 'Content-Type': 'application/json' },
+                                      body: JSON.stringify({
+                                        name: drill.name || 'Untitled Drill',
+                                        description: drill.description || null,
+                                        category: drill.category || 'technical',
+                                        ageGroup: drill.ageGroup || null,
+                                        type: drill.type || 'drill',
+                                        setPieceType: drill.setPieceType || null,
+                                        drillData: drill,
+                                      }),
+                                    })
+                                    if (res.ok) {
+                                      setSavedDrillIds(prev => new Set([...prev, drillKey]))
+                                    }
+                                  } catch {
+                                    // Silent fail
+                                  } finally {
+                                    setSavingDrillKey(null)
+                                  }
+                                }
+
+                                return (
+                                  <div key={drillIdx} className="border border-border/50 rounded-lg p-3 bg-background/50">
+                                    <DrillAnimation
+                                      drill={drill}
+                                      showControls={true}
+                                      autoPlay={false}
+                                    />
+                                    {isSubscribed && (
+                                      <div className="mt-2 flex justify-center">
+                                        <button
+                                          onClick={handleSaveDrill}
+                                          disabled={isSaved || isSaving}
+                                          className={`min-h-[44px] px-4 py-2 text-sm font-medium rounded-lg transition-colors flex items-center gap-2 ${
+                                            isSaved
+                                              ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300'
+                                              : 'bg-[#E5A11C] text-white hover:bg-[#d4940f]'
+                                          }`}
+                                        >
+                                          {isSaving ? (
+                                            <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                                            </svg>
+                                          ) : isSaved ? (
+                                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                            </svg>
+                                          ) : (
+                                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />
+                                            </svg>
+                                          )}
+                                          {isSaving ? 'Saving...' : isSaved ? 'Saved to Library' : 'Save Drill'}
+                                        </button>
+                                      </div>
+                                    )}
+                                  </div>
+                                )
+                              })}
+                            </div>
+                          )}
+
                           {/* Show quick reply buttons for the last assistant message */}
                           {msg.role === "assistant" && isLastMessage && activeQuickReply && !loading && (
                             <QuickReplies

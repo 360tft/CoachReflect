@@ -105,6 +105,7 @@ export default async function DashboardLayout({
             <NavLink href="/dashboard/history">History</NavLink>
             <NavLink href="/dashboard/analytics">Analytics</NavLink>
             <NavLink href="/dashboard/players">Players</NavLink>
+            <NavLink href="/dashboard/drills">Drills</NavLink>
             <NavLink href="/dashboard/settings">Settings</NavLink>
             {isAdmin && (
               <Link

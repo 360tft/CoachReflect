@@ -319,6 +319,29 @@ export default async function DashboardPage() {
         </Card>
       )}
 
+      {/* Drills Card - for football coaches */}
+      {(profile?.sport === 'football' || !profile?.sport) && (
+        <Card>
+          <CardContent className="py-4">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div>
+                <p className="font-medium">
+                  Drill Library
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  Ask for a drill in chat and save it to your library. Animated pitch diagrams included.
+                </p>
+              </div>
+              <Link href="/dashboard/drills">
+                <Button variant="outline" size="sm">
+                  View Drills
+                </Button>
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       {/* Streak and Badges */}
       <StreakBadges />
 
