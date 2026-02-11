@@ -425,6 +425,17 @@ export function ChatInterface({ isSubscribed, initialRemaining = 2 }: ChatInterf
         <div className="flex-1 overflow-y-auto space-y-4 pb-4">
           {messages.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center">
+              {/* Resume recent conversation prompt */}
+              {conversations.length > 0 && !conversationId && (
+                <button
+                  onClick={() => loadConversation(conversations[0].id)}
+                  className="mb-6 w-full max-w-md p-4 rounded-xl border border-amber-200/50 dark:border-amber-800/30 bg-amber-50/50 dark:bg-amber-950/20 hover:bg-amber-100/50 dark:hover:bg-amber-950/40 transition-colors text-left"
+                >
+                  <p className="text-sm font-medium text-foreground">Continue your last reflection</p>
+                  <p className="text-sm text-muted-foreground truncate">{conversations[0].title || 'Untitled'}</p>
+                </button>
+              )}
+
               <h2 className="text-2xl font-semibold mb-2">What happened in your session?</h2>
               <p className="text-muted-foreground mb-8 text-center max-w-md">
                 Tell me what went well, what didn&apos;t, and who stood out. I&apos;ll help you see what it means.
