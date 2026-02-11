@@ -112,7 +112,7 @@ export async function POST(request: Request) {
           }
 
           if (userId) {
-            await supabase
+            const { error: updateError } = await supabase
               .from("profiles")
               .update({
                 subscription_tier: subscriptionTier,
@@ -120,6 +120,10 @@ export async function POST(request: Request) {
                 stripe_customer_id: session.customer as string,
               })
               .eq("user_id", userId)
+
+            if (updateError) {
+              console.error("[Stripe Webhook] Failed to update profile:", updateError.message, { userId, subscriptionTier, subscriptionStatus })
+            }
 
             // Notify admin and send user emails
             const { data: userData } = await supabase.auth.admin.getUserById(userId)
