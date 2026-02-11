@@ -403,6 +403,100 @@ export async function sendProWelcomeEmail(userEmail: string): Promise<{ success:
 }
 
 /**
+ * Notify admin of new Pro trial started
+ */
+export async function notifyTrialStarted(userEmail: string): Promise<void> {
+  const resend = getResendClient()
+  if (!resend) return
+
+  try {
+    await resend.emails.send({
+      from: FROM_EMAIL,
+      to: ADMIN_EMAIL,
+      subject: 'New Pro Trial Started - Coach Reflection',
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #E5A11C;">New Pro Trial Started</h2>
+          <p>A user has started a 7-day Pro trial:</p>
+          <div style="background-color: #fef3c7; padding: 16px; border-radius: 8px; margin: 16px 0; border: 1px solid #E5A11C;">
+            <p style="margin: 0;"><strong>Email:</strong> ${escapeHtml(userEmail)}</p>
+            <p style="margin: 8px 0 0 0;"><strong>Trial ends:</strong> ${new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString('en-GB', { timeZone: 'Europe/London', day: 'numeric', month: 'short', year: 'numeric' })}</p>
+            <p style="margin: 8px 0 0 0;"><strong>Time:</strong> ${new Date().toLocaleString('en-GB', { timeZone: 'Europe/London' })}</p>
+          </div>
+          <p style="color: #6b7280; font-size: 14px;">
+            Card on file. They'll be charged automatically on day 8 unless they cancel.
+          </p>
+        </div>
+      `,
+    })
+  } catch (error) {
+    console.error('Failed to send trial started notification:', error)
+  }
+}
+
+/**
+ * Notify admin of trial conversion (trialing → active)
+ */
+export async function notifyTrialConverted(userEmail: string): Promise<void> {
+  const resend = getResendClient()
+  if (!resend) return
+
+  try {
+    await resend.emails.send({
+      from: FROM_EMAIL,
+      to: ADMIN_EMAIL,
+      subject: 'Trial Converted to Pro! - Coach Reflection',
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #16a34a;">Trial Converted to Pro!</h2>
+          <p>A trial user has converted to a paying Pro subscriber:</p>
+          <div style="background-color: #f0fdf4; padding: 16px; border-radius: 8px; margin: 16px 0; border: 1px solid #16a34a;">
+            <p style="margin: 0;"><strong>Email:</strong> ${escapeHtml(userEmail)}</p>
+            <p style="margin: 8px 0 0 0;"><strong>Time:</strong> ${new Date().toLocaleString('en-GB', { timeZone: 'Europe/London' })}</p>
+          </div>
+          <p style="color: #6b7280; font-size: 14px;">
+            <a href="https://dashboard.stripe.com/customers" style="color: #E5A11C;">View in Stripe</a>
+          </p>
+        </div>
+      `,
+    })
+  } catch (error) {
+    console.error('Failed to send trial converted notification:', error)
+  }
+}
+
+/**
+ * Notify admin of trial cancellation
+ */
+export async function notifyTrialCancelled(userEmail: string): Promise<void> {
+  const resend = getResendClient()
+  if (!resend) return
+
+  try {
+    await resend.emails.send({
+      from: FROM_EMAIL,
+      to: ADMIN_EMAIL,
+      subject: 'Trial Cancelled - Coach Reflection',
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #dc2626;">Trial Cancelled</h2>
+          <p>A user cancelled during their 7-day Pro trial:</p>
+          <div style="background-color: #fef2f2; padding: 16px; border-radius: 8px; margin: 16px 0; border: 1px solid #dc2626;">
+            <p style="margin: 0;"><strong>Email:</strong> ${escapeHtml(userEmail)}</p>
+            <p style="margin: 8px 0 0 0;"><strong>Time:</strong> ${new Date().toLocaleString('en-GB', { timeZone: 'Europe/London' })}</p>
+          </div>
+          <p style="color: #6b7280; font-size: 14px;">
+            They were never charged. Consider checking in to find out why.
+          </p>
+        </div>
+      `,
+    })
+  } catch (error) {
+    console.error('Failed to send trial cancelled notification:', error)
+  }
+}
+
+/**
  * Send trial converted email (trialing → active)
  */
 export async function sendTrialConvertedEmail(userEmail: string): Promise<{ success: boolean; error?: string }> {

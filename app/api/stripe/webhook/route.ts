@@ -2,7 +2,7 @@ import { NextResponse } from "next/server"
 import Stripe from "stripe"
 import { createAdminClient } from "@/lib/supabase/admin"
 import { createClub, updateClubSubscription } from "@/lib/clubs"
-import { notifyNewProSubscription, notifySubscriptionCanceled, sendProWelcomeEmail, sendAbandonedCheckoutEmail, sendTrialConvertedEmail, sendTrialCancelledEmail } from "@/lib/email-sender"
+import { notifyNewProSubscription, notifySubscriptionCanceled, sendProWelcomeEmail, sendAbandonedCheckoutEmail, sendTrialConvertedEmail, sendTrialCancelledEmail, notifyTrialStarted, notifyTrialConverted, notifyTrialCancelled } from "@/lib/email-sender"
 import { TRIAL_SEQUENCE } from "@/lib/email-sequences"
 import { renderTemplate } from "@/lib/email-templates"
 import { Resend } from "resend"
@@ -121,10 +121,14 @@ export async function POST(request: Request) {
               })
               .eq("user_id", userId)
 
-            // Notify admin of new Pro subscription
+            // Notify admin and send user emails
             const { data: userData } = await supabase.auth.admin.getUserById(userId)
             if (userData?.user?.email) {
-              await notifyNewProSubscription(userData.user.email, session.amount_total || undefined)
+              if (subscriptionStatus === "trialing") {
+                await notifyTrialStarted(userData.user.email)
+              } else {
+                await notifyNewProSubscription(userData.user.email, session.amount_total || undefined)
+              }
 
               if (subscriptionStatus === "trialing") {
                 // Trial checkout: stop onboarding sequence, start trial sequence, send welcome immediately
@@ -277,11 +281,12 @@ export async function POST(request: Request) {
               })
               .eq("user_id", userId)
 
-            // Send trial-converted email when trialing → active
+            // Send trial-converted email and notify admin when trialing → active
             if (wasTrialing && status === "active") {
               const { data: userData } = await supabase.auth.admin.getUserById(userId)
               if (userData?.user?.email) {
                 sendTrialConvertedEmail(userData.user.email).catch(console.error)
+                notifyTrialConverted(userData.user.email).catch(console.error)
               }
 
               // Mark trial sequence as complete
@@ -330,8 +335,9 @@ export async function POST(request: Request) {
 
             if (userData?.user?.email) {
               if (wasTrialing) {
-                // Trial cancelled: send trial-specific cancellation email
+                // Trial cancelled: send trial-specific cancellation email and notify admin
                 sendTrialCancelledEmail(userData.user.email).catch(console.error)
+                notifyTrialCancelled(userData.user.email).catch(console.error)
 
                 // Mark trial sequence as complete
                 await supabase
