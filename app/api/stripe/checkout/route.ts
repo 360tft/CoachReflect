@@ -111,8 +111,24 @@ export async function POST(request: Request) {
         metadata: {
           user_id: user.id,
         },
-        ...(trialEligible ? { trial_period_days: 7 } : {}),
+        ...(trialEligible ? {
+          trial_period_days: 7,
+          trial_settings: {
+            end_behavior: { missing_payment_method: 'cancel' },
+          },
+        } : {}),
       },
+      ...(trialEligible ? {
+        custom_text: {
+          submit: {
+            message: 'Your 7-day free trial starts today. You will not be charged until the trial ends. Cancel anytime from settings.',
+          },
+        },
+      } : {
+        payment_intent_data: {
+          statement_descriptor_suffix: 'COACHREFLECT',
+        },
+      }),
     })
 
     // Always return JSON — client handles redirect

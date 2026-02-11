@@ -13,7 +13,9 @@ import { EmailPreferences } from "./email-preferences"
 import { ReminderSettings } from "./reminder-settings"
 import { SyllabusUpload } from "./syllabus-upload"
 import { hasSyllabusFeature, getVoiceLimits, getTierDisplayName } from "@/lib/subscription"
+import { Suspense } from "react"
 import { NativeHidden } from "@/app/components/native-hidden"
+import { CheckoutSuccess } from "./checkout-success"
 
 export default async function SettingsPage() {
   const supabase = await createClient()
@@ -57,6 +59,10 @@ export default async function SettingsPage() {
   return (
     <div className="max-w-2xl mx-auto space-y-6">
       <h1 className="text-2xl font-bold">Settings</h1>
+
+      <Suspense>
+        <CheckoutSuccess />
+      </Suspense>
 
       {/* Subscription - FIRST */}
       <Card className="border-2 border-primary/20">

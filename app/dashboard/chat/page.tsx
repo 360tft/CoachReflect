@@ -2,6 +2,7 @@ import { createClient } from "@/lib/supabase/server"
 import { redirect } from "next/navigation"
 import { ChatInterface } from "@/app/components/chat-interface"
 import { ProfilePrompt } from "@/app/components/profile-prompt"
+import { LIMITS } from "@/lib/config"
 
 export const metadata = {
   title: "Coach Chat | Coach Reflection",
@@ -33,7 +34,8 @@ export default async function ChatPage() {
   )
 
   // Get today's message count for free tier
-  let remaining = 5
+  const dailyLimit = LIMITS.FREE.messagesPerDay
+  let remaining: number = dailyLimit
   if (!isSubscribed) {
     const today = new Date().toISOString().split("T")[0]
     const { count } = await supabase
@@ -43,7 +45,7 @@ export default async function ChatPage() {
       .gte("created_at", `${today}T00:00:00.000Z`)
       .eq("role", "user")
 
-    remaining = Math.max(0, 5 - (count || 0))
+    remaining = Math.max(0, dailyLimit - (count || 0))
   }
 
   return (
