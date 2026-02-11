@@ -1,6 +1,6 @@
 // Coach Reflection Email Sequence Configuration
 
-export type SequenceName = 'onboarding' | 'winback' | 'streak_recovery' | 'weekly_summary'
+export type SequenceName = 'onboarding' | 'winback' | 'streak_recovery' | 'weekly_summary' | 'trial'
 
 // Streak milestones that trigger celebration emails
 export const STREAK_MILESTONES = [3, 7, 14, 30] as const
@@ -35,6 +35,14 @@ export const STREAK_RECOVERY_SEQUENCE: SequenceStep[] = [
   { day: 0, template: 'streak-broken', subject: 'Your reflection streak - get back on track' },
 ]
 
+// Trial nurture sequence for 7-day Stripe trial users
+export const TRIAL_SEQUENCE: SequenceStep[] = [
+  { day: 0, template: 'trial-welcome', subject: 'Your 7-day Pro trial is live' },
+  { day: 3, template: 'trial-midpoint', subject: 'Halfway through your trial' },
+  { day: 5, template: 'trial-ending', subject: 'Your trial ends in 2 days' },
+  { day: 6, template: 'trial-final', subject: 'Last day of your Pro trial' },
+]
+
 // Weekly summary (recurring, not a sequence - just a single template)
 export const WEEKLY_SUMMARY_SEQUENCE: SequenceStep[] = [
   { day: 0, template: 'weekly-summary', subject: 'Your Week in Coaching' },
@@ -49,6 +57,8 @@ export function getSequence(name: SequenceName): SequenceStep[] {
       return WINBACK_SEQUENCE
     case 'streak_recovery':
       return STREAK_RECOVERY_SEQUENCE
+    case 'trial':
+      return TRIAL_SEQUENCE
     case 'weekly_summary':
       return WEEKLY_SUMMARY_SEQUENCE
     default:

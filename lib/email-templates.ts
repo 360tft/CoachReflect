@@ -541,6 +541,141 @@ export const TEMPLATES: Record<string, (props: TemplateProps) => string> = {
     `, props)
   },
 
+  // Trial nurture sequence emails
+  'trial-welcome': (props) => baseTemplate(`
+    <p>Hey ${props.name},</p>
+
+    <p>Your 7-day Pro trial is live. You've got full access to everything, starting now.</p>
+
+    <p>Here are three things worth trying before the week is up:</p>
+
+    <div style="background: #fef3c7; padding: 16px 20px; border-radius: 8px; margin: 16px 0; border-left: 4px solid #E5A11C;">
+      <p style="margin: 0 0 4px; font-weight: 600;">Voice notes</p>
+      <p style="color: #4b5563; font-size: 14px; margin: 0;">Record your thoughts on the drive home. The AI transcribes and structures them for you.</p>
+    </div>
+
+    <div style="background: #fef3c7; padding: 16px 20px; border-radius: 8px; margin: 16px 0; border-left: 4px solid #E5A11C;">
+      <p style="margin: 0 0 4px; font-weight: 600;">Session plan upload</p>
+      <p style="color: #4b5563; font-size: 14px; margin: 0;">Snap a photo of your session plan. The AI reads it and links it to your reflection.</p>
+    </div>
+
+    <div style="background: #fef3c7; padding: 16px 20px; border-radius: 8px; margin: 16px 0; border-left: 4px solid #E5A11C;">
+      <p style="margin: 0 0 4px; font-weight: 600;">AI insights</p>
+      <p style="color: #4b5563; font-size: 14px; margin: 0;">After 3 or more reflections, check your analytics page. The AI spots patterns you might miss.</p>
+    </div>
+
+    <p style="text-align: center; margin: 30px 0;">
+      <a href="${APP_URL}/dashboard/chat" style="background: #d97706; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; display: inline-block;">Start Reflecting</a>
+    </p>
+
+    <p>Your card won't be charged until day 8. If it's not for you, cancel anytime from settings.</p>
+
+    <p>Kev</p>
+  `, props),
+
+  'trial-midpoint': (props) => baseTemplate(`
+    <p>Hey ${props.name},</p>
+
+    <p>You're halfway through your Pro trial. Quick check-in.</p>
+
+    <p>Have you tried voice notes yet? Some coaches tell us they capture twice as much detail when they can just talk instead of type. Especially useful on the drive home after a session.</p>
+
+    <div style="background: #f3f4f6; padding: 16px 20px; border-radius: 8px; margin: 16px 0; border-left: 4px solid #E5A11C;">
+      <p style="color: #374151; font-size: 15px; line-height: 1.6; margin: 0 0 8px; font-style: italic;">"I used to forget half of what happened by the time I got home. Now I just hit record in the car and it's all there."</p>
+      <p style="color: #6b7280; font-size: 14px; margin: 0;">— Grassroots coach, Scotland</p>
+    </div>
+
+    <p>You've got 4 days left to explore everything. Make the most of it.</p>
+
+    <p style="text-align: center; margin: 30px 0;">
+      <a href="${APP_URL}/dashboard" style="background: #d97706; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; display: inline-block;">Open Dashboard</a>
+    </p>
+
+    <p>Kev</p>
+  `, props),
+
+  'trial-ending': (props) => baseTemplate(`
+    <p>Hey ${props.name},</p>
+
+    <p>Your Pro trial ends in 2 days. Wanted to give you a heads up.</p>
+
+    <p>If you carry on, nothing changes. Your card gets charged and you keep everything.</p>
+
+    <p>If you cancel, here's what you'll lose access to:</p>
+
+    <ul>
+      <li>Voice notes for hands-free reflection</li>
+      <li>Session plan upload and analysis</li>
+      <li>AI-powered coaching insights</li>
+      <li>Unlimited reflections (back to 2 messages/day)</li>
+      <li>Advanced pattern detection</li>
+    </ul>
+
+    <p>No pressure either way. You can always upgrade again later if the timing isn't right.</p>
+
+    <p style="text-align: center; margin: 30px 0;">
+      <a href="${APP_URL}/dashboard/settings" style="background: #d97706; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; display: inline-block;">Manage Subscription</a>
+    </p>
+
+    <p>Kev</p>
+  `, props),
+
+  'trial-final': (props) => baseTemplate(`
+    <p>Hey ${props.name},</p>
+
+    <p>Last day of your Pro trial. Tomorrow your card will be charged automatically.</p>
+
+    <p>Carry on = keep everything. Cancel = back to 2 messages a day.</p>
+
+    <p>Either way, no hard feelings. Coach Reflection is free to use forever, Pro just gives you more.</p>
+
+    <p style="text-align: center; margin: 30px 0;">
+      <a href="${APP_URL}/dashboard/settings" style="background: #d97706; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; display: inline-block;">Manage Subscription</a>
+    </p>
+
+    <p>Kev</p>
+  `, props),
+
+  // Trial webhook-triggered emails
+  'trial-converted': (props) => baseTemplate(`
+    <p>Hey ${props.name},</p>
+
+    <p>Thanks for staying with Pro. Your card has been charged and everything stays unlocked.</p>
+
+    <p>You've got:</p>
+    <ul>
+      <li>Unlimited reflections</li>
+      <li>Voice notes</li>
+      <li>Session plan analysis</li>
+      <li>AI coaching insights</li>
+      <li>Advanced pattern detection</li>
+    </ul>
+
+    <p>Keep reflecting. The insights get richer the more you use it.</p>
+
+    <p style="text-align: center; margin: 30px 0;">
+      <a href="${APP_URL}/dashboard" style="background: #d97706; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; display: inline-block;">Open Dashboard</a>
+    </p>
+
+    <p>Kev</p>
+  `, props),
+
+  'trial-cancelled': (props) => baseTemplate(`
+    <p>Hey ${props.name},</p>
+
+    <p>Your Pro trial has ended. You're back on the free plan with 2 messages a day.</p>
+
+    <p>You won't be charged anything.</p>
+
+    <p>The free version is yours to keep for as long as you like. If you ever want Pro features back, you can upgrade again from settings.</p>
+
+    <p style="text-align: center; margin: 30px 0;">
+      <a href="${APP_URL}/dashboard" style="background: #d97706; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; display: inline-block;">Continue Reflecting</a>
+    </p>
+
+    <p>Kev</p>
+  `, props),
+
   'checkout-recovery': (props) => baseTemplate(`
     <p>Hey ${props.name},</p>
 

@@ -2,7 +2,10 @@ import { NextResponse } from "next/server"
 import Stripe from "stripe"
 import { createAdminClient } from "@/lib/supabase/admin"
 import { createClub, updateClubSubscription } from "@/lib/clubs"
-import { notifyNewProSubscription, notifySubscriptionCanceled, sendProWelcomeEmail, sendAbandonedCheckoutEmail } from "@/lib/email-sender"
+import { notifyNewProSubscription, notifySubscriptionCanceled, sendProWelcomeEmail, sendAbandonedCheckoutEmail, sendTrialConvertedEmail, sendTrialCancelledEmail } from "@/lib/email-sender"
+import { TRIAL_SEQUENCE } from "@/lib/email-sequences"
+import { renderTemplate } from "@/lib/email-templates"
+import { Resend } from "resend"
 import type { ClubTier } from "@/lib/config"
 import { getStripe } from "@/lib/stripe"
 
@@ -118,11 +121,62 @@ export async function POST(request: Request) {
               })
               .eq("user_id", userId)
 
-            // Notify admin of new Pro subscription and send welcome email
+            // Notify admin of new Pro subscription
             const { data: userData } = await supabase.auth.admin.getUserById(userId)
             if (userData?.user?.email) {
               await notifyNewProSubscription(userData.user.email, session.amount_total || undefined)
-              sendProWelcomeEmail(userData.user.email).catch(console.error)
+
+              if (subscriptionStatus === "trialing") {
+                // Trial checkout: stop onboarding sequence, start trial sequence, send welcome immediately
+                await supabase
+                  .from("email_sequences")
+                  .update({ completed: true, paused: true })
+                  .eq("user_id", userId)
+                  .eq("sequence_name", "onboarding")
+                  .eq("completed", false)
+
+                const now = new Date()
+                const nextStep = TRIAL_SEQUENCE[1]
+                const nextSendDate = new Date(now)
+                nextSendDate.setDate(nextSendDate.getDate() + (nextStep?.day || 3))
+
+                await supabase.from("email_sequences").insert({
+                  user_id: userId,
+                  sequence_name: "trial",
+                  current_step: 1,
+                  started_at: now.toISOString(),
+                  next_send_at: nextSendDate.toISOString(),
+                  completed: false,
+                  paused: false,
+                })
+
+                // Send trial-welcome immediately via Resend
+                const userName = userData.user.user_metadata?.display_name || userData.user.email.split("@")[0] || "Coach"
+                const html = renderTemplate("trial-welcome", { name: userName })
+                if (html) {
+                  const resendApiKey = process.env.RESEND_API_KEY
+                  if (resendApiKey) {
+                    const resend = new Resend(resendApiKey)
+                    const fromEmail = process.env.RESEND_FROM_EMAIL || "Coach Reflection <hello@send.coachreflection.com>"
+                    await resend.emails.send({
+                      from: fromEmail,
+                      to: userData.user.email,
+                      subject: "Your 7-day Pro trial is live",
+                      html,
+                    })
+                  }
+                }
+
+                // Log the sent email
+                await supabase.from("email_log").insert({
+                  user_id: userId,
+                  email_type: "trial:trial-welcome",
+                  subject: "Your 7-day Pro trial is live",
+                })
+              } else {
+                // Non-trial: send Pro welcome email
+                sendProWelcomeEmail(userData.user.email).catch(console.error)
+              }
             }
 
             // Process referral conversion - credit referrer with free month if applicable
@@ -189,6 +243,15 @@ export async function POST(request: Request) {
           if (userId) {
             const status = subscription.status
 
+            // Check if this is a trial→active conversion before updating profile
+            const { data: currentProfile } = await supabase
+              .from("profiles")
+              .select("subscription_status")
+              .eq("user_id", userId)
+              .single()
+
+            const wasTrialing = currentProfile?.subscription_status === "trialing"
+
             // Determine tier from price ID
             let tier: "free" | "pro" | "pro_plus" = "free"
             if (status === "active" || status === "trialing") {
@@ -213,6 +276,22 @@ export async function POST(request: Request) {
                 subscription_period_end: periodEnd,
               })
               .eq("user_id", userId)
+
+            // Send trial-converted email when trialing → active
+            if (wasTrialing && status === "active") {
+              const { data: userData } = await supabase.auth.admin.getUserById(userId)
+              if (userData?.user?.email) {
+                sendTrialConvertedEmail(userData.user.email).catch(console.error)
+              }
+
+              // Mark trial sequence as complete
+              await supabase
+                .from("email_sequences")
+                .update({ completed: true, paused: true })
+                .eq("user_id", userId)
+                .eq("sequence_name", "trial")
+                .eq("completed", false)
+            }
           }
         }
         break
@@ -230,8 +309,15 @@ export async function POST(request: Request) {
           const userId = subscription.metadata.user_id
 
           if (userId) {
-            // Get user email before updating
+            // Get user email and current status before updating
             const { data: userData } = await supabase.auth.admin.getUserById(userId)
+            const { data: currentProfile } = await supabase
+              .from("profiles")
+              .select("subscription_status")
+              .eq("user_id", userId)
+              .single()
+
+            const wasTrialing = currentProfile?.subscription_status === "trialing"
 
             await supabase
               .from("profiles")
@@ -242,9 +328,22 @@ export async function POST(request: Request) {
               })
               .eq("user_id", userId)
 
-            // Notify admin of cancellation
             if (userData?.user?.email) {
-              await notifySubscriptionCanceled(userData.user.email)
+              if (wasTrialing) {
+                // Trial cancelled: send trial-specific cancellation email
+                sendTrialCancelledEmail(userData.user.email).catch(console.error)
+
+                // Mark trial sequence as complete
+                await supabase
+                  .from("email_sequences")
+                  .update({ completed: true, paused: true })
+                  .eq("user_id", userId)
+                  .eq("sequence_name", "trial")
+                  .eq("completed", false)
+              } else {
+                // Regular cancellation: notify admin
+                await notifySubscriptionCanceled(userData.user.email)
+              }
             }
           }
         }

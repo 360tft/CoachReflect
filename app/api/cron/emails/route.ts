@@ -94,6 +94,26 @@ export async function GET(request: Request) {
       continue
     }
 
+    // For trial: skip if user already converted (active) or cancelled (free)
+    if (seq.sequence_name === "trial") {
+      const { data: trialProfile } = await supabase
+        .from("profiles")
+        .select("subscription_status, subscription_tier")
+        .eq("user_id", seq.user_id)
+        .single()
+
+      if (trialProfile?.subscription_status === "active" || trialProfile?.subscription_tier === "free") {
+        await supabase
+          .from("email_sequences")
+          .update({ completed: true, paused: true })
+          .eq("id", seq.id)
+
+        results.push({ email: user.email, status: "skipped - trial resolved" })
+        skipped++
+        continue
+      }
+    }
+
     // Get sequence config and current step
     const sequence = getSequence(seq.sequence_name as SequenceName)
     const step = sequence[seq.current_step]

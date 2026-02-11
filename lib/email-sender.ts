@@ -403,6 +403,62 @@ export async function sendProWelcomeEmail(userEmail: string): Promise<{ success:
 }
 
 /**
+ * Send trial converted email (trialing → active)
+ */
+export async function sendTrialConvertedEmail(userEmail: string): Promise<{ success: boolean; error?: string }> {
+  const resend = getResendClient()
+  if (!resend) return { success: false, error: 'Email not configured' }
+
+  try {
+    const { renderTemplate } = await import('@/lib/email-templates')
+    const html = renderTemplate('trial-converted', {
+      name: userEmail.split('@')[0] || 'Coach',
+    })
+
+    if (!html) return { success: false, error: 'Template not found' }
+
+    await resend.emails.send({
+      from: FROM_EMAIL,
+      to: userEmail,
+      subject: 'Thanks for staying with Pro',
+      html,
+    })
+    return { success: true }
+  } catch (error) {
+    console.error('Failed to send trial converted email:', error)
+    return { success: false, error: String(error) }
+  }
+}
+
+/**
+ * Send trial cancelled email (trialing → cancelled)
+ */
+export async function sendTrialCancelledEmail(userEmail: string): Promise<{ success: boolean; error?: string }> {
+  const resend = getResendClient()
+  if (!resend) return { success: false, error: 'Email not configured' }
+
+  try {
+    const { renderTemplate } = await import('@/lib/email-templates')
+    const html = renderTemplate('trial-cancelled', {
+      name: userEmail.split('@')[0] || 'Coach',
+    })
+
+    if (!html) return { success: false, error: 'Template not found' }
+
+    await resend.emails.send({
+      from: FROM_EMAIL,
+      to: userEmail,
+      subject: 'Your Pro trial has ended',
+      html,
+    })
+    return { success: true }
+  } catch (error) {
+    console.error('Failed to send trial cancelled email:', error)
+    return { success: false, error: String(error) }
+  }
+}
+
+/**
  * Send abandoned checkout recovery email
  */
 export async function sendAbandonedCheckoutEmail(
