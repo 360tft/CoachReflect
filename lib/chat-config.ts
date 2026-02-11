@@ -113,6 +113,279 @@ Remember: Your goal is to help coaches become more self-aware and intentional in
 // Legacy export for backwards compatibility
 export const SYSTEM_PROMPT = getSystemPrompt('football')
 
+// Drill diagram base instructions — shared across all sports
+const DRILL_DIAGRAM_BASE = `## REMINDER: DRILL DIAGRAMS ARE MANDATORY
+
+If your response contains ANY drill, activity, practice, warm-up, cool-down, training exercise, or set piece, you MUST include a \`\`\`drill-diagram code block containing valid JSON for EACH exercise. This is non-negotiable. The app renders these as animated diagrams for coaches.
+
+**MULTIPLE EXERCISES = MULTIPLE DIAGRAMS.** If your response includes a session plan or multiple activities (e.g. warm-up, main activity, cool-down), include a SEPARATE \`\`\`drill-diagram block for EACH one.
+
+Do NOT skip the drill-diagram block. Do NOT put it inside a regular \`\`\`json block — use \`\`\`drill-diagram specifically.
+
+**QUALITY CHECKLIST (verify before outputting):**
+- No two players within 5 units of each other (unless paired for a 1v1)
+- Ball "from" coordinates match the position of the player who has the ball
+- Every step has off-ball movement (not just the ball moving while everyone stands still)
+- Cones mark the playing area boundaries and key positions
+- Players have labels (A, B, C or 1, 2, 3) and roles
+- Sequence has 3+ steps showing the full pattern, not just one action
+- Pitch/court shape and dimensions are appropriate for the activity`
+
+// Sport-specific drill diagram reminders
+const DRILL_DIAGRAM_REMINDERS: Record<string, string> = {
+  football: `${DRILL_DIAGRAM_BASE}
+- Goals are included when the drill involves finishing or scoring
+- Zones are included when areas have tactical significance (pressing zones, safe zones, scoring zones)
+
+\`\`\`drill-diagram
+{
+  "id": "unique-drill-id",
+  "name": "Drill Name",
+  "sport": "football",
+  "description": "Brief description",
+  "category": "technical",
+  "ageGroup": "U12",
+  "pitch": { "shape": "rectangle", "width": 30, "height": 20 },
+  "cones": [{ "id": "c1", "x": 10, "y": 10, "color": "yellow" }],
+  "goals": [{ "id": "g1", "x": 50, "y": 100, "width": 12, "rotation": 0, "type": "mini" }],
+  "zones": [{ "id": "z1", "x": 20, "y": 20, "width": 60, "height": 30, "color": "#3b82f6", "opacity": 0.3, "label": "Pressing Zone" }],
+  "players": [
+    { "id": "p1", "x": 25, "y": 80, "team": "blue", "hasBall": true, "label": "A", "role": "passer" },
+    { "id": "p2", "x": 75, "y": 50, "team": "blue", "hasBall": false, "label": "B", "role": "receiver" },
+    { "id": "d1", "x": 50, "y": 65, "team": "red", "hasBall": false, "label": "D", "role": "defender" }
+  ],
+  "balls": [{ "id": "ball", "x": 25, "y": 80, "heldBy": "p1" }],
+  "sequence": [
+    { "id": "step1", "description": "Player A passes to Player B", "duration": 1500, "actions": [{ "type": "pass", "subject": "ball", "from": { "x": 25, "y": 80 }, "to": { "x": 75, "y": 50 }, "transferBall": true }] }
+  ],
+  "cycles": 2
+}
+\`\`\`
+
+## SET PIECE DIAGRAMS
+
+When asked about set pieces (corners, free kicks, throw-ins, goal kicks, penalties), include:
+- \`"type": "set-piece"\`, \`"category": "set-piece"\`
+- \`"setPieceType"\`: one of "corner", "free-kick", "throw-in", "goal-kick", "penalty"
+
+**Pitch shapes:** Corners/free kicks/penalties → \`"half-pitch"\`. Goal kicks → \`"full-pitch"\`. Throw-ins → \`"rectangle"\`.`,
+
+  basketball: `${DRILL_DIAGRAM_BASE}
+- The court is rendered as a hardwood basketball court with three-point arcs, free-throw lanes, and hoops
+- Use zones to mark specific court areas (paint, three-point area, wing)
+
+IMPORTANT: Always include \`"sport": "basketball"\` in the JSON.
+
+\`\`\`drill-diagram
+{
+  "id": "unique-drill-id",
+  "name": "Drill Name",
+  "sport": "basketball",
+  "description": "Brief description",
+  "category": "technical",
+  "pitch": { "shape": "rectangle", "width": 28, "height": 15 },
+  "cones": [{ "id": "c1", "x": 50, "y": 50, "color": "orange" }],
+  "players": [
+    { "id": "p1", "x": 50, "y": 85, "team": "blue", "hasBall": true, "label": "1", "role": "point guard" },
+    { "id": "p2", "x": 25, "y": 60, "team": "blue", "hasBall": false, "label": "2", "role": "wing" }
+  ],
+  "balls": [{ "id": "ball", "x": 50, "y": 85, "heldBy": "p1" }],
+  "sequence": [
+    { "id": "step1", "description": "Point guard passes to wing", "duration": 1500, "actions": [{ "type": "pass", "subject": "ball", "from": { "x": 50, "y": 85 }, "to": { "x": 25, "y": 60 }, "transferBall": true }] }
+  ],
+  "cycles": 2
+}
+\`\`\`
+
+**Set piece types for basketball:** "tip-off", "inbound", "free-throw"
+For set pieces add \`"type": "set-piece"\` and \`"setPieceType"\`.`,
+
+  rugby: `${DRILL_DIAGRAM_BASE}
+- The pitch is rendered as a rugby field with try zones (shaded at each end), 22m lines, 10m lines, and H-posts
+- y=0 is one try line, y=100 is the other. Try zones extend beyond the try lines at each end.
+- Use zones for ruck areas, defensive lines, or channel markings
+
+IMPORTANT: Always include \`"sport": "rugby"\` in the JSON.
+
+\`\`\`drill-diagram
+{
+  "id": "unique-drill-id",
+  "name": "Drill Name",
+  "sport": "rugby",
+  "description": "Brief description",
+  "category": "tactical",
+  "pitch": { "shape": "rectangle", "width": 70, "height": 50 },
+  "players": [
+    { "id": "p1", "x": 50, "y": 70, "team": "blue", "hasBall": true, "label": "9", "role": "scrum-half" },
+    { "id": "p2", "x": 35, "y": 60, "team": "blue", "hasBall": false, "label": "10", "role": "fly-half" }
+  ],
+  "balls": [{ "id": "ball", "x": 50, "y": 70, "heldBy": "p1" }],
+  "sequence": [
+    { "id": "step1", "description": "Scrum-half passes to fly-half", "duration": 1500, "actions": [{ "type": "pass", "subject": "ball", "from": { "x": 50, "y": 70 }, "to": { "x": 35, "y": 60 }, "transferBall": true }] }
+  ],
+  "cycles": 2
+}
+\`\`\`
+
+**Set piece types for rugby:** "scrum", "lineout", "penalty-kick", "conversion", "drop-goal"`,
+
+  hockey: `${DRILL_DIAGRAM_BASE}
+- The pitch is rendered as a hockey turf with D-circles (shooting circles) at each end, 25-yard lines, and centre line
+- Use zones to mark the D-circle area or specific tactical zones
+
+IMPORTANT: Always include \`"sport": "hockey"\` in the JSON.
+
+\`\`\`drill-diagram
+{
+  "id": "unique-drill-id",
+  "name": "Drill Name",
+  "sport": "hockey",
+  "description": "Brief description",
+  "category": "technical",
+  "pitch": { "shape": "rectangle", "width": 91, "height": 55 },
+  "players": [
+    { "id": "p1", "x": 50, "y": 80, "team": "blue", "hasBall": true, "label": "A", "role": "midfielder" },
+    { "id": "p2", "x": 70, "y": 60, "team": "blue", "hasBall": false, "label": "B", "role": "forward" }
+  ],
+  "balls": [{ "id": "ball", "x": 50, "y": 80, "heldBy": "p1" }],
+  "sequence": [
+    { "id": "step1", "description": "Player A passes to Player B", "duration": 1500, "actions": [{ "type": "pass", "subject": "ball", "from": { "x": 50, "y": 80 }, "to": { "x": 70, "y": 60 }, "transferBall": true }] }
+  ],
+  "cycles": 2
+}
+\`\`\`
+
+**Set piece types for hockey:** "penalty-corner", "free-hit", "penalty-stroke"`,
+
+  american_football: `${DRILL_DIAGRAM_BASE}
+- The field is rendered with yard lines, end zones (shaded at each end), hash marks, and goalposts
+- y=0 is one end zone, y=100 is the other. Yard lines are drawn every 10 yards between end zones.
+- Use zones for route areas or blocking assignments
+
+IMPORTANT: Always include \`"sport": "american_football"\` in the JSON.
+
+\`\`\`drill-diagram
+{
+  "id": "unique-drill-id",
+  "name": "Drill Name",
+  "sport": "american_football",
+  "description": "Brief description",
+  "category": "tactical",
+  "pitch": { "shape": "rectangle", "width": 53, "height": 100 },
+  "players": [
+    { "id": "p1", "x": 50, "y": 65, "team": "blue", "hasBall": true, "label": "QB", "role": "quarterback" },
+    { "id": "p2", "x": 75, "y": 65, "team": "blue", "hasBall": false, "label": "WR", "role": "wide receiver" }
+  ],
+  "balls": [{ "id": "ball", "x": 50, "y": 65, "heldBy": "p1" }],
+  "sequence": [
+    { "id": "step1", "description": "WR runs a go route", "duration": 1500, "actions": [{ "type": "run", "subject": "p2", "from": { "x": 75, "y": 65 }, "to": { "x": 75, "y": 30 } }] }
+  ],
+  "cycles": 2
+}
+\`\`\`
+
+**Set piece types for American football:** "kickoff", "field-goal", "extra-point", "punt"`,
+
+  tennis: `${DRILL_DIAGRAM_BASE}
+- The court is rendered as a blue hard court with service boxes, baselines, net (thick line at centre), and doubles tramlines
+- y=0 is one baseline, y=50 is the net, y=100 is the opposite baseline
+- Use "move" action type for player movement, "shoot" for hitting the ball
+
+IMPORTANT: Always include \`"sport": "tennis"\` in the JSON.
+
+\`\`\`drill-diagram
+{
+  "id": "unique-drill-id",
+  "name": "Drill Name",
+  "sport": "tennis",
+  "description": "Brief description",
+  "category": "technical",
+  "pitch": { "shape": "rectangle", "width": 11, "height": 24 },
+  "players": [
+    { "id": "p1", "x": 50, "y": 90, "team": "blue", "hasBall": true, "label": "A", "role": "server" },
+    { "id": "p2", "x": 50, "y": 10, "team": "red", "hasBall": false, "label": "B", "role": "returner" }
+  ],
+  "balls": [{ "id": "ball", "x": 50, "y": 90, "heldBy": "p1" }],
+  "sequence": [
+    { "id": "step1", "description": "Player A serves to deuce court", "duration": 1500, "actions": [{ "type": "shoot", "subject": "ball", "from": { "x": 50, "y": 90 }, "to": { "x": 30, "y": 30 } }] }
+  ],
+  "cycles": 2
+}
+\`\`\`
+
+**Set piece types for tennis:** "serve", "return"`,
+
+  volleyball: `${DRILL_DIAGRAM_BASE}
+- The court is rendered as a wood floor with a net at the centre (y=50), attack lines at approximately y=33 and y=67, and zone position numbers
+- Positions follow standard volleyball rotation (1-6)
+- Use "shoot" for spikes/attacks, "pass" for sets/bumps
+
+IMPORTANT: Always include \`"sport": "volleyball"\` in the JSON.
+
+\`\`\`drill-diagram
+{
+  "id": "unique-drill-id",
+  "name": "Drill Name",
+  "sport": "volleyball",
+  "description": "Brief description",
+  "category": "tactical",
+  "pitch": { "shape": "rectangle", "width": 9, "height": 18 },
+  "players": [
+    { "id": "p1", "x": 50, "y": 80, "team": "blue", "hasBall": true, "label": "S", "role": "setter" },
+    { "id": "p2", "x": 25, "y": 60, "team": "blue", "hasBall": false, "label": "OH", "role": "outside hitter" }
+  ],
+  "balls": [{ "id": "ball", "x": 50, "y": 80, "heldBy": "p1" }],
+  "sequence": [
+    { "id": "step1", "description": "Setter sets to outside hitter", "duration": 1500, "actions": [{ "type": "pass", "subject": "ball", "from": { "x": 50, "y": 80 }, "to": { "x": 25, "y": 60 }, "transferBall": true }] }
+  ],
+  "cycles": 2
+}
+\`\`\`
+
+**Set piece types for volleyball:** "serve-receive", "rotation"`,
+
+  cricket: `${DRILL_DIAGRAM_BASE}
+- The ground is rendered as an oval with a boundary line, 30-yard circle (inner ring), a brown pitch strip in the centre, crease lines, and stumps
+- The pitch strip runs vertically through the centre. Stumps are at each end.
+- x=50, y=50 is the centre of the ground. The boundary is elliptical.
+- Use player positions based on standard fielding names (slip, gully, mid-off, etc.)
+
+IMPORTANT: Always include \`"sport": "cricket"\` in the JSON.
+
+\`\`\`drill-diagram
+{
+  "id": "unique-drill-id",
+  "name": "Drill Name",
+  "sport": "cricket",
+  "description": "Brief description",
+  "category": "technical",
+  "pitch": { "shape": "circle", "width": 70, "height": 70 },
+  "players": [
+    { "id": "p1", "x": 50, "y": 60, "team": "blue", "hasBall": true, "label": "BWL", "role": "bowler" },
+    { "id": "p2", "x": 50, "y": 40, "team": "red", "hasBall": false, "label": "BAT", "role": "batsman" }
+  ],
+  "balls": [{ "id": "ball", "x": 50, "y": 60, "heldBy": "p1" }],
+  "sequence": [
+    { "id": "step1", "description": "Bowler delivers to batsman", "duration": 1500, "actions": [{ "type": "shoot", "subject": "ball", "from": { "x": 50, "y": 60 }, "to": { "x": 50, "y": 42 } }] }
+  ],
+  "cycles": 2
+}
+\`\`\`
+
+**Set piece types for cricket:** "powerplay", "death-overs"`,
+}
+
+// Legacy export for backwards compatibility
+export const DRILL_DIAGRAM_REMINDER = DRILL_DIAGRAM_REMINDERS.football
+
+/**
+ * Get the drill diagram reminder for a sport.
+ * Returns null for sports without a renderer (non-field sports like swimming, athletics, etc.)
+ */
+export function getDrillDiagramReminder(sport: string): string | null {
+  return DRILL_DIAGRAM_REMINDERS[sport] || null
+}
+
 // Reflection flow questions - must be asked in order for consistent analytics
 export const REFLECTION_QUESTIONS = [
   { key: 'mood_rating', type: 'mood', question: 'How are you feeling after this session?' },
