@@ -85,12 +85,16 @@ export async function POST(request: Request) {
           // Handle individual subscription
           let userId = session.metadata?.supabase_user_id
           let subscriptionTier: "pro" | "pro_plus" = "pro"
+          let subscriptionStatus: string = "active"
 
           if (session.subscription) {
             const subData = await stripe.subscriptions.retrieve(session.subscription as string)
             if (!userId) {
               userId = subData.metadata.user_id
             }
+
+            // Use actual subscription status (could be "trialing" for trial checkouts)
+            subscriptionStatus = subData.status
 
             // Determine tier from price ID
             const priceId = subData.items.data[0]?.price.id
@@ -109,7 +113,7 @@ export async function POST(request: Request) {
               .from("profiles")
               .update({
                 subscription_tier: subscriptionTier,
-                subscription_status: "active",
+                subscription_status: subscriptionStatus,
                 stripe_customer_id: session.customer as string,
               })
               .eq("user_id", userId)
@@ -187,7 +191,7 @@ export async function POST(request: Request) {
 
             // Determine tier from price ID
             let tier: "free" | "pro" | "pro_plus" = "free"
-            if (status === "active") {
+            if (status === "active" || status === "trialing") {
               const priceId = subscription.items.data[0]?.price.id
               const proPlusPriceIds = [
                 process.env.STRIPE_PRO_PLUS_PRICE_ID,

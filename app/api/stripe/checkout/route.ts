@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import { createClient } from "@/lib/supabase/server"
+import { createAdminClient } from "@/lib/supabase/admin"
 import { getStripe } from "@/lib/stripe"
 
 export async function POST(request: Request) {
@@ -26,10 +27,10 @@ export async function POST(request: Request) {
       plan = formData?.get("plan") as string || "pro"
     }
 
-    // Get or create Stripe customer
+    // Get profile (need stripe_customer_id and pro_trial_used)
     const { data: profile } = await supabase
       .from("profiles")
-      .select("stripe_customer_id")
+      .select("stripe_customer_id, pro_trial_used")
       .eq("user_id", user.id)
       .single()
 
@@ -78,7 +79,19 @@ export async function POST(request: Request) {
 
     const appUrl = "https://coachreflection.com"
 
-    // Create checkout session — matches FootballGPT's working pattern
+    // Determine if user is eligible for 7-day free trial
+    const trialEligible = !profile?.pro_trial_used
+
+    // Mark trial as used immediately (prevents second trial even if they abandon checkout)
+    if (trialEligible) {
+      const adminClient = createAdminClient()
+      await adminClient
+        .from("profiles")
+        .update({ pro_trial_used: true })
+        .eq("user_id", user.id)
+    }
+
+    // Create checkout session — with trial if eligible
     const session = await stripe.checkout.sessions.create({
       customer: customerId,
       mode: "subscription",
@@ -93,6 +106,12 @@ export async function POST(request: Request) {
       cancel_url: `${appUrl}/dashboard/settings?canceled=true`,
       metadata: {
         user_id: user.id,
+      },
+      subscription_data: {
+        metadata: {
+          user_id: user.id,
+        },
+        ...(trialEligible ? { trial_period_days: 7 } : {}),
       },
     })
 

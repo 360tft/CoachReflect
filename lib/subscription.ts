@@ -277,7 +277,7 @@ export async function getSubscriptionInfo(userId: string): Promise<SubscriptionI
 
   if (profile) {
     const isPro = profile.subscription_tier === 'pro' || profile.subscription_tier === 'pro_plus'
-    const isActive = profile.subscription_status === 'active'
+    const isActive = profile.subscription_status === 'active' || profile.subscription_status === 'trialing'
     const notExpired = profile.subscription_period_end
       ? new Date(profile.subscription_period_end) > new Date()
       : true

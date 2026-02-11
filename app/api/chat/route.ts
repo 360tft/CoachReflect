@@ -3,7 +3,9 @@ import { GoogleGenerativeAI } from "@google/generative-ai"
 import { createClient } from "@/lib/supabase/server"
 import { createAdminClient } from "@/lib/supabase/admin"
 import { checkRateLimit, RATE_LIMITS } from "@/lib/rate-limit"
-import { getSystemPrompt, getReflectionSystemPrompt, isReflectionStart, CHAT_CONFIG, buildUserContext } from "@/lib/chat-config"
+import { LIMITS } from "@/lib/config"
+import { getSystemPrompt, getReflectionSystemPrompt, isReflectionStart, CHAT_CONFIG, buildUserContext, getDrillDiagramReminder } from "@/lib/chat-config"
+import { extractDrillFromContent } from "@/lib/drill-parser"
 import type { ChatMessage, SessionPlanAnalysis } from "@/app/types"
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY || "")
@@ -159,7 +161,7 @@ export async function POST(request: Request) {
         .gte("created_at", `${today}T00:00:00.000Z`)
         .eq("role", "user")
 
-      if ((count || 0) >= 5) {
+      if ((count || 0) >= LIMITS.FREE.messagesPerDay) {
         return NextResponse.json(
           {
             error: "You've reached your daily chat limit. Upgrade to Pro for unlimited conversations.",
@@ -343,7 +345,13 @@ export async function POST(request: Request) {
     const basePrompt = isReflection
       ? getReflectionSystemPrompt(userSport)
       : getSystemPrompt(userSport)
-    const systemPrompt = basePrompt + userContext + syllabusContext
+    let systemPrompt = basePrompt + userContext + syllabusContext
+
+    // Inject drill diagram instructions for supported sports (non-reflection only)
+    const drillReminder = getDrillDiagramReminder(userSport)
+    if (drillReminder) {
+      systemPrompt = systemPrompt + '\n\n' + drillReminder
+    }
 
     // Trim history to last N messages
     const trimmedHistory = history.slice(-CHAT_CONFIG.maxHistoryMessages)
@@ -462,8 +470,34 @@ export async function POST(request: Request) {
               .catch(err => console.error("Background memory extraction failed:", err))
           }
 
+          // Auto-save generated drills (non-blocking, all supported sports)
+          if (drillReminder) {
+            try {
+              const { drills: generatedDrills } = extractDrillFromContent(fullResponse)
+              if (generatedDrills.length > 0) {
+                const drillAdminClient = createAdminClient()
+                for (const drill of generatedDrills) {
+                  await drillAdminClient.from('generated_drills').insert({
+                    user_id: user.id,
+                    drill_data: drill,
+                    name: drill.name || 'Untitled Drill',
+                    description: drill.description || null,
+                    category: drill.category || 'technical',
+                    age_group: drill.ageGroup || null,
+                    type: drill.type || 'drill',
+                    set_piece_type: drill.setPieceType || null,
+                    prompt: message,
+                    conversation_id: convId || null,
+                  })
+                }
+              }
+            } catch {
+              // Silent fail — drill auto-save is non-critical
+            }
+          }
+
           // Calculate remaining messages for free tier
-          let remaining = isSubscribed ? -1 : 4 // -1 means unlimited
+          let remaining = isSubscribed ? -1 : LIMITS.FREE.messagesPerDay - 1 // -1 means unlimited
           if (!isSubscribed) {
             const today = new Date().toISOString().split("T")[0]
             const { count } = await adminClient
@@ -473,7 +507,7 @@ export async function POST(request: Request) {
               .gte("created_at", `${today}T00:00:00.000Z`)
               .eq("role", "user")
 
-            remaining = Math.max(0, 5 - (count || 0))
+            remaining = Math.max(0, LIMITS.FREE.messagesPerDay - (count || 0))
           }
 
           // Send done message with metadata
