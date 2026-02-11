@@ -91,7 +91,7 @@ export default async function SettingsPage() {
                 <ul className="text-sm text-muted-foreground space-y-1">
                   <li>• Reflect on the drive home (voice notes)</li>
                   <li>• Never wonder what to write again</li>
-                  <li>• Get AI feedback before you coach</li>
+                  <li>• Design sessions and drills before you coach</li>
                   <li>• The AI remembers what you forget</li>
                   <li>• Build a searchable coaching library</li>
                 </ul>

@@ -43,7 +43,7 @@ const PRO_FEATURES = [
   'Reflect after every session, not just two',
   'Talk through sessions on the drive home',
   'See patterns you\'ve been missing for years',
-  'Get AI feedback on session plans before you coach',
+  'Design sessions, drills, and SSGs — or get feedback on plans you\'ve got',
   'Build a searchable coaching library forever',
   'Evidence your development for CPD',
 ]

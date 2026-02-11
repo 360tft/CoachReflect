@@ -134,7 +134,7 @@ export function PricingSection() {
                 <span><strong>Never wonder &apos;what should I write?&apos;</strong> again</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-green-500 mt-0.5">+</span> Get AI feedback on your plans before you coach
+                <span className="text-green-500 mt-0.5">+</span> Design sessions and drills, or get feedback on plans you&apos;ve got
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-500 mt-0.5">+</span> The AI remembers what you forget

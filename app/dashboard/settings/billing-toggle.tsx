@@ -81,7 +81,7 @@ export function BillingToggle() {
           <ul className="text-muted-foreground space-y-1">
             <li>+ Reflect on the drive home (4 voice notes/month)</li>
             <li>+ Never wonder what to write again</li>
-            <li>+ Get AI feedback before you coach</li>
+            <li>+ Design sessions and drills before you coach</li>
             <li>+ The AI remembers what you forget</li>
             <li>+ Searchable coaching library forever</li>
             <li>+ CPD evidence generated automatically</li>
