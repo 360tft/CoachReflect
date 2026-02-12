@@ -23,7 +23,25 @@ export async function GET(request: NextRequest) {
     // Sanitize search input
     const search = rawSearch.replace(/[^a-zA-Z0-9@.\-_\s]/g, '').slice(0, 100)
 
-    // Build query - profiles table doesn't have email, so we get profiles first
+    // Get all auth users for email lookup
+    const { data: authUsers } = await adminClient.auth.admin.listUsers()
+    const userEmails: Record<string, string> = {}
+    for (const authUser of authUsers.users) {
+      if (authUser.email) {
+        userEmails[authUser.id] = authUser.email
+      }
+    }
+
+    // If searching, find matching user_ids from auth emails first
+    let emailMatchUserIds: string[] | null = null
+    if (search && search.length >= 2) {
+      const searchLower = search.toLowerCase()
+      emailMatchUserIds = Object.entries(userEmails)
+        .filter(([, email]) => email.toLowerCase().includes(searchLower))
+        .map(([id]) => id)
+    }
+
+    // Build query
     let query = adminClient
       .from('profiles')
       .select(`
@@ -34,12 +52,20 @@ export async function GET(request: NextRequest) {
         created_at
       `, { count: 'exact' })
       .order('created_at', { ascending: false })
-      .range(offset, offset + limit - 1)
 
     if (search && search.length >= 2) {
       const escapedSearch = search.replace(/%/g, '\\%').replace(/_/g, '\\_')
-      query = query.ilike('display_name', `%${escapedSearch}%`)
+      if (emailMatchUserIds && emailMatchUserIds.length > 0) {
+        // Search display_name OR user_id in email-matched set
+        query = query.or(`display_name.ilike.%${escapedSearch}%,user_id.in.(${emailMatchUserIds.join(',')})`)
+      } else {
+        // No email matches, just search display_name
+        query = query.ilike('display_name', `%${escapedSearch}%`)
+      }
     }
+
+    // Apply pagination after filtering
+    query = query.range(offset, offset + limit - 1)
 
     const { data: profiles, count, error } = await query
 
@@ -47,25 +73,7 @@ export async function GET(request: NextRequest) {
 
     // Get user_ids for related queries
     const userIds = profiles?.map(p => p.user_id) || []
-
-    // Get emails from auth.users in a single batch call
-    const { data: authUsers } = await adminClient.auth.admin.listUsers()
-    const userEmails: Record<string, string> = {}
-    for (const authUser of authUsers.users) {
-      if (authUser.email && userIds.includes(authUser.id)) {
-        userEmails[authUser.id] = authUser.email
-      }
-    }
-
-    // If searching by email, filter profiles that match
-    let filteredProfiles = profiles || []
-    if (search && search.length >= 2) {
-      const searchLower = search.toLowerCase()
-      filteredProfiles = filteredProfiles.filter(p =>
-        (p.display_name?.toLowerCase().includes(searchLower)) ||
-        (userEmails[p.user_id]?.toLowerCase().includes(searchLower))
-      )
-    }
+    const filteredProfiles = profiles || []
 
     // Count reflections per user (only if we have userIds)
     let reflectionsByUser: Record<string, number> = {}
