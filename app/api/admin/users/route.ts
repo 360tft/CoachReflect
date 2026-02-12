@@ -24,7 +24,7 @@ export async function GET(request: NextRequest) {
     const search = rawSearch.replace(/[^a-zA-Z0-9@.\-_\s]/g, '').slice(0, 100)
 
     // Get all auth users for email lookup
-    const { data: authUsers } = await adminClient.auth.admin.listUsers()
+    const { data: authUsers } = await adminClient.auth.admin.listUsers({ perPage: 1000 })
     const userEmails: Record<string, string> = {}
     for (const authUser of authUsers.users) {
       if (authUser.email) {
