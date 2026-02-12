@@ -17,14 +17,18 @@ export async function POST(request: Request) {
     let billingPeriod = "monthly"
     let plan = "pro"
 
+    let fpTid: string | undefined
+
     if (contentType.includes("application/json")) {
       const json = await request.json().catch(() => ({}))
       billingPeriod = json.billing_period || json.billing || "monthly"
       plan = json.plan || "pro"
+      fpTid = json.fp_tid || undefined
     } else {
       const formData = await request.formData().catch(() => null)
       billingPeriod = formData?.get("billing") as string || "monthly"
       plan = formData?.get("plan") as string || "pro"
+      fpTid = formData?.get("fp_tid") as string || undefined
     }
 
     // Get profile (need stripe_customer_id and pro_trial_used)
@@ -43,6 +47,7 @@ export async function POST(request: Request) {
         email: user.email,
         metadata: {
           user_id: user.id,
+          ...(fpTid ? { fp_tid: fpTid } : {}),
         },
       })
       customerId = customer.id
@@ -106,10 +111,12 @@ export async function POST(request: Request) {
       cancel_url: `${appUrl}/dashboard/settings?canceled=true`,
       metadata: {
         user_id: user.id,
+        ...(fpTid ? { fp_tid: fpTid } : {}),
       },
       subscription_data: {
         metadata: {
           user_id: user.id,
+          ...(fpTid ? { fp_tid: fpTid } : {}),
         },
         ...(trialEligible ? {
           trial_period_days: 7,

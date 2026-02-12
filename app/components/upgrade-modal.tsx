@@ -1,8 +1,17 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Button } from '@/app/components/ui/button'
 import { PRICING, formatPrice } from '@/lib/config'
+import { useRevenueCat } from '@/hooks/use-revenuecat'
+import { isNativePlatform } from '@/lib/platform'
+import { formatPackagePrice, getPackagePeriod } from '@/lib/revenuecat'
+
+declare global {
+  interface Window {
+    FPROM?: { data?: { tid?: string } }
+  }
+}
 
 type ModalVariant = 'limit_reached' | 'voice_notes' | 'session_plan' | 'history' | 'analytics' | 'generic'
 
@@ -51,11 +60,30 @@ const PRO_FEATURES = [
 export function UpgradeModal({ variant, isOpen, onClose }: UpgradeModalProps) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [isNative, setIsNative] = useState(false)
   const config = VARIANT_CONFIG[variant]
+
+  const {
+    isInitialized: rcInitialized,
+    isLoading: rcLoading,
+    packages,
+    error: rcError,
+    purchase,
+    restore,
+  } = useRevenueCat()
+
+  useEffect(() => {
+    setIsNative(isNativePlatform())
+  }, [])
 
   if (!isOpen) return null
 
-  const handleUpgrade = async () => {
+  // Pick the first monthly Pro package from RevenueCat offerings
+  const proPackage = packages.find(pkg =>
+    pkg.identifier.includes('monthly')
+  ) || packages[0] || null
+
+  const handleStripeUpgrade = async () => {
     setLoading(true)
     setError(null)
     try {
@@ -65,7 +93,11 @@ export function UpgradeModal({ variant, isOpen, onClose }: UpgradeModalProps) {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
         },
-        body: JSON.stringify({ plan: 'pro', billing_period: 'monthly' }),
+        body: JSON.stringify({
+          plan: 'pro',
+          billing_period: 'monthly',
+          fp_tid: window.FPROM?.data?.tid || undefined,
+        }),
       })
       if (!res.ok) {
         const data = await res.json().catch(() => ({ error: 'Checkout failed' }))
@@ -84,6 +116,39 @@ export function UpgradeModal({ variant, isOpen, onClose }: UpgradeModalProps) {
       setLoading(false)
     }
   }
+
+  const handleIAPUpgrade = async () => {
+    if (!proPackage) {
+      setError('No subscription package available. Please try again later.')
+      return
+    }
+    setLoading(true)
+    setError(null)
+    const success = await purchase(proPackage)
+    setLoading(false)
+    if (success) {
+      onClose()
+      window.location.reload()
+    } else if (rcError && rcError !== 'cancelled') {
+      setError(rcError)
+    }
+  }
+
+  const handleRestore = async () => {
+    setLoading(true)
+    setError(null)
+    const hasAccess = await restore()
+    setLoading(false)
+    if (hasAccess) {
+      onClose()
+      window.location.reload()
+    } else {
+      setError('No previous purchases found to restore.')
+    }
+  }
+
+  const handleUpgrade = isNative ? handleIAPUpgrade : handleStripeUpgrade
+  const isLoadingState = loading || rcLoading
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -130,8 +195,17 @@ export function UpgradeModal({ variant, isOpen, onClose }: UpgradeModalProps) {
 
         {/* Price */}
         <div className="text-center mb-2">
-          <span className="text-3xl font-bold">{formatPrice(PRICING.PRO.monthly.price)}</span>
-          <span className="text-muted-foreground">/month</span>
+          {isNative && proPackage ? (
+            <>
+              <span className="text-3xl font-bold">{formatPackagePrice(proPackage)}</span>
+              <span className="text-muted-foreground">{getPackagePeriod(proPackage)}</span>
+            </>
+          ) : (
+            <>
+              <span className="text-3xl font-bold">{formatPrice(PRICING.PRO.monthly.price)}</span>
+              <span className="text-muted-foreground">/month</span>
+            </>
+          )}
         </div>
 
         {/* Risk reversal */}
@@ -143,18 +217,31 @@ export function UpgradeModal({ variant, isOpen, onClose }: UpgradeModalProps) {
         </p>
 
         {/* Error message */}
-        {error && (
-          <p className="text-sm text-red-500 text-center mb-3">{error}</p>
+        {(error || rcError) && (
+          <p className="text-sm text-red-500 text-center mb-3">{error || rcError}</p>
         )}
 
         {/* CTA */}
         <Button
           onClick={handleUpgrade}
-          disabled={loading}
+          disabled={isLoadingState || (isNative && rcInitialized && !proPackage)}
           className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-semibold py-6 text-base"
         >
-          {loading ? 'Loading...' : 'Start 7-Day Free Trial'}
+          {isLoadingState ? 'Loading...' : isNative && proPackage
+            ? `Subscribe for ${formatPackagePrice(proPackage)}${getPackagePeriod(proPackage)}`
+            : 'Start 7-Day Free Trial'}
         </Button>
+
+        {/* Restore purchases (native only) */}
+        {isNative && (
+          <button
+            onClick={handleRestore}
+            disabled={isLoadingState}
+            className="w-full text-center text-sm text-muted-foreground mt-2 hover:text-foreground underline transition-colors disabled:opacity-50 disabled:no-underline"
+          >
+            Restore previous purchase
+          </button>
+        )}
 
         {/* Dismiss */}
         <button

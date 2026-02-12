@@ -3,6 +3,12 @@
 import { useState } from "react"
 import { Button } from "@/app/components/ui/button"
 
+declare global {
+  interface Window {
+    FPROM?: { data?: { tid?: string } }
+  }
+}
+
 export function BillingToggle() {
   const [billing, setBilling] = useState<"monthly" | "annual">("monthly")
   const [plan, setPlan] = useState<"pro" | "pro_plus">("pro")
@@ -130,7 +136,11 @@ export function BillingToggle() {
             const res = await fetch('/api/stripe/checkout', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ plan, billing_period: billing }),
+              body: JSON.stringify({
+                plan,
+                billing_period: billing,
+                fp_tid: window.FPROM?.data?.tid || undefined,
+              }),
             })
             const data = await res.json()
             if (data.url) {
