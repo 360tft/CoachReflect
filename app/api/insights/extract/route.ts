@@ -33,6 +33,7 @@ Extract and return a JSON object with these exact fields:
   "what_worked": <string summary of what went well, or null>,
   "what_didnt_work": <string summary of challenges/issues, or null>,
   "player_standouts": <string about ${terms.player}s mentioned, or null>,
+  "areas_to_improve": <string summary of areas needing development, or null>,
   "next_focus": <string about what they'll focus on next, or null>,
   "ai_summary": <2-3 sentence summary of the reflection>,
   "players_mentioned": [
@@ -51,6 +52,13 @@ For mood_rating and energy_rating:
 - 1 = Drained/Empty
 
 For themes, only include those that are actually present in the conversation.
+
+If this is a Gibbs Reflective Cycle conversation (6 stages: Description, Feelings, Evaluation, Analysis, Conclusion, Action Plan), map as follows:
+- Evaluation "what went well" → what_worked, "what didn't" → what_didnt_work
+- Analysis (why things happened) → themes and areas_to_improve
+- Conclusion (alternatives) → areas_to_improve
+- Action Plan → next_focus
+
 Only include data that was explicitly discussed. Don't invent details.
 Return ONLY valid JSON, no markdown formatting.`
 }
@@ -61,6 +69,7 @@ export interface ExtractedData {
   what_worked: string | null
   what_didnt_work: string | null
   player_standouts: string | null
+  areas_to_improve: string | null
   next_focus: string | null
   ai_summary: string | null
   players_mentioned: {
@@ -180,6 +189,7 @@ export async function POST(request: Request) {
         what_worked: extracted.what_worked || null,
         what_didnt_work: extracted.what_didnt_work || null,
         player_standouts: extracted.player_standouts || null,
+        areas_to_improve: extracted.areas_to_improve || null,
         next_focus: extracted.next_focus || null,
         ai_summary: extracted.ai_summary || null,
         ai_insights: `Themes: ${(extracted.themes || []).join(', ')}. Sentiment: ${extracted.overall_sentiment || 'neutral'}`,

@@ -94,6 +94,17 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        {/* FirstPromoter affiliate tracking */}
+        {process.env.NEXT_PUBLIC_FIRSTPROMOTER_ID && (
+          <>
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `(function(w){w.fpr=w.fpr||function(){w.fpr.q=w.fpr.q||[];w.fpr.q[arguments[0]=='set'?'unshift':'push'](arguments);};})(window);fpr("init",{cid:"${process.env.NEXT_PUBLIC_FIRSTPROMOTER_ID}"});fpr("click");`,
+              }}
+            />
+            <script async src="https://cdn.firstpromoter.com/fpr.js" />
+          </>
+        )}
         {/* Prevent flash of wrong theme by setting class before React hydrates */}
         <script
           dangerouslySetInnerHTML={{

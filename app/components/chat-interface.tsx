@@ -9,7 +9,7 @@ import { FeedbackButtons } from "@/app/components/feedback-buttons"
 import { ChatInput } from "@/app/components/chat-input"
 import { QuickReplies, parseQuickReplyFromMessage, stripQuickReplyMarker, type ParsedQuickReply } from "@/app/components/quick-replies"
 import { UpgradeModal } from "@/app/components/upgrade-modal"
-import { CHAT_STARTERS, type ChatMessage, type Conversation } from "@/app/types"
+import { CHAT_STARTERS, type ChatMessage, type Conversation, type ReflectionType } from "@/app/types"
 import { LIMITS } from "@/lib/config"
 import { extractDrillFromContent } from "@/lib/drill-parser"
 import type { DrillSchema } from "@/lib/drill-schema"
@@ -113,7 +113,8 @@ export function ChatInterface({ isSubscribed, initialRemaining = 2 }: ChatInterf
 
   const sendMessage = useCallback(async (
     messageText?: string,
-    attachments?: { type: 'voice' | 'image'; attachment_id: string; transcription?: string }[]
+    attachments?: { type: 'voice' | 'image'; attachment_id: string; transcription?: string }[],
+    msgReflectionType?: ReflectionType
   ) => {
     const text = messageText || input.trim()
     if ((!text && !attachments?.length) || loading) return
@@ -167,6 +168,7 @@ export function ChatInterface({ isSubscribed, initialRemaining = 2 }: ChatInterf
           history: messages.map(m => ({ role: m.role, content: m.content })),
           conversationId,
           attachments,
+          ...(msgReflectionType && { reflectionType: msgReflectionType }),
         }),
         signal: abortControllerRef.current.signal,
       })
@@ -451,14 +453,26 @@ export function ChatInterface({ isSubscribed, initialRemaining = 2 }: ChatInterf
                     <div className="flex flex-wrap gap-2">
                       {category.prompts.map((prompt) => (
                         <Button
-                          key={prompt}
+                          key={prompt.text}
                           variant="outline"
                           size="sm"
                           className="text-left h-auto py-2 px-3 bg-amber-50/50 hover:bg-amber-100/50 dark:bg-amber-950/20 dark:hover:bg-amber-950/40 border-amber-200/50 dark:border-amber-800/30"
-                          onClick={() => sendMessage(prompt)}
+                          onClick={() => {
+                            if (prompt.proOnly && !isSubscribed) {
+                              setUpgradeModalVariant('generic')
+                              setShowUpgradeModal(true)
+                              return
+                            }
+                            sendMessage(prompt.text, undefined, prompt.reflectionType)
+                          }}
                           disabled={loading}
                         >
-                          {prompt}
+                          {prompt.text}
+                          {prompt.proOnly && (
+                            <span className="ml-1.5 inline-flex items-center rounded-full bg-[#E5A11C]/15 px-1.5 py-0.5 text-[10px] font-semibold text-[#E5A11C]">
+                              Pro
+                            </span>
+                          )}
                         </Button>
                       ))}
                     </div>

@@ -4,7 +4,7 @@ import { createClient } from "@/lib/supabase/server"
 import { createAdminClient } from "@/lib/supabase/admin"
 import { checkRateLimit, RATE_LIMITS } from "@/lib/rate-limit"
 import { LIMITS } from "@/lib/config"
-import { getSystemPrompt, getReflectionSystemPrompt, isReflectionStart, CHAT_CONFIG, buildUserContext, getDrillDiagramReminder } from "@/lib/chat-config"
+import { getSystemPrompt, getReflectionSystemPrompt, getGibbsReflectionSystemPrompt, isReflectionStart, CHAT_CONFIG, buildUserContext, getDrillDiagramReminder } from "@/lib/chat-config"
 import { extractDrillFromContent } from "@/lib/drill-parser"
 import type { ChatMessage, SessionPlanAnalysis } from "@/app/types"
 
@@ -179,7 +179,8 @@ export async function POST(request: Request) {
       message,
       history = [],
       conversationId,
-      attachments = []
+      attachments = [],
+      reflectionType,
     }: {
       message: string
       history: ChatMessage[]
@@ -191,6 +192,7 @@ export async function POST(request: Request) {
         analysis?: SessionPlanAnalysis
         file_url?: string
       }[]
+      reflectionType?: 'standard' | 'gibbs'
     } = body
 
     // Validate message or attachments
@@ -342,9 +344,14 @@ export async function POST(request: Request) {
 
     // Build messages array for Gemini with appropriate system prompt
     // Use reflection prompt for reflection flows, regular prompt otherwise
-    const basePrompt = isReflection
-      ? getReflectionSystemPrompt(userSport)
-      : getSystemPrompt(userSport)
+    let basePrompt: string
+    if (reflectionType === 'gibbs' && isSubscribed) {
+      basePrompt = getGibbsReflectionSystemPrompt(userSport)
+    } else if (isReflection || reflectionType === 'standard') {
+      basePrompt = getReflectionSystemPrompt(userSport)
+    } else {
+      basePrompt = getSystemPrompt(userSport)
+    }
     let systemPrompt = basePrompt + userContext + syllabusContext
 
     // Inject drill diagram instructions for supported sports (non-reflection only)

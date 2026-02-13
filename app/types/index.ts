@@ -280,6 +280,15 @@ export interface ReflectionAIAnalysis {
   action_items: string[]
 }
 
+// Reflection framework types
+export type ReflectionType = 'standard' | 'gibbs'
+
+export interface ChatStarterPrompt {
+  text: string
+  reflectionType?: ReflectionType
+  proOnly?: boolean
+}
+
 // Chat types
 export interface ChatMessage {
   id?: string
@@ -310,41 +319,41 @@ export interface Message {
 }
 
 // Chat starters for reflection-focused conversations
-export const CHAT_STARTERS = [
+export const CHAT_STARTERS: { category: string; prompts: ChatStarterPrompt[] }[] = [
   {
     category: 'Reflection',
     prompts: [
-      "I just finished a session and want to reflect on it",
-      "Help me identify patterns in my coaching",
-      "What questions should I ask myself after a match?",
-      "I'm feeling frustrated after today's session",
+      { text: "I just finished a session and want to reflect on it" },
+      { text: "Walk me through a Gibbs reflection", reflectionType: 'gibbs', proOnly: true },
+      { text: "Help me identify patterns in my coaching" },
+      { text: "I'm feeling frustrated after today's session" },
     ]
   },
   {
     category: 'Challenges',
     prompts: [
-      "An athlete is struggling with confidence",
-      "How do I handle parents who interfere?",
-      "My group keeps making the same mistakes",
-      "I'm struggling with athlete motivation",
+      { text: "An athlete is struggling with confidence" },
+      { text: "How do I handle parents who interfere?" },
+      { text: "My group keeps making the same mistakes" },
+      { text: "I'm struggling with athlete motivation" },
     ]
   },
   {
     category: 'Development',
     prompts: [
-      "How can I improve my communication as a coach?",
-      "What makes a good training session?",
-      "Help me set coaching goals for the season",
-      "I want to work on my tactical knowledge",
+      { text: "How can I improve my communication as a coach?" },
+      { text: "What makes a good training session?" },
+      { text: "Help me set coaching goals for the season" },
+      { text: "I want to work on my tactical knowledge" },
     ]
   },
   {
     category: 'Specific Situations',
     prompts: [
-      "We lost badly today and morale is low",
-      "A key athlete is leaving the group",
-      "I need to give difficult feedback to an athlete",
-      "How do I balance winning vs development?",
+      { text: "We lost badly today and morale is low" },
+      { text: "A key athlete is leaving the group" },
+      { text: "I need to give difficult feedback to an athlete" },
+      { text: "How do I balance winning vs development?" },
     ]
   },
 ]
