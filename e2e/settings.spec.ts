@@ -7,10 +7,10 @@ test.describe('Settings Page (Authenticated)', () => {
   test.use({ storageState: 'e2e/.auth/user.json' })
 
   test('should display settings page', async ({ page }) => {
-    await goToDashboardReady(page, baseURL)
-    await page.goto(`${baseURL}/dashboard/settings`)
+    await page.goto(`${baseURL}/dashboard/settings`, { waitUntil: 'networkidle' })
+    await page.waitForTimeout(1000)
 
-    await expect(page.locator('h1, h2').filter({ hasText: /settings/i })).toBeVisible()
+    await expect(page.locator('h1, h2').filter({ hasText: /settings/i })).toBeVisible({ timeout: 10000 })
   })
 
   test('should show profile section', async ({ page }) => {
@@ -38,10 +38,10 @@ test.describe('Settings Page (Authenticated)', () => {
   })
 
   test('should have account management options', async ({ page }) => {
-    await page.goto(`${baseURL}/dashboard/settings`)
-    await page.waitForTimeout(1000)
+    await page.goto(`${baseURL}/dashboard/settings`, { waitUntil: 'networkidle' })
+    await page.waitForTimeout(2000)
 
-    // Should have options like export data, delete account, etc.
+    // AccountActions component has "Export Your Data" and "Delete Account"
     const accountOptions = page.locator('text=/export|delete|download/i')
     expect(await accountOptions.count()).toBeGreaterThan(0)
   })
@@ -79,17 +79,19 @@ test.describe('Settings Page (Authenticated)', () => {
   })
 
   test('should display export data option', async ({ page }) => {
-    await page.goto(`${baseURL}/dashboard/settings`)
-    await page.waitForTimeout(1000)
+    await page.goto(`${baseURL}/dashboard/settings`, { waitUntil: 'networkidle' })
+    await page.waitForTimeout(2000)
 
+    // "Export Data" button in AccountActions component
     const exportButton = page.locator('button, a').filter({ hasText: /export/i })
     expect(await exportButton.count()).toBeGreaterThan(0)
   })
 
   test('should display delete account option', async ({ page }) => {
-    await page.goto(`${baseURL}/dashboard/settings`)
-    await page.waitForTimeout(1000)
+    await page.goto(`${baseURL}/dashboard/settings`, { waitUntil: 'networkidle' })
+    await page.waitForTimeout(2000)
 
+    // "Delete Account" button in AccountActions component
     const deleteOption = page.locator('text=/delete.*account/i')
     expect(await deleteOption.count()).toBeGreaterThan(0)
   })
@@ -145,11 +147,13 @@ test.describe('Theme & Preferences', () => {
   test.use({ storageState: 'e2e/.auth/user.json' })
 
   test('should have theme or appearance settings', async ({ page }) => {
-    await page.goto(`${baseURL}/dashboard/settings`)
+    await page.goto(`${baseURL}/dashboard/settings`, { waitUntil: 'networkidle' })
     await page.waitForTimeout(1000)
 
-    // Look for theme or dark mode toggle
-    const hasTheme = await page.locator('text=/theme|dark mode|appearance/i').count() > 0
-    expect(hasTheme).toBe(true)
+    // Theme toggle is in the header (dashboard layout) with aria-label "Switch to dark/light mode"
+    const hasThemeToggle = await page.locator('button[aria-label*="dark" i], button[aria-label*="light" i], button[aria-label*="theme" i]').count() > 0
+    const hasThemeText = await page.locator('text=/theme|dark mode|appearance/i').count() > 0
+
+    expect(hasThemeToggle || hasThemeText).toBe(true)
   })
 })

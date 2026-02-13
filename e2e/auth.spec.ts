@@ -6,7 +6,7 @@ test.describe('Authentication Flow', () => {
   test('should display login page', async ({ page }) => {
     await page.goto(`${baseURL}/login`)
 
-    await expect(page.locator('h1, h2').filter({ hasText: /sign in|log in/i })).toBeVisible()
+    await expect(page.locator('h1, h2, h3').filter({ hasText: /sign in|log in|welcome/i })).toBeVisible()
     await expect(page.locator('input[name="email"], input[type="email"]')).toBeVisible()
     await expect(page.locator('input[name="password"], input[type="password"]')).toBeVisible()
     await expect(page.locator('button[type="submit"]')).toBeVisible()
@@ -116,38 +116,4 @@ test.describe('Password Reset Flow', () => {
   })
 })
 
-test.describe('Logout Flow', () => {
-  test.use({ storageState: 'e2e/.auth/user.json' })
-
-  test('should allow user to logout', async ({ page }) => {
-    await page.goto(`${baseURL}/dashboard`)
-    await page.waitForTimeout(1000)
-
-    // Find sign out button
-    const signOutButton = page.locator('button, a').filter({ hasText: /sign out|log out|logout/i }).first()
-
-    await expect(signOutButton).toBeVisible()
-    await signOutButton.click()
-
-    // Should redirect to login page after logout
-    await page.waitForTimeout(2000)
-    await expect(page).toHaveURL(/login/)
-  })
-
-  test('should clear session after logout', async ({ page }) => {
-    await page.goto(`${baseURL}/dashboard`)
-    await page.waitForTimeout(1000)
-
-    // Logout
-    const signOutButton = page.locator('button, a').filter({ hasText: /sign out|log out|logout/i }).first()
-    await signOutButton.click()
-    await page.waitForTimeout(2000)
-
-    // Try to access protected page
-    await page.goto(`${baseURL}/dashboard`)
-    await page.waitForTimeout(1000)
-
-    // Should be redirected to login
-    await expect(page).toHaveURL(/login/)
-  })
-})
+// Logout tests moved to logout.spec.ts (runs last to avoid invalidating auth for other tests)

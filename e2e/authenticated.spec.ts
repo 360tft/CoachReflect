@@ -7,15 +7,15 @@ test.describe('Dashboard (Authenticated)', () => {
   test('should load dashboard page', async ({ page }) => {
     await goToDashboardReady(page, baseURL)
 
-    // Should have dashboard heading or content
-    await expect(page.locator('h1, h2').filter({ hasText: /dashboard|reflect|coach/i })).toBeVisible()
+    // Dashboard shows h1 "Welcome back" for returning users or h3 CardTitle for first-time users
+    await expect(page.locator('h1, h2, h3').filter({ hasText: /dashboard|reflect|coach|welcome/i })).toBeVisible()
   })
 
   test('should show new reflection option', async ({ page }) => {
     await goToDashboardReady(page, baseURL)
 
-    // Should have button/link to create new reflection
-    const newReflectionButton = page.locator('button, a').filter({ hasText: /new|create|start/i })
+    // "Start Your First Reflection" (first-time) or "+ Reflect" (returning)
+    const newReflectionButton = page.locator('button, a').filter({ hasText: /new|create|start|reflect/i })
     expect(await newReflectionButton.count()).toBeGreaterThanOrEqual(1)
   })
 })
@@ -37,7 +37,7 @@ test.describe('Chat/Reflection Interface (Authenticated)', () => {
       await page.waitForTimeout(3000)
 
       // Should have at least 2 messages now (user + assistant)
-      const messages = page.locator('[role="article"], .message, [data-role="message"]')
+      const messages = page.locator('[data-testid="chat-message"]')
       const messageCount = await messages.count()
       expect(messageCount).toBeGreaterThanOrEqual(1)
     } else {
@@ -48,13 +48,13 @@ test.describe('Chat/Reflection Interface (Authenticated)', () => {
 
 test.describe('Billing Flow (Authenticated)', () => {
   test('should load billing page if it exists', async ({ page }) => {
-    await page.goto(`${baseURL}/dashboard/billing`)
+    // Billing info is on the settings page
+    await page.goto(`${baseURL}/dashboard/settings`)
     await waitForModalsToClose(page)
 
-    // May redirect or show billing info
-    await page.waitForTimeout(1000)
+    await page.waitForTimeout(2000)
 
-    // Should either be on billing page or see subscription info
+    // Should see subscription info on settings page
     const hasBillingContent = await page.locator('text=/subscription|plan|billing/i').count() > 0
     expect(hasBillingContent).toBe(true)
   })

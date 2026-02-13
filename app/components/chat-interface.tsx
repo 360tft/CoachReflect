@@ -511,6 +511,8 @@ export function ChatInterface({ isSubscribed, initialRemaining = 2 }: ChatInterf
                 return (
                   <div
                     key={i}
+                    data-testid="chat-message"
+                    data-role={msg.role}
                     className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
                   >
                     <div className="max-w-[85%] space-y-2">

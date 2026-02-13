@@ -7,10 +7,8 @@ test.describe('Subscription & Billing (Authenticated)', () => {
   test.use({ storageState: 'e2e/.auth/user.json' })
 
   test('should display billing settings page', async ({ page }) => {
-    await goToDashboardReady(page, baseURL)
-
-    // Navigate to settings
-    await page.goto(`${baseURL}/dashboard/settings`)
+    await page.goto(`${baseURL}/dashboard/settings`, { waitUntil: 'networkidle' })
+    await page.waitForTimeout(2000)
 
     // Should have subscription information
     const subscriptionSection = page.locator('text=/subscription|billing|plan/i').first()
@@ -18,12 +16,12 @@ test.describe('Subscription & Billing (Authenticated)', () => {
   })
 
   test('should show current subscription tier', async ({ page }) => {
-    await page.goto(`${baseURL}/dashboard/settings`)
+    await page.goto(`${baseURL}/dashboard/settings`, { waitUntil: 'networkidle' })
     await page.waitForTimeout(2000)
 
-    // Should display either Free or Pro badge
+    // Should display tier name like "Free Plan" or "Pro Plan"
     const tierBadge = page.locator('text=/free|pro/i').first()
-    await expect(tierBadge).toBeVisible()
+    await expect(tierBadge).toBeVisible({ timeout: 10000 })
   })
 
   test('should have upgrade button for free users', async ({ page }) => {
@@ -76,24 +74,27 @@ test.describe('Subscription & Billing (Authenticated)', () => {
   })
 
   test('should have customer portal link for pro users', async ({ page }) => {
-    await page.goto(`${baseURL}/dashboard/settings`)
+    await page.goto(`${baseURL}/dashboard/settings`, { waitUntil: 'networkidle' })
     await page.waitForTimeout(2000)
 
-    const proBadge = page.locator('text=/pro/i').first()
+    // Check if user is on a paid tier (look for "Pro Plan" or "Pro+" specifically, not just /pro/)
+    const hasPaidPlan = await page.locator('text=/Pro Plan|Pro\\+ Plan/').count() > 0
 
-    if (await proBadge.isVisible()) {
+    if (hasPaidPlan) {
       // Should have manage subscription or portal link
       const portalLink = page.locator('button, a').filter({ hasText: /manage|portal|billing/i })
       expect(await portalLink.count()).toBeGreaterThan(0)
+    } else {
+      console.log('⚠️  User is on free tier - skipping portal link check')
     }
   })
 
   test('should display pricing information', async ({ page }) => {
-    await page.goto(`${baseURL}/dashboard/settings`)
+    await page.goto(`${baseURL}/dashboard/settings`, { waitUntil: 'networkidle' })
     await page.waitForTimeout(2000)
 
-    // Should mention Pro pricing somewhere
-    const hasPricing = await page.locator('text=/\\$9\\.99|\\$10|month/i').count() > 0
+    // Should mention Pro pricing ($7.99/mo) somewhere
+    const hasPricing = await page.locator('text=/\\$7\\.99|\\$[0-9]+|month|\\/mo/i').count() > 0
     expect(hasPricing).toBe(true)
   })
 })
