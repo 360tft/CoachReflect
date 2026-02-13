@@ -1,17 +1,20 @@
-# CoachReflect
+# Coach Reflection
 
-> AI-powered coaching reflection journal for sports coaches at all levels.
+> Become a better coach after every session. AI-guided reflection for sports coaches.
 
-CoachReflect is an AI-powered reflection tool that helps sports coaches capture, analyse, and learn from their coaching sessions. It provides guided post-session reflections, identifies patterns over time, and supports continuing professional development across football, rugby, basketball, tennis, swimming, and more.
+Coach Reflection is an AI-powered reflection tool that helps sports coaches capture, analyse, and learn from their coaching sessions. It provides guided post-session reflections using the Gibbs Reflective Cycle, identifies patterns over time, and supports continuing professional development. Most coaches forget 80% of what happened by the next day. Coach Reflection fixes that with 2-minute guided reflections.
 
-## What CoachReflect Does
+## What Coach Reflection Does
 
-- Guides coaches through structured post-session reflections
+- Guides coaches through structured post-session reflections (never stare at a blank screen)
 - Uses AI to surface insights and patterns from reflection history
-- Tracks player development notes and observations
-- Accepts session plan uploads with AI vision analysis
-- Supports voice note reflections for quick capture
+- Tracks player development notes and observations over time
+- Accepts session plan uploads with AI vision analysis (photograph handwritten plans)
+- Supports voice note reflections for quick capture on the drive home
+- Generates animated drill diagrams for 15+ sports
 - Exports CPD records for continuing professional development
+- Tracks mood, energy, and coaching trends across weeks and months
+- AI remembers your coaching context and personalises advice
 
 ## Target Users
 
@@ -28,72 +31,44 @@ CoachReflect is an AI-powered reflection tool that helps sports coaches capture,
 ### Coach Educators
 - Mentors reviewing a coach's reflective practice
 - FA and governing body tutors assessing CPD
-- Clubs licensing CoachReflect for their coaching staff
+- Clubs licensing Coach Reflection for their coaching staff
 
 ## Sports Supported
 
-- Football (soccer)
-- Rugby (union and league)
-- Basketball
-- Tennis
-- Swimming
-- Cricket
-- Hockey
-- Athletics
-- And more
+Football (soccer), rugby (union and league), basketball, tennis, swimming, cricket, hockey, athletics, volleyball, baseball, American football, gymnastics, martial arts, and more. The AI adapts terminology and advice to each sport.
 
 ## Pricing
 
-- **Free**: Basic reflections and limited AI insights
-- **Pro**: Unlimited reflections, full AI insights, pattern tracking, voice notes, CPD export, session plan analysis
+**Free** ($0/month): 2 reflections per day, guided prompts, mood and energy tracking, 7 days of history, animated drill diagrams.
 
-## Club Licensing
+**Pro** ($7.99/month or $76.99/year): Unlimited reflections, 4 voice notes per month, session plan design and feedback, AI memory (remembers your coaching context), full searchable history, CPD evidence generation.
 
-CoachReflect offers club and organisation licensing for academies, grassroots clubs, and governing bodies who want to embed reflective practice across their coaching staff.
+**Pro+** ($19.99/month or $199/year): Everything in Pro plus unlimited voice notes, 12 full session recordings per month, communication analysis, 6-week development blocks, age-appropriate coaching nudges, upload your coaching syllabus (AI learns your philosophy), CPD export.
 
-## Key Features
+**Club plans**: Available for teams of 5, 15, or 30 coaches with centralised billing.
 
-### Guided Post-Session Reflections
-- Structured prompts that guide coaches through what went well, what to improve, and next steps
-- Tailored to sport and session type
-- Quick capture or detailed deep-dive options
+7-day free trial on all paid plans. No credit card required.
 
-### AI-Powered Insights
-- Pattern recognition across multiple reflections
-- Identifies recurring themes, strengths, and development areas
-- Suggests focus areas based on reflection history
+## Key Differentiators
 
-### Player Development Notes
-- Track individual player observations over time
-- Link player notes to specific sessions
-- Monitor progress across the season
+1. Not a blank journal. Guided prompts based on Gibbs Reflective Cycle ask the right questions after every session.
+2. Multi-sport. AI adapts terminology and advice to your specific sport across 15+ supported sports.
+3. Voice-first. Record reflections on the drive home. AI transcribes and analyses automatically.
+4. Session plan extraction. Photograph your handwritten plan. AI reads, structures, and gives feedback.
+5. Pattern detection. AI spots recurring themes, player mentions, and coaching trends across weeks and months.
+6. CPD ready. Auto-generates development evidence for coaching qualifications (FA, UEFA, governing bodies).
+7. Drill diagrams. Ask for drills and get animated pitch diagrams with player movements.
 
-### Session Plan Upload with AI Vision
-- Upload session plans as images or PDFs
-- AI analyses the session structure and offers feedback
-- Links session plans to post-session reflections
+## Platform
 
-### Voice Note Reflections
-- Record reflections on the go after training
-- AI transcribes and structures the content
-- Perfect for time-poor coaches heading home from the pitch
-
-### CPD Export
-- Export reflection history as a professional CPD record
-- Formatted for FA, UEFA, and governing body requirements
-- Evidence of reflective practice for coaching qualifications
+Available on web (coachreflection.com), iOS (App Store), and Android (Google Play). Progressive Web App with offline support. Dark mode included.
 
 ## Company
 
-Built by 360TFT (360 Total Football Training).
+Built by 360TFT (360 Total Football Training), United Kingdom.
 
 - Website: https://coachreflection.com
 - Support: hello@coachreflection.com
-- Location: United Kingdom
-
-## Links
-
-- Homepage: https://coachreflection.com
+- Parent company: https://360tft.com
 - Privacy Policy: https://coachreflection.com/privacy
 - Terms of Service: https://coachreflection.com/terms
-- Support: https://coachreflection.com/support
