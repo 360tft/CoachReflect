@@ -6,6 +6,7 @@ import { GUIDED_PROMPTS, INSIGHT_TYPES, MOOD_OPTIONS } from "@/app/types"
 import { PricingSection } from "@/app/components/pricing-section"
 import { Footer } from "@/app/components/footer"
 import { HeroScreenshot } from "@/app/components/hero-screenshot"
+import { WallOfWins } from "@/app/components/wall-of-wins"
 import { createClient } from "@/lib/supabase/server"
 
 export default async function Home() {
@@ -211,6 +212,9 @@ export default async function Home() {
           </Card>
         </div>
       </section>
+
+      {/* Wall of Wins */}
+      <WallOfWins />
 
       {/* FAQ */}
       <section className="container mx-auto px-4 py-20">
