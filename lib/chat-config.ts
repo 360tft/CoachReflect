@@ -2,6 +2,7 @@
 
 export const CHAT_CONFIG = {
   maxTokens: 2048,
+  maxTokensDrill: 8192, // Higher limit for responses that may include drill diagram JSON
   temperature: 0.7,
   maxHistoryMessages: 20, // Keep last N messages for context
   maxMessageLength: 5000,

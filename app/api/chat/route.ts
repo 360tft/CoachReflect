@@ -386,7 +386,7 @@ export async function POST(request: Request) {
           const chat = model.startChat({
             history: geminiHistory,
             generationConfig: {
-              maxOutputTokens: CHAT_CONFIG.maxTokens,
+              maxOutputTokens: CHAT_CONFIG.maxTokensDrill,
             },
           })
 
