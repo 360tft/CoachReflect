@@ -5,6 +5,8 @@ import { Button } from "@/app/components/ui/button"
 import { MoodChart } from "@/app/components/ui/mood-chart"
 import { StreakBadges } from "@/app/components/streak-badges"
 import { PushNotificationPrompt } from "@/app/components/push-notification-prompt"
+import { OnboardingProfile } from "@/app/components/onboarding-profile"
+import { TrialCountdown } from "@/app/components/trial-countdown"
 import { ReferralCard } from "@/app/components/referral-card"
 import { ShareSummaryButton } from "./share-summary-button"
 import { MOOD_OPTIONS } from "@/app/types"
@@ -109,6 +111,13 @@ export default async function DashboardPage() {
               </div>
             </div>
 
+            {/* Profile setup */}
+            {!profile?.sport && (
+              <div className="bg-muted/50 rounded-lg p-4">
+                <OnboardingProfile />
+              </div>
+            )}
+
             {/* Free tier info */}
             <div className="bg-muted/50 rounded-lg p-4 text-sm">
               <p className="font-medium mb-2">Your free account:</p>
@@ -172,6 +181,11 @@ export default async function DashboardPage() {
           </Link>
         </div>
       </div>
+
+      {/* Trial countdown */}
+      {profile?.subscription_status === "trialing" && profile?.updated_at && (
+        <TrialCountdown trialStartDate={profile.updated_at} />
+      )}
 
       {/* Free tier upgrade prompt */}
       {subscriptionTier === "free" && (
@@ -315,6 +329,29 @@ export default async function DashboardPage() {
             <p className="text-xs text-muted-foreground mt-4">
               Keep reflecting to build a deeper picture of your coaching patterns.
             </p>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Voice notes teaser for free users */}
+      {subscriptionTier === "free" && (
+        <Card>
+          <CardContent className="py-4">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div>
+                <p className="font-medium">
+                  Reflect on the drive home
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  Pro coaches record a 2-minute voice note after every session. The AI transcribes it, pulls out the key themes, and saves it to your coaching library. Hands-free.
+                </p>
+              </div>
+              <Link href="/dashboard/settings">
+                <Button variant="outline" size="sm" className="whitespace-nowrap">
+                  Try Voice Notes Free
+                </Button>
+              </Link>
+            </div>
           </CardContent>
         </Card>
       )}

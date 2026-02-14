@@ -98,9 +98,9 @@ export default async function PricingPage() {
           <div>
             <h3 className="font-semibold mb-2">Do you offer team/club pricing?</h3>
             <p className="text-muted-foreground">
-              Yes! Club plans give every coach Pro+ access with shared syllabus,
-              communication analysis, and central billing. Get in touch and
-              we&apos;ll set up a plan that works for your club.
+              Yes! Use the &quot;Teams&quot; toggle above to see our club plans. Every coach
+              gets Pro+ access with shared syllabus, club analytics, and central billing.
+              Three tiers available depending on your squad size.
             </p>
           </div>
         </div>

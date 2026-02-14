@@ -17,9 +17,9 @@ export const ONBOARDING_SEQUENCE: SequenceStep[] = [
   { day: 0, template: 'welcome', subject: 'Welcome to Coach Reflection' },
   { day: 1, template: 'first-reflection', subject: 'Your first reflection takes 2 minutes' },
   { day: 3, template: 'social-proof', subject: 'What coaches are reflecting on this week' },
-  { day: 5, template: 'feature-highlight', subject: 'AI insights that transform your coaching' },
+  { day: 5, template: 'upgrade-pitch', subject: 'Ready for AI-powered insights?' },
   { day: 7, template: 'check-in', subject: 'How are your reflections going?' },
-  { day: 10, template: 'upgrade-pitch', subject: 'Ready for AI-powered insights?' },
+  { day: 10, template: 'feature-highlight', subject: 'AI insights that transform your coaching' },
   { day: 21, template: 'last-chance', subject: 'A thank you from the Coach Reflection team' },
 ]
 

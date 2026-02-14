@@ -661,13 +661,26 @@ export function ChatInterface({ isSubscribed, initialRemaining = 2 }: ChatInterf
         )}
 
         {/* Message Counter - persistent bar above input for free users */}
-        {!isSubscribed && (
+        {!isSubscribed && remaining <= 0 ? (
+          <div className="rounded-lg px-4 py-3 mb-2 border border-amber-300 dark:border-amber-700 bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-950/40 dark:to-orange-950/30">
+            <p className="font-semibold text-sm mb-1">You&apos;ve used today&apos;s 2 free reflections</p>
+            <p className="text-xs text-muted-foreground mb-2">
+              Most coaching insights vanish within 20 minutes. Pro means you never lose one.
+            </p>
+            <button
+              onClick={() => {
+                setUpgradeModalVariant('limit_reached')
+                setShowUpgradeModal(true)
+              }}
+              className="text-sm font-semibold text-amber-700 dark:text-amber-400 hover:underline"
+            >
+              Try Pro free for 7 days
+            </button>
+          </div>
+        ) : !isSubscribed ? (
           <div className={`flex items-center justify-between rounded-lg px-3 py-2 mb-2 text-sm border ${getCounterColor()}`}>
             <span className="font-medium">
-              {remaining <= 0
-                ? "You've used today's free reflections"
-                : `${remaining} of ${dailyLimit} reflections remaining today`
-              }
+              {`${remaining} of ${dailyLimit} reflections remaining today`}
             </span>
             <button
               onClick={() => {
@@ -679,7 +692,7 @@ export function ChatInterface({ isSubscribed, initialRemaining = 2 }: ChatInterf
               Upgrade for unlimited
             </button>
           </div>
-        )}
+        ) : null}
 
         {/* Input Area */}
         <ChatInput

@@ -23,39 +23,45 @@ interface UpgradeModalProps {
 
 const VARIANT_CONFIG: Record<ModalVariant, { title: string; subtitle: string }> = {
   limit_reached: {
-    title: "You're getting somewhere",
-    subtitle: "You've hit today's limit. Coaches who reflect after every session improve 2x faster.",
+    title: "You reflected twice today. Tomorrow you'll forget most of it.",
+    subtitle: "You're already doing the hard part. Pro means nothing slips through the cracks.",
   },
   voice_notes: {
-    title: 'Reflect on the drive home',
-    subtitle: "Most coaching insights vanish within 20 minutes. Record them on the drive home before they're gone.",
+    title: "Record it on the drive home",
+    subtitle: "You know that feeling 10 minutes after a session? The one where everything is still clear? Voice notes capture it before it fades.",
   },
   session_plan: {
-    title: 'Get feedback before you coach',
-    subtitle: "Get feedback on your session plan before you step on the pitch. Walk out prepared, not hoping.",
+    title: 'Get honest feedback before you coach',
+    subtitle: "Upload your session plan and get AI feedback before you step on the pitch. Walk out prepared, not hoping.",
   },
   history: {
-    title: 'Your coaching insights are waiting',
-    subtitle: "Your older reflections hold patterns you can't see yet. Full history shows what's really changing.",
+    title: 'Your patterns are hiding in plain sight',
+    subtitle: "After a few weeks of reflecting, the AI spots things you would never notice. Full history makes that possible.",
   },
   analytics: {
-    title: 'See what 4+ weeks reveals',
-    subtitle: "Four weeks of data reveals the patterns that one week hides. See what's actually shifting.",
+    title: 'One week of data shows nothing. Four weeks changes everything.',
+    subtitle: "Patterns, player trends, burnout signals. They only appear when you zoom out. Pro gives you the full picture.",
   },
   generic: {
-    title: 'Get more from every session',
-    subtitle: 'The coaches who improve fastest reflect after every session. No limits, no gaps.',
+    title: 'The coaches who improve fastest reflect after every session',
+    subtitle: 'No daily limits, voice notes on the drive home, and an AI that remembers every session you have ever reflected on.',
   },
 }
 
 const PRO_FEATURES = [
-  'Reflect after every session. Nothing slips through the cracks.',
-  'Voice notes on the drive home. Capture thoughts before they vanish.',
-  'AI spots patterns across sessions that you\'d never notice alone.',
+  'Unlimited reflections. Nothing slips through the cracks.',
+  'Voice notes on the drive home. Two minutes, hands-free.',
+  'AI spots patterns across sessions you would never notice alone.',
   'Design sessions and drills, or get honest feedback on your plans.',
-  'Build a coaching library you can search in 10 years.',
+  'Build a searchable coaching library that grows with you.',
   'CPD evidence generated automatically. No extra paperwork.',
 ]
+
+const TESTIMONIAL = {
+  quote: "It allowed me to guide my thinking and analysis of my coaching experience thoroughly, with active listening and offered actionable solutions moving forwards.",
+  author: "The S Resource",
+  role: "Coaching Educator",
+}
 
 export function UpgradeModal({ variant, isOpen, onClose }: UpgradeModalProps) {
   const [loading, setLoading] = useState(false)
@@ -193,6 +199,14 @@ export function UpgradeModal({ variant, isOpen, onClose }: UpgradeModalProps) {
           ))}
         </ul>
 
+        {/* Testimonial */}
+        <div className="bg-muted/50 rounded-lg p-3 mb-4 border border-border/50">
+          <p className="text-xs text-muted-foreground italic leading-relaxed">
+            &quot;{TESTIMONIAL.quote}&quot;
+          </p>
+          <p className="text-xs font-medium mt-1">{TESTIMONIAL.author}, {TESTIMONIAL.role}</p>
+        </div>
+
         {/* Price */}
         <div className="text-center mb-2">
           {isNative && proPackage ? (
@@ -204,6 +218,9 @@ export function UpgradeModal({ variant, isOpen, onClose }: UpgradeModalProps) {
             <>
               <span className="text-3xl font-bold">{formatPrice(PRICING.PRO.monthly.price)}</span>
               <span className="text-muted-foreground">/month</span>
+              <p className="text-xs text-muted-foreground mt-0.5">
+                That&apos;s $0.26/day. Less than your post-match coffee.
+              </p>
             </>
           )}
         </div>

@@ -5,11 +5,12 @@ import Link from "next/link"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card"
 import { Button } from "@/app/components/ui/button"
 import { Badge } from "@/app/components/ui/badge"
-import { PRICING, type BillingPeriod, formatPrice } from "@/lib/config"
+import { PRICING, CLUB_TIERS, type BillingPeriod, formatPrice } from "@/lib/config"
 import { NativeHidden } from "@/app/components/native-hidden"
 
 export function PricingSection() {
   const [billing, setBilling] = useState<BillingPeriod>("monthly")
+  const [planType, setPlanType] = useState<"individual" | "teams">("individual")
 
   const proPrice = billing === "monthly"
     ? formatPrice(PRICING.PRO.monthly.price)
@@ -37,6 +38,32 @@ export function PricingSection() {
         Try Pro free for 7 days. No charge until day 8. Cancel with one click.
       </p>
 
+      {/* Plan Type Toggle */}
+      <div className="flex items-center justify-center gap-2 mb-4">
+        <div className="flex items-center gap-2 p-1 bg-muted rounded-lg">
+          <button
+            onClick={() => setPlanType("individual")}
+            className={`py-2 px-4 rounded-md text-sm font-medium transition-colors ${
+              planType === "individual"
+                ? "bg-background shadow-sm"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            Individual
+          </button>
+          <button
+            onClick={() => setPlanType("teams")}
+            className={`py-2 px-4 rounded-md text-sm font-medium transition-colors ${
+              planType === "teams"
+                ? "bg-background shadow-sm"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            Teams
+          </button>
+        </div>
+      </div>
+
       {/* Billing Toggle */}
       <div className="flex items-center justify-center gap-2 mb-12">
         <div className="flex items-center gap-2 p-1 bg-muted rounded-lg">
@@ -60,13 +87,14 @@ export function PricingSection() {
           >
             Annual
             <span className="ml-1 text-xs text-green-600 dark:text-green-400">
-              Save {PRICING.PRO.annual.savings}%
+              Save {planType === "individual" ? PRICING.PRO.annual.savings : 17}%
             </span>
           </button>
         </div>
       </div>
 
-      {/* Free + Pro + Pro+ Plans */}
+      {planType === "individual" ? (
+      /* Free + Pro + Pro+ Plans */
       <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
         {/* Free */}
         <Card>
@@ -214,6 +242,69 @@ export function PricingSection() {
           </CardContent>
         </Card>
       </div>
+      ) : (
+      /* Club/Team Plans */
+      <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        {CLUB_TIERS.map((tier) => {
+          const price = billing === "monthly" ? tier.monthlyPrice : tier.annualPrice
+          const period = billing === "monthly" ? "/month" : "/year"
+          const perCoach = billing === "monthly"
+            ? tier.perCoachMonthly
+            : Math.round((tier.annualPrice / 12 / tier.maxSeats) * 100) / 100
+
+          return (
+            <Card
+              key={tier.id}
+              className={tier.recommended ? "border-brand border-2 relative" : "relative"}
+            >
+              {tier.recommended && (
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                  <Badge className="bg-brand text-white">Recommended</Badge>
+                </div>
+              )}
+              <CardHeader>
+                <CardTitle>{tier.name}</CardTitle>
+                <CardDescription>Up to {tier.maxSeats} coaches</CardDescription>
+                <div className="mt-4">
+                  <span className="text-3xl font-bold">{formatPrice(price)}</span>
+                  <span className="text-lg font-normal">{period}</span>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    {formatPrice(perCoach)}/coach/mo
+                  </p>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <p className="text-xs text-muted-foreground mb-3">Every coach gets Pro+ access:</p>
+                <ul className="space-y-2 text-sm">
+                  {tier.features.map((feature) => (
+                    <li key={feature} className="flex items-start gap-2">
+                      <span className="text-green-500 mt-0.5">+</span>
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+                <NativeHidden>
+                  <Link
+                    href={`/dashboard/club/create?tier=${tier.id}&billing=${billing}`}
+                    className="block mt-6"
+                  >
+                    <Button
+                      className={tier.recommended
+                        ? "w-full bg-brand hover:bg-brand-hover !text-white"
+                        : "w-full"
+                      }
+                      variant={tier.recommended ? "default" : "outline"}
+                    >
+                      Get Started
+                    </Button>
+                  </Link>
+                </NativeHidden>
+              </CardContent>
+            </Card>
+          )
+        })}
+      </div>
+      )}
 
       {/* FAQ / Note */}
       <p className="text-center text-sm text-muted-foreground mt-12 max-w-2xl mx-auto">

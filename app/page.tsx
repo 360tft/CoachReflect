@@ -92,6 +92,9 @@ export default async function Home() {
         <p className="text-sm text-muted-foreground mt-4">
           No credit card required. Try it after your next session.
         </p>
+        <p className="text-sm font-medium text-foreground mt-2">
+          Join 500+ coaches already reflecting
+        </p>
 
         {/* Hero Screenshot */}
         <HeroScreenshot />

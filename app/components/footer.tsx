@@ -39,75 +39,21 @@ export function Footer() {
           </div>
         </div>
 
-        {/* 360 TFT Products Cross-Promotion */}
+        {/* 360 TFT Ecosystem */}
         <NativeHidden>
         <div className="pt-6 border-t border-border">
-          <p className="text-center text-muted-foreground text-xs mb-4">
-            More from 360 TFT
+          <p className="text-center text-muted-foreground text-xs mb-3">
+            Part of the <a href="https://360tft.co.uk" target="_blank" rel="noopener noreferrer" className="hover:text-primary underline">360 TFT</a> ecosystem
           </p>
-          <div className="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto">
-            <a
-              href="https://footballgpt.co"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex flex-col items-center justify-center w-28 h-16 p-2 rounded-lg bg-card hover:bg-primary/10 transition-colors group"
-            >
-              <span className="text-xs font-medium text-foreground group-hover:text-primary text-center leading-tight">FootballGPT</span>
-              <span className="text-[10px] text-muted-foreground text-center leading-tight">AI Coaching Assistant</span>
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-1 text-xs text-muted-foreground">
+            <a href="https://www.skool.com/coachingacademy" target="_blank" rel="noopener noreferrer" className="hover:text-primary">
+              Coaching Academy
             </a>
-            <a
-              href="https://refereegpt.co"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex flex-col items-center justify-center w-28 h-16 p-2 rounded-lg bg-card hover:bg-primary/10 transition-colors group"
-            >
-              <span className="text-xs font-medium text-foreground group-hover:text-primary text-center leading-tight">RefereeGPT</span>
-              <span className="text-[10px] text-muted-foreground text-center leading-tight">AI Referee Training</span>
+            <a href="https://footballgpt.co" target="_blank" rel="noopener noreferrer" className="hover:text-primary">
+              FootballGPT
             </a>
-            <a
-              href="https://www.skool.com/coachingacademy"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex flex-col items-center justify-center w-28 h-16 p-2 rounded-lg bg-card hover:bg-primary/10 transition-colors group"
-            >
-              <span className="text-xs font-medium text-foreground group-hover:text-primary text-center leading-tight">Coaching Academy</span>
-              <span className="text-[10px] text-muted-foreground text-center leading-tight">Community & Courses</span>
-            </a>
-            <a
-              href="https://www.skool.com/the-2-drill-club-5017"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex flex-col items-center justify-center w-28 h-16 p-2 rounded-lg bg-card hover:bg-primary/10 transition-colors group"
-            >
-              <span className="text-xs font-medium text-foreground group-hover:text-primary text-center leading-tight">$2 Drill Club</span>
-              <span className="text-[10px] text-muted-foreground text-center leading-tight">Weekly Drills</span>
-            </a>
-            <a
-              href="https://www.skool.com/360tft-7374"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex flex-col items-center justify-center w-28 h-16 p-2 rounded-lg bg-card hover:bg-primary/10 transition-colors group"
-            >
-              <span className="text-xs font-medium text-foreground group-hover:text-primary text-center leading-tight">360TFT Community</span>
-              <span className="text-[10px] text-muted-foreground text-center leading-tight">Free Discussion</span>
-            </a>
-            <a
-              href="https://www.amazon.co.uk/dp/B0GF9VSGKG"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex flex-col items-center justify-center w-28 h-16 p-2 rounded-lg bg-card hover:bg-primary/10 transition-colors group"
-            >
-              <span className="text-xs font-medium text-foreground group-hover:text-primary text-center leading-tight">Dogmatic Coach</span>
-              <span className="text-[10px] text-muted-foreground text-center leading-tight">Book by Kevin</span>
-            </a>
-            <a
-              href="https://360tft.co.uk"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex flex-col items-center justify-center w-28 h-16 p-2 rounded-lg bg-card hover:bg-primary/10 transition-colors group"
-            >
-              <span className="text-xs font-medium text-foreground group-hover:text-primary text-center leading-tight">360TFT Website</span>
-              <span className="text-[10px] text-muted-foreground text-center leading-tight">Blog & Resources</span>
+            <a href="https://refereegpt.co" target="_blank" rel="noopener noreferrer" className="hover:text-primary">
+              RefereeGPT
             </a>
           </div>
         </div>
