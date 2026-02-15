@@ -291,9 +291,66 @@ export const DrillAnimation = forwardRef<DrillAnimationHandle, DrillAnimationPro
     const scale = Math.min(displayWidth, pitchHeight) || 100
     const padding = 24
 
-    // Helper to convert 0-100 coordinates to canvas pixels (guards against NaN/Infinity)
-    const toX = (x: number) => isFinite(x) ? (x / 100) * (displayWidth - padding * 2) + padding : displayWidth / 2
-    const toY = (y: number) => isFinite(y) ? (y / 100) * (pitchHeight - padding * 2) + padding : pitchHeight / 2
+    // --- AUTO-VIEWPORT: zoom into the area where elements actually are ---
+    const allX: number[] = []
+    const allY: number[] = []
+    const collectCoord = (x: number, y: number) => {
+      if (isFinite(x)) allX.push(x)
+      if (isFinite(y)) allY.push(y)
+    }
+    // Collect from all drill elements
+    drill.players.forEach(p => collectCoord(p.x, p.y))
+    drill.balls.forEach(b => collectCoord(b.x, b.y))
+    drill.cones?.forEach(c => collectCoord(c.x, c.y))
+    drill.goals?.forEach(g => collectCoord(g.x, g.y))
+    drill.zones?.forEach(z => {
+      collectCoord(z.x, z.y)
+      collectCoord(z.x + z.width, z.y + z.height)
+    })
+    // Collect from animation targets
+    drill.sequence.forEach(step => {
+      step.actions.forEach(action => {
+        if (action.to && typeof action.to === 'object') {
+          collectCoord(action.to.x, action.to.y)
+        }
+      })
+    })
+
+    // Calculate bounding box with padding
+    let minX = allX.length > 0 ? Math.min(...allX) : 0
+    let maxX = allX.length > 0 ? Math.max(...allX) : 100
+    let minY = allY.length > 0 ? Math.min(...allY) : 0
+    let maxY = allY.length > 0 ? Math.max(...allY) : 100
+    const rangeX = maxX - minX
+    const rangeY = maxY - minY
+
+    // Only auto-zoom if elements use less than 60% of the available space
+    const viewportPadding = 10 // percentage units of breathing room
+    const shouldZoom = rangeX < 60 || rangeY < 60
+    if (shouldZoom) {
+      minX = Math.max(0, minX - viewportPadding)
+      maxX = Math.min(100, maxX + viewportPadding)
+      minY = Math.max(0, minY - viewportPadding)
+      maxY = Math.min(100, maxY + viewportPadding)
+      // Ensure square-ish aspect ratio so pitch doesn't look distorted
+      const adjRangeX = maxX - minX
+      const adjRangeY = maxY - minY
+      if (adjRangeX > adjRangeY) {
+        const diff = adjRangeX - adjRangeY
+        minY = Math.max(0, minY - diff / 2)
+        maxY = Math.min(100, maxY + diff / 2)
+      } else if (adjRangeY > adjRangeX) {
+        const diff = adjRangeY - adjRangeX
+        minX = Math.max(0, minX - diff / 2)
+        maxX = Math.min(100, maxX + diff / 2)
+      }
+    } else {
+      minX = 0; maxX = 100; minY = 0; maxY = 100
+    }
+
+    // Helper to convert 0-100 coordinates to canvas pixels with auto-viewport
+    const toX = (x: number) => isFinite(x) ? ((x - minX) / (maxX - minX)) * (displayWidth - padding * 2) + padding : displayWidth / 2
+    const toY = (y: number) => isFinite(y) ? ((y - minY) / (maxY - minY)) * (pitchHeight - padding * 2) + padding : pitchHeight / 2
 
     // --- SURFACE RENDERING (sport-specific pitch/court/field) ---
     renderSurface(drill.sport || 'football', {

@@ -124,6 +124,7 @@ If your response contains ANY drill, activity, practice, warm-up, cool-down, tra
 Do NOT skip the drill-diagram block. Do NOT put it inside a regular \`\`\`json block — use \`\`\`drill-diagram specifically.
 
 **QUALITY CHECKLIST (verify before outputting):**
+- **SPREAD PLAYERS ACROSS THE FULL 0-100 COORDINATE RANGE.** Do NOT cluster everyone in one corner. Use the entire canvas: x and y values should span from at least 10 to 90. A drill in a "20x20 grid" still uses coordinates 5-95 because coordinates represent percentage of the DIAGRAM, not metres.
 - No two players within 5 units of each other (unless paired for a 1v1)
 - Ball "from" coordinates match the position of the player who has the ball
 - Every step has off-ball movement (not just the ball moving while everyone stands still)
@@ -147,17 +148,19 @@ const DRILL_DIAGRAM_REMINDERS: Record<string, string> = {
   "category": "technical",
   "ageGroup": "U12",
   "pitch": { "shape": "rectangle", "width": 30, "height": 20 },
-  "cones": [{ "id": "c1", "x": 10, "y": 10, "color": "yellow" }],
-  "goals": [{ "id": "g1", "x": 50, "y": 100, "width": 12, "rotation": 0, "type": "mini" }],
-  "zones": [{ "id": "z1", "x": 20, "y": 20, "width": 60, "height": 30, "color": "#3b82f6", "opacity": 0.3, "label": "Pressing Zone" }],
+  "cones": [{ "id": "c1", "x": 10, "y": 10, "color": "yellow" }, { "id": "c2", "x": 90, "y": 10, "color": "yellow" }, { "id": "c3", "x": 10, "y": 90, "color": "yellow" }, { "id": "c4", "x": 90, "y": 90, "color": "yellow" }],
+  "goals": [{ "id": "g1", "x": 42, "y": 95, "width": 16, "rotation": 0, "type": "mini" }],
+  "zones": [{ "id": "z1", "x": 15, "y": 15, "width": 70, "height": 35, "color": "#3b82f6", "opacity": 0.3, "label": "Pressing Zone" }],
   "players": [
-    { "id": "p1", "x": 25, "y": 80, "team": "blue", "hasBall": true, "label": "A", "role": "passer" },
-    { "id": "p2", "x": 75, "y": 50, "team": "blue", "hasBall": false, "label": "B", "role": "receiver" },
-    { "id": "d1", "x": 50, "y": 65, "team": "red", "hasBall": false, "label": "D", "role": "defender" }
+    { "id": "p1", "x": 20, "y": 85, "team": "blue", "hasBall": true, "label": "A", "role": "passer" },
+    { "id": "p2", "x": 80, "y": 40, "team": "blue", "hasBall": false, "label": "B", "role": "receiver" },
+    { "id": "p3", "x": 50, "y": 15, "team": "blue", "hasBall": false, "label": "C", "role": "target" },
+    { "id": "d1", "x": 50, "y": 60, "team": "red", "hasBall": false, "label": "D", "role": "defender" }
   ],
-  "balls": [{ "id": "ball", "x": 25, "y": 80, "heldBy": "p1" }],
+  "balls": [{ "id": "ball", "x": 20, "y": 85, "heldBy": "p1" }],
   "sequence": [
-    { "id": "step1", "description": "Player A passes to Player B", "duration": 1500, "actions": [{ "type": "pass", "subject": "ball", "from": { "x": 25, "y": 80 }, "to": { "x": 75, "y": 50 }, "transferBall": true }] }
+    { "id": "step1", "description": "Player A passes to Player B", "duration": 1500, "actions": [{ "type": "pass", "subject": "ball", "from": { "x": 20, "y": 85 }, "to": { "x": 80, "y": 40 }, "transferBall": true }, { "type": "run", "subject": "p3", "to": { "x": 60, "y": 25 } }] },
+    { "id": "step2", "description": "Player B passes to Player C, A overlaps", "duration": 1500, "actions": [{ "type": "pass", "subject": "ball", "from": { "x": 80, "y": 40 }, "to": { "x": 60, "y": 25 }, "transferBall": true }, { "type": "run", "subject": "p1", "to": { "x": 85, "y": 30 } }] }
   ],
   "cycles": 2
 }
