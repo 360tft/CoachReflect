@@ -358,6 +358,28 @@ export const CHAT_STARTERS: { category: string; prompts: ChatStarterPrompt[] }[]
   },
 ]
 
+// ==================== Task Types ====================
+
+export type TaskStatus = 'pending' | 'completed' | 'dismissed'
+export type TaskPriority = 'low' | 'medium' | 'high'
+export type TaskSource = 'manual' | 'ai_chat' | 'ai_reflection'
+
+export interface Task {
+  id: string
+  user_id: string
+  title: string
+  description: string | null
+  status: TaskStatus
+  priority: TaskPriority
+  due_date: string | null
+  source: TaskSource
+  reflection_id: string | null
+  conversation_id: string | null
+  completed_at: string | null
+  created_at: string
+  updated_at: string
+}
+
 // Streak and Badge types
 export interface Streak {
   id: string

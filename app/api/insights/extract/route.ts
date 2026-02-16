@@ -36,6 +36,10 @@ Extract and return a JSON object with these exact fields:
   "areas_to_improve": <string summary of areas needing development, or null>,
   "next_focus": <string about what they'll focus on next, or null>,
   "ai_summary": <2-3 sentence summary of the reflection>,
+  "action_items": [
+    "First specific action the coach should take based on this conversation...",
+    "Second actionable improvement..."
+  ],
   "players_mentioned": [
     { "name": "string", "context": "positive|concern|neutral", "snippet": "brief quote" }
   ],
@@ -72,6 +76,7 @@ export interface ExtractedData {
   areas_to_improve: string | null
   next_focus: string | null
   ai_summary: string | null
+  action_items: string[]
   players_mentioned: {
     name: string
     context: 'positive' | 'concern' | 'neutral'
@@ -193,7 +198,7 @@ export async function POST(request: Request) {
         next_focus: extracted.next_focus || null,
         ai_summary: extracted.ai_summary || null,
         ai_insights: `Themes: ${(extracted.themes || []).join(', ')}. Sentiment: ${extracted.overall_sentiment || 'neutral'}`,
-        ai_action_items: [],
+        ai_action_items: extracted.action_items || [],
         tags: extracted.themes || [],
       }
 
@@ -317,6 +322,19 @@ export async function POST(request: Request) {
 
     // Update coach daily stats
     await updateDailyStats(adminClient, user.id, sessionDate, extracted)
+
+    // Create tasks from extracted action items
+    if (extracted.action_items?.length > 0) {
+      const taskRows = extracted.action_items.map((item) => ({
+        user_id: user.id,
+        title: item,
+        source: 'ai_chat',
+        conversation_id: conversationId,
+        reflection_id: reflectionId,
+        priority: 'medium',
+      }))
+      await adminClient.from("tasks").insert(taskRows)
+    }
 
     // Update streak and send milestone email if applicable
     try {

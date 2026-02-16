@@ -9,6 +9,7 @@ import { OnboardingProfile } from "@/app/components/onboarding-profile"
 import { TrialCountdown } from "@/app/components/trial-countdown"
 import { ReferralCard } from "@/app/components/referral-card"
 import { ShareSummaryButton } from "./share-summary-button"
+import { TaskList } from "@/app/components/task-list"
 import { MOOD_OPTIONS } from "@/app/types"
 
 export default async function DashboardPage() {
@@ -257,6 +258,9 @@ export default async function DashboardPage() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Action Items */}
+      <TaskList />
 
       {/* Post-first-reflection insight card */}
       {isEarlyUser && hasInsights && (

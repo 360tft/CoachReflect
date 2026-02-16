@@ -10,6 +10,7 @@ import { TrialAnalyzeButton } from "./trial-analyze-button"
 import { DeleteButton } from "./delete-button"
 import { ShareButton } from "@/app/components/share-button"
 import { EditableTitle } from "./editable-title"
+import { ActionItemsChecklist } from "./action-items-checklist"
 
 export default async function ReflectionPage({
   params,
@@ -115,14 +116,10 @@ export default async function ReflectionPage({
             {reflection.ai_action_items && reflection.ai_action_items.length > 0 && (
               <div>
                 <p className="font-medium mb-1">Action Items</p>
-                <ul className="space-y-2">
-                  {reflection.ai_action_items.map((item: string, i: number) => (
-                    <li key={i} className="flex items-start gap-2">
-                      <input type="checkbox" className="mt-1" />
-                      <span className="text-muted-foreground">{item}</span>
-                    </li>
-                  ))}
-                </ul>
+                <ActionItemsChecklist
+                  reflectionId={reflection.id}
+                  aiActionItems={reflection.ai_action_items}
+                />
               </div>
             )}
           </CardContent>

@@ -319,6 +319,40 @@ export function isStreakMilestone(streak: number): boolean {
 }
 
 /**
+ * Update task completion milestones and check for badges
+ */
+export async function updateTaskMilestones(userId: string): Promise<string[]> {
+  const adminClient = createAdminClient()
+  const newBadges: string[] = []
+
+  // Get total completed tasks
+  const { count } = await adminClient
+    .from('tasks')
+    .select('*', { count: 'exact', head: true })
+    .eq('user_id', userId)
+    .eq('status', 'completed')
+
+  const totalCompleted = count || 0
+
+  const milestones = [
+    { count: 1, id: 'tasks_1' },
+    { count: 5, id: 'tasks_5' },
+    { count: 10, id: 'tasks_10' },
+    { count: 25, id: 'tasks_25' },
+    { count: 50, id: 'tasks_50' },
+  ]
+
+  for (const milestone of milestones) {
+    if (totalCompleted >= milestone.count) {
+      const badge = await checkAndAwardBadge(userId, milestone.id)
+      if (badge) newBadges.push(badge)
+    }
+  }
+
+  return newBadges
+}
+
+/**
  * Award special badges (e.g., early adopter, first session plan)
  */
 export async function awardSpecialBadge(userId: string, badgeId: string): Promise<boolean> {

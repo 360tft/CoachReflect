@@ -30,6 +30,8 @@ import {
   LastChanceEmail,
 } from '@/emails/templates/engagement'
 
+import { TaskReminderEmail } from '@/emails/templates/task-reminder'
+
 // HTML escape utility to prevent injection in email templates
 function escapeHtml(str: string): string {
   return str
@@ -657,6 +659,52 @@ export async function notifyNegativeFeedback(
     return { success: true }
   } catch (error) {
     console.error('Failed to send negative feedback notification:', error)
+    return { success: false, error: String(error) }
+  }
+}
+
+/**
+ * Send task reminder email (Pro/Pro+ only)
+ */
+export async function sendTaskReminderEmail(
+  to: string,
+  props: {
+    name: string
+    userId: string
+    pendingCount: number
+    highPriorityTasks: string[]
+    overdueTasks: string[]
+  }
+): Promise<EmailResult> {
+  const resend = getResendClient()
+  if (!resend) {
+    return { success: false, error: 'Email not configured' }
+  }
+
+  const unsubscribeUrl = `${APP_URL}/unsubscribe?userId=${props.userId}`
+
+  try {
+    const element = createElement(TaskReminderEmail, {
+      name: props.name,
+      pendingCount: props.pendingCount,
+      highPriorityTasks: props.highPriorityTasks,
+      overdueTasks: props.overdueTasks,
+      unsubscribeUrl,
+    })
+    const html = await render(element)
+
+    await resend.emails.send({
+      from: FROM_EMAIL,
+      to,
+      subject: `You have ${props.pendingCount} pending coaching task${props.pendingCount !== 1 ? 's' : ''}`,
+      html,
+    })
+
+    await logEmailSent(props.userId, 'task-reminder', 'Task reminder')
+
+    return { success: true }
+  } catch (error) {
+    console.error('Failed to send task reminder email:', error)
     return { success: false, error: String(error) }
   }
 }

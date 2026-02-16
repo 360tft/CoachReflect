@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
 import { GoogleGenerativeAI } from "@google/generative-ai"
 import { createClient } from "@/lib/supabase/server"
+import { createAdminClient } from "@/lib/supabase/admin"
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY || "")
 
@@ -152,6 +153,29 @@ Energy: ${reflection.energy_rating}/5
 
     if (updateError) {
       console.error("Error saving analysis:", updateError)
+    }
+
+    // Create tasks from action items (prevent duplicates for this reflection)
+    if (analysis.action_items?.length > 0) {
+      const adminClient = createAdminClient()
+
+      // Check if tasks already exist for this reflection
+      const { count } = await adminClient
+        .from("tasks")
+        .select("*", { count: "exact", head: true })
+        .eq("reflection_id", id)
+        .eq("user_id", user.id)
+
+      if (!count || count === 0) {
+        const taskRows = analysis.action_items.map((item: string) => ({
+          user_id: user.id,
+          title: item,
+          source: "ai_reflection",
+          reflection_id: id,
+          priority: "medium",
+        }))
+        await adminClient.from("tasks").insert(taskRows)
+      }
     }
 
     return NextResponse.json({
