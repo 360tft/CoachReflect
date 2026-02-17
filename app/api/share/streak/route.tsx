@@ -1,8 +1,6 @@
 import { ImageResponse } from 'next/og'
 import { NextRequest } from 'next/server'
 
-export const runtime = 'edge'
-
 // Get streak milestone styling
 function getStreakStyle(days: number) {
   if (days >= 30) {

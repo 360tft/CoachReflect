@@ -1,8 +1,6 @@
 import { ImageResponse } from 'next/og'
 import { NextRequest } from 'next/server'
 
-export const runtime = 'edge'
-
 // Badge colors based on category
 const BADGE_COLORS: Record<string, { bg: string; accent: string }> = {
   streak: { bg: 'linear-gradient(135deg, #E5A11C 0%, #d97706 100%)', accent: '#fbbf24' },

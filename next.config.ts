@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 import { withSentryConfig } from "@sentry/nextjs";
 
 const nextConfig: NextConfig = {
+  output: 'standalone',
   // Empty turbopack config to silence Next.js 16 warning about webpack config
   turbopack: {},
   // Exclude Google APIs from bundling (Turbopack compatibility)
@@ -13,8 +14,7 @@ const nextConfig: NextConfig = {
   // Security headers for native app webview support
   async headers() {
     const isDev = process.env.NODE_ENV === 'development';
-    const isVercelPreview = process.env.VERCEL_ENV === 'preview';
-    const needsVercelLive = isDev || isVercelPreview;
+    const needsVercelLive = isDev;
 
     const cspDirectives = [
       "default-src 'self' capacitor://localhost http://localhost",

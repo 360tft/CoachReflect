@@ -1,7 +1,5 @@
 import { ImageResponse } from 'next/og'
 
-export const runtime = 'edge'
-
 export const alt = 'Coach Reflection - AI-Powered Reflection for Sports Coaches'
 export const size = {
   width: 1200,
