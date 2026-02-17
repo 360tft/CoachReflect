@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card"
 import { Button } from "@/app/components/ui/button"
+import { UpgradeModal } from "@/app/components/upgrade-modal"
 import Link from "next/link"
 
 interface PlayerSummary {
@@ -25,6 +26,7 @@ export function PlayersListClient({ isSubscribed }: PlayersListClientProps) {
   const [players, setPlayers] = useState<PlayerSummary[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false)
 
   useEffect(() => {
     async function fetchPlayers() {
@@ -88,11 +90,9 @@ export function PlayersListClient({ isSubscribed }: PlayersListClientProps) {
                     Player tracking is based on recent reflections. Upgrade to Pro to track player development across your full history.
                   </p>
                 </div>
-                <Link href="/dashboard/settings">
-                  <Button className="bg-brand hover:bg-brand-hover whitespace-nowrap" size="sm">
-                    Upgrade to Pro
-                  </Button>
-                </Link>
+                <Button onClick={() => setShowUpgradeModal(true)} className="bg-brand hover:bg-brand-hover whitespace-nowrap" size="sm">
+                  Upgrade to Pro
+                </Button>
               </div>
             </CardContent>
           </Card>
@@ -118,6 +118,12 @@ export function PlayersListClient({ isSubscribed }: PlayersListClientProps) {
             </Link>
           </CardContent>
         </Card>
+
+        <UpgradeModal
+          variant="players"
+          isOpen={showUpgradeModal}
+          onClose={() => setShowUpgradeModal(false)}
+        />
       </div>
     )
   }
@@ -161,11 +167,9 @@ export function PlayersListClient({ isSubscribed }: PlayersListClientProps) {
                   Upgrade to Pro to track player development across your full history and access detailed timelines.
                 </p>
               </div>
-              <Link href="/dashboard/settings">
-                <Button className="bg-brand hover:bg-brand-hover whitespace-nowrap" size="sm">
-                  Upgrade to Pro
-                </Button>
-              </Link>
+              <Button onClick={() => setShowUpgradeModal(true)} className="bg-brand hover:bg-brand-hover whitespace-nowrap" size="sm">
+                Upgrade to Pro
+              </Button>
             </div>
           </CardContent>
         </Card>
@@ -247,6 +251,11 @@ export function PlayersListClient({ isSubscribed }: PlayersListClientProps) {
         ))}
       </div>
 
+      <UpgradeModal
+        variant="players"
+        isOpen={showUpgradeModal}
+        onClose={() => setShowUpgradeModal(false)}
+      />
     </div>
   )
 }

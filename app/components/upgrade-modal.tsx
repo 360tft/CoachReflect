@@ -13,7 +13,7 @@ declare global {
   }
 }
 
-type ModalVariant = 'limit_reached' | 'voice_notes' | 'session_plan' | 'history' | 'analytics' | 'generic'
+type ModalVariant = 'limit_reached' | 'voice_notes' | 'session_plan' | 'history' | 'analytics' | 'players' | 'generic'
 
 interface UpgradeModalProps {
   variant: ModalVariant
@@ -41,6 +41,10 @@ const VARIANT_CONFIG: Record<ModalVariant, { title: string; subtitle: string }> 
   analytics: {
     title: 'One week of data shows nothing. Four weeks changes everything.',
     subtitle: "Patterns, player trends, burnout signals. They only appear when you zoom out. Pro gives you the full picture.",
+  },
+  players: {
+    title: 'Track every player across every session',
+    subtitle: "Seven days of mentions barely scratches the surface. Pro unlocks your full history so you can track development over months, not days.",
   },
   generic: {
     title: 'The coaches who improve fastest reflect after every session',

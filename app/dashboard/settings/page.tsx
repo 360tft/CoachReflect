@@ -15,6 +15,8 @@ import { SyllabusUpload } from "./syllabus-upload"
 import { hasSyllabusFeature, getVoiceLimits, getTierDisplayName } from "@/lib/subscription"
 import { Suspense } from "react"
 import { NativeHidden } from "@/app/components/native-hidden"
+import { NativeOnly } from "@/app/components/native-only"
+import { IAPBillingActions } from "@/app/components/iap-billing-actions"
 import { CheckoutSuccess } from "./checkout-success"
 
 export default async function SettingsPage() {
@@ -82,9 +84,11 @@ export default async function SettingsPage() {
               </p>
             </div>
             {subscriptionTier === "free" && (
-              <div className="text-right">
-                <p className="text-2xl font-bold">$7.99<span className="text-sm font-normal">/mo</span></p>
-              </div>
+              <NativeHidden>
+                <div className="text-right">
+                  <p className="text-2xl font-bold">$7.99<span className="text-sm font-normal">/mo</span></p>
+                </div>
+              </NativeHidden>
             )}
           </div>
 
@@ -103,55 +107,65 @@ export default async function SettingsPage() {
                   <li>• Build a searchable coaching library</li>
                 </ul>
               </div>
-              <BillingToggle />
+              <NativeHidden>
+                <BillingToggle />
+              </NativeHidden>
+              <NativeOnly>
+                <IAPBillingActions hasSubscription={false} />
+              </NativeOnly>
             </div>
           ) : (
             <div className="space-y-2">
               <p className="text-sm text-green-600 dark:text-green-400">You have {getTierDisplayName(subscriptionTier)} access</p>
-              {profile?.stripe_customer_id ? (
-                <NativeHidden>
+              <NativeHidden>
+                {profile?.stripe_customer_id ? (
                   <form action="/api/stripe/portal" method="POST">
                     <Button type="submit" variant="outline">
                       Manage Billing
                     </Button>
                   </form>
-                </NativeHidden>
-              ) : (
-                <p className="text-xs text-muted-foreground">{getTierDisplayName(subscriptionTier)} access granted manually</p>
-              )}
+                ) : (
+                  <p className="text-xs text-muted-foreground">{getTierDisplayName(subscriptionTier)} access granted manually</p>
+                )}
+              </NativeHidden>
+              <NativeOnly>
+                <IAPBillingActions hasSubscription={true} />
+              </NativeOnly>
             </div>
           )}
         </CardContent>
       </Card>
 
-      {/* Start a Club - for individual users */}
-      {!isClubMember && (
-        <Card>
-          <CardHeader>
-            <CardTitle>Start a Club</CardTitle>
-            <CardDescription>Get your whole coaching team reflecting</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="p-4 rounded-lg bg-muted/50 border">
-              <p className="font-medium text-foreground mb-2">
-                Club plans include Pro+ for every coach
-              </p>
-              <ul className="text-sm text-muted-foreground space-y-1">
-                <li>• Unlimited voice notes + 12 full recordings per coach</li>
-                <li>• Communication analysis and development blocks</li>
-                <li>• Shared club syllabus — AI learns your philosophy</li>
-                <li>• CPD documentation for every coach</li>
-                <li>• Central billing for all coaches</li>
-              </ul>
-            </div>
-            <Link href="/signup?plan=club">
-              <Button variant="outline" className="w-full">
-                View Club Plans
-              </Button>
-            </Link>
-          </CardContent>
-        </Card>
-      )}
+      {/* Start a Club - for individual users (web only - club billing via Stripe) */}
+      <NativeHidden>
+        {!isClubMember && (
+          <Card>
+            <CardHeader>
+              <CardTitle>Start a Club</CardTitle>
+              <CardDescription>Get your whole coaching team reflecting</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="p-4 rounded-lg bg-muted/50 border">
+                <p className="font-medium text-foreground mb-2">
+                  Club plans include Pro+ for every coach
+                </p>
+                <ul className="text-sm text-muted-foreground space-y-1">
+                  <li>• Unlimited voice notes + 12 full recordings per coach</li>
+                  <li>• Communication analysis and development blocks</li>
+                  <li>• Shared club syllabus — AI learns your philosophy</li>
+                  <li>• CPD documentation for every coach</li>
+                  <li>• Central billing for all coaches</li>
+                </ul>
+              </div>
+              <Link href="/signup?plan=club">
+                <Button variant="outline" className="w-full">
+                  View Club Plans
+                </Button>
+              </Link>
+            </CardContent>
+          </Card>
+        )}
+      </NativeHidden>
 
       {/* Profile - Editable Form */}
       <ProfileForm

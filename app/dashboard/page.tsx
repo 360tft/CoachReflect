@@ -10,6 +10,7 @@ import { TrialCountdown } from "@/app/components/trial-countdown"
 import { ReferralCard } from "@/app/components/referral-card"
 import { ShareSummaryButton } from "./share-summary-button"
 import { TaskList } from "@/app/components/task-list"
+import { NativeHidden } from "@/app/components/native-hidden"
 import { MOOD_OPTIONS } from "@/app/types"
 
 export default async function DashboardPage() {
@@ -188,28 +189,30 @@ export default async function DashboardPage() {
         <TrialCountdown trialStartDate={profile.updated_at} />
       )}
 
-      {/* Free tier upgrade prompt */}
-      {subscriptionTier === "free" && (
-        <Card className="border-brand/30 bg-brand/5">
-          <CardContent className="py-4">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-              <div>
-                <p className="font-medium">
-                  You&apos;re building a habit. Pro takes it further.
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  Unlimited reflections, voice notes on the drive home, and a searchable coaching library. See what 7 days of Pro reveals.
-                </p>
+      {/* Free tier upgrade prompt (web only - native uses IAP via settings) */}
+      <NativeHidden>
+        {subscriptionTier === "free" && (
+          <Card className="border-brand/30 bg-brand/5">
+            <CardContent className="py-4">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                  <p className="font-medium">
+                    You&apos;re building a habit. Pro takes it further.
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    Unlimited reflections, voice notes on the drive home, and a searchable coaching library. See what 7 days of Pro reveals.
+                  </p>
+                </div>
+                <Link href="/dashboard/settings">
+                  <Button className="bg-brand hover:bg-brand-hover !text-white" size="sm">
+                    Try Pro Free for 7 Days
+                  </Button>
+                </Link>
               </div>
-              <Link href="/dashboard/settings">
-                <Button className="bg-brand hover:bg-brand-hover !text-white" size="sm">
-                  Try Pro Free for 7 Days
-                </Button>
-              </Link>
-            </div>
-          </CardContent>
-        </Card>
-      )}
+            </CardContent>
+          </Card>
+        )}
+      </NativeHidden>
 
       {/* Stats Grid */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -337,28 +340,30 @@ export default async function DashboardPage() {
         </Card>
       )}
 
-      {/* Voice notes teaser for free users */}
-      {subscriptionTier === "free" && (
-        <Card>
-          <CardContent className="py-4">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-              <div>
-                <p className="font-medium">
-                  Reflect on the drive home
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  Pro coaches record a 2-minute voice note after every session. The AI transcribes it, pulls out the key themes, and saves it to your coaching library. Hands-free.
-                </p>
+      {/* Voice notes teaser for free users (web only - native uses IAP via settings) */}
+      <NativeHidden>
+        {subscriptionTier === "free" && (
+          <Card>
+            <CardContent className="py-4">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                  <p className="font-medium">
+                    Reflect on the drive home
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    Pro coaches record a 2-minute voice note after every session. The AI transcribes it, pulls out the key themes, and saves it to your coaching library. Hands-free.
+                  </p>
+                </div>
+                <Link href="/dashboard/settings">
+                  <Button variant="outline" size="sm" className="whitespace-nowrap">
+                    Try Voice Notes Free
+                  </Button>
+                </Link>
               </div>
-              <Link href="/dashboard/settings">
-                <Button variant="outline" size="sm" className="whitespace-nowrap">
-                  Try Voice Notes Free
-                </Button>
-              </Link>
-            </div>
-          </CardContent>
-        </Card>
-      )}
+            </CardContent>
+          </Card>
+        )}
+      </NativeHidden>
 
       {/* Drills Card - for football coaches */}
       {(profile?.sport === 'football' || !profile?.sport) && (

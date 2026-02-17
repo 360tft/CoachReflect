@@ -55,7 +55,7 @@ export function CPDExport({ isSubscribed }: CPDExportProps) {
             <p className="text-sm text-muted-foreground mb-4">
               CPD Export is available for Pro subscribers
             </p>
-            <Link href="/pricing">
+            <Link href="/dashboard/settings">
               <Button className="bg-brand hover:bg-brand-hover" size="sm">
                 Upgrade to Pro
               </Button>

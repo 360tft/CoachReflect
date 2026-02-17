@@ -135,7 +135,7 @@ export function AnalyticsDashboard({ isSubscribed }: AnalyticsDashboardProps) {
                 className="bg-brand hover:bg-brand-hover whitespace-nowrap"
                 size="sm"
               >
-                Upgrade to Pro ($7.99/mo)
+                Upgrade to Pro
               </Button>
             </div>
           </CardContent>
