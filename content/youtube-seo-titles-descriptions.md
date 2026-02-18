@@ -6,7 +6,7 @@
 
 ---
 
-## Video 1: Introduction to Coach Reflection
+## Video 1: Introduction to CoachReflection
 
 **Title:** `The Post-Session Thoughts You Keep Losing (and How to Fix It)`
 
@@ -20,7 +20,7 @@ You finish a session. Your mind is racing. That drill worked. One player seemed 
 
 Every coach has this experience. We think deeply about our sessions but we don't capture the insights. We don't build on them. We don't learn from them systematically.
 
-This video introduces Coach Reflection, an AI-powered coaching journal that captures your post-session thoughts, tracks patterns over time, and spots things you'd miss on your own.
+This video introduces CoachReflection, an AI-powered coaching journal that captures your post-session thoughts, tracks patterns over time, and spots things you'd miss on your own.
 
 What's in the video:
 00:00 The problem every coach has
@@ -56,17 +56,17 @@ Telegram: https://t.me/kmcoacheducation
 
 ---
 
-## Video 2: How to Use Coach Reflection
+## Video 2: How to Use CoachReflection
 
-**Title:** `How to Use Coach Reflection (Full Walkthrough)`
+**Title:** `How to Use CoachReflection (Full Walkthrough)`
 
 **Alt titles:**
-- `Coach Reflection: Step by Step Guide for New Users`
+- `CoachReflection: Step by Step Guide for New Users`
 - `Your First Reflection: A Complete Walkthrough`
 
 **Description:**
 ```
-You've signed up for Coach Reflection. Now what?
+You've signed up for CoachReflection. Now what?
 
 This is a full walkthrough of the app. From your first reflection to understanding your analytics. By the end, you'll know how to get the most out of structured reflection for your coaching development.
 
@@ -217,7 +217,7 @@ How many players do you coach? Fifteen? Twenty? Now think about each one individ
 
 Professional academies have analysts, data systems, and performance coaches tracking every player. Grassroots coaches have their memory. Which is incomplete, biased, and forgets more than it remembers.
 
-This video shows how Coach Reflection's player tracking builds a picture of every player's development just from your post-session reflections. No extra work. No spreadsheets.
+This video shows how CoachReflection's player tracking builds a picture of every player's development just from your post-session reflections. No extra work. No spreadsheets.
 
 What's in the video:
 00:00 The tracking gap between academies and grassroots
@@ -231,7 +231,7 @@ What's in the video:
 00:00 What this is and isn't
 00:00 How to get started
 
-When you reflect on sessions, you naturally mention players. "Jake had a great session." "Emma seemed withdrawn." Coach Reflection tracks these mentions over time, categorises them, and shows you patterns.
+When you reflect on sessions, you naturally mention players. "Jake had a great session." "Emma seemed withdrawn." CoachReflection tracks these mentions over time, categorises them, and shows you patterns.
 
 After a few weeks you can see: which players appear most in your reflections? What's the balance of positive to concern mentions? Which players are you accidentally overlooking?
 
@@ -261,7 +261,7 @@ Telegram: https://t.me/kmcoacheducation
 
 **Niche cluster:** Coaching development and grassroots coaching. These compete with coach education content, CPD videos, and coaching tips channels. Not AI or tech tutorials.
 
-**Title strategy:** Every title leads with the coaching problem or outcome. "Coach Reflection" as a product name only appears once in titles (Video 2, the walkthrough, where people are searching for it specifically). The rest hook on coaching pain points.
+**Title strategy:** Every title leads with the coaching problem or outcome. "CoachReflection" as a product name only appears once in titles (Video 2, the walkthrough, where people are searching for it specifically). The rest hook on coaching pain points.
 
 **Satisfaction per impression:**
 - Video 1: "I'll understand what this tool does and whether it's for me"
@@ -290,7 +290,7 @@ Telegram: https://t.me/kmcoacheducation
 4. Video 2 fourth (Walkthrough) — for people who've signed up
 5. Video 5 fifth (Player Tracking) — specific feature deep dive
 
-This order maximises early satisfaction signals. The first two videos deliver value regardless of whether the viewer uses Coach Reflection. That builds trust before the product-focused content.
+This order maximises early satisfaction signals. The first two videos deliver value regardless of whether the viewer uses CoachReflection. That builds trust before the product-focused content.
 
 ---
 

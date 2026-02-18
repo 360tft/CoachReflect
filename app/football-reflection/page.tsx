@@ -11,14 +11,14 @@ export const metadata: Metadata = {
     canonical: "https://coachreflection.com/football-reflection",
   },
   openGraph: {
-    title: "Football Reflection Journal for Coaches | Coach Reflection",
+    title: "Football Reflection Journal for Coaches | CoachReflection",
     description: "A structured football reflection journal that helps coaches review training sessions and matches. Guided prompts, AI insights and player tracking.",
     url: "https://coachreflection.com/football-reflection",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Football Reflection Journal for Coaches | Coach Reflection",
+    title: "Football Reflection Journal for Coaches | CoachReflection",
     description: "A structured football reflection journal with guided prompts, AI insights and player tracking for football coaches.",
   },
 }
@@ -32,7 +32,7 @@ const faqSchema = {
       "name": "What is a football reflection journal?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "A football reflection journal is a tool that helps coaches capture learnings from training sessions and matches. Coach Reflection adds AI-powered guided prompts tailored to football coaching, pattern detection across your season, and automatic player tracking that monitors individual development from your own observations."
+        "text": "A football reflection journal is a tool that helps coaches capture learnings from training sessions and matches. CoachReflection adds AI-powered guided prompts tailored to football coaching, pattern detection across your season, and automatic player tracking that monitors individual development from your own observations."
       }
     },
     {
@@ -40,7 +40,7 @@ const faqSchema = {
       "name": "What should I reflect on after a football training session?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Good post-session reflection covers whether your objectives were met, how players responded to the activities, what you would change, which coaching interventions worked, and what to carry into the next session. Coach Reflection provides guided prompts so you do not need to decide what to write. The AI asks specific questions and structures your answers into useful insights."
+        "text": "Good post-session reflection covers whether your objectives were met, how players responded to the activities, what you would change, which coaching interventions worked, and what to carry into the next session. CoachReflection provides guided prompts so you do not need to decide what to write. The AI asks specific questions and structures your answers into useful insights."
       }
     },
     {
@@ -56,12 +56,12 @@ const faqSchema = {
       "name": "Can I record voice notes instead of typing my reflections?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes. Coach Reflection includes a voice recording feature so you can capture your thoughts immediately after a session while they are fresh. Speak naturally about how the session went and the AI processes your voice notes into structured reflections. This is particularly useful pitchside when typing is not practical."
+        "text": "Yes. CoachReflection includes a voice recording feature so you can capture your thoughts immediately after a session while they are fresh. Speak naturally about how the session went and the AI processes your voice notes into structured reflections. This is particularly useful pitchside when typing is not practical."
       }
     },
     {
       "@type": "Question",
-      "name": "Is Coach Reflection free for football coaches?",
+      "name": "Is CoachReflection free for football coaches?",
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Yes. The free tier includes basic reflection logging, guided prompts and session history. Pro features include AI-powered pattern detection, player tracking, voice notes, session plan upload with AI extraction, mood and energy analytics, and CPD export. Pro starts from $7.99 per month."
@@ -82,9 +82,9 @@ export default function FootballReflectionPage() {
         <header className="container mx-auto px-4 py-6 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo.png" alt="Coach Reflection" width={240} height={40} className="h-10 w-auto dark:hidden" />
+            <img src="/logo.png" alt="CoachReflection" width={240} height={40} className="h-10 w-auto dark:hidden" />
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo-dark.png" alt="Coach Reflection" width={240} height={40} className="h-10 w-auto hidden dark:block" />
+            <img src="/logo-dark.png" alt="CoachReflection" width={240} height={40} className="h-10 w-auto hidden dark:block" />
             <span className="text-sm text-muted-foreground">by 360TFT</span>
           </Link>
           <div className="flex items-center gap-4">
@@ -147,7 +147,7 @@ export default function FootballReflectionPage() {
                     turns fleeting thoughts into actionable intelligence.
                   </p>
                   <p>
-                    Coach Reflection gives you that structure. Answer guided questions after each
+                    CoachReflection gives you that structure. Answer guided questions after each
                     session, and over time the AI finds the threads running through your coaching.
                     The recurring challenges. The players who need attention. The sessions where
                     your energy was low and the quality suffered. It is reflection that actually
@@ -311,7 +311,7 @@ export default function FootballReflectionPage() {
                       vague to learn from. What specifically worked about the pressing drill? What
                       kind of finishing? In what context? A week later you cannot remember.
                     </p>
-                    <h3 className="font-semibold mb-3">With Coach Reflection</h3>
+                    <h3 className="font-semibold mb-3">With CoachReflection</h3>
                     <p className="text-muted-foreground">
                       The guided prompts push you to be specific. You capture that the pressing
                       trigger worked when the ball went to the full-back but not when it went
@@ -356,7 +356,7 @@ export default function FootballReflectionPage() {
                   <CardContent>
                     <p className="text-sm text-muted-foreground">
                       A football reflection journal is a tool that helps coaches capture learnings from
-                      training sessions and matches. Coach Reflection adds AI-powered guided prompts tailored
+                      training sessions and matches. CoachReflection adds AI-powered guided prompts tailored
                       to football coaching, pattern detection across your season, and automatic player tracking
                       that monitors individual development from your own observations.
                     </p>
@@ -370,7 +370,7 @@ export default function FootballReflectionPage() {
                     <p className="text-sm text-muted-foreground">
                       Good post-session reflection covers whether your objectives were met, how players
                       responded to the activities, what you would change, which coaching interventions worked,
-                      and what to carry into the next session. Coach Reflection provides guided prompts so you
+                      and what to carry into the next session. CoachReflection provides guided prompts so you
                       do not need to decide what to write.
                     </p>
                   </CardContent>
@@ -394,7 +394,7 @@ export default function FootballReflectionPage() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-muted-foreground">
-                      Yes. Coach Reflection includes a voice recording feature so you can capture your thoughts
+                      Yes. CoachReflection includes a voice recording feature so you can capture your thoughts
                       immediately after a session while they are fresh. Speak naturally about how the session
                       went and the AI processes your voice notes into structured reflections. Particularly useful
                       pitchside when typing is not practical.
@@ -403,7 +403,7 @@ export default function FootballReflectionPage() {
                 </Card>
                 <Card className="border">
                   <CardHeader className="pb-2">
-                    <CardTitle className="text-base">Is Coach Reflection free for football coaches?</CardTitle>
+                    <CardTitle className="text-base">Is CoachReflection free for football coaches?</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-muted-foreground">

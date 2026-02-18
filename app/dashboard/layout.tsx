@@ -64,10 +64,10 @@ export default async function DashboardLayout({
           <Link href="/dashboard" className="flex items-center gap-2">
             {/* Light mode logo (dark text) */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo.png" alt="Coach Reflection" width={160} height={28} className="h-7 w-auto dark:hidden" />
+            <img src="/logo.png" alt="CoachReflection" width={160} height={28} className="h-7 w-auto dark:hidden" />
             {/* Dark mode logo (white text) */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo-dark.png" alt="Coach Reflection" width={160} height={28} className="h-7 w-auto hidden dark:block" />
+            <img src="/logo-dark.png" alt="CoachReflection" width={160} height={28} className="h-7 w-auto hidden dark:block" />
           </Link>
 
           <div className="flex items-center gap-4">

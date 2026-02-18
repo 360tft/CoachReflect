@@ -258,14 +258,14 @@ export default async function SettingsPage() {
       <Card>
         <CardHeader>
           <CardTitle>Help & Support</CardTitle>
-          <CardDescription>Get help using Coach Reflection</CardDescription>
+          <CardDescription>Get help using CoachReflection</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex items-center justify-between py-3 border-b">
             <div>
               <p className="font-medium">Help Center</p>
               <p className="text-sm text-muted-foreground">
-                FAQs and guides for getting the most out of Coach Reflection
+                FAQs and guides for getting the most out of CoachReflection
               </p>
             </div>
             <Link href="/help">
@@ -290,7 +290,7 @@ export default async function SettingsPage() {
       <Card className="border dark:border bg-muted/50/50 dark:bg-background/30">
         <CardHeader>
           <CardTitle>Refer a Coach</CardTitle>
-          <CardDescription>Share Coach Reflection with other coaches</CardDescription>
+          <CardDescription>Share CoachReflection with other coaches</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="flex items-center justify-between">

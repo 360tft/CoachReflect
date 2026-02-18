@@ -1,4 +1,4 @@
-# Coach Reflection — Presentation Pack
+# CoachReflection — Presentation Pack
 
 Copy for each slide, ready to paste into Canva.
 
@@ -6,7 +6,7 @@ Copy for each slide, ready to paste into Canva.
 
 ## SLIDE 1 — TITLE
 
-**Coach Reflection**
+**CoachReflection**
 
 The reflective journal built for sports coaches.
 
@@ -137,7 +137,7 @@ UEFA B Licensed Coach | 20+ years coaching experience
 
 Founder of 360 TFT, the Football Coaching Academy (1,500+ coaches), and FootballGPT.
 
-Coach Reflection wasn't built by a tech company guessing what coaches need. It was built by a coach who spent years reflecting in his head and wished he'd written it down.
+CoachReflection wasn't built by a tech company guessing what coaches need. It was built by a coach who spent years reflecting in his head and wished he'd written it down.
 
 ---
 

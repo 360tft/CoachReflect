@@ -3,7 +3,7 @@ import { createClient } from "@/lib/supabase/server"
 import { isAdminUser } from "@/lib/admin"
 import { Resend } from "resend"
 
-const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || "Coach Reflection <hello@send.coachreflection.com>"
+const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || "CoachReflection <hello@send.coachreflection.com>"
 
 export async function POST(request: Request) {
   try {
@@ -17,7 +17,7 @@ export async function POST(request: Request) {
     const { to, subject, message } = await request.json()
 
     const targetEmail = to || "admin@360tft.com"
-    const emailSubject = subject || "Test Email from Coach Reflection"
+    const emailSubject = subject || "Test Email from CoachReflection"
     const emailMessage = message || "This is a test email to verify email sending is working."
 
     if (!process.env.RESEND_API_KEY) {
@@ -40,7 +40,7 @@ export async function POST(request: Request) {
           <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;" />
           <p style="color: #666; font-size: 12px;">
             Sent at: ${new Date().toISOString()}<br/>
-            From: Coach Reflection Admin
+            From: CoachReflection Admin
           </p>
         </div>
       `,

@@ -7,7 +7,7 @@ const AI_PLATFORMS = [
 ]
 
 interface AskAIProps {
-  question: string  // e.g., "What is Coach Reflection?"
+  question: string  // e.g., "What is CoachReflection?"
   prompt: string    // The full prompt to send to AI
   className?: string
 }

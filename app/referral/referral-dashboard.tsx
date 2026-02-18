@@ -41,13 +41,13 @@ export function ReferralDashboard({ referralCode, stats, recentReferrals }: Refe
   }
 
   const shareOnTwitter = () => {
-    const text = encodeURIComponent("I've been using Coach Reflection to improve my coaching through reflection. Join me and get better together!")
+    const text = encodeURIComponent("I've been using CoachReflection to improve my coaching through reflection. Join me and get better together!")
     const url = encodeURIComponent(referralLink)
     window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank')
   }
 
   const shareOnWhatsApp = () => {
-    const text = encodeURIComponent(`I've been using Coach Reflection to improve my coaching. Try it out: ${referralLink}`)
+    const text = encodeURIComponent(`I've been using CoachReflection to improve my coaching. Try it out: ${referralLink}`)
     window.open(`https://wa.me/?text=${text}`, '_blank')
   }
 

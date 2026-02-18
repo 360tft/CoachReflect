@@ -68,7 +68,7 @@ export async function sendPushNotification(
   }
 }
 
-// Predefined notification templates for Coach Reflection
+// Predefined notification templates for CoachReflection
 export const NOTIFICATION_TEMPLATES = {
   streakReminder: (currentStreak: number) => ({
     title: `Don't lose your ${currentStreak}-day streak!`,

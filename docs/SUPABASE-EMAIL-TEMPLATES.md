@@ -1,4 +1,4 @@
-# Supabase Email Templates for Coach Reflection
+# Supabase Email Templates for CoachReflection
 
 Copy these templates into Supabase Dashboard → Authentication → Email Templates.
 
@@ -8,10 +8,10 @@ Brand Color: `#E5A11C` (Gold)
 
 ## 1. Confirm Signup
 
-**Subject:** Confirm your Coach Reflection account
+**Subject:** Confirm your CoachReflection account
 
 ```html
-<h2 style="color: #E5A11C; font-family: Arial, sans-serif;">Welcome to Coach Reflection</h2>
+<h2 style="color: #E5A11C; font-family: Arial, sans-serif;">Welcome to CoachReflection</h2>
 
 <p style="font-family: Arial, sans-serif; color: #374151; font-size: 16px;">
 Thanks for signing up! Please confirm your email address to get started:
@@ -24,11 +24,11 @@ Confirm Email
 </p>
 
 <p style="font-family: Arial, sans-serif; color: #6b7280; font-size: 14px;">
-If you didn't create an account with Coach Reflection, you can safely ignore this email.
+If you didn't create an account with CoachReflection, you can safely ignore this email.
 </p>
 
 <p style="font-family: Arial, sans-serif; color: #6b7280; font-size: 14px;">
-— The Coach Reflection Team
+— The CoachReflection Team
 </p>
 ```
 
@@ -36,7 +36,7 @@ If you didn't create an account with Coach Reflection, you can safely ignore thi
 
 ## 2. Reset Password (Recovery)
 
-**Subject:** Reset your Coach Reflection password
+**Subject:** Reset your CoachReflection password
 
 ```html
 <h2 style="color: #E5A11C; font-family: Arial, sans-serif;">Reset Your Password</h2>
@@ -56,7 +56,7 @@ If you didn't request a password reset, you can safely ignore this email. Your p
 </p>
 
 <p style="font-family: Arial, sans-serif; color: #6b7280; font-size: 14px;">
-— The Coach Reflection Team
+— The CoachReflection Team
 </p>
 ```
 
@@ -64,13 +64,13 @@ If you didn't request a password reset, you can safely ignore this email. Your p
 
 ## 3. Magic Link
 
-**Subject:** Your Coach Reflection login link
+**Subject:** Your CoachReflection login link
 
 ```html
 <h2 style="color: #E5A11C; font-family: Arial, sans-serif;">Your Login Link</h2>
 
 <p style="font-family: Arial, sans-serif; color: #374151; font-size: 16px;">
-Click the button below to log in to Coach Reflection:
+Click the button below to log in to CoachReflection:
 </p>
 
 <p style="margin: 24px 0;">
@@ -84,7 +84,7 @@ This link will expire in 24 hours. If you didn't request this link, you can safe
 </p>
 
 <p style="font-family: Arial, sans-serif; color: #6b7280; font-size: 14px;">
-— The Coach Reflection Team
+— The CoachReflection Team
 </p>
 ```
 
@@ -112,7 +112,7 @@ If you didn't request this change, please contact support immediately.
 </p>
 
 <p style="font-family: Arial, sans-serif; color: #6b7280; font-size: 14px;">
-— The Coach Reflection Team
+— The CoachReflection Team
 </p>
 ```
 
@@ -120,13 +120,13 @@ If you didn't request this change, please contact support immediately.
 
 ## 5. Invite User
 
-**Subject:** You've been invited to Coach Reflection
+**Subject:** You've been invited to CoachReflection
 
 ```html
 <h2 style="color: #E5A11C; font-family: Arial, sans-serif;">You're Invited!</h2>
 
 <p style="font-family: Arial, sans-serif; color: #374151; font-size: 16px;">
-You've been invited to join Coach Reflection. Click the button below to accept and set up your account:
+You've been invited to join CoachReflection. Click the button below to accept and set up your account:
 </p>
 
 <p style="margin: 24px 0;">
@@ -140,7 +140,7 @@ This invitation will expire in 7 days.
 </p>
 
 <p style="font-family: Arial, sans-serif; color: #6b7280; font-size: 14px;">
-— The Coach Reflection Team
+— The CoachReflection Team
 </p>
 ```
 

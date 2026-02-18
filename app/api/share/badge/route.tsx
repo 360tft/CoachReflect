@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
     // Get parameters
     const badgeName = searchParams.get('name') || 'Achievement Badge'
     const badgeEmoji = searchParams.get('emoji') || '🏆'
-    const badgeDescription = searchParams.get('desc') || 'Earned on Coach Reflection'
+    const badgeDescription = searchParams.get('desc') || 'Earned on CoachReflection'
     const category = (searchParams.get('category') || 'milestone') as keyof typeof BADGE_COLORS
     const streak = searchParams.get('streak')
 
@@ -156,7 +156,7 @@ export async function GET(request: NextRequest) {
                     color: 'white',
                   }}
                 >
-                  Coach Reflection
+                  CoachReflection
                 </span>
                 <span
                   style={{

@@ -71,7 +71,7 @@ export function AdminDashboard() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           to: "admin@360tft.com",
-          subject: "Test Email from Coach Reflection Admin",
+          subject: "Test Email from CoachReflection Admin",
           message: "This is a test email to verify the email system is working correctly."
         })
       })

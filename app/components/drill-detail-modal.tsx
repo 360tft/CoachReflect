@@ -111,7 +111,7 @@ export function DrillDetailModal({
   }
 
   const handleSocialShare = (platform: 'twitter' | 'whatsapp' | 'native') => {
-    const text = `Check out this drill: ${drill.name}\n\nCreated with Coach Reflection`
+    const text = `Check out this drill: ${drill.name}\n\nCreated with CoachReflection`
 
     if (platform === 'native' && navigator.share) {
       navigator.share({ title: drill.name, text, url: shareUrl })

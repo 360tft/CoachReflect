@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
- * Generate PNG logo for Coach Reflection
- * Creates logo with CR icon + "Coach Reflection" text
+ * Generate PNG logo for CoachReflection
+ * Creates logo with CR icon + "CoachReflection" text
  */
 
 import sharp from 'sharp'
@@ -32,8 +32,8 @@ async function generateLogo() {
       <rect x="0" y="8" width="64" height="64" rx="12" fill="url(#grad)"/>
       <text x="32" y="52" font-family="Arial, Helvetica, sans-serif" font-size="32" font-weight="bold" fill="${WHITE}" text-anchor="middle">CR</text>
 
-      <!-- Coach Reflection Text -->
-      <text x="84" y="52" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="bold" fill="${DARK}">Coach Reflection</text>
+      <!-- CoachReflection Text -->
+      <text x="84" y="52" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="bold" fill="${DARK}">CoachReflection</text>
     </svg>
   `
 
@@ -58,8 +58,8 @@ async function generateLogo() {
       <rect x="0" y="8" width="64" height="64" rx="12" fill="url(#grad)"/>
       <text x="32" y="52" font-family="Arial, Helvetica, sans-serif" font-size="32" font-weight="bold" fill="${WHITE}" text-anchor="middle">CR</text>
 
-      <!-- Coach Reflection Text (white for dark backgrounds) -->
-      <text x="84" y="52" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="bold" fill="${WHITE}">Coach Reflection</text>
+      <!-- CoachReflection Text (white for dark backgrounds) -->
+      <text x="84" y="52" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="bold" fill="${WHITE}">CoachReflection</text>
     </svg>
   `
 

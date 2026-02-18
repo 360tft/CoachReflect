@@ -1,7 +1,7 @@
 ---
 title: "Post-Match Reflection Questions for Soccer Coaches"
 slug: "post-match-reflection-questions-for-soccer-coaches"
-seoTitle: "Post-Match Reflection Questions for Soccer Coaches | Coach Reflection"
+seoTitle: "Post-Match Reflection Questions for Soccer Coaches | CoachReflection"
 seoDescription: "25 post-match reflection questions every soccer coach should ask after a game. Structured prompts for tactical review, player assessment, and self-evaluation."
 category: "reflection"
 topics: ["soccer", "reflection questions", "post-match review", "self-evaluation"]
@@ -100,6 +100,6 @@ Over time, you build a body of work. After ten matches, patterns start to appear
 
 ## Making It Easier
 
-I built Coach Reflection specifically because I found this process hard to maintain with just a notebook. The app gives you guided prompts after each match, adapts questions based on what you tell it, tracks player mentions automatically, and uses AI to surface patterns across your season. It turns reflection from something you know you should do into something that actually happens consistently.
+I built CoachReflection specifically because I found this process hard to maintain with just a notebook. The app gives you guided prompts after each match, adapts questions based on what you tell it, tracks player mentions automatically, and uses AI to surface patterns across your season. It turns reflection from something you know you should do into something that actually happens consistently.
 
 If structured reflection after matches is something you want to build as a habit, [give it a try](https://coachreflection.com/signup). The free tier gives you everything you need to start.

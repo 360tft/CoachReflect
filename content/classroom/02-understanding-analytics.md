@@ -1,6 +1,6 @@
 # Understanding Your Analytics
 
-Coach Reflection's analytics turn your reflections into actionable insights. This guide explains what each section means and how to use it.
+CoachReflection's analytics turn your reflections into actionable insights. This guide explains what each section means and how to use it.
 
 ---
 

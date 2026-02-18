@@ -2,7 +2,7 @@
 title: "FA Coaching CPD Requirements: Everything You Need to Know"
 slug: "fa-coaching-cpd-requirements"
 excerpt: "A clear breakdown of FA coaching CPD requirements for every badge level. How many hours you need, what counts as CPD, how to log evidence, and how to avoid losing your qualification."
-seoTitle: "FA Coaching CPD Requirements 2025/26 - Hours, Evidence & Logging | Coach Reflection"
+seoTitle: "FA Coaching CPD Requirements 2025/26 - Hours, Evidence & Logging | CoachReflection"
 seoDescription: "Complete guide to FA coaching CPD requirements. Hours needed for each badge level, what counts as CPD evidence, how to log and submit, plus UEFA licence requirements."
 category: "coaching_philosophy"
 topics: ["FA CPD", "coaching CPD", "coaching qualifications", "FA coaching licence", "UEFA licence", "coaching development"]
@@ -241,12 +241,12 @@ Yes. Structured reflections that include the date, session context, what you lea
 
 Log your CPD through the FA Learning platform and check your progress against your cycle requirements. If you are unsure whether a specific activity counts, contact your County FA. It is better to ask than to assume.
 
-### Can Coach Reflection help with FA CPD?
+### Can CoachReflection help with FA CPD?
 
-Coach Reflection's export feature generates a timestamped record of your reflections, learning points, and development themes, which is exactly what CPD portfolios need. If you reflect after your sessions in the app, your CPD evidence builds itself. When renewal time comes, you export rather than scramble.
+CoachReflection's export feature generates a timestamped record of your reflections, learning points, and development themes, which is exactly what CPD portfolios need. If you reflect after your sessions in the app, your CPD evidence builds itself. When renewal time comes, you export rather than scramble.
 
 ---
 
 CPD does not need to be a burden. The development is already happening in your coaching. The only missing piece is capturing it.
 
-[Coach Reflection](https://coachreflection.com) makes that capture effortless. Reflect after your sessions, and the app tracks your development over weeks and months. When your CPD cycle comes up for renewal, export your evidence in a format that demonstrates genuine, sustained professional development. Start free at [coachreflection.com](https://coachreflection.com).
+[CoachReflection](https://coachreflection.com) makes that capture effortless. Reflect after your sessions, and the app tracks your development over weeks and months. When your CPD cycle comes up for renewal, export your evidence in a format that demonstrates genuine, sustained professional development. Start free at [coachreflection.com](https://coachreflection.com).

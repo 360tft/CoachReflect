@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Splash Screen Generator for Coach Reflection
+ * Splash Screen Generator for CoachReflection
  *
  * Generates all required iOS and Android splash screens from a source image.
  *
@@ -23,11 +23,11 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, '..');
 
-// Coach Reflection brand colors (360TFT theme)
+// CoachReflection brand colors (360TFT theme)
 const BG_COLOR = '#0A0A0A'; // Dark background
 const BRAND_COLOR_LIGHT = '#F0B429'; // Gradient start
 const BRAND_COLOR_DARK = '#CC8F17'; // Gradient end
-const PRODUCT_NAME = 'Coach Reflection';
+const PRODUCT_NAME = 'CoachReflection';
 
 // iOS splash screen sizes (LaunchImage)
 const IOS_SPLASH_SIZES = [
@@ -317,7 +317,7 @@ async function main() {
   const sourcePath = args[0];
 
   console.log('===========================================');
-  console.log('  Coach Reflection Splash Screen Generator');
+  console.log('  CoachReflection Splash Screen Generator');
   console.log('===========================================');
 
   if (sourcePath) {

@@ -1,4 +1,4 @@
-# Supabase Email Templates for Coach Reflection
+# Supabase Email Templates for CoachReflection
 
 Copy each template into Supabase Dashboard → Authentication → Email Templates
 
@@ -6,7 +6,7 @@ Copy each template into Supabase Dashboard → Authentication → Email Template
 
 ## 1. Confirm Signup
 
-**Subject:** Confirm your Coach Reflection account
+**Subject:** Confirm your CoachReflection account
 
 ```html
 <!DOCTYPE html>
@@ -20,11 +20,11 @@ Copy each template into Supabase Dashboard → Authentication → Email Template
     <!-- Header -->
     <div style="text-align: center; margin-bottom: 30px;">
       <span style="font-size: 32px; font-weight: bold; color: #E5A11C;">CR</span>
-      <h1 style="font-size: 24px; color: #1f2937; margin: 10px 0;">Coach Reflection</h1>
+      <h1 style="font-size: 24px; color: #1f2937; margin: 10px 0;">CoachReflection</h1>
     </div>
 
     <!-- Content -->
-    <p style="font-size: 16px; margin: 16px 0;">Welcome to Coach Reflection!</p>
+    <p style="font-size: 16px; margin: 16px 0;">Welcome to CoachReflection!</p>
 
     <p style="font-size: 16px; margin: 16px 0;">Click the button below to confirm your email address and start your coaching journey.</p>
 
@@ -32,7 +32,7 @@ Copy each template into Supabase Dashboard → Authentication → Email Template
       <a href="{{ .ConfirmationURL }}" style="background-color: #E5A11C; color: #ffffff; padding: 12px 24px; border-radius: 8px; text-decoration: none; display: inline-block; font-weight: bold; font-size: 16px;">Confirm Email</a>
     </div>
 
-    <p style="font-size: 14px; color: #6b7280; margin: 16px 0;">If you didn't create an account with Coach Reflection, you can safely ignore this email.</p>
+    <p style="font-size: 14px; color: #6b7280; margin: 16px 0;">If you didn't create an account with CoachReflection, you can safely ignore this email.</p>
 
     <!-- Footer -->
     <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 30px 0;">
@@ -46,7 +46,7 @@ Copy each template into Supabase Dashboard → Authentication → Email Template
 
 ## 2. Magic Link
 
-**Subject:** Your Coach Reflection login link
+**Subject:** Your CoachReflection login link
 
 ```html
 <!DOCTYPE html>
@@ -60,11 +60,11 @@ Copy each template into Supabase Dashboard → Authentication → Email Template
     <!-- Header -->
     <div style="text-align: center; margin-bottom: 30px;">
       <span style="font-size: 32px; font-weight: bold; color: #E5A11C;">CR</span>
-      <h1 style="font-size: 24px; color: #1f2937; margin: 10px 0;">Coach Reflection</h1>
+      <h1 style="font-size: 24px; color: #1f2937; margin: 10px 0;">CoachReflection</h1>
     </div>
 
     <!-- Content -->
-    <p style="font-size: 16px; margin: 16px 0;">Click the button below to sign in to your Coach Reflection account.</p>
+    <p style="font-size: 16px; margin: 16px 0;">Click the button below to sign in to your CoachReflection account.</p>
 
     <div style="text-align: center; margin: 30px 0;">
       <a href="{{ .ConfirmationURL }}" style="background-color: #E5A11C; color: #ffffff; padding: 12px 24px; border-radius: 8px; text-decoration: none; display: inline-block; font-weight: bold; font-size: 16px;">Sign In</a>
@@ -84,7 +84,7 @@ Copy each template into Supabase Dashboard → Authentication → Email Template
 
 ## 3. Reset Password
 
-**Subject:** Reset your Coach Reflection password
+**Subject:** Reset your CoachReflection password
 
 ```html
 <!DOCTYPE html>
@@ -98,7 +98,7 @@ Copy each template into Supabase Dashboard → Authentication → Email Template
     <!-- Header -->
     <div style="text-align: center; margin-bottom: 30px;">
       <span style="font-size: 32px; font-weight: bold; color: #E5A11C;">CR</span>
-      <h1 style="font-size: 24px; color: #1f2937; margin: 10px 0;">Coach Reflection</h1>
+      <h1 style="font-size: 24px; color: #1f2937; margin: 10px 0;">CoachReflection</h1>
     </div>
 
     <!-- Content -->
@@ -138,7 +138,7 @@ Copy each template into Supabase Dashboard → Authentication → Email Template
     <!-- Header -->
     <div style="text-align: center; margin-bottom: 30px;">
       <span style="font-size: 32px; font-weight: bold; color: #E5A11C;">CR</span>
-      <h1 style="font-size: 24px; color: #1f2937; margin: 10px 0;">Coach Reflection</h1>
+      <h1 style="font-size: 24px; color: #1f2937; margin: 10px 0;">CoachReflection</h1>
     </div>
 
     <!-- Content -->
@@ -164,7 +164,7 @@ Copy each template into Supabase Dashboard → Authentication → Email Template
 
 ## 5. Invite User (for clubs)
 
-**Subject:** You've been invited to Coach Reflection
+**Subject:** You've been invited to CoachReflection
 
 ```html
 <!DOCTYPE html>
@@ -178,11 +178,11 @@ Copy each template into Supabase Dashboard → Authentication → Email Template
     <!-- Header -->
     <div style="text-align: center; margin-bottom: 30px;">
       <span style="font-size: 32px; font-weight: bold; color: #E5A11C;">CR</span>
-      <h1 style="font-size: 24px; color: #1f2937; margin: 10px 0;">Coach Reflection</h1>
+      <h1 style="font-size: 24px; color: #1f2937; margin: 10px 0;">CoachReflection</h1>
     </div>
 
     <!-- Content -->
-    <p style="font-size: 16px; margin: 16px 0;">You've been invited to join Coach Reflection!</p>
+    <p style="font-size: 16px; margin: 16px 0;">You've been invited to join CoachReflection!</p>
 
     <p style="font-size: 16px; margin: 16px 0;">Click the button below to accept the invitation and set up your account.</p>
 

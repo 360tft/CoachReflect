@@ -11,14 +11,14 @@ export const metadata: Metadata = {
     canonical: "https://coachreflection.com/soccer-reflection",
   },
   openGraph: {
-    title: "Soccer Reflection Journal for Coaches | Coach Reflection",
+    title: "Soccer Reflection Journal for Coaches | CoachReflection",
     description: "A structured soccer reflection journal that helps coaches review matches and practices. Guided prompts, AI insights and player tracking.",
     url: "https://coachreflection.com/soccer-reflection",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Soccer Reflection Journal for Coaches | Coach Reflection",
+    title: "Soccer Reflection Journal for Coaches | CoachReflection",
     description: "A structured soccer reflection journal with guided prompts, AI insights and player tracking for soccer coaches.",
   },
 }
@@ -32,7 +32,7 @@ const faqSchema = {
       "name": "What is a soccer reflection journal?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "A soccer reflection journal is a tool that helps coaches capture and learn from their matches and practices. Coach Reflection takes this further with AI-powered guided prompts that ask targeted questions about your soccer sessions, pattern detection that surfaces trends across weeks and months, and player tracking that monitors individual development over time."
+        "text": "A soccer reflection journal is a tool that helps coaches capture and learn from their matches and practices. CoachReflection takes this further with AI-powered guided prompts that ask targeted questions about your soccer sessions, pattern detection that surfaces trends across weeks and months, and player tracking that monitors individual development over time."
       }
     },
     {
@@ -40,7 +40,7 @@ const faqSchema = {
       "name": "What should I write in a soccer post-match reflection?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "A good post-match reflection covers what went well, what you would change, how individual players performed, whether your game plan worked, and what you want to focus on next. Coach Reflection provides guided prompts so you do not have to figure out what to write. The AI asks you specific questions about your match and turns your answers into structured insights."
+        "text": "A good post-match reflection covers what went well, what you would change, how individual players performed, whether your game plan worked, and what you want to focus on next. CoachReflection provides guided prompts so you do not have to figure out what to write. The AI asks you specific questions about your match and turns your answers into structured insights."
       }
     },
     {
@@ -61,7 +61,7 @@ const faqSchema = {
     },
     {
       "@type": "Question",
-      "name": "Is Coach Reflection free for soccer coaches?",
+      "name": "Is CoachReflection free for soccer coaches?",
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Yes. The free tier includes basic reflection logging, guided prompts and session history. Pro features include AI-powered pattern detection, player tracking, voice notes, session plan upload with AI extraction, mood and energy analytics, and CPD export. Pro starts from $7.99 per month."
@@ -82,9 +82,9 @@ export default function SoccerReflectionPage() {
         <header className="container mx-auto px-4 py-6 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo.png" alt="Coach Reflection" width={240} height={40} className="h-10 w-auto dark:hidden" />
+            <img src="/logo.png" alt="CoachReflection" width={240} height={40} className="h-10 w-auto dark:hidden" />
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo-dark.png" alt="Coach Reflection" width={240} height={40} className="h-10 w-auto hidden dark:block" />
+            <img src="/logo-dark.png" alt="CoachReflection" width={240} height={40} className="h-10 w-auto hidden dark:block" />
             <span className="text-sm text-muted-foreground">by 360TFT</span>
           </Link>
           <div className="flex items-center gap-4">
@@ -147,7 +147,7 @@ export default function SoccerReflectionPage() {
                   <p>
                     The problem is that most coaches do not have a system for it. Notes end up in
                     different apps, notebooks get lost, and there is no way to see trends across an
-                    entire season. Coach Reflection gives you a structured place to capture post-match
+                    entire season. CoachReflection gives you a structured place to capture post-match
                     and post-practice thoughts, and uses AI to surface the patterns that matter.
                   </p>
                 </div>
@@ -306,7 +306,7 @@ export default function SoccerReflectionPage() {
                       went wrong? Was it positioning, communication, individual errors? A week later
                       you cannot remember.
                     </p>
-                    <h3 className="font-semibold mb-3">With Coach Reflection</h3>
+                    <h3 className="font-semibold mb-3">With CoachReflection</h3>
                     <p className="text-muted-foreground">
                       The guided prompts push you to be specific. You capture that the defensive line
                       was sitting too deep in the second half, that your centre-backs were not
@@ -349,7 +349,7 @@ export default function SoccerReflectionPage() {
                   <CardContent>
                     <p className="text-sm text-muted-foreground">
                       A soccer reflection journal is a tool that helps coaches capture and learn from their
-                      matches and practices. Coach Reflection takes this further with AI-powered guided prompts,
+                      matches and practices. CoachReflection takes this further with AI-powered guided prompts,
                       pattern detection that surfaces trends across weeks and months, and player tracking that
                       monitors individual development over time.
                     </p>
@@ -363,7 +363,7 @@ export default function SoccerReflectionPage() {
                     <p className="text-sm text-muted-foreground">
                       A good post-match reflection covers what went well, what you would change, how individual
                       players performed, whether your game plan worked, and what you want to focus on next.
-                      Coach Reflection provides guided prompts so you do not have to figure out what to write.
+                      CoachReflection provides guided prompts so you do not have to figure out what to write.
                     </p>
                   </CardContent>
                 </Card>
@@ -393,7 +393,7 @@ export default function SoccerReflectionPage() {
                 </Card>
                 <Card className="border">
                   <CardHeader className="pb-2">
-                    <CardTitle className="text-base">Is Coach Reflection free for soccer coaches?</CardTitle>
+                    <CardTitle className="text-base">Is CoachReflection free for soccer coaches?</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-muted-foreground">

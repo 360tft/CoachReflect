@@ -140,11 +140,11 @@ export default async function BlogPostPage({ params }: Props) {
             dateModified: post.updated_at,
             author: {
               "@type": "Organization",
-              name: "Coach Reflection",
+              name: "CoachReflection",
             },
             publisher: {
               "@type": "Organization",
-              name: "Coach Reflection",
+              name: "CoachReflection",
               logo: {
                 "@type": "ImageObject",
                 url: "https://coachreflection.com/logo.png",
@@ -184,7 +184,7 @@ export default async function BlogPostPage({ params }: Props) {
             <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
               <span className="text-primary-foreground font-bold text-sm">CR</span>
             </div>
-            <span className="font-semibold text-foreground">Coach Reflection</span>
+            <span className="font-semibold text-foreground">CoachReflection</span>
           </Link>
         </div>
       </header>
@@ -275,10 +275,10 @@ export default async function BlogPostPage({ params }: Props) {
               </Link>
             </div>
 
-            {/* Explore Coach Reflection */}
+            {/* Explore CoachReflection */}
             <div className="mt-10 pt-6 border-t border-border">
               <h3 className="text-sm font-semibold text-foreground mb-4 uppercase tracking-wide">
-                Explore Coach Reflection
+                Explore CoachReflection
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <Link
@@ -345,7 +345,7 @@ export default async function BlogPostPage({ params }: Props) {
               </div>
             )}
 
-            {/* Try Coach Reflection CTA */}
+            {/* Try CoachReflection CTA */}
             <div className="bg-card rounded-lg border border-border p-5">
               <h3 className="font-semibold text-foreground mb-2">
                 Track Your Growth
@@ -357,7 +357,7 @@ export default async function BlogPostPage({ params }: Props) {
                 href="/signup"
                 className="block w-full text-center py-2 bg-primary text-primary-foreground rounded text-sm font-medium hover:bg-primary/90 transition-colors"
               >
-                Try Coach Reflection Free
+                Try CoachReflection Free
               </Link>
             </div>
 
@@ -397,7 +397,7 @@ export default async function BlogPostPage({ params }: Props) {
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex items-center gap-2">
               <span className="text-sm text-muted-foreground">
-                Coach Reflection by 360TFT
+                CoachReflection by 360TFT
               </span>
             </div>
             <div className="flex gap-6 text-sm text-muted-foreground">

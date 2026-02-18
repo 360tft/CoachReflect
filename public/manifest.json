@@ -1,6 +1,6 @@
 {
-  "name": "Coach Reflection - AI Reflection for Coaches",
-  "short_name": "Coach Reflection",
+  "name": "CoachReflection - AI Reflection for Coaches",
+  "short_name": "CoachReflection",
   "description": "Become a better coach after every session. Reflect for 2 minutes and the AI shows you what's working and what isn't.",
   "start_url": "/",
   "display": "standalone",

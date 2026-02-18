@@ -1,4 +1,4 @@
-// Coach Reflection Types
+// CoachReflection Types
 
 export interface Profile {
   id: string
@@ -665,6 +665,8 @@ export const SUPPORTED_AUDIO_TYPES = [
   'audio/mp4',      // .m4a
   'audio/wav',      // .wav
   'audio/webm',     // .webm
-  'audio/ogg',      // .ogg
+  'audio/ogg',      // .ogg, .opus (WhatsApp voice notes)
+  'audio/opus',     // .opus (WhatsApp voice notes)
   'audio/flac',     // .flac
+  'audio/x-m4a',    // .m4a (alternative MIME)
 ] as const

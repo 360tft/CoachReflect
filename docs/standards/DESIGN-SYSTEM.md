@@ -10,7 +10,7 @@
 
 | Ecosystem | Products | Primary Color | Dark BG |
 |-----------|----------|---------------|---------|
-| **360TFT (Football)** | FootballGPT, ScoutGPT, RefereeGPT, Coach Reflection, GPSInsights, TeamManager, 360AtHome | Gold #E5A11C | #0A0A0A |
+| **360TFT (Football)** | FootballGPT, ScoutGPT, RefereeGPT, CoachReflection, GPSInsights, TeamManager, 360AtHome | Gold #E5A11C | #0A0A0A |
 | **360 Cruising** | CruiseGPT | Navy/Cyan #0077B6 | #1a1a2e |
 | **Standalone** | prsnce | Purple | TBD |
 

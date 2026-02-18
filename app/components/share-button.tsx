@@ -38,7 +38,7 @@ export function ShareButton({ reflectionId, variant = 'outline', size = 'default
       if (navigator.share) {
         await navigator.share({
           title: 'My Coaching Reflection',
-          text: 'Check out my coaching reflection on Coach Reflection',
+          text: 'Check out my coaching reflection on CoachReflection',
           url: data.shareUrl,
         })
       } else {

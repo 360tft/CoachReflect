@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/app/components/ui/card"
 export const metadata: Metadata = {
   title: "Page Not Found",
   description:
-    "The page you are looking for does not exist on Coach Reflection. Browse our coaching journal features, blog, topics, and pricing instead.",
+    "The page you are looking for does not exist on CoachReflection. Browse our coaching journal features, blog, topics, and pricing instead.",
   robots: {
     index: false,
     follow: true,
@@ -61,7 +61,7 @@ export default function NotFound() {
 
         {/* Back to homepage */}
         <Link href="/">
-          <Button size="lg">Back to Coach Reflection</Button>
+          <Button size="lg">Back to CoachReflection</Button>
         </Link>
       </div>
     </div>

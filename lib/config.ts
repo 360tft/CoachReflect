@@ -1,4 +1,4 @@
-// Coach Reflection - Centralized Configuration
+// CoachReflection - Centralized Configuration
 // Single source of truth for pricing, limits, and settings
 
 // =============================================================================
@@ -244,7 +244,7 @@ export const FEATURES = {
 // =============================================================================
 
 export const APP_CONFIG = {
-  name: 'Coach Reflection',
+  name: 'CoachReflection',
   tagline: 'Become a Better Coach After Every Session',
   url: process.env.NEXT_PUBLIC_APP_URL || 'https://coachreflection.com',
   supportEmail: 'admin@360tft.com',

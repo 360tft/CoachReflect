@@ -2,7 +2,7 @@
 title: "Voice Notes vs Written Journals: Which Is Better for Coaching Reflection?"
 slug: "voice-notes-vs-written-journals-coaches"
 excerpt: "Should you type your coaching reflections or talk them through? A practical comparison of voice notes and written journals for sports coaches, with the science behind why speaking often captures more insight."
-seoTitle: "Voice Notes vs Written Journals for Coaches - Which Is Better? | Coach Reflection"
+seoTitle: "Voice Notes vs Written Journals for Coaches - Which Is Better? | CoachReflection"
 seoDescription: "Compare voice notes and written journals for coaching reflection. Learn why speaking your reflections often captures more insight, when each method works best, and how to combine both."
 category: "reflection"
 topics: ["voice notes", "coaching journal", "coaching reflection", "voice recording", "session review"]
@@ -251,4 +251,4 @@ The question is not really whether voice notes are better than written journals.
 
 If the answer is not consistently, voice notes might be the thing that changes that. Two minutes. One moment from the session. Press record and talk.
 
-[Coach Reflection](https://coachreflection.com) supports both voice notes and written reflections, so you can capture your thoughts however suits you best. Record a voice note straight after the session, add written analysis the next day, and let the app track your development over weeks and months. If you have been wanting to build a reflection habit but struggled with the discipline of writing, try the voice approach. Start free at [coachreflection.com](https://coachreflection.com).
+[CoachReflection](https://coachreflection.com) supports both voice notes and written reflections, so you can capture your thoughts however suits you best. Record a voice note straight after the session, add written analysis the next day, and let the app track your development over weeks and months. If you have been wanting to build a reflection habit but struggled with the discipline of writing, try the voice approach. Start free at [coachreflection.com](https://coachreflection.com).

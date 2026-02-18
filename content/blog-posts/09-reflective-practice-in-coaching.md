@@ -2,7 +2,7 @@
 title: "Reflective Practice in Coaching: A Practical Guide"
 slug: "reflective-practice-in-coaching"
 excerpt: "What is reflective practice in coaching and why does it matter? A practical, no-nonsense guide to becoming a more effective coach through structured reflection."
-seoTitle: "Reflective Practice in Coaching: A Practical Guide | Coach Reflection"
+seoTitle: "Reflective Practice in Coaching: A Practical Guide | CoachReflection"
 seoDescription: "What is reflective practice in coaching and why does it matter? A practical, no-nonsense guide to becoming a more effective coach through structured reflection."
 category: "coaching_philosophy"
 topics: ["reflective practice", "coaching philosophy", "coaching development", "self-improvement"]
@@ -235,7 +235,7 @@ The coaches who maintain reflective practice long-term share a few common traits
 - They adjust the format when it stops feeling useful. The template serves them, not the other way around.
 - They see reflection as part of coaching, not an addition to it.
 
-If you are looking for a tool that makes reflective practice as easy as possible, [Coach Reflection](https://coachreflection.com) is designed specifically for coaches who want to reflect consistently without building the system from scratch. It provides guided prompts, tracks your entries, and analyses patterns over time so you can focus on the thinking rather than the logistics.
+If you are looking for a tool that makes reflective practice as easy as possible, [CoachReflection](https://coachreflection.com) is designed specifically for coaches who want to reflect consistently without building the system from scratch. It provides guided prompts, tracks your entries, and analyses patterns over time so you can focus on the thinking rather than the logistics.
 
 But the tool matters less than the practice. Whether you use an app, a notebook, or voice notes on your phone, the important thing is that you start. Reflective practice is the simplest, most accessible development tool available to any coach. It costs nothing, takes minutes, and compounds into something genuinely transformative over time.
 

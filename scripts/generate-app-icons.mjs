@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * App Icon Generator for Coach Reflection
+ * App Icon Generator for CoachReflection
  *
  * Generates all required iOS and Android app icons from a source image.
  *
@@ -23,10 +23,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, '..');
 
-// Coach Reflection brand colors (360TFT gold theme)
+// CoachReflection brand colors (360TFT gold theme)
 const BRAND_COLOR_LIGHT = '#F0B429'; // Gradient start
 const BRAND_COLOR_DARK = '#CC8F17'; // Gradient end
-const ICON_LETTER = 'C'; // First letter of Coach Reflection
+const ICON_LETTER = 'C'; // First letter of CoachReflection
 
 // iOS icon sizes (all required for App Store submission)
 // Format: { size: base size in points, scales: array of scale factors }
@@ -249,7 +249,7 @@ async function main() {
   const sourcePath = args[0];
 
   console.log('===========================================');
-  console.log('  Coach Reflection App Icon Generator');
+  console.log('  CoachReflection App Icon Generator');
   console.log('===========================================');
 
   if (sourcePath) {

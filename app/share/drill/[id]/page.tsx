@@ -34,20 +34,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const drill = await findDrill(id)
 
   const title = drill?.name || 'Shared Drill'
-  const description = drill?.description || `A ${drill?.category || 'football'} ${drill?.type === 'set-piece' ? 'set piece' : 'drill'} created with Coach Reflection`
+  const description = drill?.description || `A ${drill?.category || 'football'} ${drill?.type === 'set-piece' ? 'set piece' : 'drill'} created with CoachReflection`
 
   return {
-    title: `${title} | Coach Reflection`,
+    title: `${title} | CoachReflection`,
     description,
     openGraph: {
-      title: `${title} | Coach Reflection`,
+      title: `${title} | CoachReflection`,
       description,
       type: 'article',
-      siteName: 'Coach Reflection',
+      siteName: 'CoachReflection',
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${title} | Coach Reflection`,
+      title: `${title} | CoachReflection`,
       description,
     },
   }
@@ -63,7 +63,7 @@ export default async function SharedDrillPage({ params }: Props) {
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Drill not found</h1>
           <p className="text-gray-600 dark:text-gray-400 mb-6">This drill may have been removed or the link is invalid.</p>
-          <a href="/" className="text-[#E5A11C] hover:text-[#d4940f] font-medium">Go to Coach Reflection</a>
+          <a href="/" className="text-[#E5A11C] hover:text-[#d4940f] font-medium">Go to CoachReflection</a>
         </div>
       </div>
     )

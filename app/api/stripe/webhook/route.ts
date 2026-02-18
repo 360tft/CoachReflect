@@ -165,7 +165,7 @@ export async function POST(request: Request) {
                   const resendApiKey = process.env.RESEND_API_KEY
                   if (resendApiKey) {
                     const resend = new Resend(resendApiKey)
-                    const fromEmail = process.env.RESEND_FROM_EMAIL || "Coach Reflection <hello@send.coachreflection.com>"
+                    const fromEmail = process.env.RESEND_FROM_EMAIL || "CoachReflection <hello@send.coachreflection.com>"
                     await resend.emails.send({
                       from: fromEmail,
                       to: userData.user.email,

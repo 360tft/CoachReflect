@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: Props) {
   const displayName = playerName.charAt(0).toUpperCase() + playerName.slice(1)
 
   return {
-    title: `${displayName} - Player Development | Coach Reflection`,
+    title: `${displayName} - Player Development | CoachReflection`,
     description: `Track ${displayName}'s development over time`,
   }
 }

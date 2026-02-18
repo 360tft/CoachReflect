@@ -1,6 +1,6 @@
-# Recommended Capacitor Plugins for Coach Reflection
+# Recommended Capacitor Plugins for CoachReflection
 
-These are optional plugins you might want to add based on Coach Reflection's features.
+These are optional plugins you might want to add based on CoachReflection's features.
 
 ## Currently Configured
 
@@ -241,7 +241,7 @@ npm run cap:sync
 import { PluginName } from '@capacitor/[plugin-name]';
 ```
 
-## My Recommendation for Coach Reflection
+## My Recommendation for CoachReflection
 
 **Install now (before app store submission):**
 1. @capacitor/app - Essential for deep links and app lifecycle

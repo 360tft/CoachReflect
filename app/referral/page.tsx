@@ -5,8 +5,8 @@ import type { Metadata } from "next"
 import { ReferralDashboard } from "./referral-dashboard"
 
 export const metadata: Metadata = {
-  title: "Refer a Coach | Coach Reflection",
-  description: "Share Coach Reflection with other coaches and earn free Pro months.",
+  title: "Refer a Coach | CoachReflection",
+  description: "Share CoachReflection with other coaches and earn free Pro months.",
 }
 
 export default async function ReferralPage() {
@@ -48,14 +48,14 @@ export default async function ReferralPage() {
     <div className="min-h-screen bg-background">
       <header className="container mx-auto px-4 py-6">
         <Link href="/dashboard" className="flex items-center gap-2">
-          <span className="text-xl font-bold">Coach Reflection</span>
+          <span className="text-xl font-bold">CoachReflection</span>
         </Link>
       </header>
 
       <main className="container mx-auto px-4 py-8 max-w-3xl">
         <h1 className="text-3xl font-bold mb-2">Refer a Coach</h1>
         <p className="text-muted-foreground mb-8">
-          Share Coach Reflection and earn free Pro months when your referrals upgrade
+          Share CoachReflection and earn free Pro months when your referrals upgrade
         </p>
 
         <ReferralDashboard
@@ -119,7 +119,7 @@ function PublicReferralPage() {
     <div className="min-h-screen bg-background">
       <header className="container mx-auto px-4 py-6">
         <Link href="/" className="flex items-center gap-2">
-          <span className="text-xl font-bold">Coach Reflection</span>
+          <span className="text-xl font-bold">CoachReflection</span>
         </Link>
       </header>
 
@@ -132,7 +132,7 @@ function PublicReferralPage() {
         <div className="p-6 bg-muted/50 border rounded-lg mb-8">
           <h2 className="text-xl font-semibold mb-2">Earn Free Pro Months</h2>
           <p className="text-muted-foreground mb-4">
-            Sign up for Coach Reflection to get your unique referral link.
+            Sign up for CoachReflection to get your unique referral link.
             When coaches you refer upgrade to Pro, you get free months added to your account.
           </p>
           <Link
@@ -144,7 +144,7 @@ function PublicReferralPage() {
         </div>
 
         <section className="mb-12">
-          <h2 className="text-2xl font-bold mb-4">Why Share Coach Reflection?</h2>
+          <h2 className="text-2xl font-bold mb-4">Why Share CoachReflection?</h2>
           <div className="grid gap-4 md:grid-cols-2">
             <div className="p-4 border rounded-lg">
               <h3 className="font-semibold mb-2">Help Coaches Improve</h3>

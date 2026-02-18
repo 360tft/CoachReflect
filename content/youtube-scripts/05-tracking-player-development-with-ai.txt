@@ -12,7 +12,7 @@ Grassroots coaches have their memory. Which is incomplete, biased, and forgets m
 
 What if you could track player development just by reflecting on your sessions? What if an AI could read your observations and build a picture of each player over time?
 
-That's what Coach Reflection's player tracking does. And in this video, I'll show you exactly how it works.
+That's what CoachReflection's player tracking does. And in this video, I'll show you exactly how it works.
 
 Let me explain the concept.
 
@@ -20,7 +20,7 @@ When you reflect on a session, you naturally mention players. "Jake had a great 
 
 These mentions are information. Each one is a data point about a player's development.
 
-Coach Reflection's AI reads your reflections and extracts every player mention. It categorises them. Positive, concern, or neutral. It tracks them over time. It builds a picture of each player based on what you've observed.
+CoachReflection's AI reads your reflections and extracts every player mention. It categorises them. Positive, concern, or neutral. It tracks them over time. It builds a picture of each player based on what you've observed.
 
 After a few weeks, you can see: which players appear most in your reflections? What's the balance of positive to concern mentions? What themes are associated with each player?
 
@@ -28,7 +28,7 @@ This isn't magic. It's just your own observations, organised and tracked in a wa
 
 Let me show you how it works in practice.
 
-You finish a session. You open Coach Reflection and answer the five questions.
+You finish a session. You open CoachReflection and answer the five questions.
 
 In your answer to "Were there any player standouts?", you write: "Sophie was brilliant today. First time she's really taken control in the game. Organised the defence, communicated constantly. Real leadership emerging. Tom struggled again with the physical side. Gets pushed off the ball too easily. Need to work on shielding."
 
@@ -144,7 +144,7 @@ Coaches who have parent conversations. If you need to explain development to par
 
 How do you get started?
 
-Sign up for Coach Reflection. It's free. Start reflecting on your sessions.
+Sign up for CoachReflection. It's free. Start reflecting on your sessions.
 
 When you answer the "Were there any player standouts?" question, mention specific players by name. Include context.
 

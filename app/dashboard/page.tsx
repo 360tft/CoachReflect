@@ -11,6 +11,7 @@ import { ReferralCard } from "@/app/components/referral-card"
 import { ShareSummaryButton } from "./share-summary-button"
 import { TaskList } from "@/app/components/task-list"
 import { NativeHidden } from "@/app/components/native-hidden"
+import { PatternPreview } from "@/app/components/pattern-preview"
 import { MOOD_OPTIONS } from "@/app/types"
 
 export default async function DashboardPage() {
@@ -69,7 +70,7 @@ export default async function DashboardPage() {
           <CardHeader className="text-center pb-2">
 
             <CardTitle className="text-2xl">
-              Welcome to Coach Reflection, {profile?.display_name || "Coach"}!
+              Welcome to CoachReflection, {profile?.display_name || "Coach"}!
             </CardTitle>
             <CardDescription className="text-base">
               Let&apos;s get your first reflection done.
@@ -339,6 +340,25 @@ export default async function DashboardPage() {
           </CardContent>
         </Card>
       )}
+
+      {/* Pattern Preview for free users with enough reflections */}
+      {subscriptionTier === "free" && reflections && reflections.length >= 3 && hasInsights && (() => {
+        const themes = (recentInsights || []).filter(i => i.insight_type === 'theme')
+        if (themes.length === 0) return null
+        // Count occurrences of each theme name
+        const themeCounts: Record<string, number> = {}
+        for (const t of themes) {
+          themeCounts[t.name] = (themeCounts[t.name] || 0) + 1
+        }
+        const topThemeName = Object.entries(themeCounts).sort((a, b) => b[1] - a[1])[0]
+        return (
+          <PatternPreview
+            topTheme={topThemeName[0]}
+            themeCount={topThemeName[1]}
+            totalReflections={stats?.[0]?.total_reflections || reflections.length}
+          />
+        )
+      })()}
 
       {/* Voice notes teaser for free users (web only - native uses IAP via settings) */}
       <NativeHidden>

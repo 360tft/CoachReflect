@@ -77,7 +77,7 @@ This creates `ios/` and `android/` directories in the project. You'll need Xcode
 2. Click **+ New** (top right)
 3. Select **Apple App Store**
 4. Fill in:
-   - **App name**: `Coach Reflection`
+   - **App name**: `CoachReflection`
    - **Bundle ID**: `com.coachreflection.app`
    - **App Store Connect Shared Secret**: You'll get this from App Store Connect (see Step 7). Leave blank for now and come back to fill it in after Step 7d.
 5. Click **Save**
@@ -90,7 +90,7 @@ This creates `ios/` and `android/` directories in the project. You'll need Xcode
 1. Still in RevenueCat, click **Apps & providers** in the left sidebar → **+ New** (top right)
 2. Select **Google Play Store**
 3. Fill in:
-   - **App name**: `Coach Reflection`
+   - **App name**: `CoachReflection`
    - **Package name**: `com.coachreflection.app`
 4. For the **Google Play service account credentials**, you'll need a JSON key file from Google Play Console. Leave blank for now and come back after Step 8c.
 5. Click **Save**
@@ -107,7 +107,7 @@ This creates `ios/` and `android/` directories in the project. You'll need Xcode
 3. Click **My Apps** → the **+** button → **New App**
 4. Fill in:
    - **Platforms**: iOS
-   - **Name**: `Coach Reflection`
+   - **Name**: `CoachReflection`
    - **Primary Language**: English (UK)
    - **Bundle ID**: Select `com.coachreflection.app` (you may need to register this in the Developer portal first — see 7b)
    - **SKU**: `coachreflection`
@@ -120,17 +120,17 @@ This creates `ios/` and `android/` directories in the project. You'll need Xcode
 2. Click the **+** button
 3. Select **App IDs** → **App**
 4. Fill in:
-   - **Description**: `Coach Reflection`
+   - **Description**: `CoachReflection`
    - **Bundle ID**: Explicit → `com.coachreflection.app`
 5. Under **Capabilities**, enable **In-App Purchase**
 6. Click **Continue** → **Register**
 
 ### 7c: Create In-App Purchase Products
 
-1. In App Store Connect, go to your Coach Reflection app
+1. In App Store Connect, go to your CoachReflection app
 2. Click **Monetization** → **Subscriptions** in the left sidebar
 3. Click **Create Subscription Group**
-   - Group name: `Coach Reflection Pro`
+   - Group name: `CoachReflection Pro`
 4. Inside the group, click **Create Subscription** four times to create:
 
 | Reference Name | Product ID | Duration | Price |
@@ -166,7 +166,7 @@ For each product:
 1. Go to https://play.google.com/console
 2. Click **Create app**
 3. Fill in:
-   - **App name**: `Coach Reflection`
+   - **App name**: `CoachReflection`
    - **Default language**: English (United Kingdom)
    - **App or game**: App
    - **Free or paid**: Free
@@ -195,7 +195,7 @@ For each subscription:
 RevenueCat needs a Google service account to verify purchases.
 
 1. Go to https://console.cloud.google.com
-2. Select or create a project for Coach Reflection
+2. Select or create a project for CoachReflection
 3. Go to **IAM & Admin** → **Service Accounts**
 4. Click **Create Service Account**
    - Name: `revenuecat-coachreflect`

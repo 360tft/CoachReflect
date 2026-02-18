@@ -1,6 +1,6 @@
 # Pro Features Guide
 
-This guide explains Coach Reflection's Pro features and how to get the most from them.
+This guide explains CoachReflection's Pro features and how to get the most from them.
 
 ---
 
@@ -86,7 +86,7 @@ With session plan upload, you can reflect on:
 
 ## Syllabus Upload (Pro+ only)
 
-Make Coach Reflection understand your coaching philosophy.
+Make CoachReflection understand your coaching philosophy.
 
 ### How it works:
 

@@ -2,7 +2,7 @@ import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'com.coachreflection.app',
-  appName: 'Coach Reflection',
+  appName: 'CoachReflection',
   webDir: 'public',
   server: {
     url: 'https://www.coachreflection.com',

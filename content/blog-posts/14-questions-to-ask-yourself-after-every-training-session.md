@@ -1,7 +1,7 @@
 ---
 title: "10 Questions to Ask Yourself After Every Training Session"
 slug: "questions-to-ask-yourself-after-every-training-session"
-seoTitle: "10 Questions to Ask Yourself After Every Training Session | Coach Reflection"
+seoTitle: "10 Questions to Ask Yourself After Every Training Session | CoachReflection"
 seoDescription: "The 10 most powerful self-reflection questions for coaches after training. Quick, practical prompts that drive real improvement in your coaching practice."
 category: "reflection"
 topics: ["reflection", "questions", "training", "self-assessment"]
@@ -175,4 +175,4 @@ Pick three questions. Answer them after your next session. See what happens.
 
 ---
 
-*Coach Reflection gives you guided post-session prompts and tracks your answers over time, so patterns in your coaching become visible across weeks and months. Try it free at [coachreflection.com](https://coachreflection.com).*
+*CoachReflection gives you guided post-session prompts and tracks your answers over time, so patterns in your coaching become visible across weeks and months. Try it free at [coachreflection.com](https://coachreflection.com).*

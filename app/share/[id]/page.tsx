@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!share || !share.reflections) {
     return {
-      title: 'Share Not Found | Coach Reflection',
+      title: 'Share Not Found | CoachReflection',
     }
   }
 
@@ -56,7 +56,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const excerpt = share.share_excerpt || reflection.what_worked || 'A coaching reflection'
   const truncatedExcerpt = excerpt.length > 200 ? excerpt.slice(0, 200) + '...' : excerpt
 
-  const title = `${sessionTitle} - ${date} | Coach Reflection`
+  const title = `${sessionTitle} - ${date} | CoachReflection`
   const description = truncatedExcerpt
 
   return {
@@ -66,7 +66,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title,
       description,
       type: 'article',
-      siteName: 'Coach Reflection',
+      siteName: 'CoachReflection',
     },
     twitter: {
       card: 'summary',
@@ -144,7 +144,7 @@ export default async function SharedReflectionPage({ params }: Props) {
               mirror symbol
             </div>
             <div>
-              <h1 className="text-xl font-bold">Coach Reflection</h1>
+              <h1 className="text-xl font-bold">CoachReflection</h1>
               <p className="text-sm opacity-80">AI-Powered Coaching Reflections</p>
             </div>
           </Link>
@@ -231,7 +231,7 @@ export default async function SharedReflectionPage({ params }: Props) {
           <div className="bg-gray-50 dark:bg-gray-900 px-6 py-4 border-t border-gray-200 dark:border-gray-700">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div className="text-sm text-gray-500 dark:text-gray-400">
-                Shared via Coach Reflection
+                Shared via CoachReflection
               </div>
               <Link
                 href="/signup"
@@ -259,7 +259,7 @@ export default async function SharedReflectionPage({ params }: Props) {
             Reflect. Grow. Coach Better.
           </h2>
           <p className="text-gray-600 dark:text-gray-400 mb-6">
-            Coach Reflection helps football coaches capture post-session thoughts,
+            CoachReflection helps football coaches capture post-session thoughts,
             track patterns, and get AI-powered insights.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

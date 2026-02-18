@@ -188,10 +188,10 @@ export default function RecoveryPage() {
         </CardHeader>
         <CardContent>
           <div className="bg-muted p-4 rounded-lg text-sm space-y-2">
-            <p><strong>Subject:</strong> Complete your Coach Reflection upgrade</p>
+            <p><strong>Subject:</strong> Complete your CoachReflection upgrade</p>
             <hr className="my-2" />
             <p>Hi [Name],</p>
-            <p>I noticed you started upgrading to Coach Reflection Pro but didn&apos;t finish.</p>
+            <p>I noticed you started upgrading to CoachReflection Pro but didn&apos;t finish.</p>
             <p>No worries - these things happen! Your cart is still waiting for you.</p>
             <p>As a reminder, Pro gives you:</p>
             <ul className="list-disc list-inside pl-2">

@@ -59,7 +59,7 @@ export function trackPageView(page: string) {
   }).catch(() => {})
 }
 
-// Common event types for Coach Reflection
+// Common event types for CoachReflection
 export const EVENTS = {
   // Auth events
   SIGNUP_START: { event_type: 'signup_start', event_category: 'auth' as const },

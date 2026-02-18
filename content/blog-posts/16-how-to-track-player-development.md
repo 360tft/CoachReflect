@@ -1,7 +1,7 @@
 ---
 title: "How to Track Player Development Without Spreadsheets"
 slug: "how-to-track-player-development"
-seoTitle: "How to Track Player Development Without Spreadsheets | Coach Reflection"
+seoTitle: "How to Track Player Development Without Spreadsheets | CoachReflection"
 seoDescription: "Stop tracking player development with spreadsheets that you'll abandon in a week. Here's a simpler approach that works for busy grassroots coaches."
 category: "player_development"
 topics: ["player development", "tracking", "coaching tools", "reflection"]
@@ -196,4 +196,4 @@ Your observations are valuable data. Start capturing them.
 
 ---
 
-*Coach Reflection automatically extracts player mentions from your reflections and tracks development patterns over time. See which players are progressing, who needs attention, and where your coaching focus has been, all without spreadsheets. Try it free at [coachreflection.com](https://coachreflection.com).*
+*CoachReflection automatically extracts player mentions from your reflections and tracks development patterns over time. See which players are progressing, who needs attention, and where your coaching focus has been, all without spreadsheets. Try it free at [coachreflection.com](https://coachreflection.com).*

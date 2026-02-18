@@ -1,4 +1,4 @@
-# SEO Implementation - Coach Reflection
+# SEO Implementation - CoachReflection
 
 ## Files Created
 

@@ -11,14 +11,14 @@ export const metadata: Metadata = {
     canonical: "https://coachreflection.com/coaching-reflection-cricket",
   },
   openGraph: {
-    title: "Cricket Coaching Reflection App - Umpire & Coach Journal | Coach Reflection",
+    title: "Cricket Coaching Reflection App - Umpire & Coach Journal | CoachReflection",
     description: "AI-powered cricket coaching journal with guided reflection prompts, player tracking and CPD export for cricket coaches and umpires.",
     url: "https://coachreflection.com/coaching-reflection-cricket",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Cricket Coaching Reflection App - Umpire & Coach Journal | Coach Reflection",
+    title: "Cricket Coaching Reflection App - Umpire & Coach Journal | CoachReflection",
     description: "AI-powered cricket coaching journal with guided prompts, player development tracking and CPD export.",
   },
 }
@@ -29,18 +29,18 @@ const faqSchema = {
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "How does Coach Reflection help cricket coaches specifically?",
+      "name": "How does CoachReflection help cricket coaches specifically?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Coach Reflection adapts its prompts and terminology to cricket. After a net session you might reflect on bowling actions, batting technique or fielding positions. After a match day the AI asks about tactical decisions, bowling changes and how players handled pressure. It understands the difference between coaching in the nets and coaching during a match, and adjusts its questions accordingly."
+        "text": "CoachReflection adapts its prompts and terminology to cricket. After a net session you might reflect on bowling actions, batting technique or fielding positions. After a match day the AI asks about tactical decisions, bowling changes and how players handled pressure. It understands the difference between coaching in the nets and coaching during a match, and adjusts its questions accordingly."
       }
     },
     {
       "@type": "Question",
-      "name": "Can cricket umpires use Coach Reflection for self-reflection?",
+      "name": "Can cricket umpires use CoachReflection for self-reflection?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes. Umpires can use Coach Reflection to log reflections after matches, reviewing decisions on LBW appeals, run-out judgements, no-ball calls and player management. The AI tracks patterns in your officiating over time, helping you identify areas where your decision-making is strong and where it needs attention. This structured reflection supports umpire development pathways."
+        "text": "Yes. Umpires can use CoachReflection to log reflections after matches, reviewing decisions on LBW appeals, run-out judgements, no-ball calls and player management. The AI tracks patterns in your officiating over time, helping you identify areas where your decision-making is strong and where it needs attention. This structured reflection supports umpire development pathways."
       }
     },
     {
@@ -48,7 +48,7 @@ const faqSchema = {
       "name": "Does it support ECB coaching qualifications and CPD?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Coach Reflection includes a CPD export feature that formats your reflections into evidence suitable for ECB coaching pathway requirements. Whether you are working towards your ECB Foundation, Level 2 or beyond, your reflections demonstrate ongoing professional development. The exported reports show reflection frequency, coaching themes and development areas."
+        "text": "CoachReflection includes a CPD export feature that formats your reflections into evidence suitable for ECB coaching pathway requirements. Whether you are working towards your ECB Foundation, Level 2 or beyond, your reflections demonstrate ongoing professional development. The exported reports show reflection frequency, coaching themes and development areas."
       }
     },
     {
@@ -61,10 +61,10 @@ const faqSchema = {
     },
     {
       "@type": "Question",
-      "name": "Is Coach Reflection useful for junior cricket coaching?",
+      "name": "Is CoachReflection useful for junior cricket coaching?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Absolutely. Junior cricket coaching involves tracking large groups of young players at different stages of development. Coach Reflection helps you remember observations about each player across sessions, spot which juniors might be getting overlooked, and reflect on how you are adapting your coaching to different age groups and ability levels. The AI prompts are particularly useful for thinking about engagement and enjoyment alongside technical development."
+        "text": "Absolutely. Junior cricket coaching involves tracking large groups of young players at different stages of development. CoachReflection helps you remember observations about each player across sessions, spot which juniors might be getting overlooked, and reflect on how you are adapting your coaching to different age groups and ability levels. The AI prompts are particularly useful for thinking about engagement and enjoyment alongside technical development."
       }
     }
   ]
@@ -82,9 +82,9 @@ export default function CricketCoachingReflectionPage() {
         <header className="container mx-auto px-4 py-6 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo.png" alt="Coach Reflection" width={240} height={40} className="h-10 w-auto dark:hidden" />
+            <img src="/logo.png" alt="CoachReflection" width={240} height={40} className="h-10 w-auto dark:hidden" />
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo-dark.png" alt="Coach Reflection" width={240} height={40} className="h-10 w-auto hidden dark:block" />
+            <img src="/logo-dark.png" alt="CoachReflection" width={240} height={40} className="h-10 w-auto hidden dark:block" />
             <span className="text-sm text-muted-foreground">by 360TFT</span>
           </Link>
           <div className="flex items-center gap-4">
@@ -259,7 +259,7 @@ export default function CricketCoachingReflectionPage() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-muted-foreground">
-                      Cricket umpires face complex decisions under pressure. Use Coach Reflection
+                      Cricket umpires face complex decisions under pressure. Use CoachReflection
                       to review your LBW calls, caught-behind decisions, wide and no-ball judgements
                       and player management. Build a record of your officiating development that
                       supports your progression through umpiring pathways.
@@ -350,11 +350,11 @@ export default function CricketCoachingReflectionPage() {
               <div className="space-y-4">
                 <Card className="border">
                   <CardHeader className="pb-2">
-                    <CardTitle className="text-base">How does Coach Reflection help cricket coaches specifically?</CardTitle>
+                    <CardTitle className="text-base">How does CoachReflection help cricket coaches specifically?</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-muted-foreground">
-                      Coach Reflection adapts its prompts and terminology to cricket. After a net session
+                      CoachReflection adapts its prompts and terminology to cricket. After a net session
                       you might reflect on bowling actions, batting technique or fielding positions. After
                       a match day the AI asks about tactical decisions, bowling changes and how players
                       handled pressure. It understands the difference between coaching in the nets and
@@ -364,7 +364,7 @@ export default function CricketCoachingReflectionPage() {
                 </Card>
                 <Card className="border">
                   <CardHeader className="pb-2">
-                    <CardTitle className="text-base">Can cricket umpires use Coach Reflection for self-reflection?</CardTitle>
+                    <CardTitle className="text-base">Can cricket umpires use CoachReflection for self-reflection?</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-muted-foreground">
@@ -381,7 +381,7 @@ export default function CricketCoachingReflectionPage() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-muted-foreground">
-                      Coach Reflection includes a CPD export feature that formats your reflections into
+                      CoachReflection includes a CPD export feature that formats your reflections into
                       evidence suitable for ECB coaching pathway requirements. Whether you are working
                       towards your ECB Foundation, Core Coach or Advanced Coach qualification, your
                       reflections demonstrate ongoing professional development.
@@ -403,12 +403,12 @@ export default function CricketCoachingReflectionPage() {
                 </Card>
                 <Card className="border">
                   <CardHeader className="pb-2">
-                    <CardTitle className="text-base">Is Coach Reflection useful for junior cricket coaching?</CardTitle>
+                    <CardTitle className="text-base">Is CoachReflection useful for junior cricket coaching?</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-muted-foreground">
                       Absolutely. Junior cricket coaching involves tracking large groups of young players
-                      at different stages of development. Coach Reflection helps you remember observations
+                      at different stages of development. CoachReflection helps you remember observations
                       about each player across sessions, spot which juniors might be getting overlooked,
                       and reflect on how you are adapting your coaching to different age groups.
                     </p>

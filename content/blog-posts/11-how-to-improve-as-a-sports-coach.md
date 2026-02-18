@@ -1,7 +1,7 @@
 ---
 title: "How to Improve as a Sports Coach"
 slug: "how-to-improve-as-a-sports-coach"
-seoTitle: "How to Improve as a Sports Coach: 8 Practical Strategies | Coach Reflection"
+seoTitle: "How to Improve as a Sports Coach: 8 Practical Strategies | CoachReflection"
 seoDescription: "Want to become a better coach? Here are 8 evidence-based strategies that actually work, from structured reflection to peer observation and deliberate practice."
 category: "player_development"
 topics: ["coaching development", "self-improvement", "coaching skills", "deliberate practice"]
@@ -237,4 +237,4 @@ The coaches who improve continuously over years and decades are not superhuman. 
 
 ## Start With Reflection
 
-If you are looking for a practical, structured way to build a reflection habit, [Coach Reflection](https://coachreflection.com) is designed for exactly that. It gives you guided prompts after every session, tracks your development over time, and helps you spot the patterns that drive real improvement. Start for free at [coachreflection.com](https://coachreflection.com).
+If you are looking for a practical, structured way to build a reflection habit, [CoachReflection](https://coachreflection.com) is designed for exactly that. It gives you guided prompts after every session, tracks your development over time, and helps you spot the patterns that drive real improvement. Start for free at [coachreflection.com](https://coachreflection.com).

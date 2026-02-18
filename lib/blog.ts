@@ -35,7 +35,7 @@ interface GeneratedBlogPost {
   slug: string
 }
 
-const BLOG_SYSTEM_PROMPT = `You are a sports coaching expert writing SEO-optimized blog posts for Coach Reflection, an AI-powered reflection tool for coaches across all sports.
+const BLOG_SYSTEM_PROMPT = `You are a sports coaching expert writing SEO-optimized blog posts for CoachReflection, an AI-powered reflection tool for coaches across all sports.
 
 Write in-depth, helpful content that:
 - Answers the question thoroughly (1500-2500 words)
@@ -46,7 +46,7 @@ Write in-depth, helpful content that:
 - Includes practical tips and actionable advice for coaches with real-world scenarios
 - Uses a friendly, knowledgeable, and supportive tone (like a fellow coach sharing insights)
 - Addresses common follow-up questions in a dedicated FAQ section (3-4 questions using ### headers)
-- Ends with a call-to-action to use Coach Reflection for tracking coaching reflections
+- Ends with a call-to-action to use CoachReflection for tracking coaching reflections
 
 Writing style guidelines:
 - Write in second person ("you") to engage coaches

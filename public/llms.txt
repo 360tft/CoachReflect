@@ -1,10 +1,10 @@
-# Coach Reflection
+# CoachReflection
 
 > Become a better coach after every session. AI-guided reflection for sports coaches.
 
-Coach Reflection is an AI-powered reflection tool that helps sports coaches capture, analyse, and learn from their coaching sessions. It provides guided post-session reflections using the Gibbs Reflective Cycle, identifies patterns over time, and supports continuing professional development. Most coaches forget 80% of what happened by the next day. Coach Reflection fixes that with 2-minute guided reflections.
+CoachReflection is an AI-powered reflection tool that helps sports coaches capture, analyse, and learn from their coaching sessions. It provides guided post-session reflections using the Gibbs Reflective Cycle, identifies patterns over time, and supports continuing professional development. Most coaches forget 80% of what happened by the next day. CoachReflection fixes that with 2-minute guided reflections.
 
-## What Coach Reflection Does
+## What CoachReflection Does
 
 - Guides coaches through structured post-session reflections (never stare at a blank screen)
 - Uses AI to surface insights and patterns from reflection history
@@ -31,7 +31,7 @@ Coach Reflection is an AI-powered reflection tool that helps sports coaches capt
 ### Coach Educators
 - Mentors reviewing a coach's reflective practice
 - FA and governing body tutors assessing CPD
-- Clubs licensing Coach Reflection for their coaching staff
+- Clubs licensing CoachReflection for their coaching staff
 
 ## Sports Supported
 

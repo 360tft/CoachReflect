@@ -1,7 +1,7 @@
 ---
 title: "End of Season Review Template for Coaches"
 slug: "end-of-season-review-template-for-coaches"
-seoTitle: "End of Season Review Template for Coaches | Coach Reflection"
+seoTitle: "End of Season Review Template for Coaches | CoachReflection"
 seoDescription: "A comprehensive end of season review template for sports coaches. Evaluate your season, celebrate progress, and plan for next year with structured reflection."
 category: "session_planning"
 topics: ["season review", "reflection", "planning", "coaching development"]
@@ -267,4 +267,4 @@ When your end of season review is a compilation of fifty session reflections rat
 
 ---
 
-*Coach Reflection tracks your session reflections and surfaces patterns across your season automatically. When it comes time for your end of season review, your data is already there. Try it free at [coachreflection.com](https://coachreflection.com).*
+*CoachReflection tracks your session reflections and surfaces patterns across your season automatically. When it comes time for your end of season review, your data is already there. Try it free at [coachreflection.com](https://coachreflection.com).*

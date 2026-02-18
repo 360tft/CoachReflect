@@ -23,8 +23,8 @@ interface UpgradeModalProps {
 
 const VARIANT_CONFIG: Record<ModalVariant, { title: string; subtitle: string }> = {
   limit_reached: {
-    title: "You reflected twice today. Tomorrow you'll forget most of it.",
-    subtitle: "You're already doing the hard part. Pro means nothing slips through the cracks.",
+    title: "Two reflections down. The rest of today's coaching insights are slipping away.",
+    subtitle: "You are already doing the work. Most coaching breakthroughs come from the third or fourth thought after a session. Pro catches them all.",
   },
   voice_notes: {
     title: "Record it on the drive home",
@@ -35,16 +35,16 @@ const VARIANT_CONFIG: Record<ModalVariant, { title: string; subtitle: string }> 
     subtitle: "Upload your session plan and get AI feedback before you step on the pitch. Walk out prepared, not hoping.",
   },
   history: {
-    title: 'Your patterns are hiding in plain sight',
-    subtitle: "After a few weeks of reflecting, the AI spots things you would never notice. Full history makes that possible.",
+    title: "Your best coaching insight is buried in last month's reflections",
+    subtitle: "Right now you can only see 7 days. The coaches who improve fastest track patterns over months. Full history makes that possible.",
   },
   analytics: {
-    title: 'One week of data shows nothing. Four weeks changes everything.',
-    subtitle: "Patterns, player trends, burnout signals. They only appear when you zoom out. Pro gives you the full picture.",
+    title: 'One week shows activity. Four weeks reveals patterns.',
+    subtitle: "Burnout signals, player development trends, your recurring blind spots. They only appear when you zoom out. Pro gives you the full picture.",
   },
   players: {
-    title: 'Track every player across every session',
-    subtitle: "Seven days of mentions barely scratches the surface. Pro unlocks your full history so you can track development over months, not days.",
+    title: 'You mentioned the same 3 players again this week',
+    subtitle: "Are you giving equal attention to everyone? Pro tracks every player mention across every session so nothing falls through the cracks.",
   },
   generic: {
     title: 'The coaches who improve fastest reflect after every session',
@@ -53,12 +53,12 @@ const VARIANT_CONFIG: Record<ModalVariant, { title: string; subtitle: string }> 
 }
 
 const PRO_FEATURES = [
-  'Unlimited reflections. Nothing slips through the cracks.',
-  'Voice notes on the drive home. Two minutes, hands-free.',
-  'AI spots patterns across sessions you would never notice alone.',
-  'Design sessions and drills, or get honest feedback on your plans.',
-  'Build a searchable coaching library that grows with you.',
-  'CPD evidence generated automatically. No extra paperwork.',
+  'Never forget a coaching insight again. Unlimited reflections, every day.',
+  'Reflect on the drive home. Two-minute voice notes, hands-free.',
+  'Spot patterns you would never notice. The AI connects dots across sessions.',
+  'Walk into every session prepared. Upload plans, get honest AI feedback.',
+  'Track every player across every session. No one falls through the cracks.',
+  'CPD evidence generated automatically. Zero extra paperwork.',
 ]
 
 const TESTIMONIAL = {
@@ -229,12 +229,17 @@ export function UpgradeModal({ variant, isOpen, onClose }: UpgradeModalProps) {
           )}
         </div>
 
+        {/* Social proof */}
+        <p className="text-center text-xs text-muted-foreground mb-2">
+          Join 1,500+ coaches in the FCA community already reflecting with Pro
+        </p>
+
         {/* Risk reversal */}
         <p className="text-center text-sm text-muted-foreground mb-1">
-          7-day free trial. No charge until day 8. Cancel anytime.
+          7-day free trial. Cancel in one tap, no questions asked.
         </p>
         <p className="text-center text-xs text-muted-foreground mb-4">
-          Built by Kevin Middleton for the FCA community of 1,500+ coaches
+          If you do not reflect more in your first week, you should not keep it.
         </p>
 
         {/* Error message */}

@@ -4,7 +4,7 @@ import { createAdminClient } from "@/lib/supabase/admin"
 import { isAdminUser } from "@/lib/admin"
 import { Resend } from "resend"
 
-const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || "Coach Reflection <hello@send.coachreflection.com>"
+const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || "CoachReflection <hello@send.coachreflection.com>"
 
 function getResendClient() {
   if (!process.env.RESEND_API_KEY) {
@@ -105,12 +105,12 @@ export async function POST(request: Request) {
       from: FROM_EMAIL,
       to: email,
       replyTo: "admin@360tft.com",
-      subject: "Complete your Coach Reflection upgrade",
+      subject: "Complete your CoachReflection upgrade",
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
           <h2 style="color: #E5A11C;">Hi ${name},</h2>
 
-          <p>I noticed you started upgrading to Coach Reflection Pro but didn't finish.</p>
+          <p>I noticed you started upgrading to CoachReflection Pro but didn't finish.</p>
 
           <p>No worries - these things happen! Your cart is still waiting for you.</p>
 
@@ -132,7 +132,7 @@ export async function POST(request: Request) {
 
           <p style="color: #666; font-size: 14px;">
             Questions? Just reply to this email - I read every one.<br/>
-            Kevin @ Coach Reflection
+            Kevin @ CoachReflection
           </p>
         </div>
       `,

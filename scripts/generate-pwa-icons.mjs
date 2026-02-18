@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Generate PWA icons for Coach Reflection
+ * Generate PWA icons for CoachReflection
  * Creates icon-192.png and icon-512.png with gold "CR" branding
  */
 
@@ -51,7 +51,7 @@ async function generateIcon(size, filename) {
 }
 
 async function main() {
-  console.log('Generating PWA icons for Coach Reflection...\n')
+  console.log('Generating PWA icons for CoachReflection...\n')
 
   await generateIcon(192, 'icon-192.png')
   await generateIcon(512, 'icon-512.png')

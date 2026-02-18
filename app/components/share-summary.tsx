@@ -16,7 +16,7 @@ export function ShareSummary() {
     if (navigator.share) {
       try {
         await navigator.share({
-          title: 'My Coaching Week - Coach Reflection',
+          title: 'My Coaching Week - CoachReflection',
           text: 'Check out my coaching reflection summary this week!',
           url: 'https://coachreflection.com',
         })

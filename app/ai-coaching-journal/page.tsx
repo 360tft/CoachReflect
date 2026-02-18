@@ -11,14 +11,14 @@ export const metadata: Metadata = {
     canonical: "https://coachreflection.com/ai-coaching-journal",
   },
   openGraph: {
-    title: "AI Coaching Journal - Become a Better Coach | Coach Reflection",
+    title: "AI Coaching Journal - Become a Better Coach | CoachReflection",
     description: "Become a better coach with an AI-powered journal. 2-minute reflections, pattern detection, player tracking and CPD export for sports coaches.",
     url: "https://coachreflection.com/ai-coaching-journal",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "AI Coaching Journal - Become a Better Coach | Coach Reflection",
+    title: "AI Coaching Journal - Become a Better Coach | CoachReflection",
     description: "AI-powered coaching journal. 2-minute reflections show you what's working and what isn't. Pattern detection and player tracking for sports coaches.",
   },
 }
@@ -32,7 +32,7 @@ const faqSchema = {
       "name": "What is an AI coaching journal?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "An AI coaching journal is a digital reflection tool that uses artificial intelligence to help sports coaches capture, analyse and learn from their coaching sessions. Unlike a paper notebook, Coach Reflection asks you guided questions after each session, detects patterns across your reflections over time, tracks individual player mentions and progress, and generates actionable insights. It turns scattered post-session thoughts into structured growth opportunities."
+        "text": "An AI coaching journal is a digital reflection tool that uses artificial intelligence to help sports coaches capture, analyse and learn from their coaching sessions. Unlike a paper notebook, CoachReflection asks you guided questions after each session, detects patterns across your reflections over time, tracks individual player mentions and progress, and generates actionable insights. It turns scattered post-session thoughts into structured growth opportunities."
       }
     },
     {
@@ -45,10 +45,10 @@ const faqSchema = {
     },
     {
       "@type": "Question",
-      "name": "Which sports does Coach Reflection support?",
+      "name": "Which sports does CoachReflection support?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Coach Reflection supports football, rugby, basketball, hockey, tennis, cricket, volleyball, baseball, swimming, athletics, gymnastics, martial arts and more. The AI adapts its terminology, prompts and insights to your sport. A football coach gets questions about formations and player positions, while a swimming coach gets prompts about stroke technique and split times."
+        "text": "CoachReflection supports football, rugby, basketball, hockey, tennis, cricket, volleyball, baseball, swimming, athletics, gymnastics, martial arts and more. The AI adapts its terminology, prompts and insights to your sport. A football coach gets questions about formations and player positions, while a swimming coach gets prompts about stroke technique and split times."
       }
     },
     {
@@ -56,15 +56,15 @@ const faqSchema = {
       "name": "Can I use voice notes instead of typing?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes. Coach Reflection includes a voice recording feature so you can capture your thoughts immediately after a session while they are fresh. Speak naturally about how the session went and the AI processes your voice notes into structured reflections. This is particularly useful on the training ground when typing is not practical."
+        "text": "Yes. CoachReflection includes a voice recording feature so you can capture your thoughts immediately after a session while they are fresh. Speak naturally about how the session went and the AI processes your voice notes into structured reflections. This is particularly useful on the training ground when typing is not practical."
       }
     },
     {
       "@type": "Question",
-      "name": "Is Coach Reflection free?",
+      "name": "Is CoachReflection free?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes, Coach Reflection offers a free tier that includes basic reflection logging, guided prompts and session history. Pro users get AI-powered pattern detection, player tracking, mood and energy analytics, voice notes, session plan upload with AI extraction, CPD export and unlimited reflections. Pricing starts from $7.99 per month."
+        "text": "Yes, CoachReflection offers a free tier that includes basic reflection logging, guided prompts and session history. Pro users get AI-powered pattern detection, player tracking, mood and energy analytics, voice notes, session plan upload with AI extraction, CPD export and unlimited reflections. Pricing starts from $7.99 per month."
       }
     }
   ]
@@ -82,9 +82,9 @@ export default function AiCoachingJournalPage() {
         <header className="container mx-auto px-4 py-6 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo.png" alt="Coach Reflection" width={240} height={40} className="h-10 w-auto dark:hidden" />
+            <img src="/logo.png" alt="CoachReflection" width={240} height={40} className="h-10 w-auto dark:hidden" />
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo-dark.png" alt="Coach Reflection" width={240} height={40} className="h-10 w-auto hidden dark:block" />
+            <img src="/logo-dark.png" alt="CoachReflection" width={240} height={40} className="h-10 w-auto hidden dark:block" />
             <span className="text-sm text-muted-foreground">by 360TFT</span>
           </Link>
           <div className="flex items-center gap-4">
@@ -209,7 +209,7 @@ export default function AiCoachingJournalPage() {
                 Built for Every Sport
               </h2>
               <p className="text-center text-muted-foreground mb-8 max-w-2xl mx-auto">
-                Coach Reflection adapts its prompts, terminology and insights to your sport.
+                CoachReflection adapts its prompts, terminology and insights to your sport.
                 The AI understands the difference between coaching football and coaching swimming.
               </p>
               <div className="flex flex-wrap justify-center gap-3">
@@ -372,7 +372,7 @@ export default function AiCoachingJournalPage() {
                     <p className="text-sm text-muted-foreground">
                       An AI coaching journal is a digital reflection tool that uses artificial intelligence
                       to help sports coaches capture, analyse and learn from their coaching sessions. Unlike
-                      a paper notebook, Coach Reflection asks you guided questions after each session, detects
+                      a paper notebook, CoachReflection asks you guided questions after each session, detects
                       patterns across your reflections over time, tracks individual player mentions and progress,
                       and generates actionable insights.
                     </p>
@@ -394,7 +394,7 @@ export default function AiCoachingJournalPage() {
                 </Card>
                 <Card className="border">
                   <CardHeader className="pb-2">
-                    <CardTitle className="text-base">Which sports does Coach Reflection support?</CardTitle>
+                    <CardTitle className="text-base">Which sports does CoachReflection support?</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-muted-foreground">
@@ -411,7 +411,7 @@ export default function AiCoachingJournalPage() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-muted-foreground">
-                      Yes. Coach Reflection includes a voice recording feature so you can capture your thoughts
+                      Yes. CoachReflection includes a voice recording feature so you can capture your thoughts
                       immediately after a session while they are fresh. Speak naturally about how the session
                       went and the AI processes your voice notes into structured reflections. This is particularly
                       useful on the training ground when typing is not practical.
@@ -420,11 +420,11 @@ export default function AiCoachingJournalPage() {
                 </Card>
                 <Card className="border">
                   <CardHeader className="pb-2">
-                    <CardTitle className="text-base">Is Coach Reflection free?</CardTitle>
+                    <CardTitle className="text-base">Is CoachReflection free?</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-muted-foreground">
-                      Yes, Coach Reflection offers a free tier that includes basic reflection logging, guided
+                      Yes, CoachReflection offers a free tier that includes basic reflection logging, guided
                       prompts and session history. Pro users get AI-powered pattern detection, player tracking,
                       mood and energy analytics, voice notes, session plan upload with AI extraction, CPD
                       export and unlimited reflections. Pricing starts from $7.99 per month.

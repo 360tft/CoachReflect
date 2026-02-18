@@ -1,7 +1,7 @@
 ---
 title: "How to Avoid Coaching Burnout: Signs, Causes, and Solutions"
 slug: "how-to-avoid-coaching-burnout"
-seoTitle: "How to Avoid Coaching Burnout: Signs, Causes, and Solutions | Coach Reflection"
+seoTitle: "How to Avoid Coaching Burnout: Signs, Causes, and Solutions | CoachReflection"
 seoDescription: "Coaching burnout is real and common. Learn to recognise the early warning signs, understand the causes, and discover practical strategies to protect your passion."
 category: "coaching_philosophy"
 topics: ["burnout", "wellbeing", "coaching psychology", "self-care"]
@@ -230,4 +230,4 @@ The coaches who sustain long careers are not the ones who grind the hardest. The
 
 Your passion for coaching is not infinite. It needs to be maintained, protected, and occasionally restored. Treat it like the valuable resource it is.
 
-If you are looking for a simple, structured way to build reflection into your coaching routine, [Coach Reflection](https://coachreflection.com) can help. It gives you a space to capture how your sessions went, track your wellbeing over time, and spot the patterns that matter before they become problems. Try it free at [coachreflection.com](https://coachreflection.com).
+If you are looking for a simple, structured way to build reflection into your coaching routine, [CoachReflection](https://coachreflection.com) can help. It gives you a space to capture how your sessions went, track your wellbeing over time, and spot the patterns that matter before they become problems. Try it free at [coachreflection.com](https://coachreflection.com).

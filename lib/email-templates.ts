@@ -1,4 +1,4 @@
-// Coach Reflection Email Templates
+// CoachReflection Email Templates
 // Simple HTML templates - can be migrated to react-email later
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://coachreflection.com'
@@ -28,12 +28,12 @@ function baseTemplate(content: string, props: TemplateProps): string {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coach Reflection</title>
+  <title>CoachReflection</title>
 </head>
 <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #374151; max-width: 600px; margin: 0 auto; padding: 20px;">
   <div style="text-align: center; margin-bottom: 30px;">
     <span style="font-size: 32px;">🪞</span>
-    <h1 style="font-size: 24px; color: #92400e; margin: 10px 0;">Coach Reflection</h1>
+    <h1 style="font-size: 24px; color: #92400e; margin: 10px 0;">CoachReflection</h1>
   </div>
 
   ${content}
@@ -54,7 +54,7 @@ export const TEMPLATES: Record<string, (props: TemplateProps) => string> = {
   'welcome': (props) => baseTemplate(`
     <p>Hey ${props.name},</p>
 
-    <p>Welcome to Coach Reflection! You've taken the first step toward becoming a more intentional coach.</p>
+    <p>Welcome to CoachReflection! You've taken the first step toward becoming a more intentional coach.</p>
 
     <p>Here's how to get started:</p>
 
@@ -77,7 +77,7 @@ export const TEMPLATES: Record<string, (props: TemplateProps) => string> = {
       <a href="${APP_URL}/dashboard/reflect/new" style="background: #d97706; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; display: inline-block;">Start Your First Reflection</a>
     </p>
 
-    <p>Here's to your growth,<br>The Coach Reflection Team</p>
+    <p>Here's to your growth,<br>The CoachReflection Team</p>
   `, props),
 
   'first-reflection': (props) => baseTemplate(`
@@ -99,7 +99,7 @@ export const TEMPLATES: Record<string, (props: TemplateProps) => string> = {
       <a href="${APP_URL}/dashboard/reflect/new" style="background: #d97706; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; display: inline-block;">Add a Reflection</a>
     </p>
 
-    <p>Keep growing,<br>The Coach Reflection Team</p>
+    <p>Keep growing,<br>The CoachReflection Team</p>
   `, props),
 
   'reflection-tips': (props) => baseTemplate(`
@@ -132,7 +132,7 @@ export const TEMPLATES: Record<string, (props: TemplateProps) => string> = {
   'check-in': (props) => baseTemplate(`
     <p>Hey ${props.name},</p>
 
-    <p>It's been a week since you joined Coach Reflection. How's it going?</p>
+    <p>It's been a week since you joined CoachReflection. How's it going?</p>
 
     <p>If you've been reflecting regularly - brilliant! You're building a valuable coaching log.</p>
 
@@ -152,7 +152,7 @@ export const TEMPLATES: Record<string, (props: TemplateProps) => string> = {
   'upgrade-pitch': (props) => baseTemplate(`
     <p>Hey ${props.name},</p>
 
-    <p>You've been using Coach Reflection for a couple of weeks now. Ready to unlock the full potential?</p>
+    <p>You've been using CoachReflection for a couple of weeks now. Ready to unlock the full potential?</p>
 
     <p><strong>With Pro ($7.99/month), you get:</strong></p>
     <ul>
@@ -230,7 +230,7 @@ export const TEMPLATES: Record<string, (props: TemplateProps) => string> = {
   'last-chance': (props) => baseTemplate(`
     <p>Hey ${props.name},</p>
 
-    <p>You've been using Coach Reflection for 3 weeks now.</p>
+    <p>You've been using CoachReflection for 3 weeks now.</p>
 
     <p>Just wanted to say thanks for giving it a go.</p>
 
@@ -281,7 +281,7 @@ export const TEMPLATES: Record<string, (props: TemplateProps) => string> = {
 
     <p>Last email about this, promise.</p>
 
-    <p>Coach Reflection is still here whenever you need it. Free to use, no pressure.</p>
+    <p>CoachReflection is still here whenever you need it. Free to use, no pressure.</p>
 
     <p>Here's all it takes:</p>
     <ol>
@@ -295,7 +295,7 @@ export const TEMPLATES: Record<string, (props: TemplateProps) => string> = {
     <p style="font-size: 14px; color: #6b7280;">P.S. If you do come back, Pro gives you unlimited reflections and voice notes. 7-day free trial, cancel anytime.</p>
 
     <p style="text-align: center; margin: 30px 0;">
-      <a href="${APP_URL}/dashboard/chat" style="background: #d97706; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; display: inline-block;">Open Coach Reflection</a>
+      <a href="${APP_URL}/dashboard/chat" style="background: #d97706; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; display: inline-block;">Open CoachReflection</a>
     </p>
 
     <p>Kev</p>
@@ -436,7 +436,7 @@ export const TEMPLATES: Record<string, (props: TemplateProps) => string> = {
       <strong>You're in the top 1% of coaches who actually take time to reflect consistently.</strong>
     </p>
 
-    <p>We're genuinely proud to have you as part of Coach Reflection. Keep going - the insights only get richer from here.</p>
+    <p>We're genuinely proud to have you as part of CoachReflection. Keep going - the insights only get richer from here.</p>
 
     <p>You've earned this streak on the free plan. Imagine what you'd see with unlimited reflections, voice notes, and full history. Pro is free for 7 days if you want to find out.</p>
 
@@ -545,7 +545,7 @@ export const TEMPLATES: Record<string, (props: TemplateProps) => string> = {
         <a href="${APP_URL}/dashboard/analytics" style="background: #d97706; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; display: inline-block;">View Full Analytics</a>
       </p>
 
-      <p>Keep growing!<br>The Coach Reflection Team</p>
+      <p>Keep growing!<br>The CoachReflection Team</p>
     `, props)
   },
 
@@ -635,7 +635,7 @@ export const TEMPLATES: Record<string, (props: TemplateProps) => string> = {
 
     <p>Carry on = keep everything. Cancel = back to 2 messages a day.</p>
 
-    <p>Either way, no hard feelings. Coach Reflection is free to use forever, Pro just gives you more.</p>
+    <p>Either way, no hard feelings. CoachReflection is free to use forever, Pro just gives you more.</p>
 
     <p style="text-align: center; margin: 30px 0;">
       <a href="${APP_URL}/dashboard/settings" style="background: #d97706; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; display: inline-block;">Manage Subscription</a>
@@ -727,7 +727,7 @@ export const TEMPLATES: Record<string, (props: TemplateProps) => string> = {
       Tip: Try starting with "Today's session was..." and let the AI guide you from there.
     </p>
 
-    <p>Keep growing,<br>The Coach Reflection Team</p>
+    <p>Keep growing,<br>The CoachReflection Team</p>
   `, props),
 }
 

@@ -132,7 +132,7 @@ export function WinbackFinalEmail({ name, unsubscribeUrl }: WinbackEmailProps) {
       </Text>
 
       <Text style={paragraph}>
-        Coach Reflection is still here whenever you need it. Free to use, no
+        CoachReflection is still here whenever you need it. Free to use, no
         pressure.
       </Text>
 
@@ -150,7 +150,7 @@ export function WinbackFinalEmail({ name, unsubscribeUrl }: WinbackEmailProps) {
 
       <Section style={buttonContainer}>
         <Button href={`${APP_URL}/dashboard/chat`} style={button}>
-          Open Coach Reflection
+          Open CoachReflection
         </Button>
       </Section>
 

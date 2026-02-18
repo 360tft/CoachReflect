@@ -17,13 +17,13 @@ interface OnboardingEmailProps {
 export function WelcomeEmail({ name, unsubscribeUrl }: OnboardingEmailProps) {
   return (
     <BaseLayout
-      preview="Welcome to Coach Reflection - start your first reflection"
+      preview="Welcome to CoachReflection - start your first reflection"
       unsubscribeUrl={unsubscribeUrl}
     >
       <Text style={paragraph}>Hey {name},</Text>
 
       <Text style={paragraph}>
-        Welcome to Coach Reflection! You've taken the first step toward becoming
+        Welcome to CoachReflection! You've taken the first step toward becoming
         a more intentional coach.
       </Text>
 
@@ -62,7 +62,7 @@ export function WelcomeEmail({ name, unsubscribeUrl }: OnboardingEmailProps) {
       <Text style={paragraph}>
         Here's to your growth,
         <br />
-        The Coach Reflection Team
+        The CoachReflection Team
       </Text>
     </BaseLayout>
   )
@@ -105,7 +105,7 @@ export function FirstReflectionEmail({ name, unsubscribeUrl }: OnboardingEmailPr
       <Text style={paragraph}>
         Keep growing,
         <br />
-        The Coach Reflection Team
+        The CoachReflection Team
       </Text>
     </BaseLayout>
   )
@@ -176,7 +176,7 @@ export function CheckInEmail({ name, unsubscribeUrl }: OnboardingEmailProps) {
       <Text style={paragraph}>Hey {name},</Text>
 
       <Text style={paragraph}>
-        It's been a week since you joined Coach Reflection. How's it going?
+        It's been a week since you joined CoachReflection. How's it going?
       </Text>
 
       <Text style={paragraph}>
@@ -219,7 +219,7 @@ export function UpgradePitchEmail({ name, unsubscribeUrl }: OnboardingEmailProps
       <Text style={paragraph}>Hey {name},</Text>
 
       <Text style={paragraph}>
-        You've been using Coach Reflection for a couple of weeks now. Ready to
+        You've been using CoachReflection for a couple of weeks now. Ready to
         unlock the full potential?
       </Text>
 

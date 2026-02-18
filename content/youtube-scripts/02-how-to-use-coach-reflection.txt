@@ -1,4 +1,4 @@
-You've signed up for Coach Reflection. Now what?
+You've signed up for CoachReflection. Now what?
 
 In this video, I'll walk you through exactly how to use it. Step by step. From your first reflection to understanding your analytics. By the end, you'll know how to get the most out of structured reflection for your coaching development.
 
@@ -14,7 +14,7 @@ The Reflect tab is where you'll spend most of your time. This is where you captu
 
 Let me walk you through a reflection.
 
-After your session, open Coach Reflection. Tap the Reflect tab. You'll see the session log first.
+After your session, open CoachReflection. Tap the Reflect tab. You'll see the session log first.
 
 Session type. Is this a training session, a match, a friendly, a tournament, a trial, or individual work? Select the right one. This helps categorise your reflections later.
 
@@ -68,7 +68,7 @@ Mood. How do you feel after this session? One to five. Don't overthink it. Just 
 
 Energy. How's your energy level? One to five.
 
-These ratings seem simple, but they're powerful over time. If your average energy drops from four to two over six weeks, that's a warning sign. Burnout is coming. Coach Reflection spots it before you feel it.
+These ratings seem simple, but they're powerful over time. If your average energy drops from four to two over six weeks, that's a warning sign. Burnout is coming. CoachReflection spots it before you feel it.
 
 That's a complete reflection. Five questions, two ratings. Two to three minutes total.
 
@@ -80,7 +80,7 @@ Every reflection you submit is saved here. You can scroll back through weeks and
 
 This is powerful when you're planning. You're about to coach "defending as a unit" and you want to remember what worked last time you covered it. Search your history. Find the reflections from that period. See what you learned.
 
-Without Coach Reflection, this information is lost in your memory, incomplete and biased by what you happen to remember. With Coach Reflection, it's all there, searchable and complete.
+Without CoachReflection, this information is lost in your memory, incomplete and biased by what you happen to remember. With CoachReflection, it's all there, searchable and complete.
 
 Let me show you the Analytics tab.
 
@@ -116,7 +116,7 @@ This is great for reflecting on the drive home. You're not looking at your phone
 
 Full analytics history. Free users can only see one week of history. Pro users can see their full history across months and years. This is where the real patterns emerge.
 
-Now let me show you some tips for getting the most out of Coach Reflection.
+Now let me show you some tips for getting the most out of CoachReflection.
 
 Tip one: Reflect immediately after the session.
 
@@ -144,7 +144,7 @@ Also mention players you might otherwise overlook. It's easy to notice the stand
 
 Tip five: Don't skip the mood and energy ratings.
 
-They seem trivial, but they're one of the most valuable parts of Coach Reflection. These ratings catch burnout early. They show you seasonal patterns. They connect your wellbeing to your coaching quality.
+They seem trivial, but they're one of the most valuable parts of CoachReflection. These ratings catch burnout early. They show you seasonal patterns. They connect your wellbeing to your coaching quality.
 
 Two taps after each reflection. Don't skip them.
 
@@ -152,23 +152,23 @@ Tip six: Connect reflections to actions.
 
 The "what will you focus on next session" question is crucial. And when you come back for your next reflection, check whether you actually did what you said you'd do.
 
-This creates a feedback loop. Plan, execute, reflect, adjust. Coach Reflection makes the loop visible.
+This creates a feedback loop. Plan, execute, reflect, adjust. CoachReflection makes the loop visible.
 
 Let me talk about building the habit.
 
-Coach Reflection only works if you use it consistently. A reflection here and there won't show patterns. Consistent reflection over weeks and months will.
+CoachReflection only works if you use it consistently. A reflection here and there won't show patterns. Consistent reflection over weeks and months will.
 
 Here's how to build the habit.
 
-Make it part of your post-session routine. Session ends. You pack up equipment. You say goodbye to players and parents. Then you open Coach Reflection and do your two-minute reflection. It's the last thing you do before you leave the venue.
+Make it part of your post-session routine. Session ends. You pack up equipment. You say goodbye to players and parents. Then you open CoachReflection and do your two-minute reflection. It's the last thing you do before you leave the venue.
 
 Set a reminder. If you tend to forget, set a phone reminder for thirty minutes after your usual session time.
 
 Start small. If five questions feel like too much, just answer three. Something is better than nothing. You can expand later.
 
-Track your streak. Coach Reflection shows your reflection streak. How many consecutive sessions have you reflected on? Try to keep the streak going. Gamification works.
+Track your streak. CoachReflection shows your reflection streak. How many consecutive sessions have you reflected on? Try to keep the streak going. Gamification works.
 
-Tell someone. Tell a fellow coach that you're using Coach Reflection. Having accountability helps. Maybe they'll start using it too.
+Tell someone. Tell a fellow coach that you're using CoachReflection. Having accountability helps. Maybe they'll start using it too.
 
 The habit is the hard part. Once reflecting is automatic, the benefits compound.
 
@@ -186,7 +186,7 @@ Five: After one month, do a deeper review. What have you learned? What's changed
 
 Six: Consider upgrading to Pro if you want voice notes, session plan upload, or full history access.
 
-That's how to use Coach Reflection.
+That's how to use CoachReflection.
 
 The link is in the description. Sign up free and start with your next session. Two to three minutes of structured reflection that compounds into real coaching development over time.
 

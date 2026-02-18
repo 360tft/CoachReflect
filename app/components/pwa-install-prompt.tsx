@@ -93,8 +93,8 @@ export function PWAInstallPrompt({ variant = 'card', onDismiss }: Props) {
             </div>
             <p className="text-sm text-gray-900 dark:text-gray-100">
               {isIOS
-                ? 'Add Coach Reflection to your home screen for quick access'
-                : 'Install Coach Reflection for a better experience'
+                ? 'Add CoachReflection to your home screen for quick access'
+                : 'Install CoachReflection for a better experience'
               }
             </p>
           </div>
@@ -132,7 +132,7 @@ export function PWAInstallPrompt({ variant = 'card', onDismiss }: Props) {
         </div>
         <div className="flex-1">
           <h3 className="font-semibold text-gray-900 dark:text-white mb-1">
-            {isIOS ? 'Add to Home Screen' : 'Install Coach Reflection'}
+            {isIOS ? 'Add to Home Screen' : 'Install CoachReflection'}
           </h3>
           <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
             {isIOS

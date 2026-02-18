@@ -17,7 +17,7 @@ export function HeroScreenshot() {
             <div className="w-3 h-3 rounded-full bg-green-500/70" />
           </div>
           <div className="flex-1 text-center">
-            <span className="text-sm font-medium text-muted-foreground">Coach Reflection</span>
+            <span className="text-sm font-medium text-muted-foreground">CoachReflection</span>
           </div>
           <div className="w-16" /> {/* Spacer for symmetry */}
         </div>

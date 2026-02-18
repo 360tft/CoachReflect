@@ -1,4 +1,4 @@
-# Codemagic CI/CD for Coach Reflection iOS & Android Apps
+# Codemagic CI/CD for CoachReflection iOS & Android Apps
 
 workflows:
   ios-release:

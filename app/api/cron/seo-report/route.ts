@@ -15,7 +15,7 @@ import {
   type SEOInsight,
 } from "@/lib/google-apis"
 
-const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'Coach Reflection <hello@send.coachreflection.com>'
+const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'CoachReflection <hello@send.coachreflection.com>'
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://coachreflection.com'
 
 // GET /api/cron/seo-report
@@ -205,7 +205,7 @@ function buildEmailHTML(data: EmailData): string {
     <!-- Footer -->
     <div style="border-top: 1px solid #e5e7eb; margin-top: 24px; padding-top: 16px; text-align: center;">
       <a href="${APP_URL}/app/admin/seo" style="display: inline-block; background-color: #E5A11C; color: #ffffff; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 14px;">View Full SEO Dashboard</a>
-      <p style="color: #9ca3af; font-size: 12px; margin-top: 16px;">Coach Reflection - Automated weekly report</p>
+      <p style="color: #9ca3af; font-size: 12px; margin-top: 16px;">CoachReflection - Automated weekly report</p>
     </div>
 
   </div>

@@ -1,7 +1,7 @@
 ---
 title: "CPD for Coaches: How to Document Your Development"
 slug: "cpd-for-coaches-document-your-development"
-seoTitle: "CPD for Coaches: How to Document Your Development | Coach Reflection"
+seoTitle: "CPD for Coaches: How to Document Your Development | CoachReflection"
 seoDescription: "CPD documentation doesn't have to be painful. Learn how structured reflection automatically creates your continuing professional development evidence."
 category: "coaching_philosophy"
 topics: ["cpd", "coaching development", "documentation", "professional development"]
@@ -250,4 +250,4 @@ Your development is already happening. All you need to do is capture it.
 
 ---
 
-*Coach Reflection makes CPD documentation effortless. Reflect after your sessions, and the app tracks your development themes, learning applications, and coaching growth over time. Export your CPD portfolio when you need it. Try it free at [coachreflection.com](https://coachreflection.com).*
+*CoachReflection makes CPD documentation effortless. Reflect after your sessions, and the app tracks your development themes, learning applications, and coaching growth over time. Export your CPD portfolio when you need it. Try it free at [coachreflection.com](https://coachreflection.com).*

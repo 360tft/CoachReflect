@@ -4,7 +4,7 @@ import { createAdminClient } from "@/lib/supabase/admin"
 import { isAdminUser } from "@/lib/admin"
 import { Resend } from "resend"
 
-const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || "Coach Reflection <hello@send.coachreflection.com>"
+const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || "CoachReflection <hello@send.coachreflection.com>"
 
 function getResendClient() {
   if (!process.env.RESEND_API_KEY) {
@@ -153,7 +153,7 @@ export async function POST(request: Request) {
       from: FROM_EMAIL,
       to: email,
       replyTo: "admin@360tft.com",
-      subject: "We miss you at Coach Reflection",
+      subject: "We miss you at CoachReflection",
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
           <h2 style="color: #E5A11C;">Hi ${name},</h2>
@@ -162,7 +162,7 @@ export async function POST(request: Request) {
 
           <p>Taking just 2 minutes after each session to reflect can transform how you grow as a coach. Your insights build up over time, revealing patterns you'd never notice otherwise.</p>
 
-          <p>Here's what coaches are discovering with Coach Reflection:</p>
+          <p>Here's what coaches are discovering with CoachReflection:</p>
           <ul>
             <li>Which players need extra attention</li>
             <li>Patterns in their coaching mood and energy</li>
@@ -177,7 +177,7 @@ export async function POST(request: Request) {
 
           <p style="color: #666; font-size: 14px;">
             Questions? Just reply to this email.<br/>
-            Kevin @ Coach Reflection
+            Kevin @ CoachReflection
           </p>
         </div>
       `,

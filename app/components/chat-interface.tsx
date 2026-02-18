@@ -677,6 +677,22 @@ export function ChatInterface({ isSubscribed, initialRemaining = 2 }: ChatInterf
               Try Pro free for 7 days
             </button>
           </div>
+        ) : !isSubscribed && remaining === 1 ? (
+          <div className="animate-pulse-once rounded-lg px-4 py-3 mb-2 border border-amber-300 dark:border-amber-700 bg-gradient-to-r from-amber-50/80 to-orange-50/60 dark:from-amber-950/30 dark:to-orange-950/20">
+            <p className="font-semibold text-sm mb-1">1 reflection left today</p>
+            <p className="text-xs text-muted-foreground mb-2">
+              Most coaches reflect 3-4 times after a session. The third thought is usually the breakthrough.
+            </p>
+            <button
+              onClick={() => {
+                setUpgradeModalVariant('limit_reached')
+                setShowUpgradeModal(true)
+              }}
+              className="text-sm font-semibold text-amber-700 dark:text-amber-400 hover:underline"
+            >
+              Go unlimited
+            </button>
+          </div>
         ) : !isSubscribed ? (
           <div className={`flex items-center justify-between rounded-lg px-3 py-2 mb-2 text-sm border ${getCounterColor()}`}>
             <span className="font-medium">

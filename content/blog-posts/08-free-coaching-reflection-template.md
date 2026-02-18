@@ -2,7 +2,7 @@
 title: "Free Coaching Reflection Template"
 slug: "free-coaching-reflection-template"
 excerpt: "A simple, proven coaching reflection template with five structured questions that take less than five minutes after each session. Adaptable for any sport."
-seoTitle: "Free Coaching Reflection Template for Sports Coaches | Coach Reflection"
+seoTitle: "Free Coaching Reflection Template for Sports Coaches | CoachReflection"
 seoDescription: "Download our free coaching reflection template. Five structured questions that take less than 5 minutes after each session. Used by hundreds of coaches."
 category: "reflection"
 topics: ["reflection", "template", "coaching tools", "coaching development"]
@@ -220,7 +220,7 @@ A journal full of "everything was great" entries is useless. The template only w
 
 ## Taking It Further
 
-This template is designed to be the simplest effective framework for coaching reflection. It works on paper, in a notes app, or in a dedicated journal. But if you want to take it further without adding complexity, [Coach Reflection](https://coachreflection.com) builds on these same principles.
+This template is designed to be the simplest effective framework for coaching reflection. It works on paper, in a notes app, or in a dedicated journal. But if you want to take it further without adding complexity, [CoachReflection](https://coachreflection.com) builds on these same principles.
 
 It provides guided prompts adapted to your session type, tracks your responses over time, and uses AI to surface patterns you might miss on your own. If you have ever wanted to know whether your coaching is actually improving, or where your blind spots are, it does the analysis that would take hours to do manually.
 

@@ -5,7 +5,7 @@ import { ProfilePrompt } from "@/app/components/profile-prompt"
 import { LIMITS } from "@/lib/config"
 
 export const metadata = {
-  title: "Coach Chat | Coach Reflection",
+  title: "Coach Chat | CoachReflection",
   description: "AI-powered coaching reflection conversations",
 }
 

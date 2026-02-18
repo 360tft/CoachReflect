@@ -3,7 +3,7 @@ import { redirect } from "next/navigation"
 import { PlayersListClient } from "./players-list-client"
 
 export const metadata = {
-  title: "Player Development | Coach Reflection",
+  title: "Player Development | CoachReflection",
   description: "Track player development over time",
 }
 

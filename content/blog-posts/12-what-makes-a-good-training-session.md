@@ -1,7 +1,7 @@
 ---
 title: "What Makes a Good Training Session?"
 slug: "what-makes-a-good-training-session"
-seoTitle: "What Makes a Good Training Session? A Coach's Checklist | Coach Reflection"
+seoTitle: "What Makes a Good Training Session? A Coach's Checklist | CoachReflection"
 seoDescription: "What separates a good training session from a great one? Discover the key ingredients that make sessions effective, engaging, and developmentally rich."
 category: "session_planning"
 topics: ["session planning", "training", "coaching quality", "player engagement"]
@@ -227,4 +227,4 @@ You will not score perfectly on all seven every time. That is not the point. The
 
 ## Track Your Sessions Over Time
 
-If you want a structured way to evaluate your sessions against these criteria and track your development over time, [Coach Reflection](https://coachreflection.com) is built for exactly this purpose. It gives you guided prompts after every session, helps you identify patterns in what works and what does not, and turns your coaching experience into genuine development. Start for free at [coachreflection.com](https://coachreflection.com).
+If you want a structured way to evaluate your sessions against these criteria and track your development over time, [CoachReflection](https://coachreflection.com) is built for exactly this purpose. It gives you guided prompts after every session, helps you identify patterns in what works and what does not, and turns your coaching experience into genuine development. Start for free at [coachreflection.com](https://coachreflection.com).

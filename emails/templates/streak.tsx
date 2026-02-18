@@ -189,7 +189,7 @@ export function Streak30Email({ name, unsubscribeUrl }: StreakEmailProps) {
       </Section>
 
       <Text style={paragraph}>
-        We're genuinely proud to have you as part of Coach Reflection. Keep
+        We're genuinely proud to have you as part of CoachReflection. Keep
         going - the insights only get richer from here.
       </Text>
 

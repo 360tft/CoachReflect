@@ -89,7 +89,7 @@ export async function GET() {
             >
               CR
             </div>
-            <span style={{ fontSize: '24px', fontWeight: '600' }}>Coach Reflection</span>
+            <span style={{ fontSize: '24px', fontWeight: '600' }}>CoachReflection</span>
           </div>
           <span style={{ fontSize: '18px', color: '#9CA3AF' }}>This Week</span>
         </div>

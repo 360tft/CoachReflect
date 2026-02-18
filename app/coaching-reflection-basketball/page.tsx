@@ -11,14 +11,14 @@ export const metadata: Metadata = {
     canonical: "https://coachreflection.com/coaching-reflection-basketball",
   },
   openGraph: {
-    title: "Basketball Coaching Reflection App - Coach Journal & CPD | Coach Reflection",
+    title: "Basketball Coaching Reflection App - Coach Journal & CPD | CoachReflection",
     description: "AI-powered basketball coaching journal with guided reflection prompts, player tracking and CPD export for basketball coaches at every level.",
     url: "https://coachreflection.com/coaching-reflection-basketball",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Basketball Coaching Reflection App - Coach Journal & CPD | Coach Reflection",
+    title: "Basketball Coaching Reflection App - Coach Journal & CPD | CoachReflection",
     description: "AI-powered basketball coaching journal with guided prompts, player development tracking and CPD export.",
   },
 }
@@ -29,10 +29,10 @@ const faqSchema = {
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "How does Coach Reflection help basketball coaches?",
+      "name": "How does CoachReflection help basketball coaches?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Coach Reflection adapts its prompts to basketball. After a practice session it asks about shooting drills, defensive rotations, play execution and player engagement. After a game it focuses on tactical adjustments, substitution patterns and how players performed under pressure. The AI understands basketball terminology and structures its questions around how basketball coaches actually work."
+        "text": "CoachReflection adapts its prompts to basketball. After a practice session it asks about shooting drills, defensive rotations, play execution and player engagement. After a game it focuses on tactical adjustments, substitution patterns and how players performed under pressure. The AI understands basketball terminology and structures its questions around how basketball coaches actually work."
       }
     },
     {
@@ -40,7 +40,7 @@ const faqSchema = {
       "name": "Can I use it to review game film alongside my reflections?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Coach Reflection is designed to complement your game film review process. After watching film you can log your observations and the AI connects them with your post-game reflections and practice notes. Over time this creates a complete picture linking what you planned in practice, what happened in the game, and what you noticed on film."
+        "text": "CoachReflection is designed to complement your game film review process. After watching film you can log your observations and the AI connects them with your post-game reflections and practice notes. Over time this creates a complete picture linking what you planned in practice, what happened in the game, and what you noticed on film."
       }
     },
     {
@@ -48,7 +48,7 @@ const faqSchema = {
       "name": "Does it support Basketball England or USA Basketball coaching pathways?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes. Coach Reflection includes a CPD export feature that formats your reflections into evidence suitable for coaching qualification requirements. Whether you are on the Basketball England coaching pathway or following USA Basketball guidelines, your structured reflections demonstrate ongoing professional development that governing bodies expect to see."
+        "text": "Yes. CoachReflection includes a CPD export feature that formats your reflections into evidence suitable for coaching qualification requirements. Whether you are on the Basketball England coaching pathway or following USA Basketball guidelines, your structured reflections demonstrate ongoing professional development that governing bodies expect to see."
       }
     },
     {
@@ -56,7 +56,7 @@ const faqSchema = {
       "name": "Is it useful for youth basketball coaching?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Absolutely. Youth basketball coaching involves managing large rosters, developing fundamental skills and keeping young players engaged. Coach Reflection helps you track each player across sessions, spot who is being overlooked, reflect on whether your drills are age-appropriate, and monitor your own coaching energy across a busy season of practices and tournaments."
+        "text": "Absolutely. Youth basketball coaching involves managing large rosters, developing fundamental skills and keeping young players engaged. CoachReflection helps you track each player across sessions, spot who is being overlooked, reflect on whether your drills are age-appropriate, and monitor your own coaching energy across a busy season of practices and tournaments."
       }
     },
     {
@@ -82,9 +82,9 @@ export default function BasketballCoachingReflectionPage() {
         <header className="container mx-auto px-4 py-6 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo.png" alt="Coach Reflection" width={240} height={40} className="h-10 w-auto dark:hidden" />
+            <img src="/logo.png" alt="CoachReflection" width={240} height={40} className="h-10 w-auto dark:hidden" />
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo-dark.png" alt="Coach Reflection" width={240} height={40} className="h-10 w-auto hidden dark:block" />
+            <img src="/logo-dark.png" alt="CoachReflection" width={240} height={40} className="h-10 w-auto hidden dark:block" />
             <span className="text-sm text-muted-foreground">by 360TFT</span>
           </Link>
           <div className="flex items-center gap-4">
@@ -352,11 +352,11 @@ export default function BasketballCoachingReflectionPage() {
               <div className="space-y-4">
                 <Card className="border">
                   <CardHeader className="pb-2">
-                    <CardTitle className="text-base">How does Coach Reflection help basketball coaches?</CardTitle>
+                    <CardTitle className="text-base">How does CoachReflection help basketball coaches?</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-muted-foreground">
-                      Coach Reflection adapts its prompts to basketball. After a practice it asks about
+                      CoachReflection adapts its prompts to basketball. After a practice it asks about
                       shooting drills, defensive rotations, play execution and player engagement. After
                       a game it focuses on tactical adjustments, substitution patterns and how players
                       performed under pressure. The AI understands basketball terminology and structures
@@ -370,7 +370,7 @@ export default function BasketballCoachingReflectionPage() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-muted-foreground">
-                      Coach Reflection is designed to complement your game film review process. After
+                      CoachReflection is designed to complement your game film review process. After
                       watching film you can log your observations and the AI connects them with your
                       post-game reflections and practice notes. Over time this creates a complete picture
                       linking what you planned in practice, what happened in the game, and what you
@@ -384,7 +384,7 @@ export default function BasketballCoachingReflectionPage() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-muted-foreground">
-                      Yes. Coach Reflection includes a CPD export feature that formats your reflections
+                      Yes. CoachReflection includes a CPD export feature that formats your reflections
                       into evidence suitable for coaching qualification requirements. Whether you are on
                       the Basketball England coaching pathway or following USA Basketball guidelines, your
                       structured reflections demonstrate ongoing professional development.
@@ -398,7 +398,7 @@ export default function BasketballCoachingReflectionPage() {
                   <CardContent>
                     <p className="text-sm text-muted-foreground">
                       Absolutely. Youth basketball coaching involves managing large rosters, developing
-                      fundamental skills and keeping young players engaged. Coach Reflection helps you
+                      fundamental skills and keeping young players engaged. CoachReflection helps you
                       track each player across sessions, spot who is being overlooked, and reflect on
                       whether your drills are age-appropriate.
                     </p>

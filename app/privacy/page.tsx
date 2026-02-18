@@ -5,7 +5,7 @@ export default function PrivacyPage() {
     <div className="min-h-screen bg-background">
       <header className="container mx-auto px-4 py-6">
         <Link href="/" className="flex items-center gap-2">
-          <span className="text-xl font-bold">Coach Reflection</span>
+          <span className="text-xl font-bold">CoachReflection</span>
         </Link>
       </header>
 
@@ -17,7 +17,7 @@ export default function PrivacyPage() {
           <section>
             <h2 className="text-xl font-semibold mb-3">1. Introduction</h2>
             <p className="text-muted-foreground">
-              Coach Reflection (&quot;we&quot;, &quot;our&quot;, or &quot;us&quot;) is committed to protecting your privacy.
+              CoachReflection (&quot;we&quot;, &quot;our&quot;, or &quot;us&quot;) is committed to protecting your privacy.
               This Privacy Policy explains how we collect, use, and safeguard your information
               when you use our coaching reflection application.
             </p>

@@ -1,7 +1,7 @@
 // JSON-LD Structured Data generators for SEO
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://coachreflection.com'
-const SITE_NAME = 'Coach Reflection'
+const SITE_NAME = 'CoachReflection'
 const ORGANIZATION_NAME = '360TFT'
 const PARENT_ORGANIZATION = 'SVMS Consultancy Limited'
 
@@ -20,7 +20,7 @@ export function generateWebsiteSchema() {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: SITE_NAME,
-    alternateName: 'Coach Reflection',
+    alternateName: 'CoachReflection',
     url: SITE_URL,
     description: 'AI-powered reflection and journaling tool for football coaches. Track sessions, identify patterns, and grow as a coach with guided post-session reflections.',
     publisher: {
@@ -213,7 +213,7 @@ export function generateBlogPostSchema(
     },
     isPartOf: {
       '@type': 'Blog',
-      name: 'Coach Reflection Blog',
+      name: 'CoachReflection Blog',
       url: `${SITE_URL}/blog`
     }
   }

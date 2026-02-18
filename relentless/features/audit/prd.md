@@ -1,6 +1,6 @@
 # PRD: Existing App Audit & Gap Analysis
 
-**Target App:** Coach Reflection (/home/kevin/Coach Reflection)
+**Target App:** CoachReflection (/home/kevin/CoachReflection)
 **Reference:** `/home/kevin/FootballGPT` (gold standard)
 **Creates:** Gap analysis and improvement tasks
 

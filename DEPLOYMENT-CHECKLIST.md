@@ -1,4 +1,4 @@
-# Coach Reflection Deployment Checklist
+# CoachReflection Deployment Checklist
 
 **Status:** Code Complete - Ready for Production Deploy
 **Estimated Time:** 40 minutes
@@ -62,10 +62,10 @@ From Supabase Dashboard → Settings → API:
 
 ### Create Products
 1. Go to https://dashboard.stripe.com/products
-2. Create product: **Coach Reflection Pro**
+2. Create product: **CoachReflection Pro**
    - Monthly: $7.99/month → save Price ID
    - Annual: $99/year → save Price ID
-3. Create product: **Coach Reflection Sponsor** (optional)
+3. Create product: **CoachReflection Sponsor** (optional)
    - Monthly: $99/month → save Price ID
 
 ### Get Credentials
@@ -91,7 +91,7 @@ From Stripe Dashboard → Developers → API keys:
 
 ### Import Project
 1. Go to https://vercel.com/new
-2. Import from GitHub: `Coach Reflection`
+2. Import from GitHub: `CoachReflection`
 3. Framework: Next.js (auto-detected)
 
 ### Environment Variables
@@ -178,7 +178,7 @@ SENTRY_PROJECT=...
 
 ### iOS
 ```bash
-cd /home/kevin/Coach Reflection
+cd /home/kevin/CoachReflection
 npm run build
 npx cap sync ios
 npx cap open ios
@@ -221,10 +221,10 @@ If something breaks:
 
 ## Credentials Storage
 
-After deployment, create `/home/kevin/Coach Reflection/docs/CREDENTIALS.md` (gitignored):
+After deployment, create `/home/kevin/CoachReflection/docs/CREDENTIALS.md` (gitignored):
 
 ```markdown
-# Coach Reflection Credentials
+# CoachReflection Credentials
 
 ## Supabase
 - Project URL: https://xxx.supabase.co

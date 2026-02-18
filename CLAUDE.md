@@ -1,4 +1,4 @@
-# Coach Reflection - Claude Session Context
+# CoachReflection - Claude Session Context
 
 ---
 
@@ -50,12 +50,12 @@ When asked to "check compliance" or "align with FootballGPT", run this process:
 4. **Apply brand adaptations** (see table below)
 5. **Report gaps** - List missing features with implementation priority
 
-### Brand Adaptations (FootballGPT → Coach Reflection)
+### Brand Adaptations (FootballGPT → CoachReflection)
 
-| FootballGPT | Coach Reflection |
+| FootballGPT | CoachReflection |
 |-------------|--------------|
 | `#16a34a` (green) | `#E5A11C` (gold - 360TFT brand) |
-| `FootballGPT` | `Coach Reflection` |
+| `FootballGPT` | `CoachReflection` |
 | `chat` / `messages` | `reflections` / `journal entries` |
 | `AI assistant` | `reflection companion` |
 | `coach` / `player` | `coach` (same) |
@@ -67,7 +67,7 @@ When asked to "check compliance" or "align with FootballGPT", run this process:
 
 ## ✅ FOOTBALLGPT PARITY STATUS (Updated: 2026-01-25)
 
-**Coach Reflection core features implemented.**
+**CoachReflection core features implemented.**
 
 ### Reference Implementation
 - **Blueprint repo:** `/home/kevin/FootballGPT`
@@ -111,7 +111,7 @@ When asked to "check compliance" or "align with FootballGPT", run this process:
 | Twitter image | ✅ | `app/twitter-image.tsx` |
 | PWA manifest | ✅ | `public/manifest.json` |
 | Metadata | ✅ | `app/layout.tsx` (OG + Twitter meta) |
-| Logo | ✅ | `public/logo.png` (CR + Coach Reflection text) |
+| Logo | ✅ | `public/logo.png` (CR + CoachReflection text) |
 
 **Brand Colors:** Gold `#E5A11C`, Dark `#0A0A0A` (360TFT brand)
 
@@ -218,11 +218,11 @@ This repo MUST maintain 3 documents for potential acquisition. Update them whene
 
 ## Product Overview
 
-Coach Reflection is a reflective journaling app for football coaches. It helps coaches capture post-session thoughts, track patterns over time, and get AI-powered insights to improve their coaching.
+CoachReflection is a reflective journaling app for football coaches. It helps coaches capture post-session thoughts, track patterns over time, and get AI-powered insights to improve their coaching.
 
 **Target User:** Grassroots to semi-pro football coaches who want to systematically improve through reflection.
 
-**Core Value Prop:** Turn post-session chaos into structured growth. Most coaches think about sessions but don't capture insights - Coach Reflection makes reflection quick, guided, and actionable.
+**Core Value Prop:** Turn post-session chaos into structured growth. Most coaches think about sessions but don't capture insights - CoachReflection makes reflection quick, guided, and actionable.
 
 ---
 
@@ -449,7 +449,7 @@ Use Claude Vision with structured extraction prompt:
 
 ## DEPLOYMENT TODO (Updated 2026-01-16)
 
-Before Coach Reflection goes fully live with clubs and analytics:
+Before CoachReflection goes fully live with clubs and analytics:
 
 ### Stripe Setup (12 prices to create)
 - [ ] Pro Monthly ($7.99) → `NEXT_PUBLIC_STRIPE_PRO_PRICE_ID`

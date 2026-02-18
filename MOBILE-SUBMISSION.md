@@ -29,7 +29,7 @@ This covers:
 - Privacy policy requirements
 - Troubleshooting
 
-## Coach Reflection-Specific Config
+## CoachReflection-Specific Config
 
 | Setting | Value |
 |---------|-------|

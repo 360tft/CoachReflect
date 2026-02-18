@@ -4,7 +4,7 @@
   <text x="16" y="26" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="700" fill="white" text-anchor="middle">CR</text>
 
   <!-- Wordmark -->
-  <text x="42" y="26" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="600" fill="#0A0A0A">Coach Reflection</text>
+  <text x="42" y="26" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="600" fill="#0A0A0A">CoachReflection</text>
 
   <defs>
     <linearGradient id="gold-gradient" x1="0%" y1="0%" x2="100%" y2="100%">

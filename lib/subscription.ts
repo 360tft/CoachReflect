@@ -1,4 +1,4 @@
-// Subscription validation for Coach Reflection
+// Subscription validation for CoachReflection
 // Unified subscription checking across individual and club memberships
 
 import { createClient } from '@/lib/supabase/server'

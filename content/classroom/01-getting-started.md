@@ -1,12 +1,12 @@
-# Getting Started with Coach Reflection
+# Getting Started with CoachReflection
 
-Welcome to Coach Reflection. This guide will help you get the most out of structured reflection for your coaching development.
+Welcome to CoachReflection. This guide will help you get the most out of structured reflection for your coaching development.
 
 ---
 
-## What is Coach Reflection?
+## What is CoachReflection?
 
-Coach Reflection is an AI-powered coaching journal that helps you:
+CoachReflection is an AI-powered coaching journal that helps you:
 
 - **Capture post-session insights** before they fade from memory
 - **Track patterns** across weeks and months of coaching
@@ -31,7 +31,7 @@ This helps the AI give you relevant insights.
 
 ### Step 2: After Your Next Session, Reflect
 
-Open Coach Reflection and answer the five questions:
+Open CoachReflection and answer the five questions:
 
 1. **What worked well today?**
 2. **What didn't go as planned?**
@@ -89,7 +89,7 @@ After the five questions, rate two things:
 
 **Energy (1-5):** How's your energy level?
 
-These ratings seem simple but they're powerful over time. If your average energy drops from 4 to 2 over six weeks, that's a burnout warning sign. Coach Reflection spots it before you feel it.
+These ratings seem simple but they're powerful over time. If your average energy drops from 4 to 2 over six weeks, that's a burnout warning sign. CoachReflection spots it before you feel it.
 
 ---
 
@@ -107,7 +107,7 @@ This feeds into your analytics, building a picture of your coaching patterns ove
 
 ## Building the Habit
 
-Coach Reflection only works with consistency. Here's how to build the habit:
+CoachReflection only works with consistency. Here's how to build the habit:
 
 1. **Reflect immediately** — Right after the session, while it's fresh
 2. **Keep it brief** — 2-3 minutes is enough

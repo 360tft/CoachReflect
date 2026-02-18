@@ -157,7 +157,7 @@ export async function GET(request: NextRequest) {
                     color: 'white',
                   }}
                 >
-                  Coach Reflection
+                  CoachReflection
                 </span>
                 <span
                   style={{

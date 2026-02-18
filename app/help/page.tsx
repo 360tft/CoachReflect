@@ -3,13 +3,13 @@ import type { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: "Help Center",
-  description: "Get help using Coach Reflection. FAQs, guides, and support for football coaches.",
+  description: "Get help using CoachReflection. FAQs, guides, and support for football coaches.",
 }
 
 const faqs = [
   {
-    question: "What is Coach Reflection?",
-    answer: "Coach Reflection is an AI-powered reflection and journaling tool designed specifically for football coaches. It helps you track your coaching sessions, identify patterns over time, and grow as a coach through guided post-session reflections."
+    question: "What is CoachReflection?",
+    answer: "CoachReflection is an AI-powered reflection and journaling tool designed specifically for football coaches. It helps you track your coaching sessions, identify patterns over time, and grow as a coach through guided post-session reflections."
   },
   {
     question: "How do I create a reflection?",
@@ -46,13 +46,13 @@ export default function HelpPage() {
     <div className="min-h-screen bg-background">
       <header className="container mx-auto px-4 py-6">
         <Link href="/" className="flex items-center gap-2">
-          <span className="text-xl font-bold">Coach Reflection</span>
+          <span className="text-xl font-bold">CoachReflection</span>
         </Link>
       </header>
 
       <main className="container mx-auto px-4 py-8 max-w-3xl">
         <h1 className="text-3xl font-bold mb-2">Help Center</h1>
-        <p className="text-muted-foreground mb-8">Find answers to common questions about Coach Reflection</p>
+        <p className="text-muted-foreground mb-8">Find answers to common questions about CoachReflection</p>
 
         {/* Quick Links */}
         <div className="grid gap-4 md:grid-cols-3 mb-12">

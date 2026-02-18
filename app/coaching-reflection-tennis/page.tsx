@@ -11,14 +11,14 @@ export const metadata: Metadata = {
     canonical: "https://coachreflection.com/coaching-reflection-tennis",
   },
   openGraph: {
-    title: "Tennis Coaching Reflection App - Coach Journal & Development | Coach Reflection",
+    title: "Tennis Coaching Reflection App - Coach Journal & Development | CoachReflection",
     description: "AI-powered tennis coaching journal with guided reflection prompts, player tracking and CPD export for tennis coaches at every level.",
     url: "https://coachreflection.com/coaching-reflection-tennis",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Tennis Coaching Reflection App - Coach Journal & Development | Coach Reflection",
+    title: "Tennis Coaching Reflection App - Coach Journal & Development | CoachReflection",
     description: "AI-powered tennis coaching journal with guided prompts, player development tracking and CPD export.",
   },
 }
@@ -29,10 +29,10 @@ const faqSchema = {
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "How does Coach Reflection help tennis coaches specifically?",
+      "name": "How does CoachReflection help tennis coaches specifically?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Coach Reflection adapts its prompts and terminology to tennis. After an individual lesson it asks about technical work on serve, groundstrokes or volleys, and how the player responded to coaching cues. After a group session it focuses on drill engagement, competition formats and managing different ability levels. The AI understands the difference between coaching a one-to-one lesson and running a junior group."
+        "text": "CoachReflection adapts its prompts and terminology to tennis. After an individual lesson it asks about technical work on serve, groundstrokes or volleys, and how the player responded to coaching cues. After a group session it focuses on drill engagement, competition formats and managing different ability levels. The AI understands the difference between coaching a one-to-one lesson and running a junior group."
       }
     },
     {
@@ -48,7 +48,7 @@ const faqSchema = {
       "name": "Does it support LTA coaching qualifications and CPD?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Coach Reflection includes a CPD export feature that formats your reflections into evidence suitable for LTA coaching pathway requirements. Whether you are working towards your LTA Level 1 Assistant, Level 2, Level 3 or beyond, your structured reflections demonstrate the ongoing professional development that the LTA expects. Exported reports show reflection frequency, coaching themes and development areas."
+        "text": "CoachReflection includes a CPD export feature that formats your reflections into evidence suitable for LTA coaching pathway requirements. Whether you are working towards your LTA Level 1 Assistant, Level 2, Level 3 or beyond, your structured reflections demonstrate the ongoing professional development that the LTA expects. Exported reports show reflection frequency, coaching themes and development areas."
       }
     },
     {
@@ -56,7 +56,7 @@ const faqSchema = {
       "name": "Is it useful for coaching junior tennis players?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Absolutely. Junior tennis coaching involves managing players at different stages of physical and technical development, often within the same group session. Coach Reflection helps you track each junior across lessons, reflect on whether your sessions are age-appropriate, and spot which players might need more individual attention. The AI prompts consider engagement and enjoyment alongside technical progression."
+        "text": "Absolutely. Junior tennis coaching involves managing players at different stages of physical and technical development, often within the same group session. CoachReflection helps you track each junior across lessons, reflect on whether your sessions are age-appropriate, and spot which players might need more individual attention. The AI prompts consider engagement and enjoyment alongside technical progression."
       }
     },
     {
@@ -82,9 +82,9 @@ export default function TennisCoachingReflectionPage() {
         <header className="container mx-auto px-4 py-6 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo.png" alt="Coach Reflection" width={240} height={40} className="h-10 w-auto dark:hidden" />
+            <img src="/logo.png" alt="CoachReflection" width={240} height={40} className="h-10 w-auto dark:hidden" />
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo-dark.png" alt="Coach Reflection" width={240} height={40} className="h-10 w-auto hidden dark:block" />
+            <img src="/logo-dark.png" alt="CoachReflection" width={240} height={40} className="h-10 w-auto hidden dark:block" />
             <span className="text-sm text-muted-foreground">by 360TFT</span>
           </Link>
           <div className="flex items-center gap-4">
@@ -350,11 +350,11 @@ export default function TennisCoachingReflectionPage() {
               <div className="space-y-4">
                 <Card className="border">
                   <CardHeader className="pb-2">
-                    <CardTitle className="text-base">How does Coach Reflection help tennis coaches specifically?</CardTitle>
+                    <CardTitle className="text-base">How does CoachReflection help tennis coaches specifically?</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-muted-foreground">
-                      Coach Reflection adapts its prompts and terminology to tennis. After an individual
+                      CoachReflection adapts its prompts and terminology to tennis. After an individual
                       lesson it asks about technical work on serve, groundstrokes or volleys, and how the
                       player responded to coaching cues. After a group session it focuses on drill engagement,
                       competition formats and managing different ability levels.
@@ -380,7 +380,7 @@ export default function TennisCoachingReflectionPage() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-muted-foreground">
-                      Coach Reflection includes a CPD export feature that formats your reflections into
+                      CoachReflection includes a CPD export feature that formats your reflections into
                       evidence suitable for LTA coaching pathway requirements. Whether you are working
                       towards your LTA Level 1 Assistant, Level 2, Level 3 or the Performance pathway,
                       your reflections demonstrate ongoing professional development.

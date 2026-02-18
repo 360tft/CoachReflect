@@ -2,7 +2,7 @@
 title: "How to Start a Coaching Journal (And Actually Keep It Up)"
 slug: "how-to-start-a-coaching-journal"
 excerpt: "A practical guide to starting and maintaining a coaching journal that genuinely improves your practice, without turning it into another task you dread."
-seoTitle: "How to Start a Coaching Journal (And Actually Keep It Up) | Coach Reflection"
+seoTitle: "How to Start a Coaching Journal (And Actually Keep It Up) | CoachReflection"
 seoDescription: "Learn how to start and maintain a coaching journal that actually improves your practice. Practical tips for busy coaches who want to develop systematically."
 category: "reflection"
 topics: ["coaching journal", "reflection", "coaching development", "self-improvement"]
@@ -212,6 +212,6 @@ If you have read this far and you are ready to start, here is what to do right n
 
 The coaches who develop fastest are the ones who reflect consistently. Not the ones who reflect perfectly. Consistency beats quality every single time when it comes to journalling.
 
-If you want to make this even easier, [Coach Reflection](https://coachreflection.com) is built specifically for this. It gives you guided prompts after each session, tracks your entries over time, and surfaces patterns automatically so you get the benefits of a journal without having to build the system yourself. It takes less than five minutes per session and works on any device.
+If you want to make this even easier, [CoachReflection](https://coachreflection.com) is built specifically for this. It gives you guided prompts after each session, tracks your entries over time, and surfaces patterns automatically so you get the benefits of a journal without having to build the system yourself. It takes less than five minutes per session and works on any device.
 
 Whatever method you choose, start today. Your future coaching self will be glad you did.

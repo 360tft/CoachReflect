@@ -1,4 +1,4 @@
-// Coach Reflection Email Sequence Configuration
+// CoachReflection Email Sequence Configuration
 
 export type SequenceName = 'onboarding' | 'winback' | 'streak_recovery' | 'weekly_summary' | 'trial'
 
@@ -14,20 +14,20 @@ export interface SequenceStep {
 
 // Onboarding sequence for new users (7 steps - SAAS-STANDARD compliant)
 export const ONBOARDING_SEQUENCE: SequenceStep[] = [
-  { day: 0, template: 'welcome', subject: 'Welcome to Coach Reflection' },
+  { day: 0, template: 'welcome', subject: 'Welcome to CoachReflection' },
   { day: 1, template: 'first-reflection', subject: 'Your first reflection takes 2 minutes' },
   { day: 3, template: 'social-proof', subject: 'What coaches are reflecting on this week' },
   { day: 5, template: 'upgrade-pitch', subject: 'Ready for AI-powered insights?' },
   { day: 7, template: 'check-in', subject: 'How are your reflections going?' },
   { day: 10, template: 'feature-highlight', subject: 'AI insights that transform your coaching' },
-  { day: 21, template: 'last-chance', subject: 'A thank you from the Coach Reflection team' },
+  { day: 21, template: 'last-chance', subject: 'A thank you from the CoachReflection team' },
 ]
 
 // Win-back sequence for inactive users (7+ days no activity)
 export const WINBACK_SEQUENCE: SequenceStep[] = [
   { day: 0, template: 'winback', subject: 'Miss your reflections? We do too' },
   { day: 3, template: 'winback-feature', subject: "New: Chat with your coaching AI" },
-  { day: 7, template: 'winback-final', subject: 'Quick reminder about Coach Reflection' },
+  { day: 7, template: 'winback-final', subject: 'Quick reminder about CoachReflection' },
 ]
 
 // Streak recovery for users who broke their streak

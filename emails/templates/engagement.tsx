@@ -17,13 +17,13 @@ interface EngagementEmailProps {
 export function LastChanceEmail({ name, unsubscribeUrl }: EngagementEmailProps) {
   return (
     <BaseLayout
-      preview="Thanks for trying Coach Reflection"
+      preview="Thanks for trying CoachReflection"
       unsubscribeUrl={unsubscribeUrl}
     >
       <Text style={paragraph}>Hey {name},</Text>
 
       <Text style={paragraph}>
-        You've been using Coach Reflection for 3 weeks now.
+        You've been using CoachReflection for 3 weeks now.
       </Text>
 
       <Text style={paragraph}>
@@ -82,7 +82,7 @@ export function PowerUserEmail({ name, unsubscribeUrl }: EngagementEmailProps) {
       </Text>
 
       <Text style={paragraph}>
-        You're one of our most active coaches on Coach Reflection. Your
+        You're one of our most active coaches on CoachReflection. Your
         consistency with reflections puts you in the top 5% of users.
       </Text>
 
@@ -125,7 +125,7 @@ export function InactiveReengagementEmail({ name, unsubscribeUrl }: EngagementEm
       <Text style={paragraph}>Hey {name},</Text>
 
       <Text style={paragraph}>
-        Noticed you haven't used Coach Reflection for a bit.
+        Noticed you haven't used CoachReflection for a bit.
       </Text>
 
       <Text style={paragraph}>

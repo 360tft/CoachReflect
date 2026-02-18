@@ -52,7 +52,7 @@ export function SharedDrillView({ drill }: { drill: SharedDrill }) {
   }
 
   const handleSocialShare = (platform: 'twitter' | 'whatsapp') => {
-    const text = `Check out this drill: ${drill.name}\n\nCreated with Coach Reflection`
+    const text = `Check out this drill: ${drill.name}\n\nCreated with CoachReflection`
     const urls: Record<string, string> = {
       twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(shareUrl)}`,
       whatsapp: `https://wa.me/?text=${encodeURIComponent(text + '\n' + shareUrl)}`,
@@ -66,15 +66,15 @@ export function SharedDrillView({ drill }: { drill: SharedDrill }) {
         <div className="container mx-auto px-4 py-3 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo.png" alt="Coach Reflection" className="h-7 w-auto dark:hidden" />
+            <img src="/logo.png" alt="CoachReflection" className="h-7 w-auto dark:hidden" />
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo-dark.png" alt="Coach Reflection" className="h-7 w-auto hidden dark:block" />
+            <img src="/logo-dark.png" alt="CoachReflection" className="h-7 w-auto hidden dark:block" />
           </Link>
           <Link
             href="/login"
             className="px-4 py-2 bg-[#E5A11C] text-white text-sm font-medium rounded-lg hover:bg-[#d4940f] transition-colors"
           >
-            Try Coach Reflection
+            Try CoachReflection
           </Link>
         </div>
       </header>
@@ -148,13 +148,13 @@ export function SharedDrillView({ drill }: { drill: SharedDrill }) {
 
           <div className="text-center pt-4 border-t border-gray-200 dark:border-gray-700">
             <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">
-              Created with Coach Reflection - AI coaching journal
+              Created with CoachReflection - AI coaching journal
             </p>
             <Link
               href="/"
               className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#E5A11C] text-white font-medium rounded-lg hover:bg-[#d4940f] transition-colors"
             >
-              Try Coach Reflection Free
+              Try CoachReflection Free
             </Link>
           </div>
         </div>

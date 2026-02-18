@@ -10,7 +10,7 @@ Most coaches don't notice burnout until it's too late. By the time they recognis
 
 But burnout has warning signs. If you track the right things, you can spot it weeks before it becomes a crisis. You can intervene early. You can protect your coaching longevity.
 
-In this video, I'll show you how to use Coach Reflection's mood and energy tracking to spot burnout before it hits. And what to do when the warning signs appear.
+In this video, I'll show you how to use CoachReflection's mood and energy tracking to spot burnout before it hits. And what to do when the warning signs appear.
 
 Let me start by explaining what burnout actually is.
 
@@ -30,7 +30,7 @@ But these components don't appear overnight. They build up over weeks and months
 
 That's where mood and energy tracking comes in.
 
-After every reflection in Coach Reflection, you rate two things.
+After every reflection in CoachReflection, you rate two things.
 
 Mood. How do you feel after this session? One is terrible, five is great. Don't overthink it. Just your gut reaction.
 
@@ -48,7 +48,7 @@ The gap between mood and energy matters too. High mood but low energy might mean
 
 Low mood and low energy together is the danger zone. That's the burnout pattern. Both dimensions are suffering. You need to act.
 
-Coach Reflection shows you these trends visually. You can see your mood and energy over four, eight, or twelve weeks. The graph makes patterns obvious that you'd otherwise miss.
+CoachReflection shows you these trends visually. You can see your mood and energy over four, eight, or twelve weeks. The graph makes patterns obvious that you'd otherwise miss.
 
 Let me talk about the early warning signs.
 
@@ -64,7 +64,7 @@ Maybe your mood is fine most of the time, but drops dramatically when you have a
 
 This is useful information. It tells you the trigger. You can address the specific issue rather than feeling generally overwhelmed.
 
-Watch for: Patterns in when your mood is lowest. Coach Reflection can help you spot these correlations.
+Watch for: Patterns in when your mood is lowest. CoachReflection can help you spot these correlations.
 
 Warning sign three: The reflection itself feels like a burden.
 
@@ -76,7 +76,7 @@ Warning sign four: Negative language dominates.
 
 Read your last ten reflections. What's the balance of positive to negative language? If every reflection is about what went wrong, with little about what went right, your perspective is skewing negative. That's a burnout indicator.
 
-Watch for: Coach Reflection's sentiment analysis can show you if your reflections are trending more negative over time.
+Watch for: CoachReflection's sentiment analysis can show you if your reflections are trending more negative over time.
 
 Warning sign five: Player mentions become problems.
 
@@ -114,7 +114,7 @@ But he wasn't tracking. So he didn't notice until it was too late.
 
 That's why mood and energy tracking matters. It catches the decline early. It gives you data instead of just feelings. It lets you intervene when intervention can still help.
 
-How does Coach Reflection make this easy?
+How does CoachReflection make this easy?
 
 After each reflection, you rate mood and energy. Two taps. Takes five seconds.
 
@@ -146,7 +146,7 @@ You might see a healthy pattern. Great. Keep going.
 
 You might see warning signs. That's actually great too. Because now you know. And knowing early means you can act early.
 
-The link to Coach Reflection is in the description. The mood and energy tracking is free. Start now.
+The link to CoachReflection is in the description. The mood and energy tracking is free. Start now.
 
 Thanks for watching. If this was useful, subscribe. More coaching content coming.
 

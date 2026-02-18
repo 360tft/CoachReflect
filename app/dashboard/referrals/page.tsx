@@ -68,12 +68,12 @@ export default function ReferralsPage() {
     if (!data?.referralCode) return
 
     const referralUrl = `${window.location.origin}/signup?ref=${data.referralCode}`
-    const message = `I've been using Coach Reflection to track my coaching journey and it's been great. Give it a try: ${referralUrl}`
+    const message = `I've been using CoachReflection to track my coaching journey and it's been great. Give it a try: ${referralUrl}`
 
     const urls = {
       twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(message)}`,
       whatsapp: `https://wa.me/?text=${encodeURIComponent(message)}`,
-      email: `mailto:?subject=${encodeURIComponent('Check out Coach Reflection')}&body=${encodeURIComponent(message)}`
+      email: `mailto:?subject=${encodeURIComponent('Check out CoachReflection')}&body=${encodeURIComponent(message)}`
     }
 
     window.open(urls[platform], '_blank', 'width=600,height=400')
@@ -113,7 +113,7 @@ export default function ReferralsPage() {
       <div>
         <h1 className="text-2xl font-bold">Refer Friends, Get Rewards</h1>
         <p className="text-muted-foreground">
-          Share Coach Reflection with fellow coaches and get 1 month of Pro free for each friend who subscribes
+          Share CoachReflection with fellow coaches and get 1 month of Pro free for each friend who subscribes
         </p>
       </div>
 

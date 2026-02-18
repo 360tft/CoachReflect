@@ -2,7 +2,7 @@
 title: "Free Coaching Reflection Template (Using the Gibbs Reflective Cycle)"
 slug: "coaching-reflection-template-gibbs-cycle"
 excerpt: "A ready-to-use coaching reflection template based on the Gibbs Reflective Cycle. Six structured questions to ask yourself after every training session or match, with examples for football, rugby, and basketball coaches."
-seoTitle: "Free Coaching Reflection Template - Gibbs Cycle for Coaches | Coach Reflection"
+seoTitle: "Free Coaching Reflection Template - Gibbs Cycle for Coaches | CoachReflection"
 seoDescription: "Download a free coaching reflection template based on the Gibbs Reflective Cycle. Six questions to ask after every session with real coaching examples. Works for any sport."
 category: "reflection"
 topics: ["reflection template", "Gibbs cycle", "coaching reflection", "session review template", "coaching development"]
@@ -268,4 +268,4 @@ However you prefer. Paper journals, notes apps, voice memos, or a dedicated refl
 
 Reflection does not need to be complicated. Six questions. A few minutes. Honest answers. That is all the Gibbs Reflective Cycle asks of you, and the coaching insights it generates are worth far more than the time it takes.
 
-If you want a digital home for your reflections that guides you through structured prompts, tracks your development over time, and lets you export your reflections as CPD evidence, [Coach Reflection](https://coachreflection.com) does exactly that. Try it free at [coachreflection.com](https://coachreflection.com).
+If you want a digital home for your reflections that guides you through structured prompts, tracks your development over time, and lets you export your reflections as CPD evidence, [CoachReflection](https://coachreflection.com) does exactly that. Try it free at [coachreflection.com](https://coachreflection.com).

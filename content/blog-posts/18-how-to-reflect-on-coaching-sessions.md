@@ -2,7 +2,7 @@
 title: "How to Reflect on Your Coaching Sessions (A Complete Guide)"
 slug: "how-to-reflect-on-coaching-sessions"
 excerpt: "A practical guide to reflective practice for sports coaches. Learn the Gibbs, Kolb, and Driscoll models, what to capture after every session, and how to turn scattered thoughts into genuine coaching improvement."
-seoTitle: "How to Reflect on Your Coaching Sessions - Complete Guide | Coach Reflection"
+seoTitle: "How to Reflect on Your Coaching Sessions - Complete Guide | CoachReflection"
 seoDescription: "Learn how to reflect on coaching sessions effectively. Covers Gibbs reflective cycle, Kolb experiential learning, practical frameworks, and digital tools for sports coaches."
 category: "reflection"
 topics: ["reflective practice", "coaching reflection", "Gibbs cycle", "Kolb", "coaching development", "session review"]
@@ -306,4 +306,4 @@ Review your reflections monthly and look for evidence of change. Are you trying 
 
 Reflection does not need to be complicated. A few honest questions, a few minutes, and somewhere to record your answers. That is all it takes to turn every coaching session into a development opportunity.
 
-[Coach Reflection](https://coachreflection.com) is built to make this process as simple as possible. Guided prompts after every session, voice notes for when typing feels like too much, and pattern tracking over weeks and months so you can see your development taking shape. If you have ever wanted to reflect more consistently but struggled with the discipline, it is worth trying. Start free at [coachreflection.com](https://coachreflection.com).
+[CoachReflection](https://coachreflection.com) is built to make this process as simple as possible. Guided prompts after every session, voice notes for when typing feels like too much, and pattern tracking over weeks and months so you can see your development taking shape. If you have ever wanted to reflect more consistently but struggled with the discipline, it is worth trying. Start free at [coachreflection.com](https://coachreflection.com).

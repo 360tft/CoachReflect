@@ -1,8 +1,8 @@
-# Coach Reflection Technical Documentation
+# CoachReflection Technical Documentation
 
 ## Overview
 
-Coach Reflection is a reflective journaling app for football coaches. Coaches log sessions, upload session plans (analyzed by AI), and capture guided reflections with AI-powered insights.
+CoachReflection is a reflective journaling app for football coaches. Coaches log sessions, upload session plans (analyzed by AI), and capture guided reflections with AI-powered insights.
 
 ## Tech Stack
 
@@ -23,7 +23,7 @@ Coach Reflection is a reflective journaling app for football coaches. Coaches lo
 ## Project Structure
 
 ```
-Coach Reflection/
+CoachReflection/
 ├── app/
 │   ├── (auth)/                    # Auth pages (login, signup)
 │   ├── api/                       # API routes

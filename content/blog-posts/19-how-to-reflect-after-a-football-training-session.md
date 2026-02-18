@@ -1,7 +1,7 @@
 ---
 title: "How to Reflect After a Football Training Session"
 slug: "how-to-reflect-after-a-football-training-session"
-seoTitle: "How to Reflect After a Football Training Session | Coach Reflection"
+seoTitle: "How to Reflect After a Football Training Session | CoachReflection"
 seoDescription: "A practical guide to post-session reflection for football coaches. Learn what to capture, when to do it, and how to turn scattered observations into coaching insights."
 category: "reflection"
 topics: ["football", "training reflection", "reflective practice", "coaching development"]
@@ -32,7 +32,7 @@ The best time to reflect is immediately after the session or within a few hours.
 
 For most grassroots coaches, this means one of three windows:
 
-**In the car on the way home.** This is when voice notes are invaluable. You cannot type, but you can speak. Record two or three minutes of unstructured thoughts. What went well. What did not. What you want to remember. You can structure it later, or let an AI tool like Coach Reflection do it for you.
+**In the car on the way home.** This is when voice notes are invaluable. You cannot type, but you can speak. Record two or three minutes of unstructured thoughts. What went well. What did not. What you want to remember. You can structure it later, or let an AI tool like CoachReflection do it for you.
 
 **That evening after the kids are in bed.** Not ideal because some detail has faded, but still workable if you jotted down a couple of keywords during the session. Even "rondo - too big" or "Jake - confident today" is enough to trigger the full memory when you sit down to write.
 
@@ -96,8 +96,8 @@ The biggest challenge with reflection is not doing it once. It is doing it fifty
 
 **Make it visible.** Track your streak. Seeing that you have reflected after every session for six weeks creates its own momentum. Breaking a streak feels worse than missing a single entry.
 
-## Where Coach Reflection Fits
+## Where CoachReflection Fits
 
-I built Coach Reflection because I wanted a system that made all of this easier. Guided prompts so you do not stare at a blank page. Voice notes so you can reflect from the car. AI that reads your reflections over time and surfaces the patterns you miss. Player tracking that works automatically from your natural writing.
+I built CoachReflection because I wanted a system that made all of this easier. Guided prompts so you do not stare at a blank page. Voice notes so you can reflect from the car. AI that reads your reflections over time and surfaces the patterns you miss. Player tracking that works automatically from your natural writing.
 
-If building a consistent post-session reflection habit is something you want to do, [Coach Reflection is free to start](https://coachreflection.com/signup). You might find it useful.
+If building a consistent post-session reflection habit is something you want to do, [CoachReflection is free to start](https://coachreflection.com/signup). You might find it useful.

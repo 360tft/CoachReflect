@@ -234,7 +234,7 @@ export default function EngagementPage() {
         </CardHeader>
         <CardContent>
           <div className="bg-muted p-4 rounded-lg text-sm space-y-2">
-            <p><strong>Subject:</strong> We miss you at Coach Reflection</p>
+            <p><strong>Subject:</strong> We miss you at CoachReflection</p>
             <hr className="my-2" />
             <p>Hi [Name],</p>
             <p>It&apos;s been a while since you last reflected on your coaching sessions.</p>

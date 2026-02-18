@@ -677,4 +677,4 @@ Before requesting review:
 ---
 
 *Last Updated: January 2026*
-*Applies to: All products (CruiseGPT, RefereeGPT, Coach Reflection, FitGPT, FootballGPT, and all future products)*
+*Applies to: All products (CruiseGPT, RefereeGPT, CoachReflection, FitGPT, FootballGPT, and all future products)*

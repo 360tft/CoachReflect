@@ -5,7 +5,7 @@ import { Footer } from "@/app/components/footer"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Coach Reflection for FCA Members | Football Coaching Academy",
+  title: "CoachReflection for FCA Members | Football Coaching Academy",
   description:
     "Built for FCA coaches. Reflect on your sessions, track patterns, and grow faster with AI-powered coaching insights.",
 }
@@ -38,9 +38,9 @@ export default function FCALandingPage() {
       <header className="container mx-auto px-4 py-6 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo.png" alt="Coach Reflection" width={240} height={40} className="h-10 w-auto dark:hidden" />
+          <img src="/logo.png" alt="CoachReflection" width={240} height={40} className="h-10 w-auto dark:hidden" />
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo-dark.png" alt="Coach Reflection" width={240} height={40} className="h-10 w-auto hidden dark:block" />
+          <img src="/logo-dark.png" alt="CoachReflection" width={240} height={40} className="h-10 w-auto hidden dark:block" />
         </Link>
         <Link href="/signup">
           <Button>Get Started Free</Button>
@@ -66,7 +66,7 @@ export default function FCALandingPage() {
         <Card className="mb-12">
           <CardContent className="py-6">
             <p className="text-muted-foreground mb-4">
-              I built Coach Reflection because I kept telling coaches in FCA to reflect after sessions,
+              I built CoachReflection because I kept telling coaches in FCA to reflect after sessions,
               but I wasn&apos;t doing it properly myself. Writing in a notebook felt like homework.
               Talking to an AI coach who asks the right questions? That I actually do.
             </p>

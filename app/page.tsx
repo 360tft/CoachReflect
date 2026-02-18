@@ -28,10 +28,10 @@ export default async function Home() {
         <Link href="/" className="flex items-center gap-2">
           {/* Light mode logo (dark text) */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo.png" alt="Coach Reflection" width={240} height={40} className="h-10 w-auto dark:hidden" />
+          <img src="/logo.png" alt="CoachReflection" width={240} height={40} className="h-10 w-auto dark:hidden" />
           {/* Dark mode logo (white text) */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo-dark.png" alt="Coach Reflection" width={240} height={40} className="h-10 w-auto hidden dark:block" />
+          <img src="/logo-dark.png" alt="CoachReflection" width={240} height={40} className="h-10 w-auto hidden dark:block" />
           <span className="text-sm text-muted-foreground">by 360TFT</span>
         </Link>
         <div className="flex items-center gap-4">
@@ -223,7 +223,7 @@ export default async function Home() {
       <section className="container mx-auto px-4 py-20">
         <h2 className="text-3xl font-bold text-center mb-4">Common Questions</h2>
         <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
-          Quick answers about Coach Reflection
+          Quick answers about CoachReflection
         </p>
         <div className="max-w-3xl mx-auto space-y-4">
           <Card className="border">
@@ -242,7 +242,7 @@ export default async function Home() {
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground">
-                Notes sit in a notebook. Coach Reflection asks you the right questions, spots patterns you might miss, and helps you identify what&apos;s actually working. It&apos;s like having a mentor who remembers everything.
+                Notes sit in a notebook. CoachReflection asks you the right questions, spots patterns you might miss, and helps you identify what&apos;s actually working. It&apos;s like having a mentor who remembers everything.
               </p>
             </CardContent>
           </Card>

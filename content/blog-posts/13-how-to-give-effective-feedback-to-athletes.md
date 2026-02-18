@@ -1,7 +1,7 @@
 ---
 title: "How to Give Effective Feedback to Athletes"
 slug: "how-to-give-effective-feedback-to-athletes"
-seoTitle: "How to Give Effective Feedback to Athletes | Coach Reflection"
+seoTitle: "How to Give Effective Feedback to Athletes | CoachReflection"
 seoDescription: "Learn how to give feedback that actually improves performance. Practical techniques for sports coaches at every level, from grassroots to performance."
 category: "communication"
 topics: ["feedback", "communication", "coaching skills", "player development"]
@@ -284,4 +284,4 @@ The ultimate test of your feedback is not whether it sounded good or felt approp
 
 Great coaches are not the ones who give the most feedback. They are the ones who give the right feedback, at the right time, in the right way, to the right athlete. And they constantly refine their approach by paying attention to whether it is working.
 
-If you want a structured way to track your feedback habits, evaluate your sessions, and identify patterns in your coaching over time, [Coach Reflection](https://coachreflection.com) gives you guided prompts and long-term tracking designed specifically for coaches. Start for free at [coachreflection.com](https://coachreflection.com).
+If you want a structured way to track your feedback habits, evaluate your sessions, and identify patterns in your coaching over time, [CoachReflection](https://coachreflection.com) gives you guided prompts and long-term tracking designed specifically for coaches. Start for free at [coachreflection.com](https://coachreflection.com).

@@ -1,4 +1,4 @@
-// Gamification system for Coach Reflection
+// Gamification system for CoachReflection
 // Handles streaks, badges, and coaching theme tracking
 
 import { createAdminClient } from '@/lib/supabase/admin'

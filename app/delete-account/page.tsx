@@ -2,8 +2,8 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'Delete Account - Coach Reflection',
-  description: 'Request deletion of your Coach Reflection account and associated data',
+  title: 'Delete Account - CoachReflection',
+  description: 'Request deletion of your CoachReflection account and associated data',
 }
 
 export default function DeleteAccountPage() {
@@ -14,13 +14,13 @@ export default function DeleteAccountPage() {
 
         <div className="space-y-6 text-muted-foreground">
           <p>
-            You can delete your Coach Reflection account and all associated data at any time.
+            You can delete your CoachReflection account and all associated data at any time.
           </p>
 
           <div className="bg-card border border-border rounded-lg p-6">
             <h2 className="text-xl font-semibold text-foreground mb-4">Option 1: Delete from the app</h2>
             <ol className="list-decimal list-inside space-y-2">
-              <li>Log in to your Coach Reflection account</li>
+              <li>Log in to your CoachReflection account</li>
               <li>Go to Settings</li>
               <li>Scroll down to &quot;Delete Account&quot;</li>
               <li>Click &quot;Delete Account&quot; and confirm</li>

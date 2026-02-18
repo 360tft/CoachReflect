@@ -1,7 +1,7 @@
 ---
 title: "Why Every Soccer Coach Needs a Reflection Journal"
 slug: "why-every-soccer-coach-needs-a-reflection-journal"
-seoTitle: "Why Every Soccer Coach Needs a Reflection Journal | Coach Reflection"
+seoTitle: "Why Every Soccer Coach Needs a Reflection Journal | CoachReflection"
 seoDescription: "How a reflection journal helps soccer coaches improve faster, track player development, avoid burnout, and build evidence for coaching licences. A practical case for structured reflection."
 category: "coaching_philosophy"
 topics: ["soccer", "reflection journal", "coaching development", "coaching philosophy"]
@@ -88,6 +88,6 @@ The coaches who improve fastest are not necessarily the ones with the most badge
 
 You do not need anything special to start. A notes app on your phone works. A physical notebook works. The important thing is that you do it consistently, not the tool you use.
 
-That said, I built Coach Reflection because I found the process hard to sustain with generic tools. The guided prompts help when you do not know what to write. The AI pattern detection surfaces trends you would miss on your own. The player tracking works automatically from your natural writing. And the CPD export means your portfolio builds itself.
+That said, I built CoachReflection because I found the process hard to sustain with generic tools. The guided prompts help when you do not know what to write. The AI pattern detection surfaces trends you would miss on your own. The player tracking works automatically from your natural writing. And the CPD export means your portfolio builds itself.
 
-If structured reflection is something you want to commit to, [Coach Reflection is free to start](https://coachreflection.com/signup). But honestly, even if you just open a notes app and write three sentences after your next practice, you are ahead of most coaches. Start there. See what happens.
+If structured reflection is something you want to commit to, [CoachReflection is free to start](https://coachreflection.com/signup). But honestly, even if you just open a notes app and write three sentences after your next practice, you are ahead of most coaches. Start there. See what happens.

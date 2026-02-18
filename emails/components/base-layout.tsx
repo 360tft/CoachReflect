@@ -27,7 +27,7 @@ export function BaseLayout({ preview, children, unsubscribeUrl }: BaseLayoutProp
           {/* Header */}
           <Section style={header}>
             <Text style={logoEmoji}>CR</Text>
-            <Text style={logoText}>Coach Reflection</Text>
+            <Text style={logoText}>CoachReflection</Text>
           </Section>
 
           {/* Content */}

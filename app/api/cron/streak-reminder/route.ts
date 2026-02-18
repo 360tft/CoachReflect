@@ -3,7 +3,7 @@ import { createClient } from "@supabase/supabase-js"
 import { Resend } from "resend"
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://coachreflection.com"
-const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || "Coach Reflection <hello@send.coachreflection.com>"
+const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || "CoachReflection <hello@send.coachreflection.com>"
 
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
@@ -89,7 +89,7 @@ export async function GET(request: Request) {
         html: `
           <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
             <div style="text-align: center; margin-bottom: 30px;">
-              <h1 style="font-size: 24px; color: #92400e; margin: 10px 0;">Coach Reflection</h1>
+              <h1 style="font-size: 24px; color: #92400e; margin: 10px 0;">CoachReflection</h1>
             </div>
 
             <p style="font-size: 16px; line-height: 1.6; color: #374151;">Hey ${userName},</p>

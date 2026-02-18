@@ -1,13 +1,13 @@
-# Capacitor Mobile Setup for Coach Reflection
+# Capacitor Mobile Setup for CoachReflection
 
 ## Overview
 
-Coach Reflection now has Capacitor configured for iOS and Android builds. Since the app requires backend API routes, we use a "live update" approach where the mobile app loads the web version from a server URL.
+CoachReflection now has Capacitor configured for iOS and Android builds. Since the app requires backend API routes, we use a "live update" approach where the mobile app loads the web version from a server URL.
 
 ## Configuration
 
 **App ID:** `com.coachreflection.com`
-**App Name:** Coach Reflection
+**App Name:** CoachReflection
 **Brand Color:** #E5A11C (gold)
 
 ## Initial Setup (One-time)
@@ -50,7 +50,7 @@ This runs the Next.js dev server at http://localhost:3000. Continue developing a
 
 ### Mobile Development
 
-Since Coach Reflection needs backend APIs, the mobile app loads from a server URL.
+Since CoachReflection needs backend APIs, the mobile app loads from a server URL.
 
 **Option 1: Test with local dev server (recommended for development)**
 
@@ -110,7 +110,7 @@ npm run cap:sync
 **iOS (Xcode):**
 - Open project: `npm run ios`
 - Set Bundle Identifier: `com.coachreflection.com`
-- Set Display Name: `Coach Reflection`
+- Set Display Name: `CoachReflection`
 - Add app icons
 - Set version and build number
 
@@ -121,7 +121,7 @@ npm run cap:sync
   - Set `versionName` and `versionCode`
 - Add app icons
 - Update `android/app/src/main/res/values/strings.xml`:
-  - Set `<string name="app_name">Coach Reflection</string>`
+  - Set `<string name="app_name">CoachReflection</string>`
 
 ## Environment Variables
 

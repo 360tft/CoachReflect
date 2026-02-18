@@ -62,7 +62,7 @@ export function Footer() {
         {/* Company Info */}
         <div className="text-center mt-6 pt-4 border-t border-border">
           <p className="text-sm font-semibold text-muted-foreground mb-1">
-            Coach Reflection <span className="font-normal">by 360TFT</span>
+            CoachReflection <span className="font-normal">by 360TFT</span>
           </p>
           <p className="text-xs text-muted-foreground">
             Operated by SVMS Consultancy Limited

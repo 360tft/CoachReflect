@@ -1,4 +1,4 @@
-// AI Response Formatting Standards for Coach Reflection
+// AI Response Formatting Standards for CoachReflection
 // Mobile-optimized response structure for reflection guidance
 
 /**

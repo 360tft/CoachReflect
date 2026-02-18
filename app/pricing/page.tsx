@@ -5,7 +5,7 @@ import { Footer } from "@/app/components/footer"
 import { createClient } from "@/lib/supabase/server"
 
 export const metadata = {
-  title: "Pricing | Coach Reflection",
+  title: "Pricing | CoachReflection",
   description: "Simple pricing for coaches. Start reflecting for free, upgrade to Pro to talk through sessions, or go Pro+ for unlimited voice notes, communication analysis, and CPD documentation.",
 }
 
@@ -27,9 +27,9 @@ export default async function PricingPage() {
       <header className="container mx-auto px-4 py-6 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo.png" alt="Coach Reflection" width={240} height={40} className="h-10 w-auto dark:hidden" />
+          <img src="/logo.png" alt="CoachReflection" width={240} height={40} className="h-10 w-auto dark:hidden" />
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo-dark.png" alt="Coach Reflection" width={240} height={40} className="h-10 w-auto hidden dark:block" />
+          <img src="/logo-dark.png" alt="CoachReflection" width={240} height={40} className="h-10 w-auto hidden dark:block" />
         </Link>
         <div className="flex items-center gap-4">
           {isLoggedIn ? (

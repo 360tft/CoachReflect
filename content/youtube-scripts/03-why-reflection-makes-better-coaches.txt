@@ -54,7 +54,7 @@ Reflection makes the data visible. When you write down that "players weren't lis
 
 Without written reflection, you might never connect these instances. Each one feels like a one-off. With written reflection, the pattern is obvious when you review your notes.
 
-This is what AI-powered tools like Coach Reflection enhance. The AI reads every reflection, remembers every detail, and surfaces patterns you'd miss. It doesn't get tired, doesn't forget, doesn't let recency bias skew its analysis.
+This is what AI-powered tools like CoachReflection enhance. The AI reads every reflection, remembers every detail, and surfaces patterns you'd miss. It doesn't get tired, doesn't forget, doesn't let recency bias skew its analysis.
 
 But even without AI, simple written reflection gives you data to spot patterns. A notebook works. The AI just makes it more powerful.
 
@@ -68,7 +68,7 @@ After a terrible session, a two-minute reflection helps you process it. Instead 
 
 This might seem like a small benefit, but it compounds. Coaches who process emotions well last longer. They don't burn out as quickly. They don't carry frustration from one session to the next. They maintain perspective.
 
-The mood and energy tracking in Coach Reflection serves this purpose. It makes your emotional state visible over time. You can see when you're trending toward burnout before it hits you.
+The mood and energy tracking in CoachReflection serves this purpose. It makes your emotional state visible over time. You can see when you're trending toward burnout before it hits you.
 
 Let me talk about accountability.
 
@@ -128,7 +128,7 @@ How do you start?
 
 If you want the simplest approach, use a notebook. After each session, answer these questions: What worked? What didn't? What will I focus on next time?
 
-If you want structure and pattern detection, use Coach Reflection. The app guides you through the questions, tracks your mood and energy, and uses AI to spot patterns across your reflections.
+If you want structure and pattern detection, use CoachReflection. The app guides you through the questions, tracks your mood and energy, and uses AI to spot patterns across your reflections.
 
 Either way, the key is consistency. One reflection teaches you little. Fifty reflections reveal patterns. A year of reflections transforms your coaching.
 

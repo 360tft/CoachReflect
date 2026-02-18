@@ -52,7 +52,7 @@ export function EmailPreferences({
       <CardHeader>
         <CardTitle>Email Preferences</CardTitle>
         <CardDescription>
-          Manage what emails you receive from Coach Reflection
+          Manage what emails you receive from CoachReflection
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">

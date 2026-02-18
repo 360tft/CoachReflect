@@ -44,7 +44,7 @@ function escapeHtml(str: string): string {
 
 // Config
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://coachreflection.com'
-const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'Coach Reflection <hello@send.coachreflection.com>'
+const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'CoachReflection <hello@send.coachreflection.com>'
 const ADMIN_EMAIL = process.env.ADMIN_EMAILS?.split(',')[0] || 'admin@360tft.com'
 
 // Lazy-load Resend client
@@ -86,7 +86,7 @@ interface TemplateConfig {
 const TEMPLATES: Record<TemplateName, TemplateConfig> = {
   'welcome': {
     component: WelcomeEmail,
-    subject: 'Welcome to Coach Reflection',
+    subject: 'Welcome to CoachReflection',
   },
   'first-reflection': {
     component: FirstReflectionEmail,
@@ -130,7 +130,7 @@ const TEMPLATES: Record<TemplateName, TemplateConfig> = {
   },
   'winback-final': {
     component: WinbackFinalEmail,
-    subject: 'Quick reminder about Coach Reflection',
+    subject: 'Quick reminder about CoachReflection',
   },
   'streak-broken': {
     component: StreakBrokenEmail,
@@ -146,7 +146,7 @@ const TEMPLATES: Record<TemplateName, TemplateConfig> = {
   },
   'last-chance': {
     component: LastChanceEmail,
-    subject: 'A thank you from the Coach Reflection team',
+    subject: 'A thank you from the CoachReflection team',
   },
 }
 
@@ -275,11 +275,11 @@ export async function notifyNewSignup(userEmail: string): Promise<void> {
     await resend.emails.send({
       from: FROM_EMAIL,
       to: ADMIN_EMAIL,
-      subject: 'New Coach Reflection Signup',
+      subject: 'New CoachReflection Signup',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #E5A11C;">New User Signed Up</h2>
-          <p>A new user has signed up for Coach Reflection:</p>
+          <p>A new user has signed up for CoachReflection:</p>
           <div style="background-color: #f3f4f6; padding: 16px; border-radius: 8px; margin: 16px 0;">
             <p style="margin: 0;"><strong>Email:</strong> ${escapeHtml(userEmail)}</p>
             <p style="margin: 8px 0 0 0;"><strong>Time:</strong> ${new Date().toLocaleString('en-GB', { timeZone: 'Europe/London' })}</p>
@@ -309,7 +309,7 @@ export async function notifyNewProSubscription(
     await resend.emails.send({
       from: FROM_EMAIL,
       to: ADMIN_EMAIL,
-      subject: 'New Pro Subscription - Coach Reflection',
+      subject: 'New Pro Subscription - CoachReflection',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #E5A11C;">New Pro Subscriber!</h2>
@@ -343,7 +343,7 @@ export async function notifySubscriptionCanceled(
     await resend.emails.send({
       from: FROM_EMAIL,
       to: ADMIN_EMAIL,
-      subject: 'Subscription Canceled - Coach Reflection',
+      subject: 'Subscription Canceled - CoachReflection',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #dc2626;">Subscription Canceled</h2>
@@ -381,11 +381,11 @@ export async function sendProWelcomeEmail(userEmail: string): Promise<{ success:
     await resend.emails.send({
       from: FROM_EMAIL,
       to: userEmail,
-      subject: 'Welcome to Coach Reflection Pro!',
+      subject: 'Welcome to CoachReflection Pro!',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #E5A11C;">Welcome to Pro!</h2>
-          <p>Thank you for upgrading to Coach Reflection Pro. You now have access to:</p>
+          <p>Thank you for upgrading to CoachReflection Pro. You now have access to:</p>
           <ul>
             <li>Unlimited reflections</li>
             <li>AI-powered coaching insights</li>
@@ -415,7 +415,7 @@ export async function notifyTrialStarted(userEmail: string): Promise<void> {
     await resend.emails.send({
       from: FROM_EMAIL,
       to: ADMIN_EMAIL,
-      subject: 'New Pro Trial Started - Coach Reflection',
+      subject: 'New Pro Trial Started - CoachReflection',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #E5A11C;">New Pro Trial Started</h2>
@@ -447,7 +447,7 @@ export async function notifyTrialConverted(userEmail: string): Promise<void> {
     await resend.emails.send({
       from: FROM_EMAIL,
       to: ADMIN_EMAIL,
-      subject: 'Trial Converted to Pro! - Coach Reflection',
+      subject: 'Trial Converted to Pro! - CoachReflection',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #16a34a;">Trial Converted to Pro!</h2>
@@ -478,7 +478,7 @@ export async function notifyTrialCancelled(userEmail: string): Promise<void> {
     await resend.emails.send({
       from: FROM_EMAIL,
       to: ADMIN_EMAIL,
-      subject: 'Trial Cancelled - Coach Reflection',
+      subject: 'Trial Cancelled - CoachReflection',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #dc2626;">Trial Cancelled</h2>
@@ -568,11 +568,11 @@ export async function sendAbandonedCheckoutEmail(
     await resend.emails.send({
       from: FROM_EMAIL,
       to: userEmail,
-      subject: 'Complete your Coach Reflection Pro upgrade',
+      subject: 'Complete your CoachReflection Pro upgrade',
       html: `
         <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
           <div style="text-align: center; margin-bottom: 30px;">
-            <h1 style="font-size: 24px; color: #92400e; margin: 10px 0;">Coach Reflection</h1>
+            <h1 style="font-size: 24px; color: #92400e; margin: 10px 0;">CoachReflection</h1>
           </div>
 
           <p style="font-size: 16px; line-height: 1.6; color: #374151;">Hey there,</p>
@@ -616,7 +616,7 @@ export async function sendAbandonedCheckoutEmail(
     const { data: users } = await supabase.auth.admin.listUsers()
     const user = users?.users?.find(u => u.email === userEmail)
     if (user) {
-      await logEmailSent(user.id, 'checkout-recovery', 'Complete your Coach Reflection Pro upgrade')
+      await logEmailSent(user.id, 'checkout-recovery', 'Complete your CoachReflection Pro upgrade')
     }
 
     return { success: true }
@@ -643,7 +643,7 @@ export async function notifyNegativeFeedback(
     await resend.emails.send({
       from: FROM_EMAIL,
       to: ADMIN_EMAIL,
-      subject: 'Negative Feedback - Coach Reflection',
+      subject: 'Negative Feedback - CoachReflection',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #dc2626;">Negative Feedback Received</h2>

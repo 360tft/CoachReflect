@@ -1,7 +1,7 @@
 // OpenAI Whisper API Integration for Voice Transcription
 // Cost: ~$0.006 per minute of audio
 
-import OpenAI from 'openai'
+import OpenAI, { toFile } from 'openai'
 import { execFileSync } from 'child_process'
 import { writeFileSync, readFileSync, mkdirSync, rmSync } from 'fs'
 import { join } from 'path'
@@ -52,6 +52,8 @@ export async function transcribeAudio(
   return transcribeChunked(audioBuffer, filename, options)
 }
 
+const MIN_AUDIO_SIZE = 1000 // 1KB - anything smaller is almost certainly empty/corrupt
+
 /**
  * Transcribe a single audio file (must be under 25MB)
  */
@@ -60,10 +62,16 @@ async function transcribeSingleFile(
   filename: string,
   options: TranscriptionOptions = {}
 ): Promise<TranscriptionResult> {
+  if (audioBuffer.length < MIN_AUDIO_SIZE) {
+    throw new Error(
+      `Audio file too small (${audioBuffer.length} bytes). Recording may have failed or been cut short. Try recording again.`
+    )
+  }
+
   const openai = getOpenAI()
 
-  const uint8Array = new Uint8Array(audioBuffer)
-  const file = new File([uint8Array], filename, {
+  // Use OpenAI SDK's toFile for reliable Node.js file handling
+  const file = await toFile(audioBuffer, filename, {
     type: getMimeType(filename),
   })
 
@@ -81,9 +89,16 @@ async function transcribeSingleFile(
       duration_seconds: response.duration || 0,
       language: response.language || null,
     }
-  } catch (error) {
-    console.error('Whisper transcription error:', error)
-    throw new Error('Failed to transcribe audio')
+  } catch (error: unknown) {
+    // Surface the actual API error for diagnosis
+    const apiMessage =
+      error instanceof OpenAI.APIError
+        ? `Whisper API error ${error.status}: ${error.message}`
+        : error instanceof Error
+          ? error.message
+          : 'Unknown transcription error'
+    console.error('Whisper transcription error:', apiMessage, error)
+    throw new Error(`Failed to transcribe audio: ${apiMessage}`)
   }
 }
 
@@ -252,6 +267,7 @@ function getMimeType(filename: string): string {
     'wav': 'audio/wav',
     'webm': 'audio/webm',
     'ogg': 'audio/ogg',
+    'opus': 'audio/ogg',  // Whisper accepts .opus as ogg container
     'flac': 'audio/flac',
   }
   return mimeTypes[ext || ''] || 'audio/mpeg'
@@ -293,6 +309,7 @@ export function validateAudioFile(
     'audio/wav',
     'audio/webm',
     'audio/ogg',
+    'audio/opus',
     'audio/flac',
     'audio/x-m4a',
   ]

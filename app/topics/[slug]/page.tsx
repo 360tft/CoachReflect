@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   return {
-    title: `${topic.title} | Coach Reflection`,
+    title: `${topic.title} | CoachReflection`,
     description: topic.description,
     openGraph: {
       title: `${topic.title} - Coaching Reflection Guide`,
@@ -54,7 +54,7 @@ export default async function TopicPage({ params }: Props) {
               name: q,
               acceptedAnswer: {
                 "@type": "Answer",
-                text: `Use Coach Reflection to explore this question through guided AI-powered reflection. ${topic.description}`,
+                text: `Use CoachReflection to explore this question through guided AI-powered reflection. ${topic.description}`,
               },
             })),
           }),
@@ -67,7 +67,7 @@ export default async function TopicPage({ params }: Props) {
             <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
               <span className="text-primary-foreground font-bold text-sm">CR</span>
             </div>
-            <span className="font-semibold text-foreground">Coach Reflection</span>
+            <span className="font-semibold text-foreground">CoachReflection</span>
           </Link>
         </div>
       </header>
@@ -101,7 +101,7 @@ export default async function TopicPage({ params }: Props) {
         <section className="mb-10 bg-primary/5 border border-primary/20 rounded-lg p-6">
           <h2 className="text-lg font-semibold text-foreground mb-2">Reflect with AI</h2>
           <p className="text-muted-foreground text-sm mb-4">
-            Coach Reflection uses AI to guide your thinking, spot patterns across sessions, and help you grow as a coach.
+            CoachReflection uses AI to guide your thinking, spot patterns across sessions, and help you grow as a coach.
           </p>
           <Link
             href="/signup"
@@ -133,7 +133,7 @@ export default async function TopicPage({ params }: Props) {
       <footer className="border-t border-border py-8 mt-12">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <span className="text-sm text-muted-foreground">Coach Reflection by 360TFT</span>
+            <span className="text-sm text-muted-foreground">CoachReflection by 360TFT</span>
             <div className="flex gap-6 text-sm text-muted-foreground">
               <Link href="/privacy" className="hover:text-primary">Privacy</Link>
               <Link href="/terms" className="hover:text-primary">Terms</Link>

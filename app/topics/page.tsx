@@ -3,7 +3,7 @@ import Link from "next/link"
 import { COACHING_TOPICS, type CoachingTopic } from "@/lib/topics"
 
 export const metadata: Metadata = {
-  title: "Coaching Reflection Topics | Coach Reflection",
+  title: "Coaching Reflection Topics | CoachReflection",
   description: "Explore coaching reflection topics. Post-session reflection, player development, communication, and more. Guided questions for every coaching scenario.",
   openGraph: {
     title: "Coaching Reflection Topics",
@@ -30,7 +30,7 @@ export default function TopicsPage() {
             <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
               <span className="text-primary-foreground font-bold text-sm">CR</span>
             </div>
-            <span className="font-semibold text-foreground">Coach Reflection</span>
+            <span className="font-semibold text-foreground">CoachReflection</span>
           </Link>
         </div>
       </header>
@@ -77,7 +77,7 @@ export default function TopicsPage() {
         <div className="mt-12 bg-card border border-border rounded-lg p-6 text-center">
           <h2 className="text-lg font-semibold text-foreground mb-2">Ready to start reflecting?</h2>
           <p className="text-muted-foreground text-sm mb-4">
-            Coach Reflection uses AI to help you capture and learn from every session.
+            CoachReflection uses AI to help you capture and learn from every session.
           </p>
           <Link
             href="/signup"
@@ -91,7 +91,7 @@ export default function TopicsPage() {
       <footer className="border-t border-border py-8 mt-12">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <span className="text-sm text-muted-foreground">Coach Reflection by 360TFT</span>
+            <span className="text-sm text-muted-foreground">CoachReflection by 360TFT</span>
             <div className="flex gap-6 text-sm text-muted-foreground">
               <Link href="/privacy" className="hover:text-primary">Privacy</Link>
               <Link href="/terms" className="hover:text-primary">Terms</Link>

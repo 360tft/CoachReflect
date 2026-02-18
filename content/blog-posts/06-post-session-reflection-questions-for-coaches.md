@@ -2,7 +2,7 @@
 title: "Post-Session Reflection Questions for Coaches"
 slug: "post-session-reflection-questions-for-coaches"
 excerpt: "The essential reflection questions every sports coach should ask after training sessions and matches, grouped by category with practical guidance on using the answers."
-seoTitle: "Post-Session Reflection Questions for Coaches | Coach Reflection"
+seoTitle: "Post-Session Reflection Questions for Coaches | CoachReflection"
 seoDescription: "Discover the essential reflection questions every sports coach should ask after training sessions and matches. Improve your coaching with structured reflection."
 category: "reflection"
 topics: ["reflection", "questions", "training", "coaching development"]
@@ -163,6 +163,6 @@ The biggest barrier to consistent reflection is time. After a long session, the 
 
 The most effective reflection habit I have seen is one that takes less than five minutes, happens immediately after the session while details are fresh, and follows a consistent structure so you do not have to think about what to write.
 
-That is exactly what [Coach Reflection](https://coachreflection.com) is designed to do. It gives you guided prompts tailored to your session, captures your thoughts quickly, and tracks patterns over time so you can see your development across weeks and months. If you have ever wanted to reflect more consistently but struggled with the discipline, it is worth a look.
+That is exactly what [CoachReflection](https://coachreflection.com) is designed to do. It gives you guided prompts tailored to your session, captures your thoughts quickly, and tracks patterns over time so you can see your development across weeks and months. If you have ever wanted to reflect more consistently but struggled with the discipline, it is worth a look.
 
 Your next session is an opportunity. The question is whether you will remember what it taught you.
