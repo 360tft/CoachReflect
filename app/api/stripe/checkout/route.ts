@@ -96,11 +96,21 @@ export async function POST(request: Request) {
         .eq("user_id", user.id)
     }
 
+    // Check if annual promo coupon should be applied
+    // Applies to annual individual plans (pro, pro_plus) when coupon is configured
+    const annualPromoCoupon = process.env.STRIPE_ANNUAL_PROMO_COUPON_ID
+    const isAnnualIndividual = billingPeriod === "annual" && (plan === "pro" || plan === "pro_plus")
+    const applyCoupon = isAnnualIndividual && annualPromoCoupon
+
     // Create checkout session — with trial if eligible
     const session = await stripe.checkout.sessions.create({
       customer: customerId,
       mode: "subscription",
-      allow_promotion_codes: true,
+      // Stripe doesn't allow discounts + allow_promotion_codes together
+      ...(applyCoupon
+        ? { discounts: [{ coupon: annualPromoCoupon }] }
+        : { allow_promotion_codes: true }
+      ),
       line_items: [
         {
           price: priceId,
@@ -128,7 +138,9 @@ export async function POST(request: Request) {
       ...(trialEligible ? {
         custom_text: {
           submit: {
-            message: 'Your 7-day free trial starts today. You will not be charged until the trial ends. Cancel anytime from settings.',
+            message: applyCoupon
+              ? 'Your 7-day free trial starts today. After your trial, you get 50% off your first year. Cancel anytime from settings.'
+              : 'Your 7-day free trial starts today. You will not be charged until the trial ends. Cancel anytime from settings.',
           },
         },
       } : {

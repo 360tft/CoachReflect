@@ -105,7 +105,7 @@ export function UpgradeModal({ variant, isOpen, onClose }: UpgradeModalProps) {
         },
         body: JSON.stringify({
           plan: 'pro',
-          billing_period: 'monthly',
+          billing_period: 'annual',
           fp_tid: window.FPROM?.data?.tid || undefined,
         }),
       })
@@ -220,10 +220,16 @@ export function UpgradeModal({ variant, isOpen, onClose }: UpgradeModalProps) {
             </>
           ) : (
             <>
-              <span className="text-3xl font-bold">{formatPrice(PRICING.PRO.monthly.price)}</span>
-              <span className="text-muted-foreground">/month</span>
+              <p className="text-xs font-semibold text-amber-600 dark:text-amber-400 mb-1">
+                Half price for your first year
+              </p>
+              <span className="text-lg text-muted-foreground line-through mr-2">
+                {formatPrice(PRICING.PRO.annual.price)}
+              </span>
+              <span className="text-3xl font-bold">{formatPrice(PRICING.PRO.annual.promoPrice)}</span>
+              <span className="text-muted-foreground">/first year</span>
               <p className="text-xs text-muted-foreground mt-0.5">
-                That&apos;s $0.26/day. Less than your post-match coffee.
+                That&apos;s {formatPrice(PRICING.PRO.annual.promoMonthlyEquivalent)}/mo. Less than your post-match coffee.
               </p>
             </>
           )}
@@ -235,9 +241,15 @@ export function UpgradeModal({ variant, isOpen, onClose }: UpgradeModalProps) {
         </p>
 
         {/* Risk reversal */}
-        <p className="text-center text-sm text-muted-foreground mb-1">
-          7-day free trial. Cancel in one tap, no questions asked.
-        </p>
+        {isNative ? (
+          <p className="text-center text-sm text-muted-foreground mb-1">
+            7-day free trial. Cancel in one tap, no questions asked.
+          </p>
+        ) : (
+          <p className="text-center text-sm text-muted-foreground mb-1">
+            7-day free trial, then {formatPrice(PRICING.PRO.annual.promoPrice)} for your first year (50% off). Full price from year 2.
+          </p>
+        )}
         <p className="text-center text-xs text-muted-foreground mb-4">
           If you do not reflect more in your first week, you should not keep it.
         </p>

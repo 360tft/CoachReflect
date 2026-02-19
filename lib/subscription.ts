@@ -99,9 +99,9 @@ export const CLUB_MEMBER_LIMITS: TierLimits = {
 export const PRICING = {
   individual: {
     pro: {
-      monthly: 9.99,
-      yearly: 99,
-      yearlyMonthly: 8.25,
+      monthly: 7.99,
+      yearly: 76.99,
+      yearlyMonthly: 6.42,
     },
     pro_plus: {
       monthly: 19.99,

@@ -16,9 +16,11 @@ export const PRICING = {
     },
     annual: {
       price: 76.99,
+      promoPrice: 38.50,
       stripePriceId: process.env.NEXT_PUBLIC_STRIPE_PRO_ANNUAL_PRICE_ID || '',
       savings: 20, // ~20% off
       monthlyEquivalent: 6.42,
+      promoMonthlyEquivalent: 3.21,
     },
   },
 
@@ -30,9 +32,11 @@ export const PRICING = {
     },
     annual: {
       price: 199,
+      promoPrice: 99.50,
       stripePriceId: process.env.STRIPE_PRO_PLUS_ANNUAL_PRICE_ID || '',
       savings: 17, // 2 months free (~17% off)
       monthlyEquivalent: 16.58,
+      promoMonthlyEquivalent: 8.29,
     },
   },
 

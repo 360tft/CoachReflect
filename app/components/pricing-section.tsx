@@ -14,18 +14,24 @@ export function PricingSection() {
 
   const proPrice = billing === "monthly"
     ? formatPrice(PRICING.PRO.monthly.price)
-    : formatPrice(PRICING.PRO.annual.price)
-  const proPeriod = billing === "monthly" ? "/month" : "/year"
+    : formatPrice(PRICING.PRO.annual.promoPrice)
+  const proOriginalPrice = billing === "annual"
+    ? formatPrice(PRICING.PRO.annual.price)
+    : null
+  const proPeriod = billing === "monthly" ? "/month" : "/first year"
   const proMonthly = billing === "annual"
-    ? `${formatPrice(PRICING.PRO.annual.monthlyEquivalent)}/mo`
+    ? `${formatPrice(PRICING.PRO.annual.promoMonthlyEquivalent)}/mo`
     : null
 
   const proPlusPrice = billing === "monthly"
     ? formatPrice(PRICING.PRO_PLUS.monthly.price)
-    : formatPrice(PRICING.PRO_PLUS.annual.price)
-  const proPlusPeriod = billing === "monthly" ? "/month" : "/year"
+    : formatPrice(PRICING.PRO_PLUS.annual.promoPrice)
+  const proPlusOriginalPrice = billing === "annual"
+    ? formatPrice(PRICING.PRO_PLUS.annual.price)
+    : null
+  const proPlusPeriod = billing === "monthly" ? "/month" : "/first year"
   const proPlusMonthly = billing === "annual"
-    ? `${formatPrice(PRICING.PRO_PLUS.annual.monthlyEquivalent)}/mo`
+    ? `${formatPrice(PRICING.PRO_PLUS.annual.promoMonthlyEquivalent)}/mo`
     : null
 
   return (
@@ -86,9 +92,15 @@ export function PricingSection() {
             }`}
           >
             Annual
-            <span className="ml-1 text-xs text-green-600 dark:text-green-400">
-              Save {planType === "individual" ? PRICING.PRO.annual.savings : 17}%
-            </span>
+            {planType === "individual" ? (
+              <span className="ml-1 text-xs text-amber-600 dark:text-amber-400 font-semibold">
+                50% off first year
+              </span>
+            ) : (
+              <span className="ml-1 text-xs text-green-600 dark:text-green-400">
+                Save 17%
+              </span>
+            )}
           </button>
         </div>
       </div>
@@ -144,11 +156,14 @@ export function PricingSection() {
             <CardTitle>Pro</CardTitle>
             <CardDescription>Reflect without limits</CardDescription>
             <div className="mt-4">
+              {proOriginalPrice && (
+                <span className="text-lg text-muted-foreground line-through mr-2">{proOriginalPrice}</span>
+              )}
               <span className="text-3xl font-bold">{proPrice}</span>
               <span className="text-lg font-normal">{proPeriod}</span>
               {proMonthly && (
-                <p className="text-sm text-green-600 dark:text-green-400 mt-1">
-                  Just {proMonthly}
+                <p className="text-sm text-amber-600 dark:text-amber-400 mt-1">
+                  Just {proMonthly} — full price from year 2
                 </p>
               )}
             </div>
@@ -194,11 +209,14 @@ export function PricingSection() {
             <CardTitle>Pro+</CardTitle>
             <CardDescription>The full picture of your coaching</CardDescription>
             <div className="mt-4">
+              {proPlusOriginalPrice && (
+                <span className="text-lg text-muted-foreground line-through mr-2">{proPlusOriginalPrice}</span>
+              )}
               <span className="text-3xl font-bold">{proPlusPrice}</span>
               <span className="text-lg font-normal">{proPlusPeriod}</span>
               {proPlusMonthly && (
-                <p className="text-sm text-green-600 dark:text-green-400 mt-1">
-                  Just {proPlusMonthly}
+                <p className="text-sm text-amber-600 dark:text-amber-400 mt-1">
+                  Just {proPlusMonthly} — full price from year 2
                 </p>
               )}
             </div>
