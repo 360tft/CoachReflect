@@ -41,6 +41,15 @@ export function AdminDashboard() {
   const [error, setError] = useState<string | null>(null)
   const [testEmailStatus, setTestEmailStatus] = useState<string | null>(null)
   const [sendingTestEmail, setSendingTestEmail] = useState(false)
+  const [promoPreview, setPromoPreview] = useState<{
+    total_free_users: number
+    already_received: number
+    will_receive: number
+    recipients: Array<{ email: string; name: string | null }>
+  } | null>(null)
+  const [promoLoading, setPromoLoading] = useState(false)
+  const [promoSending, setPromoSending] = useState(false)
+  const [promoResult, setPromoResult] = useState<string | null>(null)
 
   useEffect(() => {
     fetchMetrics()
@@ -85,6 +94,41 @@ export function AdminDashboard() {
       setTestEmailStatus(`Error: ${err instanceof Error ? err.message : "Unknown error"}`)
     } finally {
       setSendingTestEmail(false)
+    }
+  }
+
+  const previewPromo = async () => {
+    setPromoLoading(true)
+    setPromoResult(null)
+    try {
+      const res = await fetch("/api/admin/promo")
+      if (!res.ok) throw new Error("Failed to fetch promo preview")
+      const data = await res.json()
+      setPromoPreview(data)
+    } catch (err) {
+      setPromoResult(`Error: ${err instanceof Error ? err.message : "Unknown error"}`)
+    } finally {
+      setPromoLoading(false)
+    }
+  }
+
+  const sendPromo = async () => {
+    if (!confirm(`Send promo email to ${promoPreview?.will_receive} free users? This cannot be undone.`)) return
+    setPromoSending(true)
+    setPromoResult(null)
+    try {
+      const res = await fetch("/api/admin/promo", { method: "POST" })
+      const data = await res.json()
+      if (res.ok) {
+        setPromoResult(`Sent: ${data.sent}, Failed: ${data.failed}, Skipped: ${data.skipped}${data.errors ? ` | Errors: ${data.errors.join(", ")}` : ""}`)
+        setPromoPreview(null)
+      } else {
+        setPromoResult(`Error: ${data.error}`)
+      }
+    } catch (err) {
+      setPromoResult(`Error: ${err instanceof Error ? err.message : "Unknown error"}`)
+    } finally {
+      setPromoSending(false)
     }
   }
 
@@ -261,6 +305,59 @@ export function AdminDashboard() {
                 </div>
               ))}
             </div>
+          )}
+        </CardContent>
+      </Card>
+
+      {/* Promo Email */}
+      <Card className="mt-6">
+        <CardHeader>
+          <CardTitle>50% Off Annual Promo</CardTitle>
+          <CardDescription>Send the half-price annual promo email to all free users</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center gap-4">
+            <Button
+              onClick={previewPromo}
+              disabled={promoLoading}
+              variant="outline"
+            >
+              {promoLoading ? "Loading..." : "Preview Recipients"}
+            </Button>
+            {promoPreview && promoPreview.will_receive > 0 && (
+              <Button
+                onClick={sendPromo}
+                disabled={promoSending}
+                className="bg-amber-600 hover:bg-amber-700 text-white"
+              >
+                {promoSending ? "Sending..." : `Send to ${promoPreview.will_receive} users`}
+              </Button>
+            )}
+          </div>
+
+          {promoPreview && (
+            <div className="mt-4 space-y-2">
+              <div className="flex gap-6 text-sm">
+                <span>Total free users: <strong>{promoPreview.total_free_users}</strong></span>
+                <span>Already received: <strong>{promoPreview.already_received}</strong></span>
+                <span>Will receive: <strong>{promoPreview.will_receive}</strong></span>
+              </div>
+              {promoPreview.recipients.length > 0 && (
+                <div className="mt-2 max-h-48 overflow-y-auto bg-muted rounded-lg p-3">
+                  {promoPreview.recipients.map((r, i) => (
+                    <p key={i} className="text-xs text-muted-foreground">
+                      {r.email} {r.name ? `(${r.name})` : ""}
+                    </p>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {promoResult && (
+            <p className={`mt-4 text-sm ${promoResult.startsWith("Error") ? "text-red-600" : "text-green-600"}`}>
+              {promoResult}
+            </p>
           )}
         </CardContent>
       </Card>
