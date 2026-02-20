@@ -273,7 +273,7 @@ CoachReflection is a reflective journaling app for football coaches. It helps co
 - **Backend:** Next.js API routes
 - **Database:** Supabase (PostgreSQL + Auth + Storage)
 - **AI:** Claude Vision / GPT-4V for session plan analysis
-- **Hosting:** Vercel
+- **Hosting:** Coolify (dedicated Hetzner CX22 at 167.235.233.237)
 
 ---
 
