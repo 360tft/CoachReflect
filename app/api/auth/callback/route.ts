@@ -2,9 +2,11 @@ import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { NextResponse } from 'next/server'
 import { notifyNewFreeSignup, sendTemplateEmail, startOnboardingSequence } from '@/lib/email-sender'
+import { APP_CONFIG } from '@/lib/config'
 
 export async function GET(request: Request) {
-  const { searchParams, origin } = new URL(request.url)
+  const { searchParams } = new URL(request.url)
+  const origin = APP_CONFIG.url
   const code = searchParams.get('code')
   const type = searchParams.get('type')
   const next = searchParams.get('next') ?? '/dashboard'

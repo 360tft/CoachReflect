@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
 import { createClient } from "@/lib/supabase/server"
 import { getStripe } from "@/lib/stripe"
+import { APP_CONFIG } from "@/lib/config"
 
 export async function POST(request: Request) {
   try {
@@ -8,7 +9,7 @@ export async function POST(request: Request) {
     const { data: { user } } = await supabase.auth.getUser()
 
     if (!user) {
-      return NextResponse.redirect(new URL("/login", request.url))
+      return NextResponse.redirect(new URL("/login", APP_CONFIG.url))
     }
 
     const { data: profile } = await supabase
@@ -18,13 +19,13 @@ export async function POST(request: Request) {
       .single()
 
     if (!profile?.stripe_customer_id) {
-      return NextResponse.redirect(new URL("/dashboard/settings?error=no-subscription", request.url))
+      return NextResponse.redirect(new URL("/dashboard/settings?error=no-subscription", APP_CONFIG.url))
     }
 
     const stripe = getStripe()
     const session = await stripe.billingPortal.sessions.create({
       customer: profile.stripe_customer_id,
-      return_url: `${request.headers.get("origin")}/dashboard/settings`,
+      return_url: `${APP_CONFIG.url}/dashboard/settings`,
     })
 
     return NextResponse.redirect(session.url)

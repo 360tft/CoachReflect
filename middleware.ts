@@ -2,6 +2,8 @@ import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 import type { CookieOptions } from '@supabase/ssr'
 
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://coachreflection.com'
+
 type CookieToSet = { name: string; value: string; options?: CookieOptions }
 
 export async function middleware(request: NextRequest) {
@@ -37,7 +39,7 @@ export async function middleware(request: NextRequest) {
   // Protected routes - redirect to login if not authenticated
   if (request.nextUrl.pathname.startsWith('/dashboard')) {
     if (!user) {
-      const redirectUrl = new URL('/login', request.url)
+      const redirectUrl = new URL('/login', APP_URL)
       redirectUrl.searchParams.set('redirect', request.nextUrl.pathname)
       return NextResponse.redirect(redirectUrl)
     }
@@ -49,7 +51,7 @@ export async function middleware(request: NextRequest) {
       // If trying to sign up for a club while logged in, redirect to club creation
       const plan = request.nextUrl.searchParams.get('plan')
       if (plan === 'club') {
-        const clubUrl = new URL('/dashboard/club/create', request.url)
+        const clubUrl = new URL('/dashboard/club/create', APP_URL)
         // Preserve tier and billing params
         const tier = request.nextUrl.searchParams.get('tier')
         const billing = request.nextUrl.searchParams.get('billing')
@@ -57,7 +59,7 @@ export async function middleware(request: NextRequest) {
         if (billing) clubUrl.searchParams.set('billing', billing)
         return NextResponse.redirect(clubUrl)
       }
-      return NextResponse.redirect(new URL('/dashboard', request.url))
+      return NextResponse.redirect(new URL('/dashboard', APP_URL))
     }
   }
 

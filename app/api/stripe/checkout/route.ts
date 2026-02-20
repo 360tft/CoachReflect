@@ -2,6 +2,7 @@ import { NextResponse } from "next/server"
 import { createClient } from "@/lib/supabase/server"
 import { createAdminClient } from "@/lib/supabase/admin"
 import { getStripe } from "@/lib/stripe"
+import { APP_CONFIG } from "@/lib/config"
 
 export async function POST(request: Request) {
   try {
@@ -82,7 +83,7 @@ export async function POST(request: Request) {
       }, { status: 500 })
     }
 
-    const appUrl = "https://coachreflection.com"
+    const appUrl = APP_CONFIG.url
 
     // Determine if user is eligible for 7-day free trial
     const trialEligible = !profile?.pro_trial_used

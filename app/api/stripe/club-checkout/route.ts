@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
 import { createClient } from "@/lib/supabase/server"
-import { CLUB_TIERS } from "@/lib/config"
+import { CLUB_TIERS, APP_CONFIG } from "@/lib/config"
 import { getStripe } from "@/lib/stripe"
 
 // Map tier IDs to Stripe price env var names
@@ -95,8 +95,8 @@ export async function POST(request: Request) {
           quantity: 1,
         },
       ],
-      success_url: `${request.headers.get("origin")}/dashboard/club/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${request.headers.get("origin")}/dashboard/club/create?canceled=true`,
+      success_url: `${APP_CONFIG.url}/dashboard/club/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${APP_CONFIG.url}/dashboard/club/create?canceled=true`,
       subscription_data: {
         metadata: {
           user_id: user.id,
