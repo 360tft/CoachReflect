@@ -5,7 +5,7 @@
 ## Mandatory Workflow
 
 See `/home/kevin/CLAUDE.md` → MANDATORY WORKFLOW section.
-Test credentials: `E2E_TEST_EMAIL` / `E2E_TEST_PASSWORD` in Vercel env vars.
+Test credentials: `E2E_TEST_EMAIL` / `E2E_TEST_PASSWORD` in Coolify env vars.
 
 After every code change: run E2E tests, security scan, build check.
 When creating new features: ensure brand assets remain intact.
@@ -140,10 +140,10 @@ When asked to "check compliance" or "align with FootballGPT", run this process:
 | Task | Time |
 |------|------|
 | Run migrations in Supabase | 10 min |
-| Set env vars in Vercel | 10 min |
+| Set env vars in Coolify | 10 min |
 | Configure Stripe webhook URL | 5 min |
 | Create Stripe sponsor price ($99/mo) | 5 min |
-| Deploy to Vercel | 2 min |
+| Deploy via Coolify | 2 min |
 | Create CREDENTIALS.md (gitignored) | 5 min |
 | **Total** | **~40 min** |
 
@@ -190,7 +190,7 @@ This repo MUST maintain 3 documents for potential acquisition. Update them whene
 - Local dev & deployment instructions
 
 **CREDENTIALS.md (gitignored):**
-- Vercel login
+- Coolify login
 - Supabase project access
 - Anthropic API key location
 - Domain registrar access
@@ -308,18 +308,18 @@ See `supabase/migrations/` for full schema. Key tables:
 
 | Record | Host | Value | Status |
 |--------|------|-------|--------|
-| A | @ | 76.76.21.21 | ✅ Vercel |
-| CNAME | www | cname.vercel-dns.com | ✅ Vercel |
+| A | @ | 77.42.37.202 | ✅ Coolify |
+| CNAME | www | coachreflection.com | ✅ Coolify |
 | TXT | @ | v=spf1 include:amazonses.com include:resend.com ~all | ✅ SPF |
 | TXT | resend._domainkey | DKIM key | ✅ Resend |
 | MX | send | feedback-smtp.eu-west-1.amazonses.com (pri 10) | ✅ Resend |
 | TXT | send | v=spf1 include:amazonses.com ~all | ✅ Resend |
 
 **Resend Domain:** ✅ Verified
-**Vercel Domain:** ✅ Added (coachreflection.com + www.coachreflection.com)
-**SSL Certificate:** ✅ Active
+**Coolify Domain:** ✅ Configured (coachreflection.com + www.coachreflection.com)
+**SSL Certificate:** ✅ Active (auto-provisioned via Coolify proxy)
 
-### Vercel Environment Variables ✅ COMPLETE (22 vars)
+### Coolify Environment Variables ✅ COMPLETE (22 vars)
 
 **Core (10 vars):**
 | Variable | Status | Source |
@@ -354,7 +354,6 @@ See `supabase/migrations/` for full schema. Key tables:
 ### Automation Scripts
 
 Located in `/scripts/`:
-- `setup-vercel-env.sh` - Push env vars to Vercel
 - `setup-stripe-products.sh` - Create Stripe products/prices
 - `setup-stripe-webhook.sh` - Create Stripe webhook
 - `setup-namecheap-dns.sh` - Configure DNS via Namecheap API
@@ -465,7 +464,7 @@ Before CoachReflection goes fully live with clubs and analytics:
 - [ ] Academy Monthly ($99) → `STRIPE_PRICE_CLUB_ACADEMY_MONTHLY`
 - [ ] Academy Annual ($899) → `STRIPE_PRICE_CLUB_ACADEMY_ANNUAL`
 
-### Vercel Setup
+### Coolify Setup
 - [ ] Add all 12 Stripe price IDs as environment variables
 - [ ] Verify `STRIPE_WEBHOOK_SECRET` is set
 
