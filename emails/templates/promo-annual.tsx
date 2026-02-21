@@ -64,13 +64,13 @@ export function PromoAnnualEmail({ name, unsubscribeUrl }: PromoAnnualEmailProps
       </Text>
 
       <Section style={buttonContainer}>
-        <Button href={`${APP_URL}/pricing`} style={button}>
+        <Button href={`${APP_URL}/pricing?utm_source=promo-annual-50`} style={button}>
           Start Your Free Trial
         </Button>
       </Section>
 
-      <Text style={paragraph}>
-        Full price from year 2.
+      <Text style={deadline}>
+        Offer ends 7 March. Full price from year 2.
       </Text>
 
       <Text style={signature}>Kevin</Text>
@@ -117,6 +117,15 @@ const button = {
   textAlign: 'center' as const,
   display: 'inline-block',
   padding: '14px 28px',
+}
+
+const deadline = {
+  fontSize: '14px',
+  lineHeight: '1.6',
+  color: '#dc2626',
+  fontWeight: '600' as const,
+  margin: '16px 0',
+  textAlign: 'center' as const,
 }
 
 const offerBox = {

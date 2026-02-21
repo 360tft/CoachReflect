@@ -615,7 +615,7 @@ export const TEMPLATES: Record<string, (props: TemplateProps) => string> = {
       <li>Voice notes for hands-free reflection</li>
       <li>Session plan upload and analysis</li>
       <li>AI-powered coaching insights</li>
-      <li>Unlimited reflections (back to 2 messages/day)</li>
+      <li>Unlimited reflections (back to 1 message/day)</li>
       <li>Advanced pattern detection</li>
     </ul>
 
@@ -633,7 +633,7 @@ export const TEMPLATES: Record<string, (props: TemplateProps) => string> = {
 
     <p>Last day of your Pro trial. Tomorrow your card will be charged automatically.</p>
 
-    <p>Carry on = keep everything. Cancel = back to 2 messages a day.</p>
+    <p>Carry on = keep everything. Cancel = back to 1 message a day.</p>
 
     <p>Either way, no hard feelings. CoachReflection is free to use forever, Pro just gives you more.</p>
 
@@ -671,7 +671,7 @@ export const TEMPLATES: Record<string, (props: TemplateProps) => string> = {
   'trial-cancelled': (props) => baseTemplate(`
     <p>Hey ${props.name},</p>
 
-    <p>Your Pro trial has ended. You're back on the free plan with 2 messages a day.</p>
+    <p>Your Pro trial has ended. You're back on the free plan with 1 message a day.</p>
 
     <p>You won't be charged anything.</p>
 

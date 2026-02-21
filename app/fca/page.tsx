@@ -144,7 +144,7 @@ export default function FCALandingPage() {
           <h2 className="text-2xl font-bold mb-6 text-center">What you get (free)</h2>
           <div className="grid sm:grid-cols-2 gap-4">
             <div className="p-4 border rounded-lg">
-              <p className="font-medium mb-1">2 reflections a day</p>
+              <p className="font-medium mb-1">1 reflection a day</p>
               <p className="text-sm text-muted-foreground">Enough to build the habit</p>
             </div>
             <div className="p-4 border rounded-lg">

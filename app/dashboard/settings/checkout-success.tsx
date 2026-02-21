@@ -2,6 +2,7 @@
 
 import { useSearchParams, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import { isPromoActive } from '@/lib/config'
 
 export function CheckoutSuccess() {
   const searchParams = useSearchParams()
@@ -9,6 +10,7 @@ export function CheckoutSuccess() {
   const success = searchParams.get('success')
   const canceled = searchParams.get('canceled')
   const [visible, setVisible] = useState(false)
+  const promoActive = isPromoActive()
 
   useEffect(() => {
     if (success || canceled) {
@@ -47,6 +49,11 @@ export function CheckoutSuccess() {
         <p className="text-sm text-green-700 dark:text-green-300 mt-1">
           You won't be charged until the trial ends. Cancel anytime from this page.
         </p>
+        {promoActive && (
+          <p className="text-sm text-green-700 dark:text-green-300 mt-1 font-medium">
+            You've locked in 50% off your first year. Full price applies from year 2.
+          </p>
+        )}
       </div>
     )
   }

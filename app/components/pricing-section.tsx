@@ -1,38 +1,69 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card"
 import { Button } from "@/app/components/ui/button"
 import { Badge } from "@/app/components/ui/badge"
-import { PRICING, CLUB_TIERS, type BillingPeriod, formatPrice } from "@/lib/config"
+import { PRICING, CLUB_TIERS, type BillingPeriod, formatPrice, isPromoActive } from "@/lib/config"
 import { NativeHidden } from "@/app/components/native-hidden"
 
 export function PricingSection() {
   const [billing, setBilling] = useState<BillingPeriod>("monthly")
   const [planType, setPlanType] = useState<"individual" | "teams">("individual")
+  const [utmSource, setUtmSource] = useState<string | null>(null)
+  const promoActive = isPromoActive()
+
+  // Capture utm_source from URL and persist in sessionStorage
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const utm = params.get("utm_source")
+    if (utm) {
+      sessionStorage.setItem("utm_source", utm)
+      setUtmSource(utm)
+    } else {
+      setUtmSource(sessionStorage.getItem("utm_source"))
+    }
+  }, [])
+
+  const showPromo = promoActive && billing === "annual"
 
   const proPrice = billing === "monthly"
     ? formatPrice(PRICING.PRO.monthly.price)
-    : formatPrice(PRICING.PRO.annual.promoPrice)
-  const proOriginalPrice = billing === "annual"
+    : showPromo
+      ? formatPrice(PRICING.PRO.annual.promoPrice)
+      : formatPrice(PRICING.PRO.annual.price)
+  const proOriginalPrice = showPromo
     ? formatPrice(PRICING.PRO.annual.price)
     : null
-  const proPeriod = billing === "monthly" ? "/month" : "/first year"
+  const proPeriod = billing === "monthly" ? "/month" : showPromo ? "/first year" : "/year"
   const proMonthly = billing === "annual"
-    ? `${formatPrice(PRICING.PRO.annual.promoMonthlyEquivalent)}/mo`
+    ? showPromo
+      ? `${formatPrice(PRICING.PRO.annual.promoMonthlyEquivalent)}/mo`
+      : `${formatPrice(PRICING.PRO.annual.monthlyEquivalent)}/mo`
     : null
 
   const proPlusPrice = billing === "monthly"
     ? formatPrice(PRICING.PRO_PLUS.monthly.price)
-    : formatPrice(PRICING.PRO_PLUS.annual.promoPrice)
-  const proPlusOriginalPrice = billing === "annual"
+    : showPromo
+      ? formatPrice(PRICING.PRO_PLUS.annual.promoPrice)
+      : formatPrice(PRICING.PRO_PLUS.annual.price)
+  const proPlusOriginalPrice = showPromo
     ? formatPrice(PRICING.PRO_PLUS.annual.price)
     : null
-  const proPlusPeriod = billing === "monthly" ? "/month" : "/first year"
+  const proPlusPeriod = billing === "monthly" ? "/month" : showPromo ? "/first year" : "/year"
   const proPlusMonthly = billing === "annual"
-    ? `${formatPrice(PRICING.PRO_PLUS.annual.promoMonthlyEquivalent)}/mo`
+    ? showPromo
+      ? `${formatPrice(PRICING.PRO_PLUS.annual.promoMonthlyEquivalent)}/mo`
+      : `${formatPrice(PRICING.PRO_PLUS.annual.monthlyEquivalent)}/mo`
     : null
+
+  // Build signup URL with attribution
+  const buildSignupUrl = (plan: string) => {
+    const params = new URLSearchParams({ plan, billing })
+    if (utmSource) params.set("utm_source", utmSource)
+    return `/signup?${params.toString()}`
+  }
 
   return (
     <section id="pricing" className="container mx-auto px-4 py-16">
@@ -92,13 +123,13 @@ export function PricingSection() {
             }`}
           >
             Annual
-            {planType === "individual" ? (
+            {planType === "individual" && promoActive ? (
               <span className="ml-1 text-xs text-amber-600 dark:text-amber-400 font-semibold">
                 50% off first year
               </span>
             ) : (
               <span className="ml-1 text-xs text-green-600 dark:text-green-400">
-                Save 17%
+                Save {planType === "individual" ? PRICING.PRO.annual.savings : 17}%
               </span>
             )}
           </button>
@@ -118,7 +149,7 @@ export function PricingSection() {
           <CardContent>
             <ul className="space-y-2 text-sm">
               <li className="flex items-start gap-2">
-                <span className="text-green-500 mt-0.5">+</span> 2 reflections a day to get started
+                <span className="text-green-500 mt-0.5">+</span> 1 reflection a day to get started
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-500 mt-0.5">+</span> Guided prompts after every session
@@ -162,8 +193,13 @@ export function PricingSection() {
               <span className="text-3xl font-bold">{proPrice}</span>
               <span className="text-lg font-normal">{proPeriod}</span>
               {proMonthly && (
-                <p className="text-sm text-amber-600 dark:text-amber-400 mt-1">
-                  Just {proMonthly} — full price from year 2
+                <p className={`text-sm mt-1 ${showPromo ? 'text-amber-600 dark:text-amber-400' : 'text-green-600 dark:text-green-400'}`}>
+                  {showPromo ? `Just ${proMonthly} — full price from year 2` : `Just ${proMonthly}`}
+                </p>
+              )}
+              {showPromo && (
+                <p className="text-xs font-medium text-red-600 dark:text-red-400 mt-1">
+                  {PRICING.ANNUAL_PROMO.label}
                 </p>
               )}
             </div>
@@ -193,7 +229,7 @@ export function PricingSection() {
               </li>
             </ul>
             <NativeHidden>
-              <Link href={`/signup?plan=pro&billing=${billing}`} className="block mt-6">
+              <Link href={buildSignupUrl('pro')} className="block mt-6">
                 <Button className="w-full bg-brand hover:bg-brand-hover !text-white">Start Pro</Button>
               </Link>
             </NativeHidden>
@@ -215,8 +251,13 @@ export function PricingSection() {
               <span className="text-3xl font-bold">{proPlusPrice}</span>
               <span className="text-lg font-normal">{proPlusPeriod}</span>
               {proPlusMonthly && (
-                <p className="text-sm text-amber-600 dark:text-amber-400 mt-1">
-                  Just {proPlusMonthly} — full price from year 2
+                <p className={`text-sm mt-1 ${showPromo ? 'text-amber-600 dark:text-amber-400' : 'text-green-600 dark:text-green-400'}`}>
+                  {showPromo ? `Just ${proPlusMonthly} — full price from year 2` : `Just ${proPlusMonthly}`}
+                </p>
+              )}
+              {showPromo && (
+                <p className="text-xs font-medium text-red-600 dark:text-red-400 mt-1">
+                  {PRICING.ANNUAL_PROMO.label}
                 </p>
               )}
             </div>
@@ -253,7 +294,7 @@ export function PricingSection() {
               </li>
             </ul>
             <NativeHidden>
-              <Link href={`/signup?plan=pro_plus&billing=${billing}`} className="block mt-6">
+              <Link href={buildSignupUrl('pro_plus')} className="block mt-6">
                 <Button variant="outline" className="w-full">Start Pro+</Button>
               </Link>
             </NativeHidden>

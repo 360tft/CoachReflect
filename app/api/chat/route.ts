@@ -150,7 +150,7 @@ export async function POST(request: Request) {
 
     const isSubscribed = profile?.subscription_tier !== "free"
 
-    // Free tier can use chat but with limits (2 messages/day)
+    // Free tier can use chat but with limits (1 message/day)
     if (!isSubscribed) {
       // Check daily usage
       const today = new Date().toISOString().split("T")[0]

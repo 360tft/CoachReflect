@@ -2,7 +2,7 @@ import { NextResponse } from "next/server"
 import { createClient } from "@/lib/supabase/server"
 import { createAdminClient } from "@/lib/supabase/admin"
 import { getStripe } from "@/lib/stripe"
-import { APP_CONFIG } from "@/lib/config"
+import { APP_CONFIG, isPromoActive } from "@/lib/config"
 
 export async function POST(request: Request) {
   try {
@@ -19,17 +19,20 @@ export async function POST(request: Request) {
     let plan = "pro"
 
     let fpTid: string | undefined
+    let promoSource: string | undefined
 
     if (contentType.includes("application/json")) {
       const json = await request.json().catch(() => ({}))
       billingPeriod = json.billing_period || json.billing || "monthly"
       plan = json.plan || "pro"
       fpTid = json.fp_tid || undefined
+      promoSource = json.promo_source || undefined
     } else {
       const formData = await request.formData().catch(() => null)
       billingPeriod = formData?.get("billing") as string || "monthly"
       plan = formData?.get("plan") as string || "pro"
       fpTid = formData?.get("fp_tid") as string || undefined
+      promoSource = formData?.get("promo_source") as string || undefined
     }
 
     // Get profile (need stripe_customer_id and pro_trial_used)
@@ -98,10 +101,10 @@ export async function POST(request: Request) {
     }
 
     // Check if annual promo coupon should be applied
-    // Applies to annual individual plans (pro, pro_plus) when coupon is configured
+    // Applies to annual individual plans (pro, pro_plus) when coupon is configured and promo is active
     const annualPromoCoupon = process.env.STRIPE_ANNUAL_PROMO_COUPON_ID
     const isAnnualIndividual = billingPeriod === "annual" && (plan === "pro" || plan === "pro_plus")
-    const applyCoupon = isAnnualIndividual && annualPromoCoupon
+    const applyCoupon = isAnnualIndividual && annualPromoCoupon && isPromoActive()
 
     // Create checkout session — with trial if eligible
     const session = await stripe.checkout.sessions.create({
@@ -123,11 +126,13 @@ export async function POST(request: Request) {
       metadata: {
         user_id: user.id,
         ...(fpTid ? { fp_tid: fpTid } : {}),
+        ...(promoSource ? { promo_source: promoSource } : {}),
       },
       subscription_data: {
         metadata: {
           user_id: user.id,
           ...(fpTid ? { fp_tid: fpTid } : {}),
+          ...(promoSource ? { promo_source: promoSource } : {}),
         },
         ...(trialEligible ? {
           trial_period_days: 7,

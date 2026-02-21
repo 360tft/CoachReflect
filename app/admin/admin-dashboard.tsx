@@ -50,6 +50,12 @@ export function AdminDashboard() {
   const [promoLoading, setPromoLoading] = useState(false)
   const [promoSending, setPromoSending] = useState(false)
   const [promoResult, setPromoResult] = useState<string | null>(null)
+  const [promoStats, setPromoStats] = useState<{
+    emails_sent: number
+    converted: number
+    conversion_rate: string
+  } | null>(null)
+  const [promoStatsLoading, setPromoStatsLoading] = useState(false)
 
   useEffect(() => {
     fetchMetrics()
@@ -109,6 +115,21 @@ export function AdminDashboard() {
       setPromoResult(`Error: ${err instanceof Error ? err.message : "Unknown error"}`)
     } finally {
       setPromoLoading(false)
+    }
+  }
+
+  const fetchPromoStats = async () => {
+    setPromoStatsLoading(true)
+    try {
+      const res = await fetch("/api/admin/promo/stats")
+      if (res.ok) {
+        const data = await res.json()
+        setPromoStats(data)
+      }
+    } catch {
+      // silently fail - stats are informational
+    } finally {
+      setPromoStatsLoading(false)
     }
   }
 
@@ -316,6 +337,26 @@ export function AdminDashboard() {
           <CardDescription>Send the half-price annual promo email to all free users</CardDescription>
         </CardHeader>
         <CardContent>
+          {/* Conversion stats */}
+          <div className="mb-4 p-3 bg-muted rounded-lg">
+            {promoStats ? (
+              <div className="flex gap-6 text-sm">
+                <span>Emails sent: <strong>{promoStats.emails_sent}</strong></span>
+                <span>Converted to Pro: <strong className="text-green-600">{promoStats.converted}</strong></span>
+                <span>Conversion rate: <strong className={promoStats.converted > 0 ? "text-green-600" : ""}>{promoStats.conversion_rate}%</strong></span>
+              </div>
+            ) : (
+              <Button
+                onClick={fetchPromoStats}
+                disabled={promoStatsLoading}
+                variant="ghost"
+                size="sm"
+              >
+                {promoStatsLoading ? "Loading..." : "Load conversion stats"}
+              </Button>
+            )}
+          </div>
+
           <div className="flex items-center gap-4">
             <Button
               onClick={previewPromo}

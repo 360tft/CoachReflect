@@ -47,7 +47,7 @@ export default function TermsPage() {
               CoachReflection offers free and paid subscription tiers:
             </p>
             <ul className="list-disc list-inside text-muted-foreground space-y-1">
-              <li>Free tier: Limited to 2 messages per day, no voice notes</li>
+              <li>Free tier: Limited to 1 message per day, no voice notes</li>
               <li>Pro tier ($7.99/month): Unlimited reflections, 4 voice notes/month, AI insights</li>
               <li>Pro+ tier ($19.99/month): Everything in Pro plus 12 voice notes/month and syllabus upload</li>
             </ul>

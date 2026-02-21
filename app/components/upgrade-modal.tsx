@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { Button } from '@/app/components/ui/button'
-import { PRICING, formatPrice } from '@/lib/config'
+import { PRICING, formatPrice, isPromoActive } from '@/lib/config'
 import { useRevenueCat } from '@/hooks/use-revenuecat'
 import { isNativePlatform } from '@/lib/platform'
 import { formatPackagePrice, getPackagePeriod } from '@/lib/revenuecat'
@@ -23,8 +23,8 @@ interface UpgradeModalProps {
 
 const VARIANT_CONFIG: Record<ModalVariant, { title: string; subtitle: string }> = {
   limit_reached: {
-    title: "Two reflections down. The rest of today's coaching insights are slipping away.",
-    subtitle: "You are already doing the work. Most coaching breakthroughs come from the third or fourth thought after a session. Pro catches them all.",
+    title: "You've used your daily reflection. The rest of today's coaching insights are slipping away.",
+    subtitle: "Most coaching breakthroughs come from the second or third thought after a session. Pro catches them all.",
   },
   voice_notes: {
     title: "Record it on the drive home",
@@ -72,6 +72,7 @@ export function UpgradeModal({ variant, isOpen, onClose }: UpgradeModalProps) {
   const [error, setError] = useState<string | null>(null)
   const [isNative, setIsNative] = useState(false)
   const config = VARIANT_CONFIG[variant]
+  const promoActive = isPromoActive()
 
   const {
     isInitialized: rcInitialized,
@@ -105,8 +106,9 @@ export function UpgradeModal({ variant, isOpen, onClose }: UpgradeModalProps) {
         },
         body: JSON.stringify({
           plan: 'pro',
-          billing_period: 'annual',
+          billing_period: promoActive ? 'annual' : 'monthly',
           fp_tid: window.FPROM?.data?.tid || undefined,
+          promo_source: promoActive ? 'upgrade-modal' : undefined,
         }),
       })
       if (!res.ok) {
@@ -218,7 +220,7 @@ export function UpgradeModal({ variant, isOpen, onClose }: UpgradeModalProps) {
               <span className="text-3xl font-bold">{formatPackagePrice(proPackage)}</span>
               <span className="text-muted-foreground">{getPackagePeriod(proPackage)}</span>
             </>
-          ) : (
+          ) : promoActive ? (
             <>
               <p className="text-xs font-semibold text-amber-600 dark:text-amber-400 mb-1">
                 Half price for your first year
@@ -230,6 +232,17 @@ export function UpgradeModal({ variant, isOpen, onClose }: UpgradeModalProps) {
               <span className="text-muted-foreground">/first year</span>
               <p className="text-xs text-muted-foreground mt-0.5">
                 That&apos;s {formatPrice(PRICING.PRO.annual.promoMonthlyEquivalent)}/mo. Less than your post-match coffee.
+              </p>
+              <p className="text-xs font-medium text-red-600 dark:text-red-400 mt-1">
+                {PRICING.ANNUAL_PROMO.label}
+              </p>
+            </>
+          ) : (
+            <>
+              <span className="text-3xl font-bold">{formatPrice(PRICING.PRO.monthly.price)}</span>
+              <span className="text-muted-foreground">/month</span>
+              <p className="text-xs text-muted-foreground mt-0.5">
+                That&apos;s $0.26/day. Less than your post-match coffee.
               </p>
             </>
           )}
@@ -245,9 +258,13 @@ export function UpgradeModal({ variant, isOpen, onClose }: UpgradeModalProps) {
           <p className="text-center text-sm text-muted-foreground mb-1">
             7-day free trial. Cancel in one tap, no questions asked.
           </p>
-        ) : (
+        ) : promoActive ? (
           <p className="text-center text-sm text-muted-foreground mb-1">
             7-day free trial, then {formatPrice(PRICING.PRO.annual.promoPrice)} for your first year (50% off). Full price from year 2.
+          </p>
+        ) : (
+          <p className="text-center text-sm text-muted-foreground mb-1">
+            7-day free trial. Cancel in one tap, no questions asked.
           </p>
         )}
         <p className="text-center text-xs text-muted-foreground mb-4">
@@ -280,6 +297,14 @@ export function UpgradeModal({ variant, isOpen, onClose }: UpgradeModalProps) {
             Restore previous purchase
           </button>
         )}
+
+        {/* Pro+ upsell */}
+        <a
+          href={promoActive ? '/pricing?billing=annual' : '/pricing'}
+          className="block w-full text-center text-sm text-amber-600 dark:text-amber-400 font-medium mt-2 hover:underline transition-colors"
+        >
+          Want session recordings and more? See Pro+
+        </a>
 
         {/* Dismiss */}
         <button

@@ -39,7 +39,7 @@ Football (soccer), rugby (union and league), basketball, tennis, swimming, crick
 
 ## Pricing
 
-**Free** ($0/month): 2 reflections per day, guided prompts, mood and energy tracking, 7 days of history, animated drill diagrams.
+**Free** ($0/month): 1 reflection per day, guided prompts, mood and energy tracking, 7 days of history, animated drill diagrams.
 
 **Pro** ($7.99/month or $76.99/year): Unlimited reflections, 4 voice notes per month, session plan design and feedback, AI memory (remembers your coaching context), full searchable history, CPD evidence generation.
 

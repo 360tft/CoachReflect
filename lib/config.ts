@@ -54,9 +54,19 @@ export const PRICING = {
     },
   },
 
+  // Annual promo — set to null or past date to disable
+  ANNUAL_PROMO: {
+    expiresAt: new Date('2026-03-07T23:59:59Z'),
+    label: 'Offer ends 7 March',
+  },
+
   CURRENCY: 'USD',
   CURRENCY_SYMBOL: '$',
 } as const
+
+export function isPromoActive(): boolean {
+  return PRICING.ANNUAL_PROMO.expiresAt > new Date()
+}
 
 // =============================================================================
 // CLUB TIERS
@@ -153,7 +163,7 @@ export function getClubTier(tierId: ClubTier): ClubTierConfig | undefined {
 
 export const LIMITS = {
   FREE: {
-    messagesPerDay: 2,
+    messagesPerDay: 1,
     voiceNotesPerMonth: 0,
     shortVoiceNotesPerMonth: 0,
     fullRecordingsPerMonth: 0,

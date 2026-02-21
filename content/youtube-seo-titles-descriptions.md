@@ -35,11 +35,11 @@ What's in the video:
 Works for any sport, any level. Football, rugby, basketball, hockey, tennis, cricket, and more.
 
 TRY COACH REFLECTION (FREE)
-No credit card required. 2 reflections per day on the free tier:
+No credit card required. 1 reflection per day on the free tier:
 https://coachreflection.com
 
 PRICING
-Free: 2 reflections/day, 1 week analytics history
+Free: 1 reflection/day, 1 week analytics history
 Pro: Full analytics, voice notes, session plan upload
 Club plans available for academies and multi-coach setups
 

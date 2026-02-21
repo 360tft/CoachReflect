@@ -87,7 +87,7 @@ export function generateSoftwareApplicationSchema() {
         name: 'Free',
         price: '0',
         priceCurrency: 'USD',
-        description: '2 messages per day, guided prompts, mood tracking, 7 days of history'
+        description: '1 message per day, guided prompts, mood tracking, 7 days of history'
       },
       {
         '@type': 'Offer',

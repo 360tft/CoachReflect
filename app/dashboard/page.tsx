@@ -125,7 +125,7 @@ export default async function DashboardPage() {
             <div className="bg-muted/50 rounded-lg p-4 text-sm">
               <p className="font-medium mb-2">Your free account:</p>
               <ul className="space-y-1 text-muted-foreground">
-                <li>2 reflections per day to get started</li>
+                <li>1 reflection per day to get started</li>
                 <li>Mood tracking to catch burnout early</li>
                 <li>7 days of history</li>
               </ul>
