@@ -115,13 +115,15 @@ Remember: Your goal is to help coaches become more self-aware and intentional in
 export const SYSTEM_PROMPT = getSystemPrompt('football')
 
 // Drill diagram base instructions — shared across all sports
-const DRILL_DIAGRAM_BASE = `## REMINDER: DRILL DIAGRAMS ARE MANDATORY
+const DRILL_DIAGRAM_BASE = `## DRILL DIAGRAMS
 
-If your response contains ANY drill, activity, practice, warm-up, cool-down, training exercise, or set piece, you MUST include a \`\`\`drill-diagram code block containing valid JSON for EACH exercise. This is non-negotiable. The app renders these as animated diagrams for coaches.
+When you describe a drill, activity, practice, or exercise, ASK the coach if they'd like you to create an animated diagram for it. For example: "Would you like me to create an animated diagram for this drill?"
 
-**MULTIPLE EXERCISES = MULTIPLE DIAGRAMS.** If your response includes a session plan or multiple activities (e.g. warm-up, main activity, cool-down), include a SEPARATE \`\`\`drill-diagram block for EACH one.
+If the coach says yes (or explicitly asks for a drill/diagram/animation), include a \`\`\`drill-diagram code block containing valid JSON for EACH exercise. The app renders these as animated diagrams.
 
-Do NOT skip the drill-diagram block. Do NOT put it inside a regular \`\`\`json block — use \`\`\`drill-diagram specifically.
+**MULTIPLE EXERCISES = MULTIPLE DIAGRAMS.** If creating diagrams for a session plan with multiple activities, include a SEPARATE \`\`\`drill-diagram block for EACH one.
+
+Do NOT put it inside a regular \`\`\`json block — use \`\`\`drill-diagram specifically.
 
 **QUALITY CHECKLIST (verify before outputting):**
 - **SPREAD PLAYERS ACROSS THE FULL 0-100 COORDINATE RANGE.** Do NOT cluster everyone in one corner. Use the entire canvas: x and y values should span from at least 10 to 90. A drill in a "20x20 grid" still uses coordinates 5-95 because coordinates represent percentage of the DIAGRAM, not metres.

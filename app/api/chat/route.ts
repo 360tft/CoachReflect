@@ -354,8 +354,9 @@ export async function POST(request: Request) {
     }
     let systemPrompt = basePrompt + userContext + syllabusContext
 
-    // Inject drill diagram instructions for supported sports (non-reflection only)
-    const drillReminder = getDrillDiagramReminder(userSport)
+    // Inject drill diagram instructions for non-reflection conversations only
+    const isReflectionFlow = isReflection || reflectionType === 'standard' || reflectionType === 'gibbs'
+    const drillReminder = isReflectionFlow ? null : getDrillDiagramReminder(userSport)
     if (drillReminder) {
       systemPrompt = systemPrompt + '\n\n' + drillReminder
     }
