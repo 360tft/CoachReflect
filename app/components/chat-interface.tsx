@@ -203,7 +203,9 @@ export function ChatInterface({ isSubscribed, initialRemaining = 2 }: ChatInterf
             try {
               const data = JSON.parse(line.slice(6))
 
-              if (data.type === "chunk") {
+              if (data.type === "error") {
+                throw new Error(data.message || "An error occurred")
+              } else if (data.type === "chunk") {
                 assistantContent += data.content
                 // Update last message with new content
                 setMessages(prev => {
@@ -235,11 +237,12 @@ export function ChatInterface({ isSubscribed, initialRemaining = 2 }: ChatInterf
                 }
                 // Reload conversations list
                 loadConversations()
-              } else if (data.type === "error") {
-                throw new Error(data.message)
               }
-            } catch {
-              // Ignore parse errors for incomplete chunks
+            } catch (parseErr) {
+              // Re-throw actual errors, ignore JSON parse errors from incomplete chunks
+              if (parseErr instanceof Error && parseErr.message !== "Unexpected end of JSON input" && !parseErr.message.startsWith("Unexpected token")) {
+                throw parseErr
+              }
             }
           }
         }
